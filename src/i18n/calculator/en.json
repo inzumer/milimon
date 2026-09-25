@@ -27,5 +27,11 @@
     "must-not-exceed-gross": "It can't be greater than the total.",
     "must-be-integer": "It must be a whole number.",
     "needs-at-least-two": "Enter at least two values."
+  },
+  "history": {
+    "save": "Save to history",
+    "saved": "Saved to your history.",
+    "view": "View history",
+    "note": "Your latest 15 calculations are kept, with the data, the result and the steps."
   }
 }

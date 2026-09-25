@@ -40,6 +40,7 @@ const items = [
       })),
     ],
   },
+  { href: localizedPath(lang, 'history'), label: common.nav.history },
   ...(readAccountConfig(import.meta.env)
     ? [{ href: localizedPath(lang, 'account'), label: common.nav.account }]
     : []),

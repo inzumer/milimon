@@ -9,6 +9,7 @@ export const ROUTES = {
   privacy: 'privacy',
   terms: 'terms',
   account: 'account',
+  history: 'history',
 } as const;
 
 export type RouteName = keyof typeof ROUTES;

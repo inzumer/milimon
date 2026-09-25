@@ -1,18 +1,13 @@
 import { useId } from 'react';
 import { Button } from '@inzumer/ui-library';
-import {
-  getFormula,
-  valueKinds,
-  type FormulaId,
-  type StandardFormulaDefinition,
-} from '@domain/registry';
+import { SaveToHistory } from '@calculators/shared/SaveToHistory';
+import { getFormula, type FormulaId, type StandardFormulaDefinition } from '@domain/registry';
 import { formulaText, type CalculatorText } from '@i18n/formula-text';
 import type { Translations } from '@i18n/translations';
-import type { CalculationsRepository, SettingsRepository } from '@repositories';
-import type { Locale } from '@utils';
+import type { CalculationsRepository, HistoryRepository, SettingsRepository } from '@repositories';
+import { localizedPath, type Locale } from '@utils';
 import { FormulaFields } from './FormulaFields';
-import { ResultPanel } from './ResultPanel';
-import { StepList } from './StepList';
+import { FormulaResult } from './FormulaResult';
 import { useFormulaCalculator } from './useFormulaCalculator';
 
 export interface FormulaCalculatorProps {
@@ -23,6 +18,7 @@ export interface FormulaCalculatorProps {
   ui: Translations<'calculator'>;
   calculations?: CalculationsRepository;
   settings?: SettingsRepository;
+  history?: HistoryRepository;
 }
 
 /** Interactive calculator for any standard formula of the registry (React island). */
@@ -33,6 +29,7 @@ export const FormulaCalculator = ({
   ui,
   calculations,
   settings,
+  history,
 }: FormulaCalculatorProps) => {
   const formula = getFormula(formulaId) as StandardFormulaDefinition;
   const id = useId();
@@ -108,19 +105,22 @@ export const FormulaCalculator = ({
         </h3>
         {calculator.result ? (
           <>
-            <ResultPanel
-              outputs={formula.outputs}
-              values={calculator.result.value as Record<string, unknown>}
-              text={text}
-              context={context}
-              units={ui.units}
-            />
-            <h4 className="font-bold">{ui['steps-title']}</h4>
-            <StepList
+            <FormulaResult
+              formula={formula}
+              value={calculator.result.value as Record<string, unknown>}
               steps={calculator.result.steps}
-              templates={text.steps}
-              kinds={valueKinds(formula)}
+              text={text}
+              ui={ui}
               context={context}
+            />
+            <SaveToHistory
+              formulaId={formulaId}
+              draft={calculator.draft}
+              currency={calculator.currency}
+              result={calculator.result}
+              labels={ui.history}
+              historyHref={localizedPath(lang, 'history')}
+              {...(history ? { repository: history } : {})}
             />
           </>
         ) : (

@@ -1,14 +1,13 @@
 import { useId } from 'react';
 import { Button } from '@inzumer/ui-library';
-import { ResultPanel } from '@calculators/FormulaCalculator/ResultPanel';
-import { StepList } from '@calculators/FormulaCalculator/StepList';
+import { SaveToHistory } from '@calculators/shared/SaveToHistory';
 import { NumberField } from '@components/molecules/NumberField';
 import { formulaText, type CalculatorText } from '@i18n/formula-text';
 import type { Translations } from '@i18n/translations';
-import type { CalculationsRepository, SettingsRepository } from '@repositories';
-import type { Locale } from '@utils';
-import { CostTable } from './CostTable';
+import type { CalculationsRepository, HistoryRepository, SettingsRepository } from '@repositories';
+import { localizedPath, type Locale } from '@utils';
 import { IngredientCard } from './IngredientCard';
+import { RecipeCostingResult } from './RecipeCostingResult';
 import { RECIPE_EXAMPLE, useRecipeCostingCalculator } from './useRecipeCostingCalculator';
 
 export interface RecipeCostingCalculatorProps {
@@ -17,12 +16,8 @@ export interface RecipeCostingCalculatorProps {
   ui: Translations<'calculator'>;
   calculations?: CalculationsRepository;
   settings?: SettingsRepository;
+  history?: HistoryRepository;
 }
-
-const TOTALS = [
-  { key: 'recipeCost', kind: 'currency', primary: true },
-  { key: 'portionCost', kind: 'currency', primary: true },
-] as const;
 
 /** Recipe costing sheet (manual, columns 1–8): ingredients → gross quantity → cost → portion cost. */
 export const RecipeCostingCalculator = ({
@@ -31,6 +26,7 @@ export const RecipeCostingCalculator = ({
   ui,
   calculations,
   settings,
+  history,
 }: RecipeCostingCalculatorProps) => {
   const id = useId();
   const t = formulaText(text);
@@ -119,24 +115,22 @@ export const RecipeCostingCalculator = ({
         </h3>
         {calculator.result ? (
           <>
-            <ResultPanel
-              outputs={[...TOTALS]}
-              values={calculator.result.value as unknown as Record<string, unknown>}
-              text={text}
-              context={context}
-            />
-            <CostTable
+            <RecipeCostingResult
               value={calculator.result.value}
+              steps={calculator.result.steps}
               ids={calculator.rows.map((row) => row.id)}
               text={text}
+              ui={ui}
               context={context}
             />
-            <h4 className="font-bold">{ui['steps-title']}</h4>
-            <StepList
-              steps={calculator.result.steps}
-              templates={text.steps}
-              kinds={{ recipeCost: 'currency', portionCost: 'currency', servings: 'count' }}
-              context={context}
+            <SaveToHistory
+              formulaId={'recipe-costing'}
+              draft={calculator.draft}
+              currency={calculator.currency}
+              result={calculator.result}
+              labels={ui.history}
+              historyHref={localizedPath(lang, 'history')}
+              {...(history ? { repository: history } : {})}
             />
           </>
         ) : (

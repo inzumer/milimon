@@ -1,4 +1,9 @@
-import { createLocalCalculationsRepository, createLocalSettingsRepository } from '@repositories';
+import {
+  createLocalCalculationsRepository,
+  createLocalHistoryRepository,
+  createLocalSettingsRepository,
+  type HistoryEntry,
+} from '@repositories';
 import { createFakeAccountBackend, TEST_USER } from '@test/fake-account-backend';
 import { createMemoryStorage } from '@test/memory-storage';
 import { createAccountSync } from '../account-sync';
@@ -7,9 +12,35 @@ const setup = (remote: Parameters<typeof createFakeAccountBackend>[0] = { user: 
   const backend = createFakeAccountBackend(remote);
   const settings = createLocalSettingsRepository(createMemoryStorage());
   const calculations = createLocalCalculationsRepository(createMemoryStorage());
+  const history = createLocalHistoryRepository(createMemoryStorage());
   const session = createMemoryStorage();
-  const sync = createAccountSync({ backend, settings, calculations, session, debounceMs: 10 });
-  return { backend, settings, calculations, session, sync };
+  const sync = createAccountSync({
+    backend,
+    settings,
+    calculations,
+    history,
+    session,
+    debounceMs: 10,
+  });
+  return { backend, settings, calculations, history, session, sync };
+};
+
+const SAVED: HistoryEntry = {
+  id: 'entry-1',
+  formulaId: 'waste-factor',
+  savedAt: '2026-09-20T10:00:00.000Z',
+  draft: { wastePercentage: '30' },
+  currency: 'ARS',
+  result: { value: { wasteFactor: 1.429 }, steps: [] },
+  headline: { output: 'waste-factor', value: 1.429, kind: 'factor' },
+};
+
+const NEW_ENTRY = {
+  formulaId: 'pricing',
+  draft: { unitCost: '12' },
+  currency: 'ARS',
+  result: { value: { price: 20 }, steps: [] },
+  headline: null,
 };
 
 describe('account sync', () => {
@@ -147,4 +178,63 @@ describe('account sync', () => {
       expect(backend.saveProfile).not.toHaveBeenCalled();
     },
   );
+
+  it('should copy the remote history to this device', async () => {
+    const { sync, history } = setup({
+      user: TEST_USER,
+      profile: { currency: 'ARS', locale: null, colorScheme: null },
+      history: [SAVED],
+    });
+    history.add(NEW_ENTRY);
+    await sync.start();
+    expect(history.list()).toStrictEqual([SAVED]);
+  });
+
+  it('should treat a local history as data worth importing, oldest first', async () => {
+    const { sync, backend, history } = setup();
+    const first = history.add(NEW_ENTRY);
+    const second = history.add({ ...NEW_ENTRY, formulaId: 'rent-check' });
+    await expect(sync.start()).resolves.toMatchObject({ outcome: 'needs-migration' });
+    await sync.importLocal();
+    expect(vi.mocked(backend.saveHistoryEntry).mock.calls.map(([entry]) => entry.id)).toStrictEqual(
+      [first.id, second.id].sort(
+        (a, b) =>
+          history.list().findIndex((e) => e.id === b) - history.list().findIndex((e) => e.id === a),
+      ),
+    );
+  });
+
+  it('should push saved and deleted calculations while signed in', async () => {
+    const { sync, backend, history } = setup();
+    await sync.start();
+    const entry = history.add(NEW_ENTRY);
+    await vi.runAllTimersAsync();
+    expect(backend.remote.history).toStrictEqual([entry]);
+
+    history.remove(entry.id);
+    await vi.runAllTimersAsync();
+    expect(backend.remote.history).toStrictEqual([]);
+  });
+
+  it('should report history push failures without breaking', async () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => undefined);
+    const { sync, backend, history } = setup();
+    await sync.start();
+    vi.mocked(backend.saveHistoryEntry).mockRejectedValueOnce(new Error('offline'));
+    history.add(NEW_ENTRY);
+    await vi.runAllTimersAsync();
+    expect(warn).toHaveBeenCalledWith('[account] sync failed', expect.any(Error));
+    warn.mockRestore();
+  });
+
+  it('should clear the history from this device on sign-out', async () => {
+    const { sync, history } = setup({
+      user: TEST_USER,
+      profile: { currency: 'ARS', locale: null, colorScheme: null },
+      history: [SAVED],
+    });
+    await sync.start();
+    await sync.signOut();
+    expect(history.list()).toStrictEqual([]);
+  });
 });

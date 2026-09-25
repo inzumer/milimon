@@ -1,8 +1,10 @@
 import {
   DEFAULT_SETTINGS,
   onCalculationsChange,
+  onHistoryChange,
   onSettingsChange,
   type CalculationsRepository,
+  type HistoryRepository,
   type Settings,
   type SettingsRepository,
 } from '@repositories';
@@ -15,7 +17,7 @@ import type { AccountBackend, AccountUser, RemoteProfile } from './account-backe
  *
  * 1. On sign-in (once per browser session) the remote profile wins and is copied locally.
  * 2. On the first sign-in there is no profile yet: if this device has data worth keeping
- *    (drafts or a non-default currency) the person decides between importing it or starting
+ *    (drafts, saved calculations or a non-default currency) the person decides between importing it or starting
  *    fresh; otherwise the local preferences simply become the profile.
  * 3. While signed in, every local change is pushed (debounced per item).
  * 4. On sign-out this device goes back to guest mode without the person's data.
@@ -26,6 +28,7 @@ export interface AccountSyncOptions {
   backend: AccountBackend;
   settings: SettingsRepository;
   calculations: CalculationsRepository;
+  history: HistoryRepository;
   /** Remembers, per browser session, that the remote profile was already pulled. */
   session: KeyValueStorage | null;
   debounceMs?: number;
@@ -57,6 +60,7 @@ export const createAccountSync = ({
   backend,
   settings,
   calculations,
+  history,
   session,
   debounceMs = 800,
 }: AccountSyncOptions): AccountSync => {
@@ -95,9 +99,17 @@ export const createAccountSync = ({
         return draft ? backend.saveDraft(formulaId, draft) : backend.deleteDraft(formulaId);
       });
     });
+    const stopHistory = onHistoryChange((change) => {
+      if (change.type === 'added') {
+        backend.saveHistoryEntry(change.entry).catch(report);
+      } else if (change.type === 'removed') {
+        backend.deleteHistoryEntry(change.id).catch(report);
+      }
+    });
     unsubscribe = () => {
       stopSettings();
       stopDrafts();
+      stopHistory();
     };
   };
 
@@ -115,11 +127,16 @@ export const createAccountSync = ({
         backend.saveDraft(formulaId, draft),
       ),
     );
+    // Oldest first, so the server keeps the same latest entries if it has to trim.
+    for (const entry of [...history.list()].reverse()) {
+      await backend.saveHistoryEntry(entry);
+    }
   };
 
   const hasLocalData = () =>
     settings.load().currency !== DEFAULT_SETTINGS.currency ||
-    Object.keys(calculations.loadAll()).length > 0;
+    Object.keys(calculations.loadAll()).length > 0 ||
+    history.list().length > 0;
 
   const resolveSignIn = async (): Promise<SignInOutcome> => {
     if (readJson<boolean>(session, SYNCED_KEY) === true) {
@@ -127,11 +144,12 @@ export const createAccountSync = ({
     }
     const profile = await backend.fetchProfile();
     if (profile) {
-      const drafts = await backend.fetchDrafts();
+      const [drafts, entries] = await Promise.all([backend.fetchDrafts(), backend.fetchHistory()]);
       applyingRemote = true;
       try {
         settings.save(profile);
         calculations.replaceAll(drafts);
+        history.replaceAll(entries);
       } finally {
         applyingRemote = false;
       }
@@ -154,6 +172,7 @@ export const createAccountSync = ({
     try {
       settings.save({ currency: DEFAULT_SETTINGS.currency });
       calculations.replaceAll({});
+      history.replaceAll([]);
     } finally {
       applyingRemote = false;
     }

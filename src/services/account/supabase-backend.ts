@@ -1,5 +1,11 @@
 import { createClient, type SupabaseClient, type User } from '@supabase/supabase-js';
-import { DEFAULT_SETTINGS, isDraft, type CalculatorDrafts } from '@repositories';
+import {
+  DEFAULT_SETTINGS,
+  isDraft,
+  normalizeHistory,
+  type CalculatorDrafts,
+  type HistoryEntry,
+} from '@repositories';
 import { isLocale } from '@utils';
 import type { AccountBackend, AccountUser, RemoteProfile } from './account-backend';
 import { AUTH_STORAGE_KEY, type AccountConfig } from './account-config';
@@ -15,6 +21,29 @@ interface DraftRow {
   formula_id: string;
   draft: unknown;
 }
+
+export interface HistoryRow {
+  id: string;
+  formula_id: string;
+  saved_at: string;
+  draft: unknown;
+  currency: string;
+  result: unknown;
+  headline: unknown;
+}
+
+export const fromHistoryRows = (rows: HistoryRow[]): HistoryEntry[] =>
+  normalizeHistory(
+    rows.map((row) => ({
+      id: row.id,
+      formulaId: row.formula_id,
+      savedAt: row.saved_at,
+      draft: row.draft,
+      currency: row.currency,
+      result: row.result,
+      headline: row.headline,
+    })),
+  );
 
 const metadataText = (user: User, ...keys: string[]): string | null => {
   const metadata = (user.user_metadata ?? {}) as Record<string, unknown>;
@@ -141,6 +170,36 @@ export const createSupabaseBackend = (client: SupabaseClient): AccountBackend =>
         .delete()
         .eq('user_id', await userId())
         .eq('formula_id', formulaId);
+      check(error);
+    },
+    fetchHistory: async () => {
+      const { data, error } = await client
+        .from('calculation_history')
+        .select('id, formula_id, saved_at, draft, currency, result, headline')
+        .eq('user_id', await userId())
+        .overrideTypes<HistoryRow[], { merge: false }>();
+      check(error);
+      return fromHistoryRows(data ?? []);
+    },
+    saveHistoryEntry: async (entry) => {
+      const { error } = await client.from('calculation_history').upsert({
+        user_id: await userId(),
+        id: entry.id,
+        formula_id: entry.formulaId,
+        saved_at: entry.savedAt,
+        draft: entry.draft,
+        currency: entry.currency,
+        result: entry.result,
+        headline: entry.headline,
+      });
+      check(error);
+    },
+    deleteHistoryEntry: async (id) => {
+      const { error } = await client
+        .from('calculation_history')
+        .delete()
+        .eq('user_id', await userId())
+        .eq('id', id);
       check(error);
     },
   };

@@ -30,6 +30,8 @@ app tiene que seguir funcionando sin cuenta.
 - **Sin configuración, no hay cuentas**: si faltan `PUBLIC_SUPABASE_URL` o
   `PUBLIC_SUPABASE_PUBLISHABLE_KEY`, se ocultan el login del menú y de la home, y la página de cuenta
   lo explica.
+- El **historial de cálculos** (hasta 15, con datos, resultado y desarrollo) sigue el mismo camino:
+  `localStorage` + sincronización; el límite también lo aplica un trigger en la base.
 - El borrado de cuenta usa una función SQL `security definer` (`delete_own_account`) que solo puede
   borrar al usuario de la sesión; perfil y borradores se borran en cascada.
 

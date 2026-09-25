@@ -9,6 +9,8 @@ import commonEn from './common/en.json';
 import commonEs from './common/es.json';
 import formulaPageEn from './formula-page/en.json';
 import formulaPageEs from './formula-page/es.json';
+import historyPageEn from './history-page/en.json';
+import historyPageEs from './history-page/es.json';
 import homeEn from './home/en.json';
 import homeEs from './home/es.json';
 import learnPageEn from './learn-page/en.json';
@@ -35,6 +37,7 @@ const dictionaries = {
   },
   'formula-page': { es: formulaPageEs, en: formulaPageEn satisfies typeof formulaPageEs },
   'account-page': { es: accountPageEs, en: accountPageEn satisfies typeof accountPageEs },
+  'history-page': { es: historyPageEs, en: historyPageEn satisfies typeof historyPageEs },
   'privacy-page': { es: privacyPageEs, en: privacyPageEn satisfies typeof privacyPageEs },
   'terms-page': { es: termsPageEs, en: termsPageEn satisfies typeof termsPageEs },
 } as const;

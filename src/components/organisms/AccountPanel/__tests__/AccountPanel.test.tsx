@@ -1,7 +1,11 @@
 import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import labelsEn from '@i18n/account-page/en.json';
-import { createLocalCalculationsRepository, createLocalSettingsRepository } from '@repositories';
+import {
+  createLocalCalculationsRepository,
+  createLocalHistoryRepository,
+  createLocalSettingsRepository,
+} from '@repositories';
 import { createAccountSync, type AccountSession } from '@services/account';
 import { createFakeAccountBackend, TEST_USER } from '@test/fake-account-backend';
 import { createMemoryStorage } from '@test/memory-storage';
@@ -19,6 +23,7 @@ const setup = (remote: Parameters<typeof createFakeAccountBackend>[0] = {}) => {
       backend,
       settings,
       calculations,
+      history: createLocalHistoryRepository(createMemoryStorage()),
       session: createMemoryStorage(),
       debounceMs: 0,
     }),

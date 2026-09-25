@@ -11,6 +11,9 @@ export interface AnalyticsEvents {
   example_loaded: { formula: string; example: string };
   calculation_completed: { formula: string };
   calculator_reset: { formula: string };
+  calculation_saved: { formula: string };
+  history_opened: { formula: string };
+  history_deleted: { formula: string };
 }
 
 export type AnalyticsEventName = keyof AnalyticsEvents;

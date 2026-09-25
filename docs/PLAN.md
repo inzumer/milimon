@@ -476,23 +476,27 @@ idioma, tema), sus recetas y sus cálculos en un perfil propio.
 
 ---
 
-## 10 bis. Historial de cálculos
+## 10 bis. Historial de cálculos — hecho
 
-- Botón **"Guardar en el historial"** en cada calculadora (explícito: guardar en cada tecla
-  llenaría el historial de cuentas a medio hacer).
-- **Hasta 15 cálculos** por persona; al guardar el 16.º se descarta el más viejo. El límite se
-  aplica en el cliente y también en la base (trigger), para que nadie lo saltee.
-- Cada entrada guarda la fórmula, los valores cargados, el resultado principal y la fecha.
+- Botón **"Guardar en el historial"** debajo del resultado de cada calculadora (explícito: guardar
+  en cada tecla llenaría el historial de cuentas a medio hacer). Guardar dos veces lo mismo seguido
+  no se puede: el botón pasa a "Guardado" hasta que cambie algún dato.
+- Se guarda **la cuenta entera**: lo que se cargó (tal cual se escribió), el resultado completo y el
+  desarrollo paso a paso. Es una foto: si una fórmula cambia más adelante, el historial sigue
+  mostrando lo que se calculó en su momento.
+- **Hasta 15 cálculos**; al guardar el 16.º se descarta el más viejo. El límite se aplica en el
+  cliente (`HISTORY_LIMIT`) y en la base (trigger).
 - Funciona **sin cuenta** (`localStorage`) y se sincroniza con la cuenta igual que la
-  configuración: en el primer inicio se ofrece importarlo.
-- Página `/[lang]/history`: lista con fecha, fórmula y resultado, "Abrir en la calculadora" (carga
-  los valores) y "Borrar".
+  configuración (migración `supabase/migrations/*_calculation_history.sql`).
+- Página `/[lang]/history` (en el menú): fecha, fórmula y resultado principal; "Ver la cuenta
+  completa" la muestra con los mismos componentes que la calculadora; "Abrir en la calculadora"
+  recarga los valores; "Borrar".
 
 ## 11. Fases
 
 Cada fase termina con `astro check` + lint + test:coverage en verde y un PR con Conventional Commits.
 
-**Estado (2026-09-26):** F0 a F8 y F10 (cuentas) terminadas e integradas en `dev`. Siguen el historial de cálculos (§10 bis), el pase a `main` y F9.
+**Estado (2026-09-26):** F0 a F8 y F10 (cuentas) terminadas e integradas en `dev`. F10 bis (historial de cálculos) también. Siguen el pase a `main` y F9.
 
 Flujo de ramas (gitflow, ver CLAUDE.md): cada fase se trabaja en `feature/*` desde `dev` y se mergea a
 `dev`. El primer release a `main` se hace al terminar F10 (cuentas/login).

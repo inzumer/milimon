@@ -1,9 +1,14 @@
-import type { CalculatorDrafts } from '@repositories';
+import type { CalculatorDrafts, HistoryEntry } from '@repositories';
 import type { AccountBackend, AccountUser, RemoteProfile } from '@services/account';
 
 export interface FakeAccountBackend extends AccountBackend {
   /** Remote state, readable and editable by tests. */
-  remote: { user: AccountUser | null; profile: RemoteProfile | null; drafts: CalculatorDrafts };
+  remote: {
+    user: AccountUser | null;
+    profile: RemoteProfile | null;
+    drafts: CalculatorDrafts;
+    history: HistoryEntry[];
+  };
   /** Simulates the provider signing someone in or out (fires `onUserChange`). */
   setUser: (user: AccountUser | null) => void;
 }
@@ -23,6 +28,7 @@ export const createFakeAccountBackend = (
     user: null,
     profile: null,
     drafts: {},
+    history: [],
     ...initial,
   };
   const listeners = new Set<(user: AccountUser | null) => void>();
@@ -45,6 +51,7 @@ export const createFakeAccountBackend = (
     deleteAccount: vi.fn(async () => {
       remote.profile = null;
       remote.drafts = {};
+      remote.history = [];
       setUser(null);
     }),
     fetchProfile: vi.fn(async () => remote.profile),
@@ -58,6 +65,13 @@ export const createFakeAccountBackend = (
     deleteDraft: vi.fn(async (formulaId: string) => {
       const { [formulaId]: _removed, ...rest } = remote.drafts;
       remote.drafts = rest;
+    }),
+    fetchHistory: vi.fn(async () => remote.history),
+    saveHistoryEntry: vi.fn(async (entry: HistoryEntry) => {
+      remote.history = [entry, ...remote.history.filter((item) => item.id !== entry.id)];
+    }),
+    deleteHistoryEntry: vi.fn(async (id: string) => {
+      remote.history = remote.history.filter((item) => item.id !== id);
     }),
   };
 };

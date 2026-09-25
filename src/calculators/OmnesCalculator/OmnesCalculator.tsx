@@ -1,32 +1,13 @@
 import { useId } from 'react';
 import { Button } from '@inzumer/ui-library';
-import { StepList } from '@calculators/FormulaCalculator/StepList';
-import { formatValue, type FormatContext } from '@calculators/shared/format-value';
+import { SaveToHistory } from '@calculators/shared/SaveToHistory';
 import { NumberField } from '@components/molecules/NumberField';
-import type { OmnesOutput } from '@domain/formulas/omnes-rules';
-import type { ValueKind } from '@domain/registry';
 import { formulaText, type CalculatorText } from '@i18n/formula-text';
 import type { Translations } from '@i18n/translations';
-import type { CalculationsRepository, SettingsRepository } from '@repositories';
-import { interpolate, type Locale } from '@utils';
+import type { CalculationsRepository, HistoryRepository, SettingsRepository } from '@repositories';
+import { interpolate, localizedPath, type Locale } from '@utils';
+import { OmnesResult } from './OmnesResult';
 import { OMNES_EXAMPLE, useOmnesCalculator } from './useOmnesCalculator';
-
-const STEP_KINDS: Record<string, ValueKind> = {
-  maxPrice: 'currency',
-  minPrice: 'currency',
-  priceRatio: 'factor',
-  zoneWidth: 'currency',
-  lowZoneMax: 'currency',
-  mediumZoneMax: 'currency',
-  low: 'count',
-  medium: 'count',
-  high: 'count',
-  total: 'currency',
-  count: 'count',
-  averagePrice: 'currency',
-  lowerBound: 'currency',
-  upperBound: 'currency',
-};
 
 export interface OmnesCalculatorProps {
   lang: Locale;
@@ -34,54 +15,8 @@ export interface OmnesCalculatorProps {
   ui: Translations<'calculator'>;
   calculations?: CalculationsRepository;
   settings?: SettingsRepository;
+  history?: HistoryRepository;
 }
-
-const Summary = ({
-  value,
-  text,
-  context,
-}: {
-  value: OmnesOutput;
-  text: CalculatorText;
-  context: FormatContext;
-}) => {
-  const t = formulaText(text);
-  const rows: [term: string, main: string, detail?: string | undefined][] = [
-    [
-      t.output('price-ratio'),
-      formatValue(value.priceRatio, 'factor', context),
-      t.choice(value.proportionality),
-    ],
-    [
-      t.output('distribution'),
-      `${value.counts.low} · ${value.counts.medium} · ${value.counts.high}`,
-      t.choice(value.balancedDistribution ? 'distribution-balanced' : 'distribution-unbalanced'),
-    ],
-    [t.output('average-price'), formatValue(value.averagePrice, 'currency', context)],
-    [
-      t.output('ticket'),
-      value.ticket.status ? t.choice(value.ticket.status) : t.label('ticket-missing'),
-    ],
-    [
-      t.output('daily-special'),
-      value.dailySpecialZone ? t.choice(value.dailySpecialZone) : t.label('daily-special-missing'),
-    ],
-  ];
-  return (
-    <dl className="grid gap-3">
-      {rows.map(([term, main, detail]) => (
-        <div
-          key={term}
-          className="flex flex-col gap-1 rounded-lg border border-[var(--border-default)] bg-[var(--surface-primary)] p-4"
-        >
-          <dt className="text-sm text-[var(--text-secondary)]">{term}</dt>
-          <dd className="font-bold tabular-nums">{main}</dd>
-          {detail && <dd className="text-sm">{detail}</dd>}
-        </div>
-      ))}
-    </dl>
-  );
-};
 
 /** Omnes' rules for a whole menu: one price per line, plus optional ticket and daily special. */
 export const OmnesCalculator = ({
@@ -90,6 +25,7 @@ export const OmnesCalculator = ({
   ui,
   calculations,
   settings,
+  history,
 }: OmnesCalculatorProps) => {
   const id = useId();
   const calculator = useOmnesCalculator({
@@ -195,13 +131,21 @@ export const OmnesCalculator = ({
         </h3>
         {calculator.result ? (
           <>
-            <Summary value={calculator.result.value} text={text} context={context} />
-            <h4 className="font-bold">{ui['steps-title']}</h4>
-            <StepList
+            <OmnesResult
+              value={calculator.result.value}
               steps={calculator.result.steps}
-              templates={text.steps}
-              kinds={STEP_KINDS}
+              text={text}
+              ui={ui}
               context={context}
+            />
+            <SaveToHistory
+              formulaId={'omnes-rules'}
+              draft={calculator.draft}
+              currency={calculator.currency}
+              result={calculator.result}
+              labels={ui.history}
+              historyHref={localizedPath(lang, 'history')}
+              {...(history ? { repository: history } : {})}
             />
           </>
         ) : (

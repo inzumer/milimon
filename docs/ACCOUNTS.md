@@ -6,8 +6,9 @@ sin login.
 ## 1. Proyecto de Supabase
 
 1. Crear un proyecto en <https://supabase.com> (región cercana a tu público, por ejemplo São Paulo).
-2. **SQL Editor** → pegar y ejecutar `supabase/migrations/20260926000000_accounts.sql`, o usar la CLI:
-   `supabase link` y después `supabase db push`.
+2. **SQL Editor** → pegar y ejecutar, en orden, los archivos de `supabase/migrations/`
+   (`…_accounts.sql` y `…_calculation_history.sql`), o usar la CLI: `supabase link` y después
+   `supabase db push`.
 3. **Project Settings → API**: copiar la **Project URL** y la **publishable key** (o la `anon` key en
    proyectos viejos).
 4. En el hosting (Vercel), cargar:
@@ -48,5 +49,6 @@ La URL de callback que piden Google y Facebook es
 1. `pnpm dev` con las variables en `.env`.
 2. Ir a `/es/account` → "Continuar con Google" → volver a la página ya con la sesión iniciada.
 3. Cambiar la moneda y cargar una calculadora; en Supabase → **Table Editor** tienen que aparecer
-   la fila en `profiles` y los borradores en `calculator_drafts`.
+   la fila en `profiles` y los borradores en `calculator_drafts`. Guardar un cálculo en el
+   historial agrega una fila en `calculation_history`.
 4. Probar "Borrar mi cuenta": el usuario desaparece de **Authentication → Users** y sus filas también.
