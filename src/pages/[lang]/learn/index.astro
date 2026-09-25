@@ -1,0 +1,45 @@
+---
+import { Breadcrumbs } from '@inzumer/ui-library';
+import { FeatureCard } from '@components';
+import { getLearnTopic, getTranslations, LEARN_TOPIC_IDS } from '@i18n';
+import PageLayout from '@layouts/page-layout.astro';
+import { LOCALES, localizedPath, toLocale } from '@utils';
+
+export function getStaticPaths() {
+  return LOCALES.map((lang) => ({ params: { lang } }));
+}
+
+const lang = toLocale(Astro.params.lang);
+const common = getTranslations(lang, 'common');
+const page = getTranslations(lang, 'learn-page');
+const breadcrumbs = getTranslations(lang, 'formula-page').breadcrumbs;
+---
+
+<PageLayout lang={lang} title={page.index.title} description={page.index.intro}>
+  <Breadcrumbs
+    aria-label={breadcrumbs.label}
+    items={[{ label: common.nav.home, href: localizedPath(lang, 'home') }]}
+    current={page.index.title}
+    className="mb-6"
+  />
+  <header class="mb-10 flex flex-col gap-3">
+    <h1 class="text-5xl">{page.index.title}</h1>
+    <p class="max-w-2xl text-lg text-[var(--text-secondary)]">{page.index.intro}</p>
+  </header>
+  <ol class="grid gap-5 lg:grid-cols-2">
+    {LEARN_TOPIC_IDS.map((id) => {
+      const topic = getLearnTopic(lang, id);
+      return (
+        <li>
+          <FeatureCard
+            headingLevel="h2"
+            title={topic.title}
+            description={topic.summary}
+            cta={page.index.open}
+            href={localizedPath(lang, 'learn', id)}
+          />
+        </li>
+      );
+    })}
+  </ol>
+</PageLayout>

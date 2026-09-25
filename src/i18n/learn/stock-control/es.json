@@ -1,0 +1,35 @@
+{
+  "title": "Control de stock",
+  "summary": "Los inventarios periódicos dan el costo de lo consumido y muestran faltantes que de otro modo pasarían inadvertidos.",
+  "sections": [
+    {
+      "heading": "Para qué sirven los inventarios",
+      "items": [
+        "Calcular el costo de las mercaderías consumidas.",
+        "Detectar faltantes y sus causas.",
+        "Aplicar el PEPS y reducir el decomiso.",
+        "Detectar qué hay que reponer y programar las compras."
+      ]
+    },
+    {
+      "heading": "El costo de lo consumido",
+      "paragraphs": [
+        "Existencia inicial + compras del período − existencia final = costo de las mercaderías consumidas. Las dos existencias se cuentan y se valorizan con el mismo método.",
+        "Con una planilla o un sistema contable obtenés ese dato, que después alimenta el cuadro de resultados y el coeficiente de precios."
+      ]
+    },
+    {
+      "heading": "Detectar faltantes",
+      "paragraphs": [
+        "Si al lado del consumo según inventario anotás lo registrado en comandas o facturación, podés comparar ambos. Una diferencia indica faltantes sin registrar, fugas de mercadería o errores de facturación.",
+        "A veces habrá que cambiar procedimientos administrativos y a veces tomar medidas con alguien del personal o ajeno a la empresa. Sin control de stock, nunca te enterás de lo que pasa."
+      ]
+    },
+    {
+      "heading": "Rendimiento de las materias primas",
+      "paragraphs": [
+        "Elegir bien el tamaño de lo que comprás (una planta, un ave, un corte) también es controlar costos: el mismo producto puede rendir perfecto para un plato o generar fuertes pérdidas si el tamaño no es el adecuado."
+      ]
+    }
+  ]
+}

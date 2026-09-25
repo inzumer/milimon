@@ -1,0 +1,47 @@
+{
+  "title": "Desechos, mermas y otras pérdidas",
+  "summary": "No todo lo que se pierde en la cocina es lo mismo: cada pérdida tiene causas y soluciones distintas.",
+  "sections": [
+    {
+      "heading": "Los tipos de pérdida",
+      "items": [
+        "Desechos: lo que se separa intencionalmente al limpiar la materia prima en la mise en place (huesos, cáscaras, grasa, espinas).",
+        "Mermas: la reducción de peso por cocción (evaporación), por descongelado o por desangrado.",
+        "Desperdicios: lo que se pierde por mala praxis al limpiar o cocinar, o por calcular ingredientes de más.",
+        "Decomiso: lo que se tira porque está en mal estado.",
+        "Residuos: lo que el cliente deja en el plato."
+      ]
+    },
+    {
+      "heading": "Del peso bruto al peso al plato",
+      "paragraphs": [
+        "Peso bruto (lo que comprás, sucio) − desechos = peso neto. El peso neto también se llama peso limpio, peso de la mise en place, peso listo para cocción o peso de la receta.",
+        "Peso neto − merma de cocción = peso cocido, también llamado peso al plato o peso listo para servir."
+      ]
+    },
+    {
+      "heading": "¿Los porcentajes son siempre iguales?",
+      "paragraphs": [
+        "No. El % de desecho varía un poco con el origen y el tamaño de la planta o del animal, y con el criterio de quien limpia; y varía mucho con la mano de quien limpia y con el destino de la receta.",
+        "La merma de cocción varía según el tipo, el método y el equipo de cocción, y según el punto. Por eso conviene medir tus propios porcentajes en lugar de usar siempre los de una tabla."
+      ]
+    },
+    {
+      "heading": "Criterio conservador y criterio empresario",
+      "paragraphs": [
+        "Criterio conservador (contable): ponerte en la peor situación y dar los desechos por perdidos.",
+        "Criterio empresario: recuperar físicamente los desechos y usarlos en otros platos de la carta, con el mayor valor agregado posible. Hasta el nombre del plato importa en la percepción del cliente."
+      ]
+    },
+    {
+      "heading": "Cómo reducir las pérdidas",
+      "items": [
+        "Capacitar al personal de la mise en place y supervisar la limpieza, con práctica guiada por el chef.",
+        "Usar bolsas transparentes para los desechos y revisar algunas al azar (control por muestreo).",
+        "Controlar por muestreo gramajes y porciones contra la receta.",
+        "Mantener la cadena de frío para poder reprocesar desechos en otros platos.",
+        "Si se compran medias reses o cuartos, contratar un carnicero para el desposte."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "title": "What a cost is",
+  "summary": "The elements of cost in food service and the costs that aren't raw materials.",
+  "sections": [
+    {
+      "heading": "Cost and quantity",
+      "paragraphs": [
+        "A quantity on its own is just a count. When that quantity is multiplied by a value, you get a cost. In food service, cost is the valued quantities of raw materials, labor, overheads and taxes used to produce certain amounts."
+      ]
+    },
+    {
+      "heading": "The elements of cost",
+      "items": [
+        "Raw materials: meat, vegetables, dairy, dry goods, spices… the physical part of the food.",
+        "Labor: all staff, from the manager to the receptionist. If the owner works on site, they must earn their position's salary so costs aren't distorted.",
+        "Payroll charges: the contributions the employer pays by law or agreement (13th salary, pension, health insurance, leave…). Amounts withheld from employees aren't a cost.",
+        "Taxes: national (VAT, income tax), provincial (gross income tax) and municipal (fees).",
+        "Overheads: rent, promotion, laundry, insurance, disposables, cleaning, replacing tableware, security…"
+      ]
+    },
+    {
+      "heading": "Costs that aren't raw materials",
+      "items": [
+        "Staff: permanent staff (with severance and notice) and extra staff (occasional). Both carry payroll charges and workplace insurance.",
+        "General expenses: small costs that can be estimated at 10% of the other costs (excluding profit and fees).",
+        "Rent: ideally 5% of net revenue, and never more than 10%.",
+        "Utilities: electricity, gas, water, internet, management software.",
+        "Amortization: the investment in equipment and fittings spread over 36 months, since after 3 years their resale value is close to zero.",
+        "Taxes and fees: gross income tax, health & safety levy, VAT, card fees and income tax."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "title": "Stock control",
+  "summary": "Regular inventories give you the cost of what was consumed and reveal shortages that would otherwise go unnoticed.",
+  "sections": [
+    {
+      "heading": "What inventories are for",
+      "items": [
+        "Working out the cost of goods consumed.",
+        "Spotting shortages and their causes.",
+        "Applying FIFO and reducing spoilage.",
+        "Seeing what needs restocking and planning purchases."
+      ]
+    },
+    {
+      "heading": "The cost of what was consumed",
+      "paragraphs": [
+        "Opening inventory + purchases in the period − closing inventory = cost of goods consumed. Both inventories are counted and valued with the same method.",
+        "A spreadsheet or accounting system gives you that figure, which then feeds the income statement and the pricing coefficient."
+      ]
+    },
+    {
+      "heading": "Spotting shortages",
+      "paragraphs": [
+        "If you write down what was recorded in orders or invoices next to the consumption according to inventory, you can compare both. A difference means unrecorded shortages, stock leaks or billing errors.",
+        "Sometimes procedures need to change and sometimes action must be taken with staff or outsiders. Without stock control, you never find out what's going on."
+      ]
+    },
+    {
+      "heading": "Raw material yield",
+      "paragraphs": [
+        "Choosing the right size of what you buy (a plant, a bird, a cut) is also cost control: the same product can yield perfectly for one dish or cause heavy losses if the size isn't right."
+      ]
+    }
+  ]
+}

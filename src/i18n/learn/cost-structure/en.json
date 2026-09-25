@@ -1,0 +1,28 @@
+{
+  "title": "Fixed costs, variable costs and break-even",
+  "summary": "Separating costs by how they behave with sales tells you how much you need to sell.",
+  "sections": [
+    {
+      "heading": "Fixed and variable",
+      "paragraphs": [
+        "Fixed costs don't change with sales volume in the short term: insurance, property taxes, amortization, permanent staff. \"Fixed\" doesn't mean they never change, just that they don't depend directly on how much you sell.",
+        "Variable costs go up and down with sales: raw materials, beverages, VAT, gross income tax, health & safety levy and card fees.",
+        "Labor is a special case: within a month it's almost all fixed (waiters are hired before you know whether customers will come), so it's considered semi-fixed. In catering, by contrast, much of it is variable."
+      ]
+    },
+    {
+      "heading": "Sales, costs and profit",
+      "paragraphs": [
+        "Gross sales − taxes = net sales.",
+        "Net sales = variable costs + fixed costs + profit."
+      ]
+    },
+    {
+      "heading": "Contribution",
+      "paragraphs": [
+        "What's left of each sale after paying variable costs is the contribution: what it adds toward fixed costs and profit.",
+        "Once past the break-even point, every extra dollar of sales generates a profit equal to its contribution. The same formula shows quickly the impact of raising or lowering costs or prices."
+      ]
+    }
+  ]
+}

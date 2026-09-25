@@ -1,0 +1,29 @@
+{
+  "title": "Cómo fijar los precios",
+  "summary": "El precio sale de combinar el estudio de costos, los precios de la competencia y tu criterio comercial.",
+  "sections": [
+    {
+      "heading": "La ganancia como un costo más",
+      "paragraphs": [
+        "Muchos emprendedores ven la ganancia como \"lo que sobra\". El manual propone lo contrario: incluir la ganancia deseada como un costo más, antes de decidir la apertura. Si con esa ganancia los precios quedan comparables con la competencia, el proyecto es viable; si quedan muy por encima, hay que reformularlo o abandonarlo.",
+        "¿Qué ganancia es razonable? Más de lo que rendiría el dinero en un título público o un plazo fijo, porque abrir un negocio tiene riesgo y trabajo. Como mínimo, el doble de lo que rinde un título público a tres años."
+      ]
+    },
+    {
+      "heading": "El precio teórico",
+      "paragraphs": [
+        "Precio neto = costo estándar unitario × coeficiente, donde el coeficiente reparte entre las materias primas los demás costos y la ganancia deseada.",
+        "Al precio neto se le suman los impuestos y cargos sobre la venta para obtener el precio de carta."
+      ]
+    },
+    {
+      "heading": "Del precio teórico al precio real",
+      "items": [
+        "Si tu precio queda muy por debajo del mercado, podés subirlo.",
+        "Si queda parecido, no lo modifiques demasiado.",
+        "Si queda muy por encima, considerá sacar el producto de la carta.",
+        "Ni la \"tablita del 3\" ni copiar a la competencia garantizan recuperar la inversión."
+      ]
+    }
+  ]
+}
