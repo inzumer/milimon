@@ -1,9 +1,11 @@
 # Project dictionary — brand names, tech terms and Rioplatense Spanish (voseo) not in the es-ES dictionary.
 abatidor
+aceptás
 ahorrás
 anotás
 aprovechá
 averiguá
+ayudás
 bachas
 bloqueante
 buscá
@@ -12,6 +14,7 @@ cafecito
 calculalo
 calculá
 cargá
+cargás
 claude
 claudecode
 cobrás
@@ -27,6 +30,7 @@ considerá
 controlá
 contá
 dejá
+desactivás
 descartables
 descartarlo
 despersonalización
@@ -85,11 +89,13 @@ querés
 reaprovecharlos
 recalculan
 rechazá
+rechazás
 redondeá
 redondeás
 reformularlo
 renderizan
 reprocesar
+respondés
 restalo
 restá
 revisá

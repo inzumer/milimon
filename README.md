@@ -42,6 +42,7 @@ pnpm dev          # http://localhost:4321 → redirige a /es
 | `pnpm spellcheck`    | Corrector ortográfico (inglés + español)                                            |
 | `pnpm validate`      | typecheck + lint + test:coverage + build                                            |
 | `pnpm audit:a11y`    | axe-core en todas las páginas, tema claro y oscuro (requiere `pnpm build` y Chrome) |
+| `pnpm og:image`      | Regenera las imágenes para compartir `public/og/og-{es,en}.png` (requiere Chrome)   |
 
 ## Deploy
 
@@ -50,9 +51,10 @@ solo, sin configuración.
 
 Variables de entorno (ver `.env.example`):
 
-| Variable   | Para qué                                                                             |
-| ---------- | ------------------------------------------------------------------------------------ |
-| `SITE_URL` | URL pública: canónicas, `hreflang`, sitemap y Open Graph (obligatoria en producción) |
+| Variable                   | Para qué                                                                             |
+| -------------------------- | ------------------------------------------------------------------------------------ |
+| `SITE_URL`                 | URL pública: canónicas, `hreflang`, sitemap y Open Graph (obligatoria en producción) |
+| `PUBLIC_GA_MEASUREMENT_ID` | ID de Google Analytics 4 (`G-…`). Vacío = sin analítica ni banner de cookies         |
 
 ## Estructura
 
@@ -63,6 +65,8 @@ src/
   components/   UI reutilizable (atoms / molecules / organisms / templates)
   calculators/  islas de React, una por calculadora
   domain/       fórmulas puras + registry
+  repositories/ persistencia (configuración, borradores) detrás de interfaces
+  services/     integraciones externas (Google Analytics)
   i18n/         traducciones en carpetas kebab-case: <carpeta>/{es,en}.json
   hooks/ utils/ styles/ assets/ test/
 docs/

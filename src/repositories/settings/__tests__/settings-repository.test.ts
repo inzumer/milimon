@@ -25,7 +25,12 @@ describe('settings repository (local)', () => {
     repository.save({ colorScheme: 'dark' });
     const saved = repository.save({ locale: 'en' });
 
-    expect(saved).toStrictEqual({ colorScheme: 'dark', locale: 'en', currency: 'ARS' });
+    expect(saved).toStrictEqual({
+      colorScheme: 'dark',
+      locale: 'en',
+      currency: 'ARS',
+      analyticsConsent: null,
+    });
     expect(createLocalSettingsRepository(storage).load()).toStrictEqual(saved);
   });
 
@@ -42,6 +47,14 @@ describe('settings repository (local)', () => {
     const storage = createMemoryStorage();
     storage.setItem(SETTINGS_STORAGE_KEY, '42');
     expect(createLocalSettingsRepository(storage).load()).toStrictEqual(DEFAULT_SETTINGS);
+  });
+
+  it('should store the analytics consent and discard unknown values', () => {
+    const storage = createMemoryStorage();
+    const repository = createLocalSettingsRepository(storage);
+    expect(repository.save({ analyticsConsent: 'granted' }).analyticsConsent).toBe('granted');
+    storage.setItem(SETTINGS_STORAGE_KEY, JSON.stringify({ analyticsConsent: 'maybe' }));
+    expect(repository.load().analyticsConsent).toBeNull();
   });
 
   it('should accept any ISO 4217 currency code', () => {
@@ -67,6 +80,7 @@ describe('settings change notifications', () => {
       colorScheme: null,
       locale: null,
       currency: 'EUR',
+      analyticsConsent: null,
     });
 
     unsubscribe();

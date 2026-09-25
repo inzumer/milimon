@@ -28,7 +28,8 @@
   },
   "footer": {
     "tagline": "Manual de estudio de costos en gastronomía.",
-    "source": "Basado en el manual de Administración y Gestión gastronómica."
+    "source": "Basado en el manual de Administración y Gestión gastronómica.",
+    "privacy": "Privacidad"
   },
   "not-found": {
     "title": "Página no encontrada",
@@ -37,5 +38,12 @@
   },
   "settings": {
     "currency": "Moneda"
+  },
+  "consent": {
+    "title": "¿Nos ayudás a mejorar?",
+    "message": "Usamos Google Analytics para saber qué fórmulas se usan más y mejorar el manual. Solo se activa si aceptás; nunca guardamos los números que cargás.",
+    "accept": "Aceptar",
+    "reject": "Rechazar",
+    "privacy-link": "Política de privacidad"
   }
 }

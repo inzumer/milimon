@@ -1,6 +1,6 @@
 /**
- * Analytics facade. Every interaction worth measuring calls `track()`; the provider is wired in
- * phase F8. Until then events go to a no-op sink (or to a sink registered in tests).
+ * Analytics facade. Every interaction worth measuring calls `track()`. Events go to a no-op sink
+ * until a provider registers one: Google Analytics (`@services`) does it only after consent.
  */
 export interface AnalyticsEvents {
   language_changed: { from: string; to: string };
