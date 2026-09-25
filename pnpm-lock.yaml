@@ -182,8 +182,11 @@ importers:
         specifier: ^1.1.0
         version: 1.1.0(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       '@inzumer/ui-library':
-        specifier: ^1.0.2
-        version: 1.0.2(class-variance-authority@0.7.1)(clsx@2.1.1)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(tailwind-merge@3.7.0)
+        specifier: ^1.1.0
+        version: 1.1.0(class-variance-authority@0.7.1)(clsx@2.1.1)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(tailwind-merge@3.7.0)
+      '@supabase/supabase-js':
+        specifier: ^2.117.1
+        version: 2.117.1
       astro:
         specifier: ^7.3.5
         version: 7.3.5(@types/node@24.13.6)(jiti@2.7.0)(yaml@2.9.1)
@@ -199,6 +202,9 @@ importers:
       react-dom:
         specifier: ^19.3.0
         version: 19.3.0(react@19.3.0)
+      sharp:
+        specifier: ^0.35.4
+        version: 0.35.4(@types/node@24.13.6)
       tailwind-merge:
         specifier: ^3.7.0
         version: 3.7.0
@@ -254,6 +260,9 @@ importers:
       astro-eslint-parser:
         specifier: ^3.2.0
         version: 3.2.0
+      axe-core:
+        specifier: ^4.13.0
+        version: 4.13.0
       cspell:
         specifier: ^10.3.3
         version: 10.3.3
@@ -1445,8 +1454,8 @@ packages:
       react: '>=18 || ^19'
       react-dom: '>=18 || ^19'
 
-  '@inzumer/ui-library@1.0.2':
-    resolution: {integrity: sha512-SCVKOXaEXbJEbpp2ps0ggsLpAl+0HZMPmzsrUVendGN6fbgIU3FuPkCwrI2ijSukaaNZBcFBx4cmxtAJWmDdAg==}
+  '@inzumer/ui-library@1.1.0':
+    resolution: {integrity: sha512-b9N9NzV1ZmyUmqYNprK9/23FqPEyBrDeBpBOZH4Zs+GdDbJTqGQteJD/sxR4UGuB1Q486aG5TPU4Z624HDOIjA==}
     peerDependencies:
       class-variance-authority: '>=0.7.0'
       clsx: '>=2.0.0'
@@ -1628,6 +1637,38 @@ packages:
 
   '@shikijs/vscode-textmate@10.0.2':
     resolution: {integrity: sha512-83yeghZ2xxin3Nj8z1NMd/NCuca+gsYXswywDy5bHvwlWL8tpTQmzGeUuHd9FC3E/SBEMvzJRwWEOz5gGes9Qg==}
+
+  '@supabase/auth-js@2.117.1':
+    resolution: {integrity: sha512-3vJpc5thxaovbZ2zrWagzp/ZtCcXpQk1xftinzneNB1XLdhAmjqChOnj2Y8wpriYEFVvlqC+sFbR0JBUi83hDA==}
+    engines: {node: '>=22.0.0'}
+
+  '@supabase/functions-js@2.117.1':
+    resolution: {integrity: sha512-yyMIbEPMDXmjpjWe7WKd7en3mn6q4eDGLHEQVPcqWQIyC1hC7xa3po+o4cWSyItI6a6GYY/voDUpwhZmkxjcPw==}
+    engines: {node: '>=22.0.0'}
+
+  '@supabase/phoenix@0.4.5':
+    resolution: {integrity: sha512-aAn9H9ovVyeApKy11OWOrrOGq8DV68yWeH4ud2lN9fzn4aO8Zb5GLL9m1pUg9nLqIcT+ZDfAcsZe0E/nqdv2lw==}
+
+  '@supabase/postgrest-js@2.117.1':
+    resolution: {integrity: sha512-2a7we4uKXA1d94CUc02MpUj+LzZWO3qm8fH2PDq60tVt0T6KQTIiMmEsRD53lrnwZA9C3SsaKL3mk4DiDH6GvQ==}
+    engines: {node: '>=22.0.0'}
+
+  '@supabase/realtime-js@2.117.1':
+    resolution: {integrity: sha512-GkbZfeh5F5aqnUhG1chrdaVQmnRK8ZUL8H16Km/eVVsX99x0w2AijfxjONCB9YKgrXArcnMsKSJzOIQGCv+qvQ==}
+    engines: {node: '>=22.0.0'}
+
+  '@supabase/storage-js@2.117.1':
+    resolution: {integrity: sha512-ytDQbELKKzIVStLkShxTTK5FT4vds12eXF5QfW+gTHVvO7cB3VKZ7Hu2wkUaJlDZCaUfFdih3vznF6P8kNkJQg==}
+    engines: {node: '>=22.0.0'}
+
+  '@supabase/supabase-js@2.117.1':
+    resolution: {integrity: sha512-VcyiuXF0jZFbN4GcHtytSGNwfXnRJwlxjGFZxeEmRVgSLSbaoHk2Avyg49/aEdTJGBSz5vK1L7uhYiYdfl0Axw==}
+    engines: {node: '>=22.0.0'}
+    peerDependencies:
+      '@opentelemetry/api': '>=1.0.0'
+    peerDependenciesMeta:
+      '@opentelemetry/api':
+        optional: true
 
   '@tailwindcss/node@4.3.3':
     resolution: {integrity: sha512-/T8IKEsf9VTU6tLjgC7+sv2mOPtQxzE2jMw7u4Tt40Tx+QSZxpzh95/H6cMKoja9XuW7iMdLJYBB0o9G1CaAgg==}
@@ -2806,6 +2847,10 @@ packages:
 
   http-cache-semantics@4.2.0:
     resolution: {integrity: sha512-dTxcvPXqPvXBQpq5dUr6mEMJX4oIEFv6bwom3FDwKRDsuIjjJGANqhBuoAn9c1RQJIdAKav33ED65E2ys+87QQ==}
+
+  iceberg-js@0.8.1:
+    resolution: {integrity: sha512-1dhVQZXhcHje7798IVM+xoo/1ZdVfzOMIc8/rgVSijRK38EDqOJoGula9N/8ZI5RD8QTxNQtK/Gozpr+qUqRRA==}
+    engines: {node: '>=20.0.0'}
 
   ignore@5.3.2:
     resolution: {integrity: sha512-hsBTNUqQTDwkWtcdYI2i06Y/nUBEsNEDJKjWdigLvegy8kDuJAS8uRlpkkcQpyEXL0Z/pjDy5HBmMjRCJ2gq+g==}
@@ -5008,8 +5053,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@img/colour@1.1.0':
-    optional: true
+  '@img/colour@1.1.0': {}
 
   '@img/sharp-darwin-arm64@0.35.4':
     optionalDependencies:
@@ -5120,7 +5164,7 @@ snapshots:
       react: 19.3.0
       react-dom: 19.3.0(react@19.3.0)
 
-  '@inzumer/ui-library@1.0.2(class-variance-authority@0.7.1)(clsx@2.1.1)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(tailwind-merge@3.7.0)':
+  '@inzumer/ui-library@1.1.0(class-variance-authority@0.7.1)(clsx@2.1.1)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(tailwind-merge@3.7.0)':
     dependencies:
       '@inzumer/tokens': 1.1.0(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       class-variance-authority: 0.7.1
@@ -5270,6 +5314,38 @@ snapshots:
       '@types/hast': 3.0.5
 
   '@shikijs/vscode-textmate@10.0.2': {}
+
+  '@supabase/auth-js@2.117.1':
+    dependencies:
+      tslib: 2.8.1
+
+  '@supabase/functions-js@2.117.1':
+    dependencies:
+      tslib: 2.8.1
+
+  '@supabase/phoenix@0.4.5': {}
+
+  '@supabase/postgrest-js@2.117.1':
+    dependencies:
+      tslib: 2.8.1
+
+  '@supabase/realtime-js@2.117.1':
+    dependencies:
+      '@supabase/phoenix': 0.4.5
+      tslib: 2.8.1
+
+  '@supabase/storage-js@2.117.1':
+    dependencies:
+      iceberg-js: 0.8.1
+      tslib: 2.8.1
+
+  '@supabase/supabase-js@2.117.1':
+    dependencies:
+      '@supabase/auth-js': 2.117.1
+      '@supabase/functions-js': 2.117.1
+      '@supabase/postgrest-js': 2.117.1
+      '@supabase/realtime-js': 2.117.1
+      '@supabase/storage-js': 2.117.1
 
   '@tailwindcss/node@4.3.3':
     dependencies:
@@ -6591,6 +6667,8 @@ snapshots:
 
   http-cache-semantics@4.2.0: {}
 
+  iceberg-js@0.8.1: {}
+
   ignore@5.3.2: {}
 
   ignore@7.0.10: {}
@@ -7136,7 +7214,6 @@ snapshots:
       '@img/sharp-win32-ia32': 0.35.4
       '@img/sharp-win32-x64': 0.35.4
       '@types/node': 24.13.6
-    optional: true
 
   shebang-command@2.0.0:
     dependencies:

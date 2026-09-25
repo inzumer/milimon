@@ -41,7 +41,7 @@ sobre `@inzumer/ui-library` + `@inzumer/tokens` personalizados con la identidad 
   puro sin JavaScript, así que carga rápido y es bueno para SEO.
 - Las calculadoras se hidratan como islas (`client:visible`), así que solo se descarga el JS de la
   calculadora que está en pantalla.
-- Tiene i18n y content collections nativas: las traducciones por carpeta (§3) se validan en el build.
+- Tiene i18n nativo; las traducciones por carpeta (§3) se validan con TypeScript y tests.
 - Sigue siendo Vite: los aliases de `tsconfig`, Vitest y Tailwind funcionan igual que en ui-library.
 
 ### Notas de ecosistema
@@ -216,10 +216,12 @@ Ejemplo de `formulas/cooking-loss/es.json`:
 }
 ```
 
-- Las carpetas se registran como **content collections de tipo `data`** con schema zod: el build
-  falla si falta un idioma, una clave o un input que exista en `domain/registry.ts`.
-- Un test además compara que `es` y `en` tengan exactamente las mismas claves.
-- Traductor propio `t(lang, namespace)` tipado, que funciona igual en `.astro` y en React. Las islas
+- Cada carpeta se importa como JSON tipado en `src/i18n/translations.ts`: TypeScript exige que `en`
+  tenga la forma de `es` (el español es el idioma fuente).
+- `src/i18n/__tests__/translations.test.ts` recorre **todas** las carpetas automáticamente y exige: un
+  archivo por idioma, las mismas claves en ambos (en las dos direcciones), claves y carpetas en
+  kebab-case y ningún texto vacío. En F3/F4 se suma: cada input del registry tiene label y placeholder.
+- Traductor propio `getTranslations(lang, namespace)` tipado, que funciona igual en `.astro` y en React. Las islas
   reciben ya resueltos solo los textos que usan (como props), así que no se manda i18next al cliente.
 - Claves en kebab-case.
 - **Placeholders:** cada input tiene un placeholder descriptivo que indica qué va, en qué unidad y
@@ -311,21 +313,22 @@ sus convenciones (cva + `cn` + tokens + tests) y, una vez estables, se suben a l
 Cada fórmula se escribe **una sola vez** en `src/domain` como función pura y se registra en
 `registry.ts`. El registry alimenta el menú, las páginas, el desplegable y las validaciones de i18n.
 
-| id                 | Herramienta                     | Fórmulas (manual)                                                                                                                                                                                                                                                                                                                                                    |
-| ------------------ | ------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `waste-percentage` | % de desecho                    | desecho = bruto − neto; `%D = desecho / bruto × 100`                                                                                                                                                                                                                                                                                                                 |
-| `waste-factor`     | Factor de desecho               | `FD = %D / (100 − %D) + 1`; alternativa `FD = bruto / neto`                                                                                                                                                                                                                                                                                                          |
-| `gross-quantity`   | Cantidad bruta a comprar        | neto = personas × porción; `bruto = neto × FD` (y regla de tres); redondeo hacia arriba                                                                                                                                                                                                                                                                              |
-| `clean-price`      | Precio limpio equivalente       | `PLE = precio bruto × FD` vs precio limpio del proveedor                                                                                                                                                                                                                                                                                                             |
-| `cooking-loss`     | % merma de cocción              | antes de cocción (neto + aderezos inseparables) − cocido; `%M = merma / antes × 100`                                                                                                                                                                                                                                                                                 |
-| `recipe-costing`   | Costeo de receta                | ingrediente, UM, cantidad receta, %D, FD, `bruta = cant × FD`, precio compra, `costo = bruta × precio`; costo receta = Σ; costo porción = receta / rendimiento; incidencia %                                                                                                                                                                                         |
-| `cost-of-goods`    | Costo de mercaderías consumidas | `CMC = existencia inicial + compras − existencia final`                                                                                                                                                                                                                                                                                                              |
-| `pricing`          | Coeficiente y precio            | costos no MP (sueldos, cargas sociales 48%, alquiler, servicios, gastos generales, amortización = inversión / 36); ganancia neta = inversión × %retorno / 12 + retiro; bruta = neta / (1 − 0,35); `coef = 1 + (costos no MP + ganancia bruta) / CMC`; precio neto = costo std × coef; `precio bruto = precio neto × (1 + Σ impuestos y cargos)` con desglose visible |
-| `income-statement` | Cuadro de ganancias y pérdidas  | ingresos A&B − costo de venta − costo operativo = resultado antes de IG; IG 35%; resultado del ejercicio                                                                                                                                                                                                                                                             |
-| `break-even`       | Punto de equilibrio             | tasa impuestos = VB / VN; tasa CV = CV / VN; TC = 1 − tasa CV; `PE = CF / TC`; ventas objetivo = (CF + **ganancia antes de impuestos**) / TC; ventas brutas = VN × tasa impuestos                                                                                                                                                                                    |
-| `omnes-rules`      | Reglas de Omnes                 | proporcionalidad (máx ≤ 2–3 × mín); 3 zonas (rango / 3) y distribución 25/50/25; ticket promedio ±10% del promedio de la oferta; sugerencia del día en zona media                                                                                                                                                                                                    |
-| `floor-area`       | Superficie del salón            | `m² = (m² por cliente + 10–20%) × clientes`; capacidad = m² local × 55% / 1,30                                                                                                                                                                                                                                                                                       |
-| `rent-check`       | Chequeo de alquiler             | alquiler / facturación neta ≤ 10% (óptimo 5%)                                                                                                                                                                                                                                                                                                                        |
+| id                 | Herramienta                      | Fórmulas (manual)                                                                                                                                                                                                                                                                                                                                                    |
+| ------------------ | -------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `waste-percentage` | % de desecho                     | desecho = bruto − neto; `%D = desecho / bruto × 100`                                                                                                                                                                                                                                                                                                                 |
+| `waste-factor`     | Factor de desecho                | `FD = %D / (100 − %D) + 1`; alternativa `FD = bruto / neto`                                                                                                                                                                                                                                                                                                          |
+| `gross-quantity`   | Cantidad bruta a comprar         | neto = personas × porción; `bruto = neto × FD` (y regla de tres); redondeo hacia arriba                                                                                                                                                                                                                                                                              |
+| `clean-price`      | Precio limpio equivalente        | `PLE = precio bruto × FD` vs precio limpio del proveedor                                                                                                                                                                                                                                                                                                             |
+| `cooking-loss`     | % merma de cocción               | antes de cocción (neto + aderezos inseparables) − cocido; `%M = merma / antes × 100`                                                                                                                                                                                                                                                                                 |
+| `recipe-costing`   | Costeo de receta                 | ingrediente, UM, cantidad receta, %D, FD, `bruta = cant × FD`, precio compra, `costo = bruta × precio`; costo receta = Σ; costo porción = receta / rendimiento; incidencia %                                                                                                                                                                                         |
+| `cost-of-goods`    | Costo de mercaderías consumidas  | `CMC = existencia inicial + compras − existencia final`                                                                                                                                                                                                                                                                                                              |
+| `pricing`          | Coeficiente y precio             | costos no MP (sueldos, cargas sociales 48%, alquiler, servicios, gastos generales, amortización = inversión / 36); ganancia neta = inversión × %retorno / 12 + retiro; bruta = neta / (1 − 0,35); `coef = 1 + (costos no MP + ganancia bruta) / CMC`; precio neto = costo std × coef; `precio bruto = precio neto × (1 + Σ impuestos y cargos)` con desglose visible |
+| `income-statement` | Cuadro de ganancias y pérdidas   | ingresos A&B − costo de venta − costo operativo = resultado antes de IG; IG 35%; resultado del ejercicio                                                                                                                                                                                                                                                             |
+| `break-even`       | Punto de equilibrio              | tasa impuestos = VB / VN; tasa CV = CV / VN; TC = 1 − tasa CV; `PE = CF / TC`; ventas objetivo = (CF + **ganancia antes de impuestos**) / TC; ventas brutas = VN × tasa impuestos                                                                                                                                                                                    |
+| `omnes-rules`      | Reglas de Omnes                  | proporcionalidad (máx ≤ 2–3 × mín); 3 zonas (rango / 3) y distribución 25/50/25; ticket promedio ±10% del promedio de la oferta; sugerencia del día en zona media                                                                                                                                                                                                    |
+| `floor-area`       | Superficie del salón             | `m² = m² por cliente × (1 + 10–20 % circulación) × clientes`                                                                                                                                                                                                                                                                                                         |
+| `seating-capacity` | Cubiertos que entran en un local | `cubiertos = m² local × 55 % / m² por cliente con circulación` (inversa de la anterior)                                                                                                                                                                                                                                                                              |
+| `rent-check`       | Chequeo de alquiler              | alquiler / facturación neta ≤ 10% (óptimo 5%)                                                                                                                                                                                                                                                                                                                        |
 
 Valores por defecto (del manual, editables): IVA 21%, IIBB 3%, tarjetas 5%, Seguridad e Higiene
 0,5%, Ganancias 35%, cargas sociales 48%, retorno anual 32%, gastos generales 10%.
@@ -396,17 +399,63 @@ Texto propio basado en el manual, no copiado literal.
 
 ---
 
-## 9. Analytics (fase posterior)
+## 9. Analytics y compartir (F8) — hecho
 
-- Desde el día uno existe `utils/analytics.ts` con un `track(event, props)` que por ahora no hace nada.
-  Las calculadoras ya lo llaman (`tool_selected`, `calculation_done`, `example_loaded`,
-  `language_changed`, `theme_changed`, `currency_changed`), así que después solo hay que conectar el proveedor.
-- Cuando se defina el proveedor (Vercel Analytics, GA4 vía Partytown, Plausible…) se evalúa si hace
-  falta banner de consentimiento (zamuner ya tiene un componente `Cookies` reutilizable).
+> Implementado: `services/google-analytics` (Consent Mode v2, script solo tras aceptar),
+> `ConsentBanner`, página `/[lang]/privacy` con el interruptor `AnalyticsPreference`, imágenes
+> `public/og/og-{es,en}.png` generadas con `pnpm og:image` y card `summary_large_image`.
+> Queda por hacer fuera del código: crear la propiedad GA4, cargar el ID en el hosting y probar la
+> vista previa en WhatsApp, LinkedIn y el Sharing Debugger de Facebook.
+
+- Desde el día uno existe `utils/analytics.ts` con un `track(event, props)`. Las calculadoras ya lo
+  llaman (`tool_selected`, `calculation_completed`, `example_loaded`, `calculator_reset`,
+  `language_changed`, `theme_changed`, `currency_changed`, `menu_opened`), así que solo hay que
+  conectar el proveedor.
+- **Proveedor: Google Analytics 4** (pedido del proyecto), con el ID en `PUBLIC_GA_MEASUREMENT_ID`.
+  Sin ese ID no se carga nada.
+- GA4 usa cookies → **banner de consentimiento** (reutilizando la idea del componente `Cookies` de
+  zamuner) y **Consent Mode v2**: el script no se carga hasta que la persona acepta; si rechaza, no hay medición.
+  La elección se guarda en el repositorio de configuración.
+- Eventos útiles para decidir: qué calculadoras se usan, cuántas cuentas se completan, qué ejemplos
+  se cargan, idioma, tema y moneda.
+
+### Compartir en redes (Open Graph)
+
+- Ya hay Open Graph básico en todas las páginas (título, descripción, imagen del logo, idioma) e
+  íconos de ventana: favicon, apple-touch, android y manifest.
+- Pendiente de revisar juntos:
+  - Imagen para compartir de 1200 × 630 con la marca (logo + título de la página), una por página
+    o una general. Si ya hay diseños, se usan esos; si no, se pueden generar en el build a partir del
+    título de cada fórmula.
+  - Card `summary_large_image` de X/Twitter.
+  - Probar la vista previa en WhatsApp, LinkedIn y Facebook (este último con su Sharing Debugger).
 
 ---
 
-## 10. Cuentas y perfiles (fase final)
+## 9 bis. Monetización (a evaluar, sin implementar)
+
+Ideas para discutir, ordenadas de menor a mayor impacto en la experiencia:
+
+| Opción                          | Cómo sería                                                                                                         | A favor                                            | En contra                                                          |
+| ------------------------------- | ------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------- | ------------------------------------------------------------------ |
+| Donaciones                      | Botón de Cafecito / Mercado Pago / Ko-fi en el footer                                                              | Nada invasivo, se suma en minutos                  | Ingresos bajos e irregulares                                       |
+| Afiliados                       | Links a balanzas, termómetros o libros recomendados en el contenido de estudio                                     | Relevante para el tema                             | Hay que cuidar que no parezca publicidad encubierta                |
+| Plan premium (con cuentas, F10) | Gratis: todas las fórmulas. Premium: recetas ilimitadas guardadas, exportar a PDF/Excel, varios locales, historial | Aprovecha el login; valor claro para profesionales | Requiere cobros (Mercado Pago / Stripe) y soporte                  |
+| Licencias educativas            | Versión para escuelas de gastronomía (el contenido nace de un manual de curso) con cuentas por curso               | Público natural del producto                       | Venta B2B, más lenta                                               |
+| Publicidad (AdSense)            | Anuncios en páginas de estudio                                                                                     | Pasivo                                             | Paga poco con este tráfico, ensucia la marca y pide consentimiento |
+
+Recomendación inicial: arrancar con donaciones y medir con GA4 qué se usa. Si hay tracción, evaluar
+el plan premium sobre las cuentas de F10.
+
+---
+
+## 10. Cuentas y perfiles (fase final) — hecho
+
+> Implementado según [ADR 0003](adr/0003-accounts-with-supabase.md): Supabase con PKCE, sincronización
+> offline-first, migración de datos locales en el primer inicio, página `/[lang]/account` (cerrar
+> sesión, borrar cuenta), términos, privacidad con instrucciones de borrado y guía de
+> configuración en [ACCOUNTS.md](ACCOUNTS.md). Las recetas guardadas viajan como borradores del
+> costeo de recetas; el historial de cálculos se suma como §10 bis.
 
 Objetivo: que cualquier persona, en cualquier país, guarde su configuración (moneda, formato,
 idioma, tema), sus recetas y sus cálculos en un perfil propio.
@@ -427,23 +476,44 @@ idioma, tema), sus recetas y sus cálculos en un perfil propio.
 
 ---
 
+## 10 bis. Historial de cálculos — hecho
+
+- Botón **"Guardar en el historial"** debajo del resultado de cada calculadora (explícito: guardar
+  en cada tecla llenaría el historial de cuentas a medio hacer). Guardar dos veces lo mismo seguido
+  no se puede: el botón pasa a "Guardado" hasta que cambie algún dato.
+- Se guarda **la cuenta entera**: lo que se cargó (tal cual se escribió), el resultado completo y el
+  desarrollo paso a paso. Es una foto: si una fórmula cambia más adelante, el historial sigue
+  mostrando lo que se calculó en su momento.
+- **Hasta 15 cálculos**; al guardar el 16.º se descarta el más viejo. El límite se aplica en el
+  cliente (`HISTORY_LIMIT`) y en la base (trigger).
+- Funciona **sin cuenta** (`localStorage`) y se sincroniza con la cuenta igual que la
+  configuración (migración `supabase/migrations/*_calculation_history.sql`).
+- Página `/[lang]/history` (en el menú): fecha, fórmula y resultado principal; "Ver la cuenta
+  completa" la muestra con los mismos componentes que la calculadora; "Abrir en la calculadora"
+  recarga los valores; "Borrar".
+
 ## 11. Fases
 
 Cada fase termina con `astro check` + lint + test:coverage en verde y un PR con Conventional Commits.
 
-| Fase                         | Entregable                                                                                                                                                                                                                                            |
-| ---------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **F0 · Setup**               | `git init`, Astro + React + TS estricto, Tailwind + preset, aliases, ESLint/Prettier (+ plugins astro), cspell con diccionario español, Vitest 90%, CLAUDE.md, `.claude/`, PR template, CI, `.nvmrc`, README                                          |
-| **F1 · Tema + shell**        | tokens Milimon claro/oscuro, script anti-parpadeo, fuentes self-hosted, layout mobile-first/centrado ≥1024, Header + Drawer hamburguesa, toggles de idioma y tema, Footer, rutas `[lang]`, redirect raíz, 404, traductor tipado + collections de i18n |
-| **F2 · Dominio**             | fórmulas puras con tests usando los ejemplos del manual (100% de cobertura en `domain/`), parseo/formato de números y moneda, registry, repositorios de persistencia (`local`)                                                                        |
-| **F3 · Calculadoras**        | `NumberField`, `CalculatorForm`, `ResultPanel` con desarrollo de la cuenta, `Select`, una isla por herramienta, `RecipeCostingTable`, panel de configuración (moneda)                                                                                 |
-| **F4 · Páginas de fórmulas** | índice + detalle con explicación, ejemplos del manual, notas de estudio, "Probar este ejemplo" y calculadora embebida; traducciones es/en de cada carpeta                                                                                             |
-| **F5 · Calculadora general** | página con desplegable, `?tool=`, links a la explicación                                                                                                                                                                                              |
-| **F6 · Aprender**            | secciones explicativas es/en con links cruzados                                                                                                                                                                                                       |
-| **F7 · Pulido**              | meta/OG/hreflang, sitemap, favicon desde el logo (hoy el PNG pesa 1,6 MB → `astro:assets` a WebP/AVIF), auditoría a11y en ambos temas, Lighthouse, deploy                                                                                             |
-| **F8 · Analytics**           | conectar `track()` al proveedor elegido + consentimiento si aplica                                                                                                                                                                                    |
-| **F9 · Upstream**            | subir a ui-library los componentes genéricos (Drawer, Accordion, Select, Table, NumberField) con changeset                                                                                                                                            |
-| **F10 · Cuentas**            | login Google/Facebook, perfiles, repositorios `remote`, migración desde localStorage, privacidad/términos, borrado de cuenta                                                                                                                          |
+**Estado (2026-09-26):** F0 a F8 y F10 (cuentas) terminadas e integradas en `dev`. F10 bis (historial de cálculos) también. Siguen el pase a `main` y F9.
+
+Flujo de ramas (gitflow, ver CLAUDE.md): cada fase se trabaja en `feature/*` desde `dev` y se mergea a
+`dev`. El primer release a `main` se hace al terminar F10 (cuentas/login).
+
+| Fase                           | Entregable                                                                                                                                                                                                                                                 |
+| ------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **F0 · Setup**                 | `git init`, Astro + React + TS estricto, Tailwind + preset, aliases, ESLint/Prettier (+ plugins astro), cspell con diccionario español, Vitest 90%, CLAUDE.md, `.claude/`, PR template, CI, `.nvmrc`, README                                               |
+| **F1 · Tema + shell**          | tokens Milimon claro/oscuro, script anti-parpadeo, fuentes self-hosted, layout mobile-first/centrado ≥1024, Header + Drawer hamburguesa, toggles de idioma y tema, Footer, rutas `[lang]`, redirect raíz, 404, traductor tipado + tests de paridad de i18n |
+| **F2 · Dominio**               | fórmulas puras con tests usando los ejemplos del manual (100% de cobertura en `domain/`), parseo/formato de números y moneda, registry, repositorios de persistencia (`local`)                                                                             |
+| **F3 · Calculadoras**          | `NumberField`, `CalculatorForm`, `ResultPanel` con desarrollo de la cuenta, `Select`, una isla por herramienta, `RecipeCostingTable`, panel de configuración (moneda)                                                                                      |
+| **F4 · Páginas de fórmulas**   | índice + detalle con explicación, ejemplos del manual, notas de estudio, "Probar este ejemplo" y calculadora embebida; traducciones es/en de cada carpeta                                                                                                  |
+| **F5 · Calculadora general**   | página con desplegable, `?tool=`, links a la explicación                                                                                                                                                                                                   |
+| **F6 · Aprender**              | secciones explicativas es/en con links cruzados                                                                                                                                                                                                            |
+| **F7 · Pulido**                | meta/OG/hreflang, sitemap, favicon desde el logo (hoy el PNG pesa 1,6 MB → `astro:assets` a WebP/AVIF), auditoría a11y en ambos temas, Lighthouse, deploy                                                                                                  |
+| **F8 · Analytics y compartir** | GA4 con banner de consentimiento y Consent Mode v2, imágenes Open Graph 1200 × 630, card grande de X                                                                                                                                                       |
+| **F9 · Upstream**              | subir a ui-library los componentes genéricos (Drawer, Accordion, Select, Table, NumberField) con changeset                                                                                                                                                 |
+| **F10 · Cuentas**              | login Google/Facebook, perfiles, repositorios `remote`, migración desde localStorage, privacidad/términos, borrado de cuenta                                                                                                                               |
 
 ---
 

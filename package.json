@@ -1,6 +1,6 @@
 {
   "name": "milimon-cost-lab",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "private": true,
   "description": "Milimon Cost Lab — calculadora y manual de estudio de costos, desechos y mermas en gastronomía",
   "license": "UNLICENSED",
@@ -24,7 +24,9 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
-    "validate": "pnpm typecheck && pnpm lint && pnpm test:coverage && pnpm build"
+    "validate": "pnpm typecheck && pnpm lint && pnpm test:coverage && pnpm build",
+    "audit:a11y": "node scripts/a11y-audit.mjs",
+    "og:image": "node scripts/og-image.mjs"
   },
   "dependencies": {
     "@astrojs/react": "^7.0.0",
@@ -32,12 +34,14 @@
     "@fontsource-variable/nunito": "^5.3.0",
     "@fontsource/lobster-two": "^5.3.0",
     "@inzumer/tokens": "^1.1.0",
-    "@inzumer/ui-library": "^1.0.2",
+    "@inzumer/ui-library": "^1.1.0",
+    "@supabase/supabase-js": "^2.117.1",
     "astro": "^7.3.5",
     "class-variance-authority": "0.7.1",
     "clsx": "2.1.1",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
+    "sharp": "^0.35.4",
     "tailwind-merge": "^3.7.0",
     "zod": "^4.6.5"
   },
@@ -58,6 +62,7 @@
     "@vitest/coverage-v8": "^5.0.1",
     "@vitest/eslint-plugin": "^1.6.27",
     "astro-eslint-parser": "^3.2.0",
+    "axe-core": "^4.13.0",
     "cspell": "^10.3.3",
     "eslint": "^10.11.0",
     "eslint-plugin-astro": "^3.2.1",

@@ -1,0 +1,29 @@
+{
+  "title": "How to set prices",
+  "summary": "Prices come from combining the cost study, competitors' prices and your commercial judgment.",
+  "sections": [
+    {
+      "heading": "Profit as one more cost",
+      "paragraphs": [
+        "Many entrepreneurs see profit as \"what's left over\". The handbook proposes the opposite: include the desired profit as one more cost, before deciding to open. If with that profit prices are comparable with the competition, the project is viable; if they're well above, it must be reworked or dropped.",
+        "What profit is reasonable? More than the money would earn in a government bond or a term deposit, because opening a business means risk and work. At least twice the yield of a three-year government bond."
+      ]
+    },
+    {
+      "heading": "The theoretical price",
+      "paragraphs": [
+        "Net price = standard unit cost × coefficient, where the coefficient spreads the other costs and the desired profit over the raw materials.",
+        "Taxes and fees on sales are added to the net price to get the menu price."
+      ]
+    },
+    {
+      "heading": "From theoretical price to real price",
+      "items": [
+        "If your price is well below the market, you can raise it.",
+        "If it's similar, don't change it much.",
+        "If it's well above, consider taking the product off the menu.",
+        "Neither the \"rule of 3\" nor copying competitors guarantees recovering the investment."
+      ]
+    }
+  ]
+}

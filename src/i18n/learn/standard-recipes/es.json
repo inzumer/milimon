@@ -1,0 +1,39 @@
+{
+  "title": "Recetas estandarizadas",
+  "summary": "Una receta escrita y costeada para cada plato es la base de la calidad, del costo y del precio.",
+  "sections": [
+    {
+      "heading": "Qué tiene que tener cada receta",
+      "items": [
+        "Nombre del plato, rendimiento total de porciones y tamaño de la porción.",
+        "Ingredientes con su unidad de medida y cantidad.",
+        "Método de preparación, tiempo y temperatura de cocción.",
+        "Fotografía del plato e instrucciones especiales.",
+        "Costo unitario de compra, costo de cada ingrediente, de la receta y de la porción.",
+        "Precio de venta y relación entre el costo de las materias primas y la venta."
+      ]
+    },
+    {
+      "heading": "Ventajas",
+      "items": [
+        "Despersonalización: el plato sale igual sin importar quién lo prepare.",
+        "Capacitación: los empleados nuevos aprenden mucho más rápido.",
+        "Continuidad: el cliente que vuelve busca el mismo plato que probó; perder esa uniformidad es una de las causas de fracaso más frecuentes.",
+        "Costeo: sabés cuánto incide cada ingrediente y dónde conviene ajustar.",
+        "Precio: comparar el costo con el precio muestra la rentabilidad de cada plato.",
+        "Control de stock: el sistema descuenta las cantidades de la receta al vender."
+      ]
+    },
+    {
+      "heading": "Ajuste de contenido",
+      "paragraphs": [
+        "Con la receta costeada, el chef puede trabajar en \"laboratorio\" para bajar costos sin perder calidad:"
+      ],
+      "items": [
+        "Precio de los ingredientes: buscar mejores proveedores para los más caros.",
+        "Participación de cada ingrediente: revisar proporciones entre el componente principal y la guarnición.",
+        "Sustituciones: reemplazar un ingrediente por otro de menor valor, respetando el arte culinario (por ejemplo, cheesecake de maracuyá en lugar de frutos rojos)."
+      ]
+    }
+  ]
+}

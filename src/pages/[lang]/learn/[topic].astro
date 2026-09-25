@@ -1,0 +1,104 @@
+---
+import { Breadcrumbs } from '@inzumer/ui-library';
+import { FeatureCard } from '@components';
+import {
+  adjacentTopics,
+  getFormulaTranslation,
+  getLearnTopic,
+  getTranslations,
+  LEARN_TOPIC_IDS,
+  LEARN_TOPICS,
+  type LearnTopicId,
+} from '@i18n';
+import PageLayout from '@layouts/page-layout.astro';
+import { LOCALES, localizedPath, toLocale } from '@utils';
+
+export function getStaticPaths() {
+  return LOCALES.flatMap((lang) => LEARN_TOPIC_IDS.map((topic) => ({ params: { lang, topic } })));
+}
+
+const lang = toLocale(Astro.params.lang);
+const id = Astro.params.topic as LearnTopicId;
+const topic = getLearnTopic(lang, id);
+const common = getTranslations(lang, 'common');
+const page = getTranslations(lang, 'learn-page');
+const formulaPage = getTranslations(lang, 'formula-page');
+const related = LEARN_TOPICS.find((item) => item.id === id)?.related ?? [];
+const { previous, next } = adjacentTopics(id);
+---
+
+<PageLayout lang={lang} title={topic.title} description={topic.summary}>
+  <Breadcrumbs
+    aria-label={formulaPage.breadcrumbs.label}
+    items={[
+      { label: common.nav.home, href: localizedPath(lang, 'home') },
+      { label: common.nav.learn, href: localizedPath(lang, 'learn') },
+    ]}
+    current={topic.title}
+    className="mb-6"
+  />
+
+  <article class="flex flex-col gap-10">
+    <header class="flex flex-col gap-3">
+      <h1 class="text-5xl">{topic.title}</h1>
+      <p class="max-w-2xl text-lg text-[var(--text-secondary)]">{topic.summary}</p>
+    </header>
+
+    {topic.sections.map((section, index) => (
+      <section aria-labelledby={`section-${index}`} class="flex max-w-3xl flex-col gap-3">
+        <h2 id={`section-${index}`} class="text-3xl">
+          {section.heading}
+        </h2>
+        {section.paragraphs?.map((paragraph) => (
+          <p class="leading-relaxed">{paragraph}</p>
+        ))}
+        {section.items && (
+          <ul class="flex list-disc flex-col gap-2 pl-6 marker:text-[var(--text-link)]">
+            {section.items.map((item) => (
+              <li class="pl-1 leading-relaxed">{item}</li>
+            ))}
+          </ul>
+        )}
+      </section>
+    ))}
+
+    <section aria-labelledby="related-formulas" class="flex flex-col gap-5">
+      <h2 id="related-formulas" class="text-3xl">
+        {page['related-formulas']}
+      </h2>
+      <ul class="grid gap-5 lg:grid-cols-2">
+        {related.map((formulaId) => {
+          const formula = getFormulaTranslation(lang, formulaId);
+          return (
+            <li>
+              <FeatureCard
+                title={formula.title}
+                description={formula.summary}
+                cta={formulaPage.index.open}
+                href={localizedPath(lang, 'formulas', formulaId)}
+              />
+            </li>
+          );
+        })}
+      </ul>
+    </section>
+
+    <nav aria-label={page['topic-navigation']} class="flex flex-wrap justify-between gap-4">
+      {previous && (
+        <a href={localizedPath(lang, 'learn', previous)} class="flex flex-col gap-1 font-semibold">
+          <span class="text-sm text-[var(--text-secondary)]">← {page.previous}</span>
+          {getLearnTopic(lang, previous).title}
+        </a>
+      )}
+      {next && (
+        <a
+          href={localizedPath(lang, 'learn', next)}
+          class="ml-auto flex flex-col gap-1 text-right font-semibold"
+        >
+          <span class="text-sm text-[var(--text-secondary)]">{page.next} →</span>
+          {getLearnTopic(lang, next).title}
+        </a>
+      )}
+    </nav>
+  </article>
+</PageLayout>

@@ -1,0 +1,22 @@
+{
+  "title": "Equilibrio de la carta",
+  "summary": "Cómo distribuir los precios entre baratos, medios y caros, y cómo mostrarlos.",
+  "sections": [
+    {
+      "heading": "Las cuatro reglas de Omnes",
+      "items": [
+        "Proporcionalidad de precios: el producto más caro cuesta hasta 2 o 3 veces el más barato. Un negocio no puede ser caro y barato al mismo tiempo.",
+        "Proporcionalidad de cantidades: la zona de precios medios tiene tantos productos como las zonas barata y cara juntas.",
+        "Adecuación entre precios ofrecidos y demandados: el ticket promedio tiene que estar dentro del ±10 % del precio promedio de la oferta.",
+        "Adecuación al bolsillo del cliente: la sugerencia del día va en la zona de precios medios."
+      ]
+    },
+    {
+      "heading": "Estrategia de precios o de productos",
+      "paragraphs": [
+        "Si competís por precio, poné los precios encolumnados a la derecha de la carta: el cliente se concentra en el precio.",
+        "Si competís por producto, ubicá el precio lo más cerca posible de la descripción del plato: genera menos impacto psicológico."
+      ]
+    }
+  ]
+}

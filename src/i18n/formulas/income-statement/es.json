@@ -1,0 +1,138 @@
+{
+  "title": "Cuadro de ganancias y pérdidas",
+  "summary": "Ingresos menos costos del mes: cuánto gana el negocio antes y después del impuesto a las ganancias.",
+  "study": {
+    "what": [
+      "El cuadro de ganancias y pérdidas ordena los ingresos y los egresos de un período para saber cuánto gana (o pierde) el negocio.",
+      "Las ventas brutas incluyen impuestos; el costo de venta sale del costo de mercaderías consumidas; el costo operativo reúne al personal, los gastos del mes y los impuestos sobre las ventas."
+    ],
+    "formula": [
+      "Ingresos = ventas de alimentos + ventas de bebidas",
+      "Costo de venta = costo de alimentos + costo de bebidas",
+      "Costo operativo = sueldos + cargas + alquiler + servicios + gastos generales + amortizaciones + impuestos + tasas",
+      "Resultado antes de ganancias = ingresos − costo de venta − costo operativo",
+      "Resultado del ejercicio = resultado antes de ganancias − impuesto a las ganancias (35 %)"
+    ],
+    "variables": [
+      {
+        "name": "Ventas brutas",
+        "description": "Lo facturado en alimentos y bebidas, con impuestos incluidos."
+      },
+      {
+        "name": "Costo de venta",
+        "description": "El costo de las mercaderías consumidas (alimentos y bebidas)."
+      },
+      {
+        "name": "Costo operativo",
+        "description": "Los costos fijos del mes más los impuestos sobre las ventas."
+      },
+      {
+        "name": "Impuesto a las ganancias",
+        "description": "Se aplica solo si hay resultado positivo."
+      }
+    ],
+    "steps": [
+      "Sumá las ventas de alimentos y de bebidas.",
+      "Sumá el costo de alimentos y de bebidas.",
+      "Sumá todos los costos operativos.",
+      "Restá costo de venta y costo operativo a las ventas.",
+      "Calculá el impuesto a las ganancias y restalo."
+    ],
+    "examples": [
+      {
+        "title": "Cuadro del manual",
+        "paragraphs": [
+          "Ventas: $ 820.000 de alimentos + $ 298.000 de bebidas = $ 1.118.000.",
+          "Costo de venta: $ 200.000 + $ 70.000 = $ 270.000.",
+          "Costo operativo: $ 537.577, que incluye $ 223.600 de impuestos sobre las ventas (el 20 % de las ventas brutas).",
+          "Resultado antes de ganancias: $ 310.423. Impuesto (35 %): $ 108.648,05. Resultado del ejercicio: $ 201.774,95."
+        ]
+      }
+    ],
+    "notes": [
+      {
+        "type": "tip",
+        "text": "Si sobre las ventas netas se aplica un 24,5 % de impuestos, a las ventas brutas hay que descontarles aproximadamente un 20 % para volver a las netas (1 − 1 ÷ 1,245 ≈ 19,7 %)."
+      },
+      {
+        "type": "tip",
+        "text": "Los costos fijos del cuadro (el costo operativo sin los impuestos sobre las ventas) son los que usa el punto de equilibrio: $ 313.977 en el ejemplo."
+      }
+    ]
+  },
+  "inputs": {
+    "food-sales": {
+      "label": "Ventas de alimentos",
+      "placeholder": "Ingresos por alimentos del período (ej.: 820000)"
+    },
+    "beverage-sales": {
+      "label": "Ventas de bebidas",
+      "placeholder": "Ingresos por bebidas del período (ej.: 298000)"
+    },
+    "food-cost": {
+      "label": "Costo de alimentos",
+      "placeholder": "Costo de mercaderías consumidas de alimentos (ej.: 200000)"
+    },
+    "beverage-cost": {
+      "label": "Costo de bebidas",
+      "placeholder": "Costo de mercaderías consumidas de bebidas (ej.: 70000)"
+    },
+    "salaries": {
+      "label": "Sueldos",
+      "placeholder": "Total de sueldos del período (ej.: 57000)"
+    },
+    "social-charges": {
+      "label": "Cargas sociales",
+      "placeholder": "Aportes y contribuciones sobre los sueldos (ej.: 27360)"
+    },
+    "rent": {
+      "label": "Alquiler",
+      "placeholder": "Alquiler del período (ej.: 41000)"
+    },
+    "services": {
+      "label": "Servicios",
+      "placeholder": "Luz, gas, agua, internet, etc. (ej.: 13000)"
+    },
+    "general-expenses": {
+      "label": "Gastos generales",
+      "placeholder": "Limpieza, lavadero, honorarios, etc. (ej.: 90000)"
+    },
+    "amortization": {
+      "label": "Amortizaciones",
+      "placeholder": "Inversión ÷ meses de amortización (ej.: 83333)"
+    },
+    "sales-taxes": {
+      "label": "Impuestos sobre las ventas",
+      "placeholder": "IVA, Ingresos Brutos y demás impuestos del período (ej.: 223600)"
+    },
+    "municipal-fees": {
+      "label": "Tasas y contribuciones",
+      "placeholder": "Tasas municipales del período (ej.: 2284)"
+    },
+    "income-tax-rate": {
+      "label": "Impuesto a las ganancias",
+      "placeholder": "Alícuota sobre el resultado (ej.: 35)"
+    }
+  },
+  "outputs": {
+    "total-sales": "Ingresos por ventas",
+    "cost-of-sales": "Costo de venta",
+    "operating-costs": "Costo operativo",
+    "result-before-income-tax": "Resultado antes del impuesto a las ganancias",
+    "income-tax": "Impuesto a las ganancias",
+    "net-result": "Resultado del ejercicio"
+  },
+  "steps": {
+    "total-sales": "Ingresos = alimentos + bebidas = {foodSales} + {beverageSales} = {totalSales}",
+    "cost-of-sales": "Costo de venta = alimentos + bebidas = {foodCost} + {beverageCost} = {costOfSales}",
+    "operating-costs": "Costo operativo = costos fijos + impuestos sobre las ventas = {fixedCosts} + {salesTaxes} = {operatingCosts}",
+    "result-before-income-tax": "Resultado antes de ganancias = ingresos − costo de venta − costo operativo = {totalSales} − {costOfSales} − {operatingCosts} = {resultBeforeIncomeTax}",
+    "income-tax": "Impuesto a las ganancias = resultado × {incomeTaxRate} = {resultBeforeIncomeTax} × {incomeTaxRate} = {incomeTax}",
+    "net-result": "Resultado del ejercicio = resultado − impuesto = {resultBeforeIncomeTax} − {incomeTax} = {netResult}"
+  },
+  "examples": {
+    "manual-statement": {
+      "title": "Cuadro del manual: $ 1.118.000 de ventas"
+    }
+  }
+}

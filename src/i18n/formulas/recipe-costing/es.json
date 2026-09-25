@@ -1,0 +1,122 @@
+{
+  "title": "Costeo de recetas",
+  "summary": "El costo de cada ingrediente, de la receta completa y de cada porción.",
+  "study": {
+    "what": [
+      "Con la receta estandarizada podés costear cada plato: cuánto cuesta cada ingrediente, la receta completa y cada porción. Es la base para fijar precios y para ajustar el contenido de los platos.",
+      "Necesitás cuatro datos por ingrediente: la cantidad limpia que usa la receta, su unidad de medida, su % de desecho y su precio de compra en esa misma unidad."
+    ],
+    "formula": [
+      "Cantidad bruta = cantidad de la receta × factor de desecho",
+      "Costo del ingrediente = cantidad bruta × precio de compra",
+      "Costo de la receta = suma de los costos de los ingredientes",
+      "Costo por porción = costo de la receta ÷ rendimiento"
+    ],
+    "variables": [
+      {
+        "name": "Cantidad de la receta",
+        "description": "Cantidad limpia, lista para cocinar, de cada ingrediente."
+      },
+      {
+        "name": "Precio de compra",
+        "description": "Precio de la mercadería bruta (sucia), en la misma unidad que la cantidad."
+      },
+      {
+        "name": "Rendimiento",
+        "description": "Cuántas porciones salen de la receta."
+      },
+      {
+        "name": "Incidencia",
+        "description": "Qué porcentaje del costo total representa cada ingrediente."
+      }
+    ],
+    "steps": [
+      "Columnas 1 y 2: el ingrediente y su unidad de medida.",
+      "Columna 3: la cantidad de la receta (limpia).",
+      "Columnas 4 y 5: el % de desecho y su factor.",
+      "Columna 6: cantidad bruta = columna 3 × columna 5.",
+      "Columna 7: el precio de la mercadería bruta, en la misma unidad.",
+      "Columna 8: costo = columna 6 × columna 7.",
+      "Sumá los costos y dividí por el rendimiento para obtener el costo por porción."
+    ],
+    "examples": [
+      {
+        "title": "Tournedó con galette de papas para 10 porciones (ilustrativo)",
+        "paragraphs": [
+          "Lomo: 1,800 kg limpios con 30 % de desecho → 2,571 kg brutos × $ 10.000 = $ 25.714,29.",
+          "Papas: 2,000 kg con 20 % de desecho → 2,500 kg × $ 1.500 = $ 3.750.",
+          "Manteca: 0,200 kg sin desecho × $ 8.000 = $ 1.600.",
+          "Costo de la receta: $ 31.064,29. Costo por porción: $ 3.106,43. El lomo es el 82,8 % del costo."
+        ]
+      }
+    ],
+    "notes": [
+      {
+        "type": "tip",
+        "text": "Con la incidencia de cada ingrediente podés ajustar el contenido: negociar el precio de los ingredientes más caros, revisar proporciones (¿achicar el principal y agrandar la guarnición?) o sustituir ingredientes respetando el arte culinario."
+      },
+      {
+        "type": "common-mistake",
+        "text": "Unificá la unidad entre el precio y la receta: si comprás peras por cajón pero la receta usa kilos, pasá el precio a kilos."
+      },
+      {
+        "type": "tip",
+        "text": "Un ahorro chico por plato se multiplica: $ 2 menos en cada una de 10.000 unidades vendidas por mes son $ 20.000 por mes y $ 240.000 por año."
+      }
+    ]
+  },
+  "inputs": {
+    "servings": {
+      "label": "Rendimiento (porciones)",
+      "placeholder": "Cuántas porciones rinde la receta (ej.: 10)"
+    },
+    "name": {
+      "label": "Ingrediente",
+      "placeholder": "Nombre del ingrediente (ej.: Lomo)"
+    },
+    "unit": {
+      "label": "Unidad",
+      "placeholder": "Unidad de medida (ej.: kg)"
+    },
+    "net-quantity": {
+      "label": "Cantidad de la receta (limpia)",
+      "placeholder": "Cantidad limpia que usa la receta (ej.: 1,800)"
+    },
+    "waste-percentage": {
+      "label": "% de desecho",
+      "placeholder": "Porcentaje que se pierde al limpiarlo (ej.: 30)"
+    },
+    "unit-price": {
+      "label": "Precio de compra",
+      "placeholder": "Precio de la mercadería sucia por unidad (ej.: 10000)",
+      "hint": "Usá la misma unidad que la cantidad (si la receta va en kg, el precio por kg)."
+    }
+  },
+  "outputs": {
+    "waste-factor": "Factor de desecho",
+    "gross-quantity": "Cantidad bruta",
+    "cost": "Costo",
+    "share": "Incidencia",
+    "recipe-cost": "Costo de la receta",
+    "portion-cost": "Costo por porción"
+  },
+  "steps": {
+    "recipe-cost": "Costo de la receta = suma del costo de cada ingrediente = {recipeCost}",
+    "portion-cost": "Costo por porción = costo de la receta ÷ porciones = {recipeCost} ÷ {servings} = {portionCost}"
+  },
+  "examples": {
+    "tournedos-recipe": {
+      "title": "Tournedó con galette de papas para 10 porciones"
+    }
+  },
+  "labels": {
+    "ingredients-title": "Ingredientes",
+    "ingredient-number": "Ingrediente {number}",
+    "add-ingredient": "Agregar ingrediente",
+    "remove-ingredient": "Quitar {name}",
+    "table-caption": "Costo por ingrediente",
+    "tenderloin": "Lomo",
+    "potatoes": "Papas",
+    "butter": "Manteca"
+  }
+}

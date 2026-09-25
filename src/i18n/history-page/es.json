@@ -1,0 +1,26 @@
+{
+  "title": "Historial",
+  "description": "Tus últimos 15 cálculos guardados, completos: lo que cargaste, el resultado y el desarrollo paso a paso.",
+  "list": {
+    "loading": "Cargando tu historial…",
+    "empty": "Todavía no guardaste ningún cálculo. En cualquier calculadora, cuando tengas un resultado, tocá “Guardar en el historial”.",
+    "go-to-calculator": "Ir a la calculadora",
+    "count": "{count} de {limit} cálculos guardados",
+    "saved-on": "Guardado el {date}",
+    "show": "Ver la cuenta completa",
+    "hide": "Ocultar la cuenta",
+    "open": "Abrir en la calculadora",
+    "delete": "Borrar",
+    "delete-label": "Borrar {title} del {date}",
+    "deleted": "Cálculo borrado del historial.",
+    "inputs-title": "Lo que cargaste",
+    "result-title": "Resultado",
+    "currency": "Montos en {currency}",
+    "yes": "Sí",
+    "no": "No",
+    "unavailable": "No se puede mostrar este cálculo. Podés abrirlo en la calculadora para rehacerlo.",
+    "ingredient": "Ingrediente",
+    "account-hint": "Con una cuenta, tu historial te sigue a cualquier dispositivo.",
+    "sign-in": "Iniciar sesión"
+  }
+}

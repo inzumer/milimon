@@ -1,0 +1,120 @@
+{
+  "title": "Omnes' rules",
+  "summary": "Check whether your menu prices are well spread between cheap, medium and expensive.",
+  "study": {
+    "what": [
+      "Once prices are set, the menu should be spread harmoniously between cheap, medium and expensive items, with suitable options for your customers.",
+      "Omnes' rules are four commercial principles: price proportionality, item count per zone, fit between offered and demanded prices, and where to place the daily special."
+    ],
+    "formula": [
+      "Proportionality: most expensive price ≤ 2 to 3 × cheapest price",
+      "Width of each zone = (most expensive − cheapest) ÷ 3",
+      "Balanced menu: half of the items in the medium zone and a quarter at each end",
+      "Average ticket within ±10% of the average menu price",
+      "Daily special in the medium price zone"
+    ],
+    "variables": [
+      {
+        "name": "Average menu price",
+        "description": "The sum of all menu prices divided by the number of items."
+      },
+      {
+        "name": "Average ticket",
+        "description": "What customers pay on average."
+      },
+      {
+        "name": "Zones",
+        "description": "Three ranges of the same width: cheap, medium and expensive."
+      }
+    ],
+    "steps": [
+      "Find the cheapest and the most expensive price, and compare the ratio between them.",
+      "Split the difference into three equal zones.",
+      "Count how many items fall into each zone.",
+      "Work out the average menu price and compare it with the average ticket.",
+      "Check which zone the daily special is in."
+    ],
+    "examples": [
+      {
+        "title": "Bakery with 16 cakes (handbook)",
+        "paragraphs": [
+          "Prices go from $40 to $115: a $75 difference, so zones are $25 wide.",
+          "Cheap: $40 to $65; medium: over $65 up to $90; expensive: over $90 up to $115.",
+          "A balanced menu has 4 cheap, 8 medium and 4 expensive items.",
+          "If the average price is $77.50, a healthy average ticket goes from $69.75 to $85.25."
+        ]
+      }
+    ],
+    "notes": [
+      {
+        "type": "tip",
+        "text": "Customers move within certain price ranges according to their income: a business can't be expensive and cheap at the same time."
+      },
+      {
+        "type": "tip",
+        "text": "If you compete on price, list prices in a column on the right of the menu; if you compete on product, place the price close to the dish description."
+      },
+      {
+        "type": "manual-difference",
+        "text": "The handbook gives the price range and how many cakes fall into each zone, but not the price list: the one in the example is illustrative and follows that split."
+      }
+    ]
+  },
+  "inputs": {
+    "prices": {
+      "label": "Menu prices",
+      "placeholder": "Price of one item (e.g. 40)"
+    },
+    "average-ticket": {
+      "label": "Average ticket",
+      "placeholder": "What each customer pays per item on average (e.g. 80)",
+      "hint": "Optional."
+    },
+    "daily-special-price": {
+      "label": "Daily special price",
+      "placeholder": "Price of the suggested dish (e.g. 75)",
+      "hint": "Optional."
+    }
+  },
+  "outputs": {
+    "price-ratio": "Most expensive ÷ cheapest",
+    "zones": "Price zones",
+    "distribution": "Distribution",
+    "average-price": "Average menu price",
+    "ticket": "Average ticket",
+    "daily-special": "Daily special"
+  },
+  "steps": {
+    "price-ratio": "Ratio = most expensive ÷ cheapest = {maxPrice} ÷ {minPrice} = {priceRatio}",
+    "zone-width": "Width of each zone = (most expensive − cheapest) ÷ 3 = ({maxPrice} − {minPrice}) ÷ 3 = {zoneWidth}",
+    "zones": "Cheap: {minPrice} to {lowZoneMax} · Medium: up to {mediumZoneMax} · Expensive: up to {maxPrice}",
+    "distribution": "Items per zone: {low} cheap, {medium} medium, {high} expensive",
+    "average-price": "Average price = sum of prices ÷ count = {total} ÷ {count} = {averagePrice}",
+    "ticket-range": "Healthy ticket range (±10%): from {lowerBound} to {upperBound}"
+  },
+  "examples": {
+    "sixteen-cakes": {
+      "title": "Bakery with 16 cakes between $40 and $115"
+    }
+  },
+  "choices": {
+    "ideal": "Ideal: the most expensive costs up to twice the cheapest",
+    "acceptable": "Acceptable: the most expensive costs 2 to 3 times the cheapest",
+    "too-wide": "Too wide: the most expensive is more than 3 times the cheapest",
+    "balanced": "Suitable: the average ticket is within ±10% of the average price",
+    "too-expensive": "Prices too high: customers spend less than 90% of the average",
+    "too-cheap": "Prices too low: customers spend more than 110% of the average",
+    "low": "In the cheap zone (it should be in the medium one)",
+    "medium": "In the medium zone, as it should",
+    "high": "In the expensive zone (it should be in the medium one)",
+    "distribution-balanced": "Balanced: the medium zone has as many items as the other two combined",
+    "distribution-unbalanced": "Unbalanced: the medium zone should have as many items as the other two combined"
+  },
+  "labels": {
+    "prices-hint": "Write one price per line (you can also separate them with spaces or semicolons).",
+    "prices-count": "{count} prices entered",
+    "invalid-prices": "Check these values, they are not valid numbers: {values}",
+    "ticket-missing": "Enter the average ticket to check whether prices fit demand.",
+    "daily-special-missing": "Enter the daily special price to place it in a zone."
+  }
+}

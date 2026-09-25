@@ -1,2 +1,20 @@
-// Barrel — public exports of src/i18n are added here as the phases land.
-export {};
+export {
+  formulaText,
+  toCalculatorText,
+  type CalculatorText,
+  formulaTranslationSchema,
+  getFormulaTranslation,
+  toKebabCase,
+  type FormulaTranslation,
+} from './formulas';
+export {
+  adjacentTopics,
+  getLearnTopic,
+  isLearnTopicId,
+  LEARN_TOPIC_IDS,
+  LEARN_TOPICS,
+  type LearnTopic,
+  type LearnTopicId,
+} from './learn';
+export { loadCalculatorText, type CalculatorTextLoader } from './load-calculator-text';
+export { getTranslations, type Namespace, type Translations } from './translations';

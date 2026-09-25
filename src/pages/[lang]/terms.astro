@@ -1,0 +1,39 @@
+---
+import { Breadcrumbs } from '@inzumer/ui-library';
+import { getTranslations } from '@i18n';
+import PageLayout from '@layouts/page-layout.astro';
+import { LOCALES, localizedPath, toLocale } from '@utils';
+
+export function getStaticPaths() {
+  return LOCALES.map((lang) => ({ params: { lang } }));
+}
+
+const lang = toLocale(Astro.params.lang);
+const common = getTranslations(lang, 'common');
+const page = getTranslations(lang, 'terms-page');
+const breadcrumbs = getTranslations(lang, 'formula-page').breadcrumbs;
+---
+
+<PageLayout lang={lang} title={page.title} description={page.description}>
+  <Breadcrumbs
+    aria-label={breadcrumbs.label}
+    items={[{ label: common.nav.home, href: localizedPath(lang, 'home') }]}
+    current={page.title}
+    className="mb-6"
+  />
+  <article class="flex max-w-2xl flex-col gap-8">
+    <header class="flex flex-col gap-3">
+      <h1 class="text-5xl">{page.title}</h1>
+      <p class="text-lg text-[var(--text-secondary)]">{page.description}</p>
+      <p class="text-sm text-[var(--text-secondary)]">{page.updated}</p>
+    </header>
+    {Object.entries(page.sections).map(([key, section]) => (
+      <section id={key} class="flex scroll-mt-24 flex-col gap-3">
+        <h2 class="text-3xl">{section.heading}</h2>
+        {section.paragraphs.map((paragraph) => (
+          <p>{paragraph}</p>
+        ))}
+      </section>
+    ))}
+  </article>
+</PageLayout>

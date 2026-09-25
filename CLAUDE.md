@@ -32,10 +32,12 @@ Key commands (Node from `.nvmrc`, pnpm from `packageManager`):
 - **Translations** in kebab-case folders, one file per language: `src/i18n/<folder>/{es,en}.json`.
   Folder name = formula id = route slug. `es` and `en` must have exactly the same keys.
 - **Every input** has a visible label and a descriptive placeholder (what, unit, example from the manual).
+- **Tests**: every test title starts with `should …` (e.g. `it('should render the menu')`), enforced
+  by `vitest/valid-title`. `describe` names the unit under test.
 - **Formulas** are pure functions in `src/domain`, registered once in `registry.ts`, tested with
   the manual's worked examples.
-- **Imports**: path aliases (`@components`, `@calculators`, `@domain`, `@hooks`, `@utils`, `@i18n`,
-  `@layouts/*`, `@assets/*`, `@styles/*`) for anything outside the current folder. Enforced by ESLint.
+- **Imports**: path aliases (`@components`, `@calculators`, `@domain`, `@repositories`, `@services`, `@hooks`, `@utils`, `@i18n`,
+  `@layouts/*`, `@assets/*`, `@styles/*`, `@test/*`) for anything outside the current folder. Enforced by ESLint.
 - **Naming**: React components in PascalCase folders; `.astro` files, content folders, slugs and
   i18n keys in kebab-case.
 - **Theming**: colors only via CSS variables (`src/styles/theme.css`); light and dark mode must both work.
@@ -69,6 +71,17 @@ Format: `<type>[optional scope]: <description>`
 Breaking changes: append `!` before the colon and/or add a `BREAKING CHANGE:` footer.
 
 Suggested scopes: `domain`, `calculators`, `ui`, `i18n`, `theme`, `pages`, `deps`, `ci`.
+
+## Git workflow (gitflow)
+
+- `main`: production. Only receives `release/*` (and `hotfix/*`) merges, tagged `vX.Y.Z`.
+- `dev`: integration branch. Every feature is merged here with `--no-ff`.
+- `feature/<kebab-name>` from `dev` → back into `dev`. One phase (or part of one) per feature branch.
+- `release/<version>` from `dev` → `main` (tag) and back into `dev`.
+- `hotfix/<kebab-name>` from `main` → `main` (tag) and `dev`.
+- Current plan: keep merging features into `dev`; the first release to `main` happens once
+  accounts/login (phase F10) is done.
+- Never commit directly on `main` or `dev`, and never commit or push unless asked.
 
 ## Pull requests
 

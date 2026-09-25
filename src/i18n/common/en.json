@@ -1,0 +1,53 @@
+{
+  "app-name": "Milimon Cost Lab",
+  "skip-to-content": "Skip to content",
+  "meta": {
+    "description": "Calculator and study guide for food cost, trim waste and cooking loss, with every formula explained step by step."
+  },
+  "nav": {
+    "label": "Main navigation",
+    "home": "Home",
+    "calculator": "Calculator",
+    "formulas": "Formulas",
+    "learn": "Learn",
+    "all-formulas": "All formulas",
+    "all-topics": "All topics",
+    "account": "My account",
+    "sign-in": "Sign in",
+    "history": "History"
+  },
+  "menu": {
+    "open": "Open menu",
+    "close": "Close menu",
+    "title": "Menu",
+    "preferences": "Preferences"
+  },
+  "language": {
+    "label": "Language",
+    "current": "English"
+  },
+  "theme": {
+    "dark-mode": "Dark mode"
+  },
+  "footer": {
+    "tagline": "A study guide to food cost management.",
+    "source": "Based on the Food & Beverage Administration and Management handbook.",
+    "privacy": "Privacy",
+    "terms": "Terms"
+  },
+  "not-found": {
+    "title": "Page not found",
+    "description": "The page you are looking for doesn't exist or isn't available yet.",
+    "back-home": "Back to home"
+  },
+  "settings": {
+    "currency": "Currency"
+  },
+  "consent": {
+    "title": "Help us improve?",
+    "message": "We use Google Analytics to learn which formulas are used most and improve the handbook. It only turns on if you accept; we never store the numbers you enter.",
+    "accept": "Accept",
+    "reject": "Reject",
+    "privacy-link": "Privacy policy"
+  }
+}

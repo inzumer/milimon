@@ -1,0 +1,45 @@
+---
+import { ButtonLink } from '@components';
+import { getTranslations } from '@i18n';
+import PageLayout from '@layouts/page-layout.astro';
+import { DEFAULT_LOCALE, LOCALES, localizedPath } from '@utils';
+
+// One static 404 for every URL: both languages are rendered and the one matching the URL prefix
+// is shown (Spanish by default, and without JavaScript).
+const messages = LOCALES.map((lang) => ({
+  lang,
+  text: getTranslations(lang, 'common')['not-found'],
+  home: localizedPath(lang, 'home'),
+}));
+const title = getTranslations(DEFAULT_LOCALE, 'common')['not-found'].title;
+---
+
+<PageLayout lang={DEFAULT_LOCALE} title={title} noindex>
+  {messages.map(({ lang, text, home }) => (
+    <section
+      data-not-found={lang}
+      lang={lang}
+      hidden={lang !== DEFAULT_LOCALE}
+      class="flex flex-col items-center gap-4 py-16 text-center"
+    >
+      <p class="font-display text-7xl font-bold text-[var(--text-link)]">404</p>
+      <h1 class="text-4xl">{text.title}</h1>
+      <p class="text-lg text-[var(--text-secondary)]">{text.description}</p>
+      <ButtonLink href={home} size="lg">
+        {text['back-home']}
+      </ButtonLink>
+    </section>
+  ))}
+  <script is:inline define:vars={{ locales: LOCALES }}>
+    (() => {
+      const prefix = window.location.pathname.split('/')[1];
+      if (!locales.includes(prefix)) {
+        return;
+      }
+      document.documentElement.lang = prefix;
+      document.querySelectorAll('[data-not-found]').forEach((section) => {
+        section.hidden = section.dataset.notFound !== prefix;
+      });
+    })();
+  </script>
+</PageLayout>

@@ -1,0 +1,23 @@
+{
+  "hero": {
+    "subtitle": "Work out food cost, trim waste and cooking loss in your kitchen, and understand every formula step by step.",
+    "logo-alt": "Milimon: a cook in a chef's hat holding a wooden spoon",
+    "sign-in-hint": "Optional: keep your settings and calculations in your account."
+  },
+  "calculator-card": {
+    "title": "Calculator",
+    "description": "Pick the calculation you need, enter your values and see the result with the full working.",
+    "cta": "Go to the calculator"
+  },
+  "sections-title": "Study the topics",
+  "formulas-card": {
+    "title": "Formulas",
+    "description": "Every formula explained: what each value means, the step-by-step method and worked examples from the handbook.",
+    "cta": "See formulas"
+  },
+  "learn-card": {
+    "title": "Learn",
+    "description": "Purchasing, receiving, storage, costs, pricing and break-even, with a practical approach.",
+    "cta": "Start learning"
+  }
+}

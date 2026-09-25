@@ -1,0 +1,88 @@
+{
+  "title": "Porcentaje de desecho",
+  "summary": "Qué parte de la mercadería comprada se pierde al limpiarla.",
+  "study": {
+    "what": [
+      "Muchas materias primas no se usan tal como se compran: hay que limpiarlas, y en la limpieza se separan partes que no van al plato (cáscaras, semillas, huesos, grasa, nervios, espinas, vísceras). Esa pérdida intencional durante la mise en place es el desecho.",
+      "Saber el % de desecho de cada materia prima te sirve para calcular cuánto comprar y cuánto dinero vas a necesitar, costear recetas, comparar si conviene comprar sucio o limpio, controlar al proveedor en la recepción y controlar cómo se limpia en la cocina."
+    ],
+    "formula": ["Desecho = peso bruto − peso neto", "% de desecho = desecho ÷ peso bruto × 100"],
+    "variables": [
+      {
+        "name": "Peso bruto (sucio)",
+        "description": "Lo que pesa la mercadería tal como la comprás, con todos sus desechos."
+      },
+      {
+        "name": "Peso neto (limpio)",
+        "description": "Lo que queda después de limpiar: la cantidad lista para la receta."
+      },
+      {
+        "name": "Desecho",
+        "description": "La diferencia entre los dos pesos: lo que se separa al limpiar."
+      }
+    ],
+    "steps": [
+      "Pesá la mercadería en bruto, antes de limpiarla.",
+      "Limpiala separando los desechos.",
+      "Pesá la mercadería limpia.",
+      "Restá: peso bruto − peso neto = peso del desecho.",
+      "Dividí el desecho por el peso bruto y multiplicá por 100."
+    ],
+    "examples": [
+      {
+        "title": "Ejemplo del manual",
+        "paragraphs": [
+          "Se pesan 2,400 kg de mercadería sucia. Después de limpiarla quedan 1,700 kg.",
+          "Desecho = 2,400 kg − 1,700 kg = 0,700 kg.",
+          "% de desecho = 0,700 ÷ 2,400 × 100 = 29,17 %. El manual lo redondea a 30 %."
+        ]
+      }
+    ],
+    "notes": [
+      {
+        "type": "rounding",
+        "text": "La cuenta exacta da 29,17 % y el manual usa 30 %. Redondear hacia arriba es conservador (comprás un poco de más), pero conviene saber que es un redondeo y no el valor exacto."
+      },
+      {
+        "type": "tip",
+        "text": "El % de desecho no es fijo para una misma materia prima: varía con el origen, el tamaño y el criterio de quien limpia, y mucho con el destino de la receta. No se desecha igual una manzana para tarta Tatin que para dulce."
+      },
+      {
+        "type": "tip",
+        "text": "Criterio conservador: das los desechos por perdidos. Criterio empresario: buscás reaprovecharlos en otros platos de la carta, con el mayor valor agregado posible."
+      },
+      {
+        "type": "common-mistake",
+        "text": "No confundas desecho (lo que sacás al limpiar) con merma (lo que se pierde al cocinar), desperdicio (lo que se pierde por mala praxis) ni decomiso (lo que se tira por mal estado)."
+      }
+    ]
+  },
+  "inputs": {
+    "gross-weight": {
+      "label": "Peso bruto (sucio)",
+      "placeholder": "Peso tal como lo compraste, en kg (ej.: 2,400)",
+      "hint": "Pesá la mercadería antes de limpiarla."
+    },
+    "net-weight": {
+      "label": "Peso neto (limpio)",
+      "placeholder": "Peso después de limpiar, en kg (ej.: 1,700)",
+      "hint": "Pesá lo que queda listo para la receta, sin desechos."
+    }
+  },
+  "outputs": {
+    "waste-weight": "Peso del desecho",
+    "waste-percentage": "% de desecho"
+  },
+  "steps": {
+    "waste-weight": "Desecho = peso bruto − peso neto = {grossWeight} kg − {netWeight} kg = {wasteWeight} kg",
+    "waste-percentage": "% de desecho = desecho ÷ peso bruto × 100 = {wasteWeight} kg ÷ {grossWeight} kg × 100 = {wastePercentage}"
+  },
+  "examples": {
+    "manual-cleaning": {
+      "title": "Limpieza de 2,400 kg que dejan 1,700 kg limpios"
+    }
+  },
+  "errors": {
+    "net-weight.must-not-exceed-gross": "El peso limpio no puede ser mayor que el peso bruto."
+  }
+}

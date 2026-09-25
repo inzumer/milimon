@@ -1,0 +1,46 @@
+{
+  "title": "Privacy",
+  "description": "What data Milimon Cost Lab keeps, where it stays, how to change your analytics choice and how to delete it.",
+  "updated": "Last updated: September 2026",
+  "sections": {
+    "on-device": {
+      "heading": "What stays on your device",
+      "paragraphs": [
+        "Your preferences (theme, language, currency) and the latest values of each calculator are saved in your browser's local storage (localStorage). They never leave your device or reach any server.",
+        "You can delete them at any time from your browser settings (site data)."
+      ]
+    },
+    "analytics": {
+      "heading": "Analytics (only with your permission)",
+      "paragraphs": [
+        "If you accept, we use Google Analytics 4 to measure, in aggregate, which pages are visited and which tools are used: for example, that the waste factor was calculated or a handbook example was loaded.",
+        "We never send the numbers you enter in the calculators. Google Analytics does receive technical data about the visit (truncated IP address, browser, device, approximate country) and sets its own cookies (_ga) to tell visits apart.",
+        "If you don't answer or you reject, the Google script is not loaded and no analytics cookie is set."
+      ]
+    },
+    "your-choice": {
+      "heading": "Changing your choice",
+      "paragraphs": [
+        "You can turn analytics on or off at any time with this switch. If you turn it off, we stop sending data from that moment on."
+      ]
+    },
+    "accounts": {
+      "heading": "Accounts (optional)",
+      "paragraphs": [
+        "If you sign in with Google or Facebook, we store your name, email and profile picture as the provider shares them, to show who is signed in. We never see or store your password.",
+        "Your profile keeps your currency, language and theme, and the latest values of each calculator, so they follow you to any device. The data is hosted on Supabase and each row can only be read by its owner.",
+        "We don't sell or share this data and we don't use it for advertising."
+      ]
+    },
+    "data-deletion": {
+      "heading": "How to delete your data",
+      "paragraphs": [
+        "Open “My account” (from the menu), choose “Delete my account” and confirm. Your profile, saved calculations and user are deleted right away.",
+        "If you signed in with Facebook, you can also remove Milimon Cost Lab's access from your Facebook settings (Settings & privacy → Settings → Apps and websites). Removing it there doesn't delete your Milimon Cost Lab account: use the previous step for that.",
+        "Data saved on this device (without an account) is deleted from your browser settings (site data)."
+      ]
+    }
+  },
+  "preference-label": "Allow analytics (Google Analytics)",
+  "analytics-disabled": "Analytics is turned off on this site: no third-party script is loaded."
+}

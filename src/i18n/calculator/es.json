@@ -1,0 +1,37 @@
+{
+  "form-title": "Tus datos",
+  "result-title": "Resultado",
+  "steps-title": "Desarrollo de la cuenta",
+  "empty-result": "Completá los datos para ver el resultado y el desarrollo de la cuenta paso a paso.",
+  "examples-title": "Probá con un ejemplo",
+  "load-example": "Cargar",
+  "reset": "Limpiar datos",
+  "example-source": {
+    "manual": "Del manual",
+    "illustrative": "Ilustrativo"
+  },
+  "units": {
+    "weight": "kg",
+    "area": "m²",
+    "months": "meses",
+    "percentage": "%",
+    "currency": "{currency}"
+  },
+  "errors": {
+    "required": "Completá este dato.",
+    "invalid-number": "Escribí un número válido (por ejemplo 2,4).",
+    "must-be-positive": "Tiene que ser mayor que 0.",
+    "must-be-non-negative": "No puede ser negativo.",
+    "must-be-below-100": "Tiene que ser menor que 100 %.",
+    "must-be-at-most-100": "No puede superar el 100 %.",
+    "must-not-exceed-gross": "No puede ser mayor que el total.",
+    "must-be-integer": "Tiene que ser un número entero.",
+    "needs-at-least-two": "Cargá al menos dos valores."
+  },
+  "history": {
+    "save": "Guardar en el historial",
+    "saved": "Guardado en tu historial.",
+    "view": "Ver historial",
+    "note": "Se guardan tus últimos 15 cálculos, con los datos, el resultado y el desarrollo."
+  }
+}

@@ -1,0 +1,82 @@
+{
+  "title": "Cubiertos que entran en un local",
+  "summary": "Cuántos clientes podés sentar en un local según su superficie total.",
+  "study": {
+    "what": [
+      "Es la cuenta inversa de la superficie del salón: dado un local en alquiler, cuántos cubiertos entran.",
+      "Sirve para evaluar enseguida si un local se ajusta a tu proyecto, antes de negociar el alquiler."
+    ],
+    "formula": [
+      "Superficie del salón = superficie del local × % destinado al salón (≈ 55 %)",
+      "Cubiertos = superficie del salón ÷ m² por cliente con circulación"
+    ],
+    "variables": [
+      {
+        "name": "Superficie del local",
+        "description": "Los metros cuadrados totales del local."
+      },
+      {
+        "name": "% para el salón",
+        "description": "Entre 45 % y 65 %; el manual usa 55 % como referencia."
+      },
+      {
+        "name": "m² por cliente con circulación",
+        "description": "La superficie por persona ya sumada la circulación (por ejemplo, 1,30 m²)."
+      }
+    ],
+    "steps": [
+      "Multiplicá la superficie del local por el % destinado al salón.",
+      "Dividí esa superficie por los m² por cliente con circulación.",
+      "Redondeá hacia abajo: esos son los cubiertos que entran."
+    ],
+    "examples": [
+      {
+        "title": "Local de 80 m² (manual)",
+        "paragraphs": [
+          "El salón ocupa aproximadamente el 55 %: 80 m² × 55 % = 44 m².",
+          "Con 1,30 m² por persona: 44 ÷ 1,30 = 33,8, es decir, 33 cubiertos.",
+          "Si el proyecto necesita 40 cubiertos, este local no alcanza."
+        ]
+      }
+    ],
+    "notes": [
+      {
+        "type": "manual-difference",
+        "text": "El manual escribe \"los 45 m² que resultan (55 % de 80 m²)\" y llega a 34 cubiertos, pero el 55 % de 80 m² son 44 m², que dan 33 cubiertos."
+      },
+      {
+        "type": "rounding",
+        "text": "Los cubiertos se redondean hacia abajo: una fracción de lugar no alcanza para sentar a una persona más sin quitarle comodidad a las demás."
+      }
+    ]
+  },
+  "inputs": {
+    "premises-area": {
+      "label": "Superficie total del local",
+      "placeholder": "Metros cuadrados del local (ej.: 80)"
+    },
+    "dining-share-percentage": {
+      "label": "Parte destinada al salón",
+      "placeholder": "Porcentaje del local para el salón, entre 45 y 65 (ej.: 55)",
+      "hint": "El resto es cocina (15–25 %) y depósitos y servicios (20–35 %)."
+    },
+    "area-per-customer-with-circulation": {
+      "label": "Superficie por cliente con circulación",
+      "placeholder": "Metros cuadrados por persona con circulación (ej.: 1,30)"
+    }
+  },
+  "outputs": {
+    "dining-area": "Superficie del salón",
+    "capacity": "Capacidad exacta",
+    "capacity-rounded": "Cubiertos que entran"
+  },
+  "steps": {
+    "dining-area": "Salón = superficie del local × {diningSharePercentage} = {premisesArea} m² × {diningSharePercentage} = {diningArea} m²",
+    "capacity": "Cubiertos = salón ÷ superficie por cliente = {diningArea} m² ÷ {areaPerCustomerWithCirculation} m² = {capacity} (se redondea hacia abajo)"
+  },
+  "examples": {
+    "manual-80-m2": {
+      "title": "Local de 80 m² con 55 % de salón y 1,30 m² por cliente"
+    }
+  }
+}

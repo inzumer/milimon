@@ -1,0 +1,124 @@
+{
+  "title": "Punto de equilibrio",
+  "summary": "Cuánto hay que vender para cubrir todos los costos y cuánto para ganar lo que querés.",
+  "study": {
+    "what": [
+      "El punto de equilibrio es el volumen de ventas en el que los ingresos igualan a los egresos: no se gana ni se pierde, y ya no hay que seguir poniendo plata en el negocio.",
+      "A partir de ese punto, cada peso extra de ventas aporta su contribución a la ganancia. Con la misma fórmula podés calcular cuánto vender para ganar lo que querés."
+    ],
+    "formula": [
+      "Ventas netas = ventas brutas − impuestos",
+      "Tasa de impuestos = ventas brutas ÷ ventas netas",
+      "Tasa de costos variables = costos variables ÷ ventas netas",
+      "Tasa de contribución = 1 − tasa de costos variables",
+      "Punto de equilibrio = costos fijos ÷ tasa de contribución",
+      "Ventas para una ganancia = (costos fijos + ganancia antes de impuestos) ÷ tasa de contribución",
+      "Ventas brutas = ventas netas × tasa de impuestos"
+    ],
+    "variables": [
+      {
+        "name": "Costos variables",
+        "description": "Los que suben y bajan con las ventas: las materias primas (el costo de mercaderías consumidas)."
+      },
+      {
+        "name": "Costos fijos",
+        "description": "Los que no dependen del volumen de ventas en el corto plazo: personal, alquiler, servicios, amortizaciones, tasas."
+      },
+      {
+        "name": "Tasa de contribución",
+        "description": "Qué parte de cada peso de venta neta queda para pagar los costos fijos y generar ganancia."
+      }
+    ],
+    "steps": [
+      "Calculá las ventas netas restando los impuestos.",
+      "Calculá la tasa de impuestos y la de costos variables.",
+      "Calculá la tasa de contribución.",
+      "Dividí los costos fijos por la tasa de contribución.",
+      "Para una ganancia, sumala (antes de impuestos) a los costos fijos antes de dividir.",
+      "Multiplicá por la tasa de impuestos para pasar a ventas brutas."
+    ],
+    "examples": [
+      {
+        "title": "Datos del manual",
+        "paragraphs": [
+          "Ventas brutas $ 1.118.000 − impuestos $ 332.248,05 = ventas netas $ 785.751,95. Tasa de impuestos: 1,42.",
+          "Tasa de costos variables: 270.000 ÷ 785.751,95 = 0,34. Tasa de contribución: 0,66.",
+          "Punto de equilibrio: 313.977 ÷ 0,66 = $ 475.722,73 de ventas netas (con la tasa sin redondear, $ 478.346,31)."
+        ]
+      },
+      {
+        "title": "Ventas para ganar lo que querés",
+        "paragraphs": [
+          "El dueño quiere $ 130.000 netos por mes; antes del impuesto a las ganancias son 130.000 ÷ 0,65 = $ 200.000.",
+          "Ventas netas = (313.977 + 200.000) ÷ 0,66 ≈ $ 778.753. Ventas brutas ≈ 778.753 × 1,42 ≈ $ 1.105.829.",
+          "Con las tasas sin redondear: $ 783.047,80 netos y $ 1.114.152,43 brutos."
+        ]
+      }
+    ],
+    "notes": [
+      {
+        "type": "manual-difference",
+        "text": "El manual suma $ 130.000 (la ganancia neta) como si fuera antes de impuestos y llega a $ 672.692 de ventas netas. Esa ganancia todavía tiene que pagar el 35 % de impuesto a las ganancias, así que con $ 130.000 te quedás corto: por eso acá se usa la ganancia antes de impuestos ($ 200.000)."
+      },
+      {
+        "type": "rounding",
+        "text": "El manual redondea la tasa de contribución a 0,66 y la de impuestos a 1,42. La calculadora usa los valores exactos, por eso los resultados difieren un poco."
+      },
+      {
+        "type": "tip",
+        "text": "La contribución marginal te deja ver rápido cómo impacta subir o bajar costos o precios, sin rearmar todo el cuadro de resultados."
+      }
+    ]
+  },
+  "inputs": {
+    "gross-sales": {
+      "label": "Ventas brutas",
+      "placeholder": "Ventas del período con impuestos incluidos (ej.: 1118000)"
+    },
+    "taxes": {
+      "label": "Impuestos",
+      "placeholder": "Impuestos sobre las ventas + impuesto a las ganancias (ej.: 332248,05)"
+    },
+    "variable-costs": {
+      "label": "Costos variables",
+      "placeholder": "Costo de mercaderías consumidas del período (ej.: 270000)"
+    },
+    "fixed-costs": {
+      "label": "Costos fijos",
+      "placeholder": "Sueldos, cargas, alquiler, servicios, gastos, amortizaciones y tasas (ej.: 313977)"
+    },
+    "desired-profit-before-tax": {
+      "label": "Ganancia deseada antes de impuestos",
+      "placeholder": "Ganancia mensual que querés, antes del impuesto a las ganancias (ej.: 200000)",
+      "hint": "Si pensás en lo que querés cobrar en limpio, dividilo por (1 − 0,35)."
+    }
+  },
+  "outputs": {
+    "net-sales": "Ventas netas",
+    "tax-rate": "Tasa de impuestos",
+    "variable-cost-rate": "Tasa de costos variables",
+    "contribution-rate": "Tasa de contribución",
+    "break-even-net-sales": "Punto de equilibrio (ventas netas)",
+    "break-even-gross-sales": "Punto de equilibrio (ventas brutas)",
+    "target-net-sales": "Ventas netas para tu ganancia",
+    "target-gross-sales": "Ventas brutas para tu ganancia"
+  },
+  "steps": {
+    "net-sales": "Ventas netas = ventas brutas − impuestos = {grossSales} − {taxes} = {netSales}",
+    "tax-rate": "Tasa de impuestos = ventas brutas ÷ ventas netas = {grossSales} ÷ {netSales} = {taxRate}",
+    "variable-cost-rate": "Tasa de costos variables = costos variables ÷ ventas netas = {variableCosts} ÷ {netSales} = {variableCostRate}",
+    "contribution-rate": "Tasa de contribución = 1 − tasa de costos variables = 1 − {variableCostRate} = {contributionRate}",
+    "break-even": "Punto de equilibrio = costos fijos ÷ tasa de contribución = {fixedCosts} ÷ {contributionRate} = {breakEvenNetSales}",
+    "target-sales": "Ventas netas para tu ganancia = (costos fijos + ganancia antes de impuestos) ÷ tasa de contribución = ({fixedCosts} + {desiredProfitBeforeTax}) ÷ {contributionRate} = {targetNetSales}",
+    "target-gross-sales": "Ventas brutas = ventas netas × tasa de impuestos = {targetNetSales} × {taxRate} = {targetGrossSales}"
+  },
+  "examples": {
+    "manual-break-even": {
+      "title": "Datos del manual, con $ 200.000 de ganancia antes de impuestos"
+    }
+  },
+  "errors": {
+    "taxes.must-not-exceed-gross": "Los impuestos no pueden ser iguales o mayores que las ventas brutas.",
+    "variable-costs.must-not-exceed-gross": "Los costos variables tienen que ser menores que las ventas netas."
+  }
+}

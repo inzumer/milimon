@@ -1,0 +1,79 @@
+{
+  "title": "Factor de desecho",
+  "summary": "El número por el que multiplicás lo limpio para saber cuánto comprar sucio.",
+  "study": {
+    "what": [
+      "El factor de desecho es el número por el que multiplicás una cantidad limpia para saber cuánto tenés que comprar sucio. También sirve para convertir un precio sucio en su precio limpio equivalente.",
+      "El manual prefiere calcularlo a partir del % de desecho, porque ese porcentaje lo vas a necesitar en muchas otras cuentas."
+    ],
+    "formula": [
+      "Factor = % de desecho ÷ (100 − % de desecho) + 1",
+      "Es lo mismo que: Factor = 100 ÷ (100 − % de desecho)",
+      "Otra forma: Factor = peso bruto ÷ peso neto"
+    ],
+    "variables": [
+      {
+        "name": "% de desecho",
+        "description": "Qué parte de la mercadería comprada se pierde al limpiarla."
+      },
+      {
+        "name": "100 − % de desecho",
+        "description": "La parte aprovechable: lo que queda limpio de cada 100 que comprás."
+      },
+      {
+        "name": "Factor de desecho",
+        "description": "Cuántas veces más tenés que comprar en bruto respecto de lo que necesitás limpio."
+      }
+    ],
+    "steps": [
+      "Tomá el % de desecho de la materia prima.",
+      "Calculá la parte aprovechable: 100 − % de desecho.",
+      "Dividí el % de desecho por la parte aprovechable.",
+      "Sumale 1."
+    ],
+    "examples": [
+      {
+        "title": "Lomo para tournedó (manual)",
+        "paragraphs": [
+          "El lomo tiene 30 % de desecho, así que se aprovecha el 70 %.",
+          "Factor = 30 ÷ 70 + 1 = 0,4286 + 1 = 1,429.",
+          "Por cada kilo limpio que necesites, tenés que comprar 1,429 kg de lomo entero."
+        ]
+      }
+    ],
+    "notes": [
+      {
+        "type": "common-mistake",
+        "text": "Con 30 % de desecho el factor no es 1,30. Si sumás solo el 30 %, lo que compraste de más también pierde un 30 % al limpiarlo: es \"el desecho del desecho\", y así nunca alcanza."
+      },
+      {
+        "type": "rounding",
+        "text": "Las dos fórmulas dan el mismo resultado. Si ves pequeñas diferencias, vienen de redondear decimales."
+      },
+      {
+        "type": "tip",
+        "text": "Un factor de 1 significa que no hay desecho: el producto se usa tal como se compra."
+      }
+    ]
+  },
+  "inputs": {
+    "waste-percentage": {
+      "label": "% de desecho",
+      "placeholder": "Porcentaje que se pierde al limpiar (ej.: 30)",
+      "hint": "Si no lo sabés, calculalo con la fórmula de % de desecho."
+    }
+  },
+  "outputs": {
+    "usable-percentage": "% aprovechable",
+    "waste-factor": "Factor de desecho"
+  },
+  "steps": {
+    "usable-percentage": "Lo aprovechable = 100 % − % de desecho = 100 % − {wastePercentage} = {usablePercentage}",
+    "waste-factor": "Factor = % de desecho ÷ (100 − % de desecho) + 1 = {wastePercentage} ÷ {usablePercentage} + 1 = {wasteFactor}"
+  },
+  "examples": {
+    "manual-tenderloin": {
+      "title": "Lomo para tournedó con 30 % de desecho"
+    }
+  }
+}

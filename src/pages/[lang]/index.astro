@@ -1,16 +1,70 @@
 ---
-import BaseLayout from '@layouts/base-layout.astro';
-import { LOCALES, toLocale } from '@utils';
+import { Image } from 'astro:assets';
+import logo from '@assets/logo.png';
+import { ButtonLink, FeatureCard } from '@components';
+import { getTranslations } from '@i18n';
+import PageLayout from '@layouts/page-layout.astro';
+import { readAccountConfig } from '@services';
+import { LOCALES, localizedPath, toLocale } from '@utils';
 
 export function getStaticPaths() {
   return LOCALES.map((lang) => ({ params: { lang } }));
 }
 
 const lang = toLocale(Astro.params.lang);
+const common = getTranslations(lang, 'common');
+const home = getTranslations(lang, 'home');
+const accountsEnabled = readAccountConfig(import.meta.env) !== null;
 ---
 
-<BaseLayout lang={lang}>
-  <main>
-    <h1>Milimon Cost Lab</h1>
-  </main>
-</BaseLayout>
+<PageLayout lang={lang}>
+  <section class="flex flex-col items-center gap-4 pb-10 text-center">
+    <Image
+      src={logo}
+      alt={home.hero['logo-alt']}
+      width={224}
+      height={224}
+      densities={[1, 2]}
+      class="size-56"
+      loading="eager"
+      fetchpriority="high"
+    />
+    <h1 class="text-5xl">{common['app-name']}</h1>
+    <p class="max-w-xl text-lg text-[var(--text-secondary)]">{home.hero.subtitle}</p>
+    {accountsEnabled && (
+      <div class="flex flex-col items-center gap-2">
+        <ButtonLink href={localizedPath(lang, 'account')} variant="secondary">
+          {common.nav['sign-in']}
+        </ButtonLink>
+        <p class="text-sm text-[var(--text-secondary)]">{home.hero['sign-in-hint']}</p>
+      </div>
+    )}
+  </section>
+
+  <section class="flex flex-col gap-6">
+    <FeatureCard
+      highlighted
+      headingLevel="h2"
+      title={home['calculator-card'].title}
+      description={home['calculator-card'].description}
+      cta={home['calculator-card'].cta}
+      href={localizedPath(lang, 'calculator')}
+    />
+
+    <h2 class="pt-4 text-3xl">{home['sections-title']}</h2>
+    <div class="grid gap-6 lg:grid-cols-2">
+      <FeatureCard
+        title={home['formulas-card'].title}
+        description={home['formulas-card'].description}
+        cta={home['formulas-card'].cta}
+        href={localizedPath(lang, 'formulas')}
+      />
+      <FeatureCard
+        title={home['learn-card'].title}
+        description={home['learn-card'].description}
+        cta={home['learn-card'].cta}
+        href={localizedPath(lang, 'learn')}
+      />
+    </div>
+  </section>
+</PageLayout>

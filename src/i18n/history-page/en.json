@@ -1,0 +1,26 @@
+{
+  "title": "History",
+  "description": "Your latest 15 saved calculations, complete: what you entered, the result and the step-by-step working.",
+  "list": {
+    "loading": "Loading your history…",
+    "empty": "You haven't saved any calculation yet. In any calculator, once you have a result, tap “Save to history”.",
+    "go-to-calculator": "Go to the calculator",
+    "count": "{count} of {limit} calculations saved",
+    "saved-on": "Saved on {date}",
+    "show": "Show the whole calculation",
+    "hide": "Hide the calculation",
+    "open": "Open in the calculator",
+    "delete": "Delete",
+    "delete-label": "Delete {title} from {date}",
+    "deleted": "Calculation deleted from your history.",
+    "inputs-title": "What you entered",
+    "result-title": "Result",
+    "currency": "Amounts in {currency}",
+    "yes": "Yes",
+    "no": "No",
+    "unavailable": "This calculation can't be shown. You can open it in the calculator to redo it.",
+    "ingredient": "Ingredient",
+    "account-hint": "With an account, your history follows you to any device.",
+    "sign-in": "Sign in"
+  }
+}

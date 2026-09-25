@@ -1,0 +1,158 @@
+/*
+ * Milimon theme — overrides @inzumer/tokens (imported before this file).
+ *
+ * Brand: primary #F6AF27 (amber) · secondary #FDF7F1 (cream) · tertiary #2F201B (brown).
+ * Scales are interpolated in OKLab: primary lightens toward white and darkens toward the brand
+ * brown; neutral runs from cream (50) to brown (950).
+ *
+ * Contrast (WCAG 2.2) checked for every text/background pair used below:
+ *   light — text 14.7 · secondary 6.9 · tertiary 4.9 · link 5.3 · button text 8.3 · focus 5.3
+ *   dark  — text 14.7 · secondary 10.8 · tertiary 6.3 · link 9.4 · button text 8.3 · focus 9.4
+ * Amber on cream is only 1.78:1 → never use primary-500 as text or as the only boundary on light.
+ */
+
+:root {
+  --color-primary-50: 255 247 237;
+  --color-primary-100: 254 238 215;
+  --color-primary-200: 253 223 178;
+  --color-primary-300: 251 207 140;
+  --color-primary-400: 249 190 96;
+  --color-primary-500: 246 175 39;
+  --color-primary-600: 206 147 44;
+  --color-primary-700: 168 119 44;
+  --color-primary-800: 136 96 43;
+  --color-primary-900: 104 74 39;
+  --color-primary-950: 78 55 34;
+
+  --color-neutral-50: 253 247 241;
+  --color-neutral-100: 239 232 226;
+  --color-neutral-200: 221 213 207;
+  --color-neutral-300: 199 190 184;
+  --color-neutral-400: 173 162 156;
+  --color-neutral-500: 143 131 125;
+  --color-neutral-600: 119 106 100;
+  --color-neutral-700: 97 83 77;
+  --color-neutral-800: 78 63 58;
+  --color-neutral-900: 61 46 41;
+  --color-neutral-950: 47 32 27;
+
+  --font-display: 'Lobster Two', ui-serif, Georgia, serif;
+  --font-body: 'Nunito Variable', 'Nunito', ui-sans-serif, system-ui, sans-serif;
+
+  --layout-max-width: 102.4rem; /* 1024px with the 1rem = 10px root */
+  --header-height: 6.4rem;
+
+  color-scheme: light;
+
+  /* Semantic — light */
+  --surface-primary: rgb(var(--color-neutral-50));
+  --surface-secondary: rgb(var(--color-neutral-100));
+  --surface-tertiary: rgb(var(--color-neutral-200));
+  --surface-inverse: rgb(var(--color-neutral-950));
+  --surface-overlay: rgb(var(--color-neutral-950) / 0.5);
+
+  --text-primary: rgb(var(--color-neutral-950));
+  --text-secondary: rgb(var(--color-neutral-700));
+  --text-tertiary: rgb(var(--color-neutral-600));
+  --text-disabled: rgb(var(--color-neutral-400));
+  --text-inverse: rgb(var(--color-neutral-50));
+  --text-link: rgb(var(--color-primary-800));
+  --text-link-hover: rgb(var(--color-primary-900));
+
+  --border-default: rgb(var(--color-neutral-200));
+  --border-muted: rgb(var(--color-neutral-100));
+  --border-strong: rgb(var(--color-neutral-500));
+  --border-focus: rgb(var(--color-primary-800));
+
+  --btn-primary-bg: rgb(var(--color-primary-500));
+  --btn-primary-bg-hover: rgb(var(--color-primary-400));
+  --btn-primary-bg-active: rgb(var(--color-primary-300));
+  --btn-primary-text: rgb(var(--color-neutral-950));
+  --btn-primary-border: transparent;
+
+  --btn-secondary-bg: rgb(var(--color-neutral-100));
+  --btn-secondary-bg-hover: rgb(var(--color-neutral-200));
+  --btn-secondary-bg-active: rgb(var(--color-neutral-300));
+  --btn-secondary-text: rgb(var(--color-neutral-950));
+  --btn-secondary-border: rgb(var(--color-neutral-300));
+
+  --btn-ghost-bg: transparent;
+  --btn-ghost-bg-hover: rgb(var(--color-neutral-100));
+  --btn-ghost-bg-active: rgb(var(--color-neutral-200));
+  --btn-ghost-text: rgb(var(--color-neutral-950));
+  --btn-ghost-border: transparent;
+
+  --input-bg: rgb(var(--color-neutral-50));
+  --input-border: rgb(var(--color-neutral-500));
+  --input-border-focus: rgb(var(--color-primary-800));
+  --input-text: rgb(var(--color-neutral-950));
+  --input-placeholder: rgb(var(--color-neutral-600));
+}
+
+[data-color-scheme='dark'] {
+  color-scheme: dark;
+
+  --surface-primary: rgb(var(--color-neutral-950));
+  --surface-secondary: rgb(var(--color-neutral-900));
+  --surface-tertiary: rgb(var(--color-neutral-800));
+  --surface-inverse: rgb(var(--color-neutral-50));
+  --surface-overlay: rgb(0 0 0 / 0.6);
+
+  --text-primary: rgb(var(--color-neutral-50));
+  --text-secondary: rgb(var(--color-neutral-200));
+  --text-tertiary: rgb(var(--color-neutral-400));
+  --text-disabled: rgb(var(--color-neutral-600));
+  --text-inverse: rgb(var(--color-neutral-950));
+  --text-link: rgb(var(--color-primary-400));
+  --text-link-hover: rgb(var(--color-primary-300));
+
+  --border-default: rgb(var(--color-neutral-800));
+  --border-muted: rgb(var(--color-neutral-900));
+  --border-strong: rgb(var(--color-neutral-500));
+  --border-focus: rgb(var(--color-primary-400));
+
+  --btn-primary-bg: rgb(var(--color-primary-500));
+  --btn-primary-bg-hover: rgb(var(--color-primary-400));
+  --btn-primary-bg-active: rgb(var(--color-primary-300));
+  --btn-primary-text: rgb(var(--color-neutral-950));
+
+  --btn-secondary-bg: rgb(var(--color-neutral-900));
+  --btn-secondary-bg-hover: rgb(var(--color-neutral-800));
+  --btn-secondary-bg-active: rgb(var(--color-neutral-700));
+  --btn-secondary-text: rgb(var(--color-neutral-50));
+  --btn-secondary-border: rgb(var(--color-neutral-700));
+
+  --btn-ghost-bg-hover: rgb(var(--color-neutral-900));
+  --btn-ghost-bg-active: rgb(var(--color-neutral-800));
+  --btn-ghost-text: rgb(var(--color-neutral-50));
+
+  --input-bg: rgb(var(--color-neutral-900));
+  --input-border: rgb(var(--color-neutral-500));
+  --input-border-focus: rgb(var(--color-primary-400));
+  --input-text: rgb(var(--color-neutral-50));
+  --input-placeholder: rgb(var(--color-neutral-400));
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--surface-primary);
+  color: var(--text-primary);
+}
+
+h1,
+h2 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

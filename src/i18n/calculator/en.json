@@ -1,0 +1,37 @@
+{
+  "form-title": "Your data",
+  "result-title": "Result",
+  "steps-title": "Full working",
+  "empty-result": "Fill in the data to see the result and the step-by-step working.",
+  "examples-title": "Try an example",
+  "load-example": "Load",
+  "reset": "Clear data",
+  "example-source": {
+    "manual": "From the handbook",
+    "illustrative": "Illustrative"
+  },
+  "units": {
+    "weight": "kg",
+    "area": "m²",
+    "months": "months",
+    "percentage": "%",
+    "currency": "{currency}"
+  },
+  "errors": {
+    "required": "Please fill in this value.",
+    "invalid-number": "Enter a valid number (for example 2.4).",
+    "must-be-positive": "It must be greater than 0.",
+    "must-be-non-negative": "It can't be negative.",
+    "must-be-below-100": "It must be less than 100%.",
+    "must-be-at-most-100": "It can't exceed 100%.",
+    "must-not-exceed-gross": "It can't be greater than the total.",
+    "must-be-integer": "It must be a whole number.",
+    "needs-at-least-two": "Enter at least two values."
+  },
+  "history": {
+    "save": "Save to history",
+    "saved": "Saved to your history.",
+    "view": "View history",
+    "note": "Your latest 15 calculations are kept, with the data, the result and the steps."
+  }
+}

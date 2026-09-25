@@ -1,0 +1,23 @@
+{
+  "hero": {
+    "subtitle": "Calculá costos, desechos y mermas de tu cocina, y entendé cada fórmula paso a paso.",
+    "logo-alt": "Milimon: una cocinera con gorro de chef y una cuchara de madera",
+    "sign-in-hint": "Opcional: guardá tu configuración y tus cálculos en tu cuenta."
+  },
+  "calculator-card": {
+    "title": "Calculadora",
+    "description": "Elegí la cuenta que necesitás, cargá tus valores y mirá el resultado con todo el desarrollo.",
+    "cta": "Ir a la calculadora"
+  },
+  "sections-title": "Estudiá los temas",
+  "formulas-card": {
+    "title": "Fórmulas",
+    "description": "Cada fórmula explicada: qué significa cada dato, el paso a paso y ejemplos resueltos del manual.",
+    "cta": "Ver fórmulas"
+  },
+  "learn-card": {
+    "title": "Aprender",
+    "description": "Compras, recepción, almacenamiento, costos, precios y punto de equilibrio, con enfoque práctico.",
+    "cta": "Empezar a aprender"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "title": "Menu balance",
+  "summary": "How to spread prices between cheap, medium and expensive items, and how to display them.",
+  "sections": [
+    {
+      "heading": "Omnes' four rules",
+      "items": [
+        "Price proportionality: the most expensive item costs up to 2 or 3 times the cheapest. A business can't be expensive and cheap at the same time.",
+        "Item proportionality: the medium price zone has as many items as the cheap and expensive zones combined.",
+        "Fit between offered and demanded prices: the average ticket must be within ±10% of the average menu price.",
+        "Fit with the customer's budget: the daily special goes in the medium price zone."
+      ]
+    },
+    {
+      "heading": "Price or product strategy",
+      "paragraphs": [
+        "If you compete on price, list prices in a column on the right of the menu: customers focus on the price.",
+        "If you compete on product, place the price as close as possible to the dish description: it has less psychological impact."
+      ]
+    }
+  ]
+}

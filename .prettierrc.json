@@ -17,7 +17,7 @@
     "<BUILTIN_MODULES>",
     "<THIRD_PARTY_MODULES>",
     "^@inzumer/(.*)$",
-    "^(@components|@calculators|@domain|@hooks|@utils|@i18n|@layouts|@assets|@styles)(/.*)?$",
+    "^(@components|@calculators|@domain|@repositories|@services|@hooks|@utils|@i18n|@layouts|@assets|@styles|@test)(/.*)?$",
     "^[./]"
   ],
   "plugins": [
@@ -25,6 +25,13 @@
     "@ianvs/prettier-plugin-sort-imports",
     "prettier-plugin-tailwindcss"
   ],
-  "overrides": [{ "files": "*.astro", "options": { "parser": "astro" } }],
+  "overrides": [
+    {
+      "files": "*.astro",
+      "options": {
+        "parser": "astro"
+      }
+    }
+  ],
   "tailwindStylesheet": "./src/styles/global.css"
 }

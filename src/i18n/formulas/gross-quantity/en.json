@@ -1,0 +1,98 @@
+{
+  "title": "Gross quantity to buy",
+  "summary": "How much to buy as purchased so that, after cleaning, there's enough for every portion.",
+  "study": {
+    "what": [
+      "Recipes state clean quantities. To buy, you need the gross quantity: how much to order as purchased so that, after cleaning, there's enough for every portion.",
+      "The handbook solves it with the waste factor or with the rule of three, and rounds the purchase up."
+    ],
+    "formula": [
+      "Clean quantity needed = portions × clean portion",
+      "Gross quantity = clean quantity × waste factor",
+      "Rule of three: gross quantity = clean quantity × 100 ÷ (100 − trim waste %)"
+    ],
+    "variables": [
+      {
+        "name": "Portions",
+        "description": "How many guests or portions you'll serve."
+      },
+      {
+        "name": "Clean portion",
+        "description": "How much of the clean ingredient each portion takes, according to the recipe."
+      },
+      {
+        "name": "Waste factor",
+        "description": "Comes from the trim waste % of the raw material."
+      },
+      {
+        "name": "Gross quantity",
+        "description": "What you need to buy, before rounding."
+      }
+    ],
+    "steps": [
+      "Multiply the portions by the clean quantity of each one.",
+      "Work out the waste factor of the raw material.",
+      "Multiply the clean quantity needed by the factor.",
+      "Round up to the unit you buy in."
+    ],
+    "examples": [
+      {
+        "title": "Tournedos with potato galette for 200 guests (handbook)",
+        "paragraphs": [
+          "Each portion takes 0.180 kg of clean tenderloin: 200 × 0.180 = 36.000 kg clean.",
+          "The tenderloin has 30% trim, so the factor is 1.429.",
+          "Gross quantity = 36.000 kg × 1.429 = 51.429 kg. With the rule of three: if 70% is 36.000 kg, 100% is 36.000 × 100 ÷ 70 = 51.429 kg.",
+          "Rounding up, you buy 52 kg."
+        ]
+      }
+    ],
+    "notes": [
+      {
+        "type": "common-mistake",
+        "text": "Adding 30% to 36 kg gives 46.8 kg, but cleaning that leaves only 32.76 kg — more than 3 kg short. That's why the factor is used instead of a plain percentage."
+      },
+      {
+        "type": "rounding",
+        "text": "For practical reasons the purchase is rounded up (51.429 → 52 kg). Having a little left over is always better than falling short."
+      }
+    ]
+  },
+  "inputs": {
+    "servings": {
+      "label": "Guests or portions",
+      "placeholder": "Number of portions to serve (e.g. 200)"
+    },
+    "net-portion": {
+      "label": "Clean portion per guest",
+      "placeholder": "Clean recipe quantity per portion, in kg (e.g. 0.180)"
+    },
+    "waste-percentage": {
+      "label": "Trim waste %",
+      "placeholder": "Percentage lost when cleaning (e.g. 30)"
+    },
+    "rounding-step": {
+      "label": "Round the purchase up to multiples of",
+      "placeholder": "Purchase unit you round up to, in kg (e.g. 1)",
+      "hint": "The handbook rounds up to whole kilos: 51.429 kg → 52 kg."
+    }
+  },
+  "outputs": {
+    "net-required": "Clean quantity needed",
+    "waste-factor": "Waste factor",
+    "gross-quantity": "Exact gross quantity",
+    "purchase-quantity": "Quantity to buy",
+    "naive-quantity": "If you just added the % (not enough)"
+  },
+  "steps": {
+    "net-required": "Clean needed = portions × clean portion = {servings} × {netPortion} kg = {netRequired} kg",
+    "waste-factor": "Waste factor for {wastePercentage} = {wasteFactor}",
+    "gross-quantity": "Gross = clean × factor = {netRequired} kg × {wasteFactor} = {grossQuantity} kg",
+    "rule-of-three": "Check with the rule of three: {netRequired} kg × 100 ÷ (100 − {wastePercentage}) = {grossQuantity} kg",
+    "purchase-quantity": "Rounding up to multiples of {roundingStep} kg: you buy {purchaseQuantity} kg"
+  },
+  "examples": {
+    "manual-tournedos": {
+      "title": "Tournedos for 200 guests (0.180 kg tenderloin, 30% trim)"
+    }
+  }
+}

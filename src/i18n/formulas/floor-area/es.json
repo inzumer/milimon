@@ -1,0 +1,83 @@
+{
+  "title": "Superficie del salón",
+  "summary": "Cuántos metros cuadrados de salón necesitás para la cantidad de cubiertos que querés.",
+  "study": {
+    "what": [
+      "Para calcular el salón se usa una superficie por cliente, que depende de la forma y el tamaño de las mesas, cómo se ubican y la categoría del lugar, más un porcentaje para circular.",
+      "Te sirve para saber, antes de alquilar, qué superficie necesitás para la cantidad de cubiertos que querés atender."
+    ],
+    "formula": ["m² necesarios = m² por cliente × (1 + % de circulación) × cantidad de clientes"],
+    "variables": [
+      {
+        "name": "m² por cliente",
+        "description": "Entre 1,10 y 1,50 m² por persona, según el tipo de mesas y la categoría del lugar."
+      },
+      {
+        "name": "Circulación",
+        "description": "Entre 10 % y 20 % extra para que clientes y personal se muevan con comodidad."
+      },
+      {
+        "name": "Cubiertos",
+        "description": "Cuántos clientes querés sentar al mismo tiempo."
+      }
+    ],
+    "steps": [
+      "Elegí la superficie por cliente según tu concepto.",
+      "Sumale el porcentaje de circulación.",
+      "Multiplicá por la cantidad de cubiertos.",
+      "Redondeá hacia arriba."
+    ],
+    "examples": [
+      {
+        "title": "Casa de té de 20 cubiertos (manual)",
+        "paragraphs": [
+          "1,10 m² por persona + 20 % de circulación = 1,32 m² por persona.",
+          "20 cubiertos × 1,32 m² = 26,4 m², que el manual redondea a 27 m²."
+        ]
+      }
+    ],
+    "notes": [
+      {
+        "type": "tip",
+        "text": "En general, la cocina ocupa entre el 15 % y el 25 % del local, el salón entre el 45 % y el 65 %, y los depósitos y servicios entre el 20 % y el 35 %."
+      },
+      {
+        "type": "rounding",
+        "text": "El manual dice que con 1,10 m² se necesitan \"entre 1,20 y 1,30 m²\" por persona; la cuenta exacta da 1,21 m² (con 10 %) y 1,32 m² (con 20 %)."
+      },
+      {
+        "type": "tip",
+        "text": "Si un local no tiene los metros para tus cubiertos con la comodidad prevista, el manual recomienda descartarlo antes que resignar rentabilidad o el concepto del negocio."
+      }
+    ]
+  },
+  "inputs": {
+    "area-per-customer": {
+      "label": "Superficie por cliente",
+      "placeholder": "Metros cuadrados por persona, entre 1,10 y 1,50 (ej.: 1,10)",
+      "hint": "Más separación entre mesas = más categoría y más metros."
+    },
+    "circulation-percentage": {
+      "label": "Circulación",
+      "placeholder": "Porcentaje extra para circular, entre 10 y 20 (ej.: 20)"
+    },
+    "customers": {
+      "label": "Cubiertos",
+      "placeholder": "Cantidad de clientes sentados al mismo tiempo (ej.: 20)"
+    }
+  },
+  "outputs": {
+    "area-per-customer-with-circulation": "Superficie por cliente con circulación",
+    "required-area": "Superficie exacta",
+    "required-area-rounded": "Superficie de salón necesaria"
+  },
+  "steps": {
+    "area-per-customer": "Por cliente con circulación = {areaPerCustomer} m² × (1 + {circulationPercentage}) = {areaPerCustomerWithCirculation} m²",
+    "required-area": "Superficie = por cliente × cubiertos = {areaPerCustomerWithCirculation} m² × {customers} = {requiredArea} m² (se redondea hacia arriba)"
+  },
+  "examples": {
+    "manual-tea-house": {
+      "title": "Casa de té de 20 cubiertos (1,10 m² + 20 %)"
+    }
+  }
+}

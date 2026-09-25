@@ -1,0 +1,75 @@
+{
+  "title": "Rent vs. revenue",
+  "summary": "Check whether the rent is reasonable for what you sell.",
+  "study": {
+    "what": [
+      "Rent is one of the heaviest fixed costs. The handbook suggests it shouldn't exceed 10% of net revenue, and considers 5% optimal.",
+      "It's worth projecting sales before signing, to know whether the rent of the space you like is within those limits."
+    ],
+    "formula": [
+      "Rent share = rent ÷ net revenue × 100",
+      "Revenue for 10% = rent × 100 ÷ 10",
+      "Revenue for 5% = rent × 100 ÷ 5"
+    ],
+    "variables": [
+      {
+        "name": "Rent",
+        "description": "What you pay each month for the premises."
+      },
+      {
+        "name": "Net revenue",
+        "description": "The month's sales excluding taxes."
+      }
+    ],
+    "steps": [
+      "Divide the rent by the net revenue and multiply by 100.",
+      "Compare the result with 5% (optimal) and 10% (maximum)."
+    ],
+    "examples": [
+      {
+        "title": "Handbook rent",
+        "paragraphs": [
+          "With $41,000 of rent and net sales of $785,751.95, rent is 5.22% of revenue: acceptable, just above optimal.",
+          "For it to be 5%, net revenue would have to reach $820,000 a month."
+        ]
+      }
+    ],
+    "notes": [
+      {
+        "type": "tip",
+        "text": "If the space is bigger than you need, try to negotiate the rent in proportion to the meters you'll actually use."
+      }
+    ]
+  },
+  "inputs": {
+    "rent": {
+      "label": "Monthly rent",
+      "placeholder": "What you pay in rent each month (e.g. 41000)"
+    },
+    "net-sales": {
+      "label": "Monthly net revenue",
+      "placeholder": "Sales for the month excluding taxes (e.g. 785751.95)"
+    }
+  },
+  "outputs": {
+    "rent-share": "Rent as a share of revenue",
+    "status": "Assessment",
+    "sales-for-max-share": "Sales for rent to be 10%",
+    "sales-for-optimal-share": "Sales for rent to be 5%"
+  },
+  "steps": {
+    "rent-share": "Rent ÷ net revenue × 100 = {rent} ÷ {netSales} × 100 = {rentShare}",
+    "sales-for-max-share": "To stay within {maxShare}: {rent} × 100 ÷ 10 = {salesForMaxShare}",
+    "sales-for-optimal-share": "To reach the optimal {optimalShare}: {rent} × 100 ÷ 5 = {salesForOptimalShare}"
+  },
+  "examples": {
+    "manual-statement-rent": {
+      "title": "Handbook rent ($41,000) with its net sales"
+    }
+  },
+  "choices": {
+    "optimal": "Optimal: rent is up to 5% of revenue",
+    "acceptable": "Acceptable: between 5% and 10%",
+    "too-high": "High: more than 10% of revenue"
+  }
+}

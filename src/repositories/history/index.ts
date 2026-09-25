@@ -1,0 +1,16 @@
+export {
+  createLocalHistoryRepository,
+  HISTORY_CHANGED_EVENT,
+  HISTORY_LIMIT,
+  HISTORY_STORAGE_KEY,
+  isHistoryEntry,
+  normalizeHistory,
+  onHistoryChange,
+  type HistoryChange,
+  type HistoryEntry,
+  type HistoryHeadline,
+  type HistoryRepository,
+  type NewHistoryEntry,
+  type SavedResult,
+  type SavedStep,
+} from './history-repository';

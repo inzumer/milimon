@@ -1,0 +1,42 @@
+{
+  "title": "El local: salón, cocina y alquiler",
+  "summary": "Cuánto espacio necesitás y cómo repartirlo, antes de firmar un alquiler.",
+  "sections": [
+    {
+      "heading": "Cómo se reparte el local",
+      "items": [
+        "Cocina: entre el 15 % y el 25 % de la superficie.",
+        "Salón: entre el 45 % y el 65 %.",
+        "Depósitos y servicios: entre el 20 % y el 35 %."
+      ],
+      "paragraphs": [
+        "La proporción depende del concepto, el menú, la cantidad de cubiertos, la comodidad que querés ofrecer y cuánto usás productos preelaborados."
+      ]
+    },
+    {
+      "heading": "El salón",
+      "paragraphs": [
+        "Se calcula con una superficie por cliente de entre 1,10 y 1,50 m², más un 10 % a 20 % para circular. Con eso sabés enseguida si un local sirve: si no tiene los metros para tus cubiertos con la comodidad prevista, conviene descartarlo; si es más grande, negociá el alquiler en proporción."
+      ]
+    },
+    {
+      "heading": "La cocina",
+      "paragraphs": [
+        "No hay coeficientes fijos: la cocina crece menos que proporcionalmente con los cubiertos. Se diseña con principios:"
+      ],
+      "items": [
+        "Zonas de trabajo definidas y circuitos cortos.",
+        "Tareas sucias (recepción, lavado) separadas de las limpias (mise en place, cocción, presentación), sin cruces ni retornos.",
+        "Circuitos independientes para personal, mercadería y clientes.",
+        "Cocina y salón al mismo nivel, con circulación en un solo sentido.",
+        "Altura mínima de 3 m, buena ventilación, pisos antideslizantes, mesadas de 85–90 cm de alto y pasillos de 1,20 m."
+      ]
+    },
+    {
+      "heading": "El alquiler",
+      "paragraphs": [
+        "No debería superar el 10 % de la facturación neta, y lo óptimo es un 5 %. Proyectá tus ventas antes de firmar."
+      ]
+    }
+  ]
+}

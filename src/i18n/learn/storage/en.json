@@ -1,0 +1,43 @@
+{
+  "title": "Storage",
+  "summary": "Storing goods properly protects quality and prevents spoilage.",
+  "sections": [
+    {
+      "heading": "Dry goods",
+      "items": [
+        "No moisture and no sunlight.",
+        "Well ventilated.",
+        "Everything off the floor.",
+        "Ideal temperature: 16 °C."
+      ]
+    },
+    {
+      "heading": "Chilled goods",
+      "items": [
+        "No wooden, cardboard or paper containers.",
+        "Use plastic or stainless steel containers.",
+        "Everything covered, with its lid or at least cling film.",
+        "Ideal temperature: 4 °C."
+      ]
+    },
+    {
+      "heading": "Frozen goods",
+      "items": ["The same container rules as chilled goods.", "Labeled with the freezing date."]
+    },
+    {
+      "heading": "Other storerooms",
+      "items": [
+        "Bottle crates: kept apart, so they don't bring pesticides or rodenticides from their original storage.",
+        "Wine: locked, to prevent unauthorized consumption.",
+        "Cleaning products: separate from food, to avoid chemical contamination."
+      ]
+    },
+    {
+      "heading": "FIFO and spoilage",
+      "paragraphs": [
+        "Spoilage is the loss of raw materials, semi-finished or finished products that went bad, almost always because food safety rules weren't followed. Following them protects the customer's health and your wallet too.",
+        "When counting inventory, rotate the stock: first in, first out (FIFO). Keep the oldest items within reach."
+      ]
+    }
+  ]
+}

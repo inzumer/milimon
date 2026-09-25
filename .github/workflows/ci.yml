@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [main]
+    branches: [main, dev]
   pull_request:
-    branches: [main]
+    branches: [main, dev]
 
 concurrency:
   group: ci-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -49,3 +49,6 @@ jobs:
 
       - name: Build
         run: pnpm build
+
+      - name: Accessibility audit
+        run: pnpm audit:a11y

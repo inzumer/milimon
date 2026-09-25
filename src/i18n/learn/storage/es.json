@@ -1,0 +1,46 @@
+{
+  "title": "Almacenamiento",
+  "summary": "Guardar bien la mercadería cuida la calidad y evita el decomiso.",
+  "sections": [
+    {
+      "heading": "Secos",
+      "items": [
+        "Sin humedad y sin luz solar.",
+        "Aireados.",
+        "Todo levantado del piso.",
+        "Temperatura ideal: 16 °C."
+      ]
+    },
+    {
+      "heading": "Refrigerados",
+      "items": [
+        "No ingresar envases de madera, cartón ni papel.",
+        "Usar envases de plástico o acero inoxidable.",
+        "Todo tapado, con su tapa o al menos con film.",
+        "Temperatura ideal: 4 °C."
+      ]
+    },
+    {
+      "heading": "Congelados",
+      "items": [
+        "Las mismas reglas de envases que los refrigerados.",
+        "Rotulado con la fecha de congelado."
+      ]
+    },
+    {
+      "heading": "Otros depósitos",
+      "items": [
+        "Cajones de botellas: aparte, para no contaminar con pesticidas o raticidas de sus depósitos de origen.",
+        "Vinos: bajo llave, para evitar el consumo clandestino.",
+        "Artículos de limpieza: separados de los alimentos, para evitar contaminaciones químicas."
+      ]
+    },
+    {
+      "heading": "PEPS y decomiso",
+      "paragraphs": [
+        "El decomiso es la pérdida de materias primas, semielaborados o productos terminados que están en mal estado, casi siempre por no respetar las normas de seguridad e higiene. Cuidar esas normas protege la salud del cliente y también tu bolsillo.",
+        "Al hacer inventario aprovechá para rotar la mercadería: lo primero que entra es lo primero que sale (PEPS). Dejá lo más antiguo al alcance de la mano."
+      ]
+    }
+  ]
+}
