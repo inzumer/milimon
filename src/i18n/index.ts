@@ -1,5 +1,7 @@
 export {
   formulaText,
+  toCalculatorText,
+  type CalculatorText,
   formulaTranslationSchema,
   getFormulaTranslation,
   toKebabCase,

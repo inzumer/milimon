@@ -1,6 +1,62 @@
 {
   "title": "Trim waste percentage",
   "summary": "How much of what you buy is lost when you clean it.",
+  "study": {
+    "what": [
+      "Many raw materials can't be used exactly as they are bought: they need cleaning, and cleaning removes parts that never reach the plate (peels, seeds, bones, fat, sinew, fish bones, offal). That intentional loss during mise en place is trim waste.",
+      "Knowing the trim waste % of each raw material lets you work out how much to buy and how much money you'll need, cost recipes, compare buying untrimmed vs. trimmed, check the supplier at receiving and check how cleaning is done in the kitchen."
+    ],
+    "formula": ["Trim = gross weight − net weight", "Trim waste % = trim ÷ gross weight × 100"],
+    "variables": [
+      {
+        "name": "Gross weight (as purchased)",
+        "description": "What the product weighs as you buy it, with all its trim."
+      },
+      {
+        "name": "Net weight (clean)",
+        "description": "What is left after cleaning: the quantity ready for the recipe."
+      },
+      {
+        "name": "Trim",
+        "description": "The difference between both weights: what is removed when cleaning."
+      }
+    ],
+    "steps": [
+      "Weigh the product as purchased, before cleaning it.",
+      "Clean it, setting the trim aside.",
+      "Weigh the clean product.",
+      "Subtract: gross weight − net weight = trim weight.",
+      "Divide the trim by the gross weight and multiply by 100."
+    ],
+    "examples": [
+      {
+        "title": "Handbook example",
+        "paragraphs": [
+          "2.400 kg of untrimmed product are weighed. After cleaning, 1.700 kg are left.",
+          "Trim = 2.400 kg − 1.700 kg = 0.700 kg.",
+          "Trim waste % = 0.700 ÷ 2.400 × 100 = 29.17%. The handbook rounds it to 30%."
+        ]
+      }
+    ],
+    "notes": [
+      {
+        "type": "rounding",
+        "text": "The exact result is 29.17% and the handbook uses 30%. Rounding up is conservative (you buy a little extra), but it's worth knowing it's a rounded figure, not the exact value."
+      },
+      {
+        "type": "tip",
+        "text": "Trim waste isn't fixed for a given raw material: it changes with origin, size and the judgment of whoever cleans it, and above all with the recipe it's for. An apple for tarte Tatin isn't trimmed like one for jam."
+      },
+      {
+        "type": "tip",
+        "text": "Conservative approach: count the trim as lost. Business approach: reuse it in other dishes on the menu, adding as much value as possible."
+      },
+      {
+        "type": "common-mistake",
+        "text": "Don't confuse trim waste (removed when cleaning) with cooking loss (lost when cooking), waste from bad practice or spoilage (thrown away because it went bad)."
+      }
+    ]
+  },
   "inputs": {
     "gross-weight": {
       "label": "Gross weight (as purchased)",
@@ -22,7 +78,9 @@
     "waste-percentage": "Trim waste % = trim ÷ gross weight × 100 = {wasteWeight} kg ÷ {grossWeight} kg × 100 = {wastePercentage}"
   },
   "examples": {
-    "manual-cleaning": { "title": "Cleaning 2.400 kg that leaves 1.700 kg clean" }
+    "manual-cleaning": {
+      "title": "Cleaning 2.400 kg that leaves 1.700 kg clean"
+    }
   },
   "errors": {
     "net-weight.must-not-exceed-gross": "The clean weight can't be greater than the gross weight."

@@ -1,6 +1,65 @@
 {
   "title": "Omnes' rules",
   "summary": "Check whether your menu prices are well spread between cheap, medium and expensive.",
+  "study": {
+    "what": [
+      "Once prices are set, the menu should be spread harmoniously between cheap, medium and expensive items, with suitable options for your customers.",
+      "Omnes' rules are four commercial principles: price proportionality, item count per zone, fit between offered and demanded prices, and where to place the daily special."
+    ],
+    "formula": [
+      "Proportionality: most expensive price ≤ 2 to 3 × cheapest price",
+      "Width of each zone = (most expensive − cheapest) ÷ 3",
+      "Balanced menu: half of the items in the medium zone and a quarter at each end",
+      "Average ticket within ±10% of the average menu price",
+      "Daily special in the medium price zone"
+    ],
+    "variables": [
+      {
+        "name": "Average menu price",
+        "description": "The sum of all menu prices divided by the number of items."
+      },
+      {
+        "name": "Average ticket",
+        "description": "What customers pay on average."
+      },
+      {
+        "name": "Zones",
+        "description": "Three ranges of the same width: cheap, medium and expensive."
+      }
+    ],
+    "steps": [
+      "Find the cheapest and the most expensive price, and compare the ratio between them.",
+      "Split the difference into three equal zones.",
+      "Count how many items fall into each zone.",
+      "Work out the average menu price and compare it with the average ticket.",
+      "Check which zone the daily special is in."
+    ],
+    "examples": [
+      {
+        "title": "Bakery with 16 cakes (handbook)",
+        "paragraphs": [
+          "Prices go from $40 to $115: a $75 difference, so zones are $25 wide.",
+          "Cheap: $40 to $65; medium: over $65 up to $90; expensive: over $90 up to $115.",
+          "A balanced menu has 4 cheap, 8 medium and 4 expensive items.",
+          "If the average price is $77.50, a healthy average ticket goes from $69.75 to $85.25."
+        ]
+      }
+    ],
+    "notes": [
+      {
+        "type": "tip",
+        "text": "Customers move within certain price ranges according to their income: a business can't be expensive and cheap at the same time."
+      },
+      {
+        "type": "tip",
+        "text": "If you compete on price, list prices in a column on the right of the menu; if you compete on product, place the price close to the dish description."
+      },
+      {
+        "type": "manual-difference",
+        "text": "The handbook gives the price range and how many cakes fall into each zone, but not the price list: the one in the example is illustrative and follows that split."
+      }
+    ]
+  },
   "inputs": {
     "prices": {
       "label": "Menu prices",

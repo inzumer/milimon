@@ -1,6 +1,53 @@
 {
   "title": "Costo de mercaderías consumidas",
   "summary": "Cuánta mercadería se usó en el período, a partir de los inventarios y las compras.",
+  "study": {
+    "what": [
+      "De todos los importes del cuadro de resultados, el más difícil de obtener es el costo de las mercaderías consumidas (o vendidas). Se calcula con dos inventarios y las compras del período.",
+      "Hacer inventarios periódicos además sirve para detectar faltantes, programar compras, reducir el decomiso y aplicar el PEPS (lo primero que entra es lo primero que sale)."
+    ],
+    "formula": ["CMC = existencia inicial + compras del período − existencia final"],
+    "variables": [
+      {
+        "name": "Existencia inicial",
+        "description": "La mercadería contada y valorizada al empezar el período."
+      },
+      {
+        "name": "Compras del período",
+        "description": "Todo lo que ingresó al negocio durante el período."
+      },
+      {
+        "name": "Existencia final",
+        "description": "La mercadería contada al cerrar el período, valorizada con el mismo método."
+      }
+    ],
+    "steps": [
+      "Contá la mercadería al empezar el período y valorizala.",
+      "Sumá las compras del período.",
+      "Contá la mercadería al cerrar el período y valorizala con el mismo método.",
+      "Restá la existencia final de la suma anterior."
+    ],
+    "examples": [
+      {
+        "title": "Mes del manual",
+        "paragraphs": [
+          "Existencia inicial $ 125.000 + compras $ 245.000 = $ 370.000 disponibles.",
+          "Existencia final: $ 100.000.",
+          "Costo de mercaderías consumidas = 370.000 − 100.000 = $ 270.000. Este valor se usa después para calcular el coeficiente de precios."
+        ]
+      }
+    ],
+    "notes": [
+      {
+        "type": "tip",
+        "text": "Si comparás lo consumido según el inventario con lo registrado en comandas o facturación, detectás faltantes, fugas de mercadería o errores que hay que investigar."
+      },
+      {
+        "type": "common-mistake",
+        "text": "Usá el mismo método de valuación en los dos inventarios; si no, la diferencia no refleja el consumo real."
+      }
+    ]
+  },
   "inputs": {
     "opening-inventory": {
       "label": "Existencia inicial",

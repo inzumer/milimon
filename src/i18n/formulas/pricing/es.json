@@ -1,6 +1,91 @@
 {
   "title": "Coeficiente y precio de venta",
   "summary": "El precio teórico de cada producto: costo × coeficiente, más impuestos y cargos.",
+  "study": {
+    "what": [
+      "El precio de venta tiene que cubrir la materia prima, todos los demás costos del negocio y la ganancia que querés obtener. El manual trata la ganancia deseada como un costo más, y la define antes de decidir la apertura.",
+      "El método usa un coeficiente: se multiplica el costo estándar de cada producto (el de su ficha técnica) y después se suman los impuestos y cargos sobre la venta. El resultado es un precio teórico que tenés que comparar con la competencia y ajustar con criterio comercial."
+    ],
+    "formula": [
+      "Costos no MP = sueldos + cargas sociales + alquiler + servicios + gastos generales + amortizaciones",
+      "Amortización = inversión ÷ 36 meses",
+      "Ganancia neta deseada = inversión × % de retorno anual ÷ 12 + retiro mensual",
+      "Ganancia antes de impuestos = ganancia neta ÷ (1 − 35 %)",
+      "Coeficiente = 1 + (costos no MP + ganancia antes de impuestos) ÷ CMC",
+      "Precio neto = costo estándar unitario × coeficiente",
+      "Precio de carta = precio neto × (1 + IVA + IIBB + tarjetas + Seguridad e Higiene)"
+    ],
+    "variables": [
+      {
+        "name": "Costos no relacionados con la materia prima",
+        "description": "Personal (con cargas sociales), alquiler, servicios, gastos generales y amortización de la inversión."
+      },
+      {
+        "name": "Ganancia deseada",
+        "description": "El retorno que esperás sobre lo invertido más lo que querés retirar por tu trabajo, antes del impuesto a las ganancias."
+      },
+      {
+        "name": "CMC",
+        "description": "Costo de las mercaderías consumidas del mes."
+      },
+      {
+        "name": "Costo estándar unitario",
+        "description": "El costo de materia prima de un producto, según su ficha técnica."
+      }
+    ],
+    "steps": [
+      "Sumá los costos que no son materia prima.",
+      "Definí la ganancia neta deseada y pasala a ganancia antes de impuestos.",
+      "Calculá el costo de mercaderías consumidas del mes.",
+      "Calculá el coeficiente.",
+      "Multiplicá el costo estándar de cada producto por el coeficiente.",
+      "Sumá los impuestos y cargos sobre la venta para obtener el precio de carta."
+    ],
+    "examples": [
+      {
+        "title": "Coeficiente del manual",
+        "paragraphs": [
+          "Costos no MP: sueldos $ 57.000 + cargas (48 %) $ 27.360 + alquiler $ 41.000 + servicios $ 13.000 + gastos generales $ 90.000 + amortización ($ 3.000.000 ÷ 36) $ 83.333,33 = $ 311.693,33.",
+          "Ganancia: $ 3.000.000 × 32 % ÷ 12 = $ 80.000 de retorno + $ 50.000 de retiro = $ 130.000 netos → $ 130.000 ÷ 0,65 = $ 200.000 antes de impuestos.",
+          "Coeficiente = 1 + ($ 311.693,33 + $ 200.000) ÷ $ 270.000 = 2,895."
+        ]
+      },
+      {
+        "title": "Precios de la pastelería",
+        "paragraphs": [
+          "Medialunas: $ 12 × 2,895 = $ 34,74 netos. Sachertorte: $ 42 × 2,895 = $ 121,59 netos.",
+          "Con IVA 21 %, Ingresos Brutos 3 % y Seguridad e Higiene 0,5 % (24,5 %): medialunas $ 34,74 × 1,245 = $ 43,25.",
+          "Sumando la comisión de tarjetas del 5 % (29,5 % en total): $ 34,74 × 1,295 = $ 44,99."
+        ]
+      }
+    ],
+    "notes": [
+      {
+        "type": "manual-difference",
+        "text": "El manual dice \"24,5 % (21 % de IVA, 3 % de Ingresos Brutos, 5 % de tarjetas y 0,5 % de Seguridad e Higiene)\" y usa 1,245, pero esos cuatro componentes suman 29,5 %: el 24,5 % es la suma sin tarjetas. Por eso acá ves el desglose y elegís si cobrás con tarjeta."
+      },
+      {
+        "type": "manual-difference",
+        "text": "El manual muestra $ 43,27 para las medialunas; multiplicando sin redondeos intermedios da $ 43,25."
+      },
+      {
+        "type": "manual-difference",
+        "text": "La planilla de Excel del curso usa 50 % de cargas sociales; seguimos el manual, que usa 48 %."
+      },
+      {
+        "type": "tip",
+        "text": "No fijes precios con la \"tablita del 3\" ni solo mirando a la competencia: combiná el estudio de costos, los precios de la competencia y tu criterio comercial."
+      },
+      {
+        "type": "tip",
+        "text": "Si tu precio queda muy por debajo del mercado, podés subirlo; si queda muy por encima, conviene revisar el producto o sacarlo de la carta."
+      },
+      {
+        "type": "tip",
+        "text": "Como retorno mínimo razonable, el manual propone el doble de lo que rinde un título público a tres años."
+      }
+    ]
+  },
   "inputs": {
     "unit-cost": {
       "label": "Costo estándar unitario",

@@ -3,7 +3,7 @@ import { Button } from '@inzumer/ui-library';
 import { ResultPanel } from '@calculators/FormulaCalculator/ResultPanel';
 import { StepList } from '@calculators/FormulaCalculator/StepList';
 import { NumberField } from '@components/molecules/NumberField';
-import { formulaText, type FormulaTranslation } from '@i18n/formulas';
+import { formulaText, type CalculatorText } from '@i18n/formulas';
 import type { Translations } from '@i18n/translations';
 import type { CalculationsRepository, SettingsRepository } from '@repositories';
 import type { Locale } from '@utils';
@@ -13,7 +13,7 @@ import { RECIPE_EXAMPLE, useRecipeCostingCalculator } from './useRecipeCostingCa
 
 export interface RecipeCostingCalculatorProps {
   lang: Locale;
-  text: FormulaTranslation;
+  text: CalculatorText;
   ui: Translations<'calculator'>;
   calculations?: CalculationsRepository;
   settings?: SettingsRepository;

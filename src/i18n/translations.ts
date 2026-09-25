@@ -3,6 +3,8 @@ import calculatorEn from './calculator/en.json';
 import calculatorEs from './calculator/es.json';
 import commonEn from './common/en.json';
 import commonEs from './common/es.json';
+import formulaPageEn from './formula-page/en.json';
+import formulaPageEs from './formula-page/es.json';
 import homeEn from './home/en.json';
 import homeEs from './home/es.json';
 
@@ -16,6 +18,7 @@ const dictionaries = {
   common: { es: commonEs, en: commonEn satisfies typeof commonEs },
   home: { es: homeEs, en: homeEn satisfies typeof homeEs },
   calculator: { es: calculatorEs, en: calculatorEn satisfies typeof calculatorEs },
+  'formula-page': { es: formulaPageEs, en: formulaPageEn satisfies typeof formulaPageEs },
 } as const;
 
 export type Namespace = keyof typeof dictionaries;

@@ -1,0 +1,34 @@
+{
+  "index": {
+    "title": "Formulas",
+    "intro": "Every calculation in the handbook, explained step by step, with a calculator to practice with your own numbers.",
+    "open": "See formula and calculator"
+  },
+  "groups": {
+    "waste-and-loss": "Trim waste and loss",
+    "recipes": "Recipes and stock",
+    "pricing": "Pricing",
+    "results": "Results",
+    "premises": "The premises"
+  },
+  "sections": {
+    "what": "What it is and why it matters",
+    "formula": "The formula",
+    "variables": "What each value means",
+    "steps": "Step by step",
+    "examples": "Worked examples",
+    "notes": "Study notes",
+    "calculator": "Calculator",
+    "related": "Related formulas"
+  },
+  "notes": {
+    "tip": "Tip",
+    "common-mistake": "Common mistake",
+    "rounding": "Rounding",
+    "manual-difference": "Difference with the handbook"
+  },
+  "breadcrumbs": {
+    "label": "You are here"
+  },
+  "try-calculator": "Try it in the calculator"
+}

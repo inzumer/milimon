@@ -1,6 +1,56 @@
 {
   "title": "Dining room area",
   "summary": "How many square meters of dining room you need for the number of covers you want.",
+  "study": {
+    "what": [
+      "To size the dining room you use an area per customer, which depends on the shape and size of the tables, how they're arranged and the category of the place, plus a percentage for walkways.",
+      "It tells you, before renting, how much space you need for the number of covers you want to serve."
+    ],
+    "formula": ["Area needed = area per customer × (1 + circulation %) × number of customers"],
+    "variables": [
+      {
+        "name": "Area per customer",
+        "description": "Between 1.10 and 1.50 m² per person, depending on the tables and the category of the place."
+      },
+      {
+        "name": "Circulation",
+        "description": "Between 10% and 20% extra so customers and staff can move comfortably."
+      },
+      {
+        "name": "Covers",
+        "description": "How many customers you want to seat at the same time."
+      }
+    ],
+    "steps": [
+      "Choose the area per customer that fits your concept.",
+      "Add the circulation percentage.",
+      "Multiply by the number of covers.",
+      "Round up."
+    ],
+    "examples": [
+      {
+        "title": "Tea house with 20 covers (handbook)",
+        "paragraphs": [
+          "1.10 m² per person + 20% circulation = 1.32 m² per person.",
+          "20 covers × 1.32 m² = 26.4 m², which the handbook rounds to 27 m²."
+        ]
+      }
+    ],
+    "notes": [
+      {
+        "type": "tip",
+        "text": "As a rule of thumb, the kitchen takes 15% to 25% of the premises, the dining room 45% to 65%, and storage and services 20% to 35%."
+      },
+      {
+        "type": "rounding",
+        "text": "The handbook says that with 1.10 m² you need \"between 1.20 and 1.30 m²\" per person; the exact figures are 1.21 m² (10%) and 1.32 m² (20%)."
+      },
+      {
+        "type": "tip",
+        "text": "If a space doesn't have the meters for your covers at the planned comfort level, the handbook recommends passing on it rather than giving up profitability or the concept."
+      }
+    ]
+  },
   "inputs": {
     "area-per-customer": {
       "label": "Area per customer",
@@ -26,6 +76,8 @@
     "required-area": "Area = per customer × covers = {areaPerCustomerWithCirculation} m² × {customers} = {requiredArea} m² (then rounded up)"
   },
   "examples": {
-    "manual-tea-house": { "title": "Tea house with 20 covers (1.10 m² + 20%)" }
+    "manual-tea-house": {
+      "title": "Tea house with 20 covers (1.10 m² + 20%)"
+    }
   }
 }

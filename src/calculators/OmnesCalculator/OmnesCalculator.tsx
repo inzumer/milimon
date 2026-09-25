@@ -5,7 +5,7 @@ import { formatValue, type FormatContext } from '@calculators/shared/format-valu
 import { NumberField } from '@components/molecules/NumberField';
 import type { OmnesOutput } from '@domain/formulas/omnes-rules';
 import type { ValueKind } from '@domain/registry';
-import { formulaText, type FormulaTranslation } from '@i18n/formulas';
+import { formulaText, type CalculatorText } from '@i18n/formulas';
 import type { Translations } from '@i18n/translations';
 import type { CalculationsRepository, SettingsRepository } from '@repositories';
 import { interpolate, type Locale } from '@utils';
@@ -30,7 +30,7 @@ const STEP_KINDS: Record<string, ValueKind> = {
 
 export interface OmnesCalculatorProps {
   lang: Locale;
-  text: FormulaTranslation;
+  text: CalculatorText;
   ui: Translations<'calculator'>;
   calculations?: CalculationsRepository;
   settings?: SettingsRepository;
@@ -42,7 +42,7 @@ const Summary = ({
   context,
 }: {
   value: OmnesOutput;
-  text: FormulaTranslation;
+  text: CalculatorText;
   context: FormatContext;
 }) => {
   const t = formulaText(text);

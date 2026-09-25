@@ -1,6 +1,6 @@
 import { Button, Input } from '@inzumer/ui-library';
 import { NumberField } from '@components/molecules/NumberField';
-import { formulaText, type FormulaTranslation } from '@i18n/formulas';
+import { formulaText, type CalculatorText } from '@i18n/formulas';
 import type { Translations } from '@i18n/translations';
 import { interpolate } from '@utils';
 import type { IngredientField, IngredientRow } from './useRecipeCostingCalculator';
@@ -12,7 +12,7 @@ export interface IngredientCardProps {
   currency: string;
   canRemove: boolean;
   errors: Record<string, string>;
-  text: FormulaTranslation;
+  text: CalculatorText;
   ui: Translations<'calculator'>;
   onChange: (field: IngredientField, value: string) => void;
   onBlur: (field: IngredientField) => void;

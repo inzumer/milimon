@@ -1,6 +1,75 @@
 {
   "title": "Break-even point",
   "summary": "How much you need to sell to cover every cost, and how much to earn what you want.",
+  "study": {
+    "what": [
+      "The break-even point is the sales volume at which revenue equals expenses: you neither win nor lose, and you no longer have to keep putting money into the business.",
+      "From that point on, every extra dollar of sales contributes to profit. With the same formula you can work out how much to sell to earn what you want."
+    ],
+    "formula": [
+      "Net sales = gross sales − taxes",
+      "Tax rate = gross sales ÷ net sales",
+      "Variable cost rate = variable costs ÷ net sales",
+      "Contribution rate = 1 − variable cost rate",
+      "Break-even point = fixed costs ÷ contribution rate",
+      "Sales for a profit = (fixed costs + profit before tax) ÷ contribution rate",
+      "Gross sales = net sales × tax rate"
+    ],
+    "variables": [
+      {
+        "name": "Variable costs",
+        "description": "Costs that go up and down with sales: raw materials (the cost of goods consumed)."
+      },
+      {
+        "name": "Fixed costs",
+        "description": "Costs that don't depend on sales volume in the short term: staff, rent, utilities, amortization, fees."
+      },
+      {
+        "name": "Contribution rate",
+        "description": "The share of each dollar of net sales left to pay fixed costs and generate profit."
+      }
+    ],
+    "steps": [
+      "Work out net sales by subtracting taxes.",
+      "Work out the tax rate and the variable cost rate.",
+      "Work out the contribution rate.",
+      "Divide the fixed costs by the contribution rate.",
+      "For a target profit, add it (before tax) to the fixed costs before dividing.",
+      "Multiply by the tax rate to get gross sales."
+    ],
+    "examples": [
+      {
+        "title": "Handbook data",
+        "paragraphs": [
+          "Gross sales $1,118,000 − taxes $332,248.05 = net sales $785,751.95. Tax rate: 1.42.",
+          "Variable cost rate: 270,000 ÷ 785,751.95 = 0.34. Contribution rate: 0.66.",
+          "Break-even point: 313,977 ÷ 0.66 = $475,722.73 of net sales ($478,346.31 with the unrounded rate)."
+        ]
+      },
+      {
+        "title": "Sales to earn what you want",
+        "paragraphs": [
+          "The owner wants $130,000 net a month; before income tax that's 130,000 ÷ 0.65 = $200,000.",
+          "Net sales = (313,977 + 200,000) ÷ 0.66 ≈ $778,753. Gross sales ≈ 778,753 × 1.42 ≈ $1,105,829.",
+          "With unrounded rates: $783,047.80 net and $1,114,152.43 gross."
+        ]
+      }
+    ],
+    "notes": [
+      {
+        "type": "manual-difference",
+        "text": "The handbook adds $130,000 (the net profit) as if it were before tax and gets $672,692 of net sales. That profit still has to pay 35% income tax, so $130,000 falls short: that's why the profit before tax ($200,000) is used here."
+      },
+      {
+        "type": "rounding",
+        "text": "The handbook rounds the contribution rate to 0.66 and the tax rate to 1.42. The calculator uses exact values, so results differ slightly."
+      },
+      {
+        "type": "tip",
+        "text": "The contribution margin shows quickly how raising or lowering costs or prices affects results, without rebuilding the whole income statement."
+      }
+    ]
+  },
   "inputs": {
     "gross-sales": {
       "label": "Gross sales",
@@ -44,7 +113,9 @@
     "target-gross-sales": "Gross sales = net sales × tax rate = {targetNetSales} × {taxRate} = {targetGrossSales}"
   },
   "examples": {
-    "manual-break-even": { "title": "Handbook data, with $200,000 profit before tax" }
+    "manual-break-even": {
+      "title": "Handbook data, with $200,000 profit before tax"
+    }
   },
   "errors": {
     "taxes.must-not-exceed-gross": "Taxes can't be equal to or greater than gross sales.",

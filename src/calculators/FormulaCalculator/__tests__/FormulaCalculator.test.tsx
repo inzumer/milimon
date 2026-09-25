@@ -53,7 +53,7 @@ describe('FormulaCalculator', () => {
 
     const region = resultRegion();
     expect(within(region).getByText('29,17%')).toBeInTheDocument();
-    expect(within(region).getByText('0,7')).toBeInTheDocument();
+    expect(within(region).getByText('0,7 kg')).toBeInTheDocument();
     expect(
       within(region).getByText('Desecho = peso bruto − peso neto = 2,4 kg − 1,7 kg = 0,7 kg'),
     ).toBeInTheDocument();
@@ -93,7 +93,7 @@ describe('FormulaCalculator', () => {
 
     expect(screen.getByRole('textbox', { name: /Comensales/ })).toHaveValue('200');
     expect(screen.getByRole('textbox', { name: /Porción limpia/ })).toHaveValue('0,18');
-    expect(within(resultRegion()).getByText('52')).toBeInTheDocument();
+    expect(within(resultRegion()).getByText('52 kg')).toBeInTheDocument();
     expect(calculations.loadDraft('gross-quantity')).toMatchObject({ servings: '200' });
     expect(sink).toHaveBeenCalledWith('example_loaded', {
       formula: 'gross-quantity',

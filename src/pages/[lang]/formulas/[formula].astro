@@ -1,0 +1,161 @@
+---
+import { Breadcrumbs } from '@inzumer/ui-library';
+import { FormulaCalculator, OmnesCalculator, RecipeCostingCalculator } from '@calculators';
+import { ButtonLink } from '@components';
+import { FORMULA_IDS, formulasByGroup, getFormula } from '@domain/registry';
+import { getFormulaTranslation, getTranslations, toCalculatorText } from '@i18n';
+import StudyNotes from '@layouts/formula/study-notes.astro';
+import PageLayout from '@layouts/page-layout.astro';
+import { LOCALES, localizedPath, toLocale } from '@utils';
+
+export function getStaticPaths() {
+  return LOCALES.flatMap((lang) => FORMULA_IDS.map((formula) => ({ params: { lang, formula } })));
+}
+
+const lang = toLocale(Astro.params.lang);
+const formula = getFormula(Astro.params.formula as (typeof FORMULA_IDS)[number]);
+const text = getFormulaTranslation(lang, formula.id);
+const common = getTranslations(lang, 'common');
+const page = getTranslations(lang, 'formula-page');
+const ui = getTranslations(lang, 'calculator');
+const { study } = text;
+const calculatorText = toCalculatorText(text);
+const related = formulasByGroup()[formula.group].filter((item) => item.id !== formula.id);
+const section = (key: string) => `section-${key}`;
+---
+
+<PageLayout lang={lang} title={text.title} description={text.summary}>
+  <Breadcrumbs
+    aria-label={page.breadcrumbs.label}
+    items={[
+      { label: common.nav.home, href: localizedPath(lang, 'home') },
+      { label: common.nav.formulas, href: localizedPath(lang, 'formulas') },
+    ]}
+    current={text.title}
+    className="mb-6"
+  />
+
+  <article class="flex flex-col gap-12">
+    <header class="flex flex-col gap-3">
+      <p class="text-sm font-bold tracking-wide text-[var(--text-link)] uppercase">
+        {page.groups[formula.group]}
+      </p>
+      <h1 class="text-5xl">{text.title}</h1>
+      <p class="max-w-2xl text-lg text-[var(--text-secondary)]">{text.summary}</p>
+      <ButtonLink href={`#${section('calculator')}`} className="mt-2 self-start">
+        {page['try-calculator']}
+      </ButtonLink>
+    </header>
+
+    <section aria-labelledby={section('what')} class="flex flex-col gap-4">
+      <h2 id={section('what')} class="text-3xl">
+        {page.sections.what}
+      </h2>
+      {study.what.map((paragraph) => (
+        <p class="max-w-3xl leading-relaxed">{paragraph}</p>
+      ))}
+    </section>
+
+    <section aria-labelledby={section('formula')} class="flex flex-col gap-4">
+      <h2 id={section('formula')} class="text-3xl">
+        {page.sections.formula}
+      </h2>
+      <ul class="flex flex-col gap-2 rounded-xl border-2 border-[rgb(var(--color-primary-500))] bg-[var(--surface-secondary)] p-5 text-lg font-semibold">
+        {study.formula.map((line) => (
+          <li>{line}</li>
+        ))}
+      </ul>
+    </section>
+
+    <section aria-labelledby={section('variables')} class="flex flex-col gap-4">
+      <h2 id={section('variables')} class="text-3xl">
+        {page.sections.variables}
+      </h2>
+      <dl class="grid gap-4 lg:grid-cols-2">
+        {study.variables.map((variable) => (
+          <div class="rounded-lg border border-[var(--border-default)] p-4">
+            <dt class="font-bold">{variable.name}</dt>
+            <dd class="text-[var(--text-secondary)]">{variable.description}</dd>
+          </div>
+        ))}
+      </dl>
+    </section>
+
+    <section aria-labelledby={section('steps')} class="flex flex-col gap-4">
+      <h2 id={section('steps')} class="text-3xl">
+        {page.sections.steps}
+      </h2>
+      <ol class="flex max-w-3xl list-decimal flex-col gap-2 pl-6 marker:font-bold">
+        {study.steps.map((step) => (
+          <li class="pl-1 leading-relaxed">{step}</li>
+        ))}
+      </ol>
+    </section>
+
+    <section aria-labelledby={section('examples')} class="flex flex-col gap-4">
+      <h2 id={section('examples')} class="text-3xl">
+        {page.sections.examples}
+      </h2>
+      {study.examples.map((example) => (
+        <div class="flex flex-col gap-2 rounded-xl bg-[var(--surface-secondary)] p-5">
+          <h3 class="text-xl font-bold">{example.title}</h3>
+          {example.paragraphs.map((paragraph) => (
+            <p class="leading-relaxed tabular-nums">{paragraph}</p>
+          ))}
+        </div>
+      ))}
+    </section>
+
+    <section aria-labelledby={section('notes')} class="flex flex-col gap-4">
+      <h2 id={section('notes')} class="text-3xl">
+        {page.sections.notes}
+      </h2>
+      <StudyNotes notes={study.notes} labels={page.notes} />
+    </section>
+
+    <section
+      id={section('calculator')}
+      aria-labelledby={`${section('calculator')}-title`}
+      class="flex scroll-mt-24 flex-col gap-4"
+    >
+      <h2 id={`${section('calculator')}-title`} class="text-3xl">
+        {page.sections.calculator}
+      </h2>
+      {formula.layout === 'standard' && (
+        <FormulaCalculator
+          client:visible
+          formulaId={formula.id}
+          lang={lang}
+          text={calculatorText}
+          ui={ui}
+        />
+      )}
+      {formula.id === 'omnes-rules' && (
+        <OmnesCalculator client:visible lang={lang} text={calculatorText} ui={ui} />
+      )}
+      {formula.id === 'recipe-costing' && (
+        <RecipeCostingCalculator client:visible lang={lang} text={calculatorText} ui={ui} />
+      )}
+    </section>
+
+    {related.length > 0 && (
+      <nav aria-labelledby={section('related')} class="flex flex-col gap-4">
+        <h2 id={section('related')} class="text-3xl">
+          {page.sections.related}
+        </h2>
+        <ul class="flex flex-col gap-2">
+          {related.map((item) => (
+            <li>
+              <a
+                href={localizedPath(lang, 'formulas', item.id)}
+                class="text-lg font-semibold underline underline-offset-4"
+              >
+                {getFormulaTranslation(lang, item.id).title}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    )}
+  </article>
+</PageLayout>
