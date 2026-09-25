@@ -1,5 +1,5 @@
 import { useId } from 'react';
-import { Button } from '@inzumer/ui-library';
+import { Button, Textarea } from '@inzumer/ui-library';
 import { SaveToHistory } from '@calculators/shared/SaveToHistory';
 import { NumberField } from '@components/molecules/NumberField';
 import { formulaText, type CalculatorText } from '@i18n/formula-text';
@@ -82,33 +82,28 @@ export const OmnesCalculator = ({
         <h3 id={`${id}-form`} className="text-lg font-bold">
           {ui['form-title']}
         </h3>
-        <div className="flex flex-col gap-1.5">
-          <label htmlFor={`${id}-prices`} className="text-sm font-semibold">
-            {pricesText.label} ({calculator.currency})
-          </label>
-          <textarea
-            id={`${id}-prices`}
-            rows={8}
-            value={calculator.prices}
-            placeholder={pricesText.placeholder}
-            aria-describedby={`${id}-prices-help`}
-            aria-invalid={showListError ? 'true' : undefined}
-            onChange={(event) => calculator.setField('prices', event.target.value)}
-            onBlur={calculator.touch}
-            className="rounded-md border border-[var(--input-border)] bg-[var(--input-bg)] p-3 text-base text-[var(--input-text)] tabular-nums placeholder:text-[var(--input-placeholder)] focus-visible:border-[var(--input-border-focus)] focus-visible:ring-2 focus-visible:ring-[var(--border-focus)] focus-visible:outline-none"
-          />
-          <p id={`${id}-prices-help`} className="text-sm text-[var(--text-secondary)]">
-            {t.label('prices-hint')}{' '}
-            {interpolate(t.label('prices-count'), {
-              count: calculator.list.prices.length,
-            })}
-          </p>
-          {showListError && (
-            <p role="alert" className="text-sm text-[var(--border-error)]">
-              {invalid.length > 0 ? listError : ui.errors[listError as keyof typeof ui.errors]}
-            </p>
-          )}
-        </div>
+        <Textarea
+          id={`${id}-prices`}
+          label={`${pricesText.label} (${calculator.currency})`}
+          rows={8}
+          inputSize="lg"
+          className="tabular-nums"
+          value={calculator.prices}
+          placeholder={pricesText.placeholder}
+          hint={`${t.label('prices-hint')} ${interpolate(t.label('prices-count'), {
+            count: calculator.list.prices.length,
+          })}`}
+          {...(showListError
+            ? {
+                error:
+                  invalid.length > 0
+                    ? (listError as string)
+                    : ui.errors[listError as keyof typeof ui.errors],
+              }
+            : {})}
+          onChange={(event) => calculator.setField('prices', event.target.value)}
+          onBlur={calculator.touch}
+        />
         {optional('averageTicket', 'average-ticket')}
         {optional('dailySpecialPrice', 'daily-special-price')}
         <Button
