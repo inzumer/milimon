@@ -1,8 +1,8 @@
 import { Switch } from '@inzumer/ui-library';
 import { NumberField } from '@components/molecules/NumberField';
 import type { InputDefinition } from '@domain/registry';
-import type { CalculatorText } from '@i18n/formulas';
-import { formulaText, toKebabCase } from '@i18n/formulas';
+import type { CalculatorText } from '@i18n/formula-text';
+import { formulaText, toKebabCase } from '@i18n/formula-text';
 import type { Translations } from '@i18n/translations';
 import type { CalculatorDraft } from '@repositories';
 import { interpolate } from '@utils';

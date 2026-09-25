@@ -1,0 +1,10 @@
+{
+  "title": "Calculator",
+  "intro": "Pick the calculation you need, enter your data and see the result with the full working. If in doubt, each calculation has its step-by-step explanation.",
+  "select-label": "What do you want to calculate?",
+  "select-placeholder": "Pick a calculation…",
+  "how-it-works": "How is it calculated? See the explanation",
+  "loading": "Loading the calculator…",
+  "load-error": "We couldn't load the calculator. Please try again.",
+  "empty": "Pick a calculation from the list to start."
+}

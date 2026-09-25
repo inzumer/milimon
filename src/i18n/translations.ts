@@ -1,4 +1,6 @@
 import type { Locale } from '@utils/locale';
+import calculatorPageEn from './calculator-page/en.json';
+import calculatorPageEs from './calculator-page/es.json';
 import calculatorEn from './calculator/en.json';
 import calculatorEs from './calculator/es.json';
 import commonEn from './common/en.json';
@@ -18,6 +20,10 @@ const dictionaries = {
   common: { es: commonEs, en: commonEn satisfies typeof commonEs },
   home: { es: homeEs, en: homeEn satisfies typeof homeEs },
   calculator: { es: calculatorEs, en: calculatorEn satisfies typeof calculatorEs },
+  'calculator-page': {
+    es: calculatorPageEs,
+    en: calculatorPageEn satisfies typeof calculatorPageEs,
+  },
   'formula-page': { es: formulaPageEs, en: formulaPageEn satisfies typeof formulaPageEs },
 } as const;
 

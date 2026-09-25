@@ -1,6 +1,6 @@
 import { Button, Input } from '@inzumer/ui-library';
 import { NumberField } from '@components/molecules/NumberField';
-import { formulaText, type CalculatorText } from '@i18n/formulas';
+import { formulaText, type CalculatorText } from '@i18n/formula-text';
 import type { Translations } from '@i18n/translations';
 import { interpolate } from '@utils';
 import type { IngredientField, IngredientRow } from './useRecipeCostingCalculator';
