@@ -1,0 +1,53 @@
+---
+import { Image } from 'astro:assets';
+import logo from '@assets/logo.png';
+import { SiteMenu } from '@components';
+import { getTranslations } from '@i18n';
+import { localizedPath, type Locale } from '@utils';
+
+interface Props {
+  lang: Locale;
+  pathname: string;
+}
+
+const { lang, pathname } = Astro.props;
+const common = getTranslations(lang, 'common');
+
+const items = [
+  { href: localizedPath(lang, 'home'), label: common.nav.home },
+  { href: localizedPath(lang, 'calculator'), label: common.nav.calculator },
+  { href: localizedPath(lang, 'formulas'), label: common.nav.formulas },
+  { href: localizedPath(lang, 'learn'), label: common.nav.learn },
+];
+
+const labels = {
+  open: common.menu.open,
+  close: common.menu.close,
+  title: common.menu.title,
+  navigation: common.nav.label,
+  preferences: common.menu.preferences,
+  language: common.language.label,
+  darkMode: common.theme['dark-mode'],
+};
+---
+
+<header class="sticky top-0 z-40 border-b border-[var(--border-default)] bg-[var(--surface-primary)]">
+  <div class="mx-auto flex h-header w-full max-w-layout items-center justify-between gap-4 px-4">
+    <a
+      href={localizedPath(lang, 'home')}
+      class="flex min-h-11 items-center gap-3 rounded-lg text-[var(--text-primary)] no-underline hover:text-[var(--text-primary)] focus-visible:ring-2 focus-visible:ring-[var(--border-focus)] focus-visible:outline-none"
+    >
+      <Image
+        src={logo}
+        alt=""
+        width={44}
+        height={44}
+        densities={[1, 2]}
+        class="size-11 rounded-full"
+        loading="eager"
+      />
+      <span class="font-display text-2xl font-bold">{common['app-name']}</span>
+    </a>
+    <SiteMenu client:load lang={lang} pathname={pathname} items={items} labels={labels} />
+  </div>
+</header>

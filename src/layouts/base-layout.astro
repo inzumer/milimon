@@ -1,15 +1,21 @@
 ---
 import '@styles/global.css';
+import nunitoLatin from '@fontsource-variable/nunito/files/nunito-latin-wght-normal.woff2?url';
+import lobsterLatin from '@fontsource/lobster-two/files/lobster-two-latin-700-normal.woff2?url';
+import { getTranslations } from '@i18n';
+import { SETTINGS_STORAGE_KEY } from '@repositories';
 import type { Locale } from '@utils';
 
 interface Props {
   lang: Locale;
-  title?: string;
+  title?: string | undefined;
+  description?: string | undefined;
 }
 
-const { lang, title } = Astro.props;
-const appName = 'Milimon Cost Lab';
-const pageTitle = title ? `${title} · ${appName}` : appName;
+const { lang, title, description } = Astro.props;
+const common = getTranslations(lang, 'common');
+const pageTitle = title ? `${title} · ${common['app-name']}` : common['app-name'];
+const pageDescription = description ?? common.meta.description;
 ---
 
 <!doctype html>
@@ -18,9 +24,43 @@ const pageTitle = title ? `${title} · ${appName}` : appName;
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#FDF7F1" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#2F201B" media="(prefers-color-scheme: dark)" />
     <title>{pageTitle}</title>
+    <meta name="description" content={pageDescription} />
+    <link rel="preload" href={nunitoLatin} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={lobsterLatin} as="font" type="font/woff2" crossorigin />
+    {/*
+      Applies the color scheme before the first paint (no flash of the wrong theme).
+      Explicit choice from the settings repository wins; otherwise it follows the OS, live.
+    */}
+    <script is:inline define:vars={{ storageKey: SETTINGS_STORAGE_KEY }}>
+      (() => {
+        const root = document.documentElement;
+        const media = window.matchMedia('(prefers-color-scheme: dark)');
+        const stored = () => {
+          try {
+            const scheme = JSON.parse(localStorage.getItem(storageKey) || 'null')?.colorScheme;
+            return scheme === 'dark' || scheme === 'light' ? scheme : null;
+          } catch {
+            return null;
+          }
+        };
+        const apply = () => {
+          root.dataset.colorScheme = stored() ?? (media.matches ? 'dark' : 'light');
+        };
+        apply();
+        media.addEventListener('change', () => {
+          if (!stored()) {
+            apply();
+          }
+        });
+      })();
+    </script>
+    <slot name="head" />
   </head>
-  <body>
+  <body class="min-h-dvh antialiased">
     <slot />
   </body>
 </html>

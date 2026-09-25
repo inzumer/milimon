@@ -1,11 +1,14 @@
 /*
- * Global stylesheet — Tailwind v4 + @inzumer/tokens.
- * Brand overrides (Milimon palette, light/dark) and fonts are added in phase F1.
+ * Global stylesheet — Tailwind v4 + @inzumer/tokens + Milimon theme.
+ * Order matters: tokens variables first, then theme.css overrides them (same specificity, later wins).
  */
 @import 'tailwindcss';
 @import '@inzumer/tokens/css/reset' layer(base);
 @import '@inzumer/tokens/css/variables';
 @import '@inzumer/tokens/css/typography' layer(base);
+@import '@fontsource/lobster-two/latin-700.css';
+@import '@fontsource-variable/nunito/wght.css';
+@import './theme.css';
 
 @config '../../tailwind.config.ts';
 

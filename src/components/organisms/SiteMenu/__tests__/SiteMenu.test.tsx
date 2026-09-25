@@ -1,0 +1,91 @@
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { setAnalyticsSink } from '@utils';
+import { SiteMenu, type SiteMenuProps } from '../SiteMenu';
+
+const props: SiteMenuProps = {
+  lang: 'es',
+  pathname: '/es/formulas/cooking-loss',
+  items: [
+    { href: '/es', label: 'Inicio' },
+    { href: '/es/calculator', label: 'Calculadora' },
+    { href: '/es/formulas', label: 'Fórmulas' },
+  ],
+  labels: {
+    open: 'Abrir menú',
+    close: 'Cerrar menú',
+    title: 'Menú',
+    navigation: 'Navegación principal',
+    preferences: 'Preferencias',
+    language: 'Idioma',
+    darkMode: 'Modo oscuro',
+  },
+};
+
+const openMenu = async () => {
+  const user = userEvent.setup();
+  render(<SiteMenu {...props} />);
+  await user.click(screen.getByRole('button', { name: 'Abrir menú' }));
+  return user;
+};
+
+describe('SiteMenu', () => {
+  afterEach(() => {
+    setAnalyticsSink(null);
+  });
+
+  it('renders a collapsed hamburger button', () => {
+    render(<SiteMenu {...props} />);
+    const trigger = screen.getByRole('button', { name: 'Abrir menú' });
+    expect(trigger).toHaveAttribute('aria-expanded', 'false');
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+  });
+
+  it('opens a modal dialog with the navigation and preferences', async () => {
+    const sink = vi.fn();
+    setAnalyticsSink(sink);
+    await openMenu();
+
+    expect(screen.getByRole('dialog', { name: 'Menú' })).toHaveAttribute('aria-modal', 'true');
+    expect(screen.getByRole('button', { name: 'Abrir menú' })).toHaveAttribute(
+      'aria-expanded',
+      'true',
+    );
+    expect(screen.getByRole('navigation', { name: 'Navegación principal' })).toBeInTheDocument();
+    expect(screen.getByRole('listbox', { name: 'Idioma' })).toBeInTheDocument();
+    expect(screen.getByRole('switch', { name: 'Modo oscuro' })).toBeInTheDocument();
+    expect(sink).toHaveBeenCalledWith('menu_opened', {});
+  });
+
+  it('marks the current section with aria-current', async () => {
+    await openMenu();
+    expect(screen.getByRole('link', { name: 'Fórmulas' })).toHaveAttribute('aria-current', 'page');
+    expect(screen.getByRole('link', { name: 'Inicio' })).not.toHaveAttribute('aria-current');
+  });
+
+  it('moves focus into the dialog', async () => {
+    await openMenu();
+    expect(screen.getByRole('button', { name: 'Cerrar menú' })).toHaveFocus();
+  });
+
+  it('closes with the close button and returns focus to the trigger', async () => {
+    const user = await openMenu();
+    await user.click(screen.getByRole('button', { name: 'Cerrar menú' }));
+
+    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument());
+    expect(screen.getByRole('button', { name: 'Abrir menú' })).toHaveFocus();
+  });
+
+  it('closes with Escape', async () => {
+    const user = await openMenu();
+    await user.keyboard('{Escape}');
+    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument());
+  });
+
+  it('locks page scroll while open', async () => {
+    const user = await openMenu();
+    expect(document.body.style.overflow).toBe('hidden');
+    await user.keyboard('{Escape}');
+    await waitFor(() => expect(document.body.style.overflow).toBe(''));
+  });
+});

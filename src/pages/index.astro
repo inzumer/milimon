@@ -1,7 +1,52 @@
 ---
-import { DEFAULT_LOCALE } from '@utils';
+import { SETTINGS_STORAGE_KEY } from '@repositories';
+import { DEFAULT_LOCALE, LOCALES } from '@utils';
 
-// Static output: Astro emits an HTML redirect to the default locale.
-// Browser-language detection is added in phase F1.
-return Astro.redirect(`/${DEFAULT_LOCALE}`);
+// Static output: pick the language on the client. Saved choice → browser languages → default.
+// Without JavaScript, the <noscript> refresh sends visitors to the default locale.
+const fallback = `/${DEFAULT_LOCALE}`;
 ---
+
+<!doctype html>
+<html lang={DEFAULT_LOCALE}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>Milimon Cost Lab</title>
+    <script
+      is:inline
+      define:vars={{
+        storageKey: SETTINGS_STORAGE_KEY,
+        locales: LOCALES,
+        fallbackLocale: DEFAULT_LOCALE,
+      }}
+    >
+      (() => {
+        let lang = null;
+        try {
+          const saved = JSON.parse(localStorage.getItem(storageKey) || 'null')?.locale;
+          lang = locales.includes(saved) ? saved : null;
+        } catch {
+          lang = null;
+        }
+        if (!lang) {
+          const preferred = navigator.languages?.length
+            ? navigator.languages
+            : [navigator.language];
+          lang =
+            preferred
+              .map((tag) => String(tag).slice(0, 2).toLowerCase())
+              .find((code) => locales.includes(code)) ?? fallbackLocale;
+        }
+        window.location.replace(`/${lang}`);
+      })();
+    </script>
+    <noscript>
+      <meta http-equiv="refresh" content={`0; url=${fallback}`} />
+    </noscript>
+  </head>
+  <body>
+    <a href={fallback}>Milimon Cost Lab</a>
+  </body>
+</html>

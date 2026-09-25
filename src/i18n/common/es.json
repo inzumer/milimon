@@ -1,0 +1,36 @@
+{
+  "app-name": "Milimon Cost Lab",
+  "skip-to-content": "Saltar al contenido",
+  "meta": {
+    "description": "Calculadora y manual de estudio de costos, desechos y mermas en gastronomía, con cada fórmula explicada paso a paso."
+  },
+  "nav": {
+    "label": "Navegación principal",
+    "home": "Inicio",
+    "calculator": "Calculadora",
+    "formulas": "Fórmulas",
+    "learn": "Aprender"
+  },
+  "menu": {
+    "open": "Abrir menú",
+    "close": "Cerrar menú",
+    "title": "Menú",
+    "preferences": "Preferencias"
+  },
+  "language": {
+    "label": "Idioma",
+    "current": "Español"
+  },
+  "theme": {
+    "dark-mode": "Modo oscuro"
+  },
+  "footer": {
+    "tagline": "Manual de estudio de costos en gastronomía.",
+    "source": "Basado en el manual de Administración y Gestión gastronómica."
+  },
+  "not-found": {
+    "title": "Página no encontrada",
+    "description": "La página que buscás no existe o todavía no está disponible.",
+    "back-home": "Volver al inicio"
+  }
+}

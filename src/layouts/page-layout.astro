@@ -1,0 +1,36 @@
+---
+import { getTranslations } from '@i18n';
+import type { Locale } from '@utils';
+import BaseLayout from './base-layout.astro';
+import SiteFooter from './site-footer.astro';
+import SiteHeader from './site-header.astro';
+
+interface Props {
+  lang: Locale;
+  title?: string | undefined;
+  description?: string | undefined;
+}
+
+const { lang, title, description } = Astro.props;
+const common = getTranslations(lang, 'common');
+---
+
+<BaseLayout lang={lang} title={title} description={description}>
+  <a
+    href="#main"
+    class="sr-only z-50 rounded-lg bg-[var(--btn-primary-bg)] px-4 py-3 font-semibold text-[var(--btn-primary-text)] focus:not-sr-only focus:fixed focus:top-2 focus:left-2"
+  >
+    {common['skip-to-content']}
+  </a>
+  <div class="flex min-h-dvh flex-col">
+    <SiteHeader lang={lang} pathname={Astro.url.pathname} />
+    <main
+      id="main"
+      tabindex="-1"
+      class="mx-auto w-full max-w-layout flex-1 px-4 py-8 focus:outline-none"
+    >
+      <slot />
+    </main>
+    <SiteFooter lang={lang} />
+  </div>
+</BaseLayout>
