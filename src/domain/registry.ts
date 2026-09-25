@@ -98,6 +98,8 @@ export interface StandardFormulaDefinition extends BaseDefinition {
   layout: 'standard';
   inputs: InputDefinition[];
   outputs: OutputDefinition[];
+  /** Kinds of intermediate values that appear in the worked steps but aren't inputs or outputs. */
+  stepValueKinds?: Record<string, ValueKind>;
   calculate: (values: FormulaValues) => CalculationResult<object>;
 }
 
@@ -278,6 +280,12 @@ export const FORMULAS: Record<FormulaId, FormulaDefinition> = {
     id: 'pricing',
     group: 'pricing',
     layout: 'standard',
+    stepValueKinds: {
+      socialCharges: 'currency',
+      amortization: 'currency',
+      monthlyReturn: 'currency',
+      netProfit: 'currency',
+    },
     inputs: [
       { key: 'unitCost', kind: 'currency' },
       { key: 'costOfGoodsConsumed', kind: 'currency' },
@@ -365,6 +373,7 @@ export const FORMULAS: Record<FormulaId, FormulaDefinition> = {
     id: 'income-statement',
     group: 'results',
     layout: 'standard',
+    stepValueKinds: { fixedCosts: 'currency' },
     inputs: [
       { key: 'foodSales', kind: 'currency' },
       { key: 'beverageSales', kind: 'currency' },
@@ -537,6 +546,7 @@ export const FORMULAS: Record<FormulaId, FormulaDefinition> = {
     id: 'rent-check',
     group: 'premises',
     layout: 'standard',
+    stepValueKinds: { maxShare: 'percentage', optimalShare: 'percentage' },
     inputs: [
       { key: 'rent', kind: 'currency' },
       { key: 'netSales', kind: 'currency' },
@@ -574,3 +584,12 @@ export const formulasByGroup = (): Record<FormulaGroup, FormulaDefinition[]> =>
 /** Initial form values: the manual defaults for parameters, `null` (empty) for data. */
 export const initialValues = (formula: StandardFormulaDefinition): FormulaValues =>
   Object.fromEntries(formula.inputs.map((input) => [input.key, input.defaultValue ?? null]));
+
+/** Kind of every value a formula can show (inputs, outputs and intermediate step values). */
+export const valueKinds = (
+  formula: StandardFormulaDefinition,
+): Record<string, ValueKind | 'text'> => ({
+  ...Object.fromEntries(formula.inputs.map((input) => [input.key, input.kind])),
+  ...Object.fromEntries(formula.outputs.map((output) => [output.key, output.kind])),
+  ...formula.stepValueKinds,
+});

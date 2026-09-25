@@ -1,0 +1,101 @@
+{
+  "title": "Pricing coefficient and selling price",
+  "summary": "The theoretical price of each product: cost × coefficient, plus taxes and fees.",
+  "inputs": {
+    "unit-cost": {
+      "label": "Standard unit cost",
+      "placeholder": "Raw material cost of the product from its recipe card (e.g. 12)"
+    },
+    "cost-of-goods-consumed": {
+      "label": "Cost of goods consumed (month)",
+      "placeholder": "Opening inventory + purchases − closing inventory (e.g. 270000)"
+    },
+    "salaries": {
+      "label": "Salaries (month)",
+      "placeholder": "Total staff salaries, including the owner's if they work there (e.g. 57000)"
+    },
+    "social-charges-rate": {
+      "label": "Payroll charges",
+      "placeholder": "Percentage on top of salaries (e.g. 48)"
+    },
+    "rent": {
+      "label": "Rent (month)",
+      "placeholder": "Monthly rent of the premises (e.g. 41000)"
+    },
+    "services": {
+      "label": "Utilities (month)",
+      "placeholder": "Electricity, gas, water, internet and other utilities (e.g. 13000)"
+    },
+    "general-expenses": {
+      "label": "General expenses (month)",
+      "placeholder": "Cleaning, laundry, stationery, professional fees, etc. (e.g. 90000)"
+    },
+    "investment": {
+      "label": "Investment",
+      "placeholder": "Total invested to open the business (e.g. 3000000)"
+    },
+    "amortization-months": {
+      "label": "Amortization period",
+      "placeholder": "Months over which the investment is written off (e.g. 36)",
+      "hint": "The handbook assumes equipment is worth nothing after 3 years."
+    },
+    "annual-return-rate": {
+      "label": "Expected annual return on investment",
+      "placeholder": "Annual percentage you want to earn as an investor (e.g. 32)",
+      "hint": "At least twice what a government bond yields."
+    },
+    "monthly-withdrawal": {
+      "label": "Owner's monthly draw",
+      "placeholder": "What you want to take home monthly for your work, net (e.g. 50000)"
+    },
+    "income-tax-rate": {
+      "label": "Income tax",
+      "placeholder": "Rate on profit (e.g. 35)"
+    },
+    "vat-rate": {
+      "label": "VAT",
+      "placeholder": "VAT rate (e.g. 21)"
+    },
+    "gross-income-tax-rate": {
+      "label": "Gross income tax",
+      "placeholder": "Provincial gross income tax rate (e.g. 3)"
+    },
+    "safety-hygiene-rate": {
+      "label": "Health & safety levy",
+      "placeholder": "Municipal levy rate (e.g. 0.5)"
+    },
+    "include-card-fee": {
+      "label": "Do you accept cards?",
+      "placeholder": "Add the card processing fee to the price"
+    },
+    "card-fee-rate": {
+      "label": "Card processing fee",
+      "placeholder": "Percentage charged by the card issuer (e.g. 5)"
+    }
+  },
+  "outputs": {
+    "non-raw-material-costs": "Costs not related to raw materials",
+    "gross-profit": "Desired profit before tax",
+    "coefficient": "Coefficient",
+    "net-price": "Net price",
+    "sales-tax-rate": "Taxes and fees on the price",
+    "gross-price": "Menu price"
+  },
+  "steps": {
+    "social-charges": "Payroll charges = salaries × {socialChargesRate} = {salaries} × {socialChargesRate} = {socialCharges}",
+    "amortization": "Amortization = investment ÷ months = {investment} ÷ {amortizationMonths} = {amortization}",
+    "non-raw-material-costs": "Non-raw-material costs = salaries + charges + rent + utilities + general expenses + amortization = {salaries} + {socialCharges} + {rent} + {services} + {generalExpenses} + {amortization} = {nonRawMaterialCosts}",
+    "monthly-return": "Monthly return = investment × {annualReturnRate} ÷ 12 = {investment} × {annualReturnRate} ÷ 12 = {monthlyReturn}",
+    "net-profit": "Desired net profit = monthly return + draw = {monthlyReturn} + {monthlyWithdrawal} = {netProfit}",
+    "gross-profit": "Profit before tax = net profit ÷ (1 − {incomeTaxRate}) = {netProfit} ÷ (1 − {incomeTaxRate}) = {grossProfit}",
+    "coefficient": "Coefficient = 1 + (non-raw-material costs + profit before tax) ÷ COGS = 1 + ({nonRawMaterialCosts} + {grossProfit}) ÷ {costOfGoodsConsumed} = {coefficient}",
+    "net-price": "Net price = unit cost × coefficient = {unitCost} × {coefficient} = {netPrice}",
+    "sales-tax-rate": "Taxes and fees = VAT + gross income tax + cards + health & safety = {vatRate} + {grossIncomeTaxRate} + {cardFeeRate} + {safetyHygieneRate} = {salesTaxRate}",
+    "gross-price": "Menu price = net price × (1 + {salesTaxRate}) = {netPrice} × (1 + {salesTaxRate}) = {grossPrice}"
+  },
+  "examples": {
+    "manual-croissants": {
+      "title": "Handbook croissants: $12 cost (no card fee, as in the example)"
+    }
+  }
+}

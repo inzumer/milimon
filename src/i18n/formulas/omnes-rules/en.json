@@ -1,0 +1,51 @@
+{
+  "title": "Omnes' rules",
+  "summary": "Check whether your menu prices are well spread between cheap, medium and expensive.",
+  "inputs": {
+    "prices": {
+      "label": "Menu prices",
+      "placeholder": "Price of one item (e.g. 40)"
+    },
+    "average-ticket": {
+      "label": "Average ticket",
+      "placeholder": "What each customer pays per item on average (e.g. 80)",
+      "hint": "Optional."
+    },
+    "daily-special-price": {
+      "label": "Daily special price",
+      "placeholder": "Price of the suggested dish (e.g. 75)",
+      "hint": "Optional."
+    }
+  },
+  "outputs": {
+    "price-ratio": "Most expensive ÷ cheapest",
+    "zones": "Price zones",
+    "distribution": "Distribution",
+    "average-price": "Average menu price",
+    "ticket": "Average ticket",
+    "daily-special": "Daily special"
+  },
+  "steps": {
+    "price-ratio": "Ratio = most expensive ÷ cheapest = {maxPrice} ÷ {minPrice} = {priceRatio}",
+    "zone-width": "Width of each zone = (most expensive − cheapest) ÷ 3 = ({maxPrice} − {minPrice}) ÷ 3 = {zoneWidth}",
+    "zones": "Cheap: {minPrice} to {lowZoneMax} · Medium: up to {mediumZoneMax} · Expensive: up to {maxPrice}",
+    "distribution": "Items per zone: {low} cheap, {medium} medium, {high} expensive",
+    "average-price": "Average price = sum of prices ÷ count = {total} ÷ {count} = {averagePrice}",
+    "ticket-range": "Healthy ticket range (±10%): from {lowerBound} to {upperBound}"
+  },
+  "examples": {
+    "sixteen-cakes": { "title": "Bakery with 16 cakes between $40 and $115" }
+  },
+  "choices": {
+    "ideal": "Ideal: the most expensive costs up to twice the cheapest",
+    "acceptable": "Acceptable: the most expensive costs 2 to 3 times the cheapest",
+    "too-wide": "Too wide: the most expensive is more than 3 times the cheapest",
+    "balanced": "Balanced",
+    "unbalanced": "Unbalanced: the medium zone should have as many items as the other two combined",
+    "too-expensive": "Prices too high: customers spend less than 90% of the average",
+    "too-cheap": "Prices too low: customers spend more than 110% of the average",
+    "low": "In the cheap zone (it should be in the medium one)",
+    "medium": "In the medium zone, as it should",
+    "high": "In the expensive zone (it should be in the medium one)"
+  }
+}

@@ -182,8 +182,8 @@ importers:
         specifier: ^1.1.0
         version: 1.1.0(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       '@inzumer/ui-library':
-        specifier: ^1.0.2
-        version: 1.0.2(class-variance-authority@0.7.1)(clsx@2.1.1)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(tailwind-merge@3.7.0)
+        specifier: ^1.1.0
+        version: 1.1.0(class-variance-authority@0.7.1)(clsx@2.1.1)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(tailwind-merge@3.7.0)
       astro:
         specifier: ^7.3.5
         version: 7.3.5(@types/node@24.13.6)(jiti@2.7.0)(yaml@2.9.1)
@@ -1448,8 +1448,8 @@ packages:
       react: '>=18 || ^19'
       react-dom: '>=18 || ^19'
 
-  '@inzumer/ui-library@1.0.2':
-    resolution: {integrity: sha512-SCVKOXaEXbJEbpp2ps0ggsLpAl+0HZMPmzsrUVendGN6fbgIU3FuPkCwrI2ijSukaaNZBcFBx4cmxtAJWmDdAg==}
+  '@inzumer/ui-library@1.1.0':
+    resolution: {integrity: sha512-b9N9NzV1ZmyUmqYNprK9/23FqPEyBrDeBpBOZH4Zs+GdDbJTqGQteJD/sxR4UGuB1Q486aG5TPU4Z624HDOIjA==}
     peerDependencies:
       class-variance-authority: '>=0.7.0'
       clsx: '>=2.0.0'
@@ -5122,7 +5122,7 @@ snapshots:
       react: 19.3.0
       react-dom: 19.3.0(react@19.3.0)
 
-  '@inzumer/ui-library@1.0.2(class-variance-authority@0.7.1)(clsx@2.1.1)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(tailwind-merge@3.7.0)':
+  '@inzumer/ui-library@1.1.0(class-variance-authority@0.7.1)(clsx@2.1.1)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(tailwind-merge@3.7.0)':
     dependencies:
       '@inzumer/tokens': 1.1.0(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       class-variance-authority: 0.7.1

@@ -1,0 +1,30 @@
+{
+  "title": "Porcentaje de desecho",
+  "summary": "Qué parte de la mercadería comprada se pierde al limpiarla.",
+  "inputs": {
+    "gross-weight": {
+      "label": "Peso bruto (sucio)",
+      "placeholder": "Peso tal como lo compraste, en kg (ej.: 2,400)",
+      "hint": "Pesá la mercadería antes de limpiarla."
+    },
+    "net-weight": {
+      "label": "Peso neto (limpio)",
+      "placeholder": "Peso después de limpiar, en kg (ej.: 1,700)",
+      "hint": "Pesá lo que queda listo para la receta, sin desechos."
+    }
+  },
+  "outputs": {
+    "waste-weight": "Peso del desecho",
+    "waste-percentage": "% de desecho"
+  },
+  "steps": {
+    "waste-weight": "Desecho = peso bruto − peso neto = {grossWeight} kg − {netWeight} kg = {wasteWeight} kg",
+    "waste-percentage": "% de desecho = desecho ÷ peso bruto × 100 = {wasteWeight} kg ÷ {grossWeight} kg × 100 = {wastePercentage}"
+  },
+  "examples": {
+    "manual-cleaning": { "title": "Limpieza de 2,400 kg que dejan 1,700 kg limpios" }
+  },
+  "errors": {
+    "net-weight.must-not-exceed-gross": "El peso limpio no puede ser mayor que el peso bruto."
+  }
+}

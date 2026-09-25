@@ -27,9 +27,9 @@ describe('LanguageSwitcher', () => {
 
   it('should expose a labelled group with the current language selected', () => {
     setup();
-    expect(screen.getByRole('listbox', { name: 'Idioma' })).toBeInTheDocument();
-    expect(screen.getByRole('option', { name: 'ES' })).toHaveAttribute('aria-selected', 'true');
-    expect(screen.getByRole('option', { name: 'EN' })).toHaveAttribute('aria-selected', 'false');
+    expect(screen.getByRole('radiogroup', { name: 'Idioma' })).toBeInTheDocument();
+    expect(screen.getByRole('radio', { name: 'ES' })).toHaveAttribute('aria-checked', 'true');
+    expect(screen.getByRole('radio', { name: 'EN' })).toHaveAttribute('aria-checked', 'false');
   });
 
   it('should navigate to the same route in the other language and remember it', async () => {
@@ -37,7 +37,7 @@ describe('LanguageSwitcher', () => {
     setAnalyticsSink(sink);
     const { navigate, repository, user } = setup();
 
-    await user.click(screen.getByRole('option', { name: 'EN' }));
+    await user.click(screen.getByRole('radio', { name: 'EN' }));
 
     expect(navigate).toHaveBeenCalledWith('/en/formulas/cooking-loss');
     expect(repository.load().locale).toBe('en');
@@ -46,7 +46,7 @@ describe('LanguageSwitcher', () => {
 
   it('should do nothing when the current language is picked again', async () => {
     const { navigate, user } = setup();
-    await user.click(screen.getByRole('option', { name: 'ES' }));
+    await user.click(screen.getByRole('radio', { name: 'ES' }));
     expect(navigate).not.toHaveBeenCalled();
   });
 
@@ -56,7 +56,7 @@ describe('LanguageSwitcher', () => {
     vi.spyOn(window, 'location', 'get').mockReturnValue({ ...window.location, hash: '', assign });
     render(<LanguageSwitcher lang="es" pathname="/es" label="Idioma" />);
 
-    await user.click(screen.getByRole('option', { name: 'EN' }));
+    await user.click(screen.getByRole('radio', { name: 'EN' }));
 
     expect(assign).toHaveBeenCalledWith('/en');
     vi.restoreAllMocks();

@@ -1,0 +1,51 @@
+{
+  "title": "Reglas de Omnes",
+  "summary": "Revisá si los precios de tu carta están bien distribuidos entre baratos, medios y caros.",
+  "inputs": {
+    "prices": {
+      "label": "Precios de la carta",
+      "placeholder": "Precio de un producto (ej.: 40)"
+    },
+    "average-ticket": {
+      "label": "Ticket promedio",
+      "placeholder": "Lo que paga en promedio cada cliente por producto (ej.: 80)",
+      "hint": "Opcional."
+    },
+    "daily-special-price": {
+      "label": "Precio de la sugerencia del día",
+      "placeholder": "Precio del plato sugerido (ej.: 75)",
+      "hint": "Opcional."
+    }
+  },
+  "outputs": {
+    "price-ratio": "Relación más caro ÷ más barato",
+    "zones": "Zonas de precios",
+    "distribution": "Distribución",
+    "average-price": "Precio promedio de la oferta",
+    "ticket": "Ticket promedio",
+    "daily-special": "Sugerencia del día"
+  },
+  "steps": {
+    "price-ratio": "Relación = precio más caro ÷ más barato = {maxPrice} ÷ {minPrice} = {priceRatio}",
+    "zone-width": "Ancho de cada zona = (más caro − más barato) ÷ 3 = ({maxPrice} − {minPrice}) ÷ 3 = {zoneWidth}",
+    "zones": "Baratos: {minPrice} a {lowZoneMax} · Medios: hasta {mediumZoneMax} · Caros: hasta {maxPrice}",
+    "distribution": "Productos por zona: {low} baratos, {medium} medios, {high} caros",
+    "average-price": "Precio promedio = suma de precios ÷ cantidad = {total} ÷ {count} = {averagePrice}",
+    "ticket-range": "Rango sano del ticket (±10 %): de {lowerBound} a {upperBound}"
+  },
+  "examples": {
+    "sixteen-cakes": { "title": "Pastelería con 16 tortas entre $ 40 y $ 115" }
+  },
+  "choices": {
+    "ideal": "Ideal: el más caro cuesta hasta el doble del más barato",
+    "acceptable": "Aceptable: el más caro cuesta entre 2 y 3 veces el más barato",
+    "too-wide": "Demasiado amplio: el más caro supera 3 veces al más barato",
+    "balanced": "Equilibrado",
+    "unbalanced": "Desequilibrado: la zona media debería tener tantos productos como las otras dos juntas",
+    "too-expensive": "Precios muy altos: los clientes gastan menos del 90 % del promedio",
+    "too-cheap": "Precios muy bajos: los clientes gastan más del 110 % del promedio",
+    "low": "En la zona de precios baratos (debería estar en la media)",
+    "medium": "En la zona de precios medios, como corresponde",
+    "high": "En la zona de precios caros (debería estar en la media)"
+  }
+}

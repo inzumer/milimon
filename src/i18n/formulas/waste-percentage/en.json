@@ -1,0 +1,30 @@
+{
+  "title": "Trim waste percentage",
+  "summary": "How much of what you buy is lost when you clean it.",
+  "inputs": {
+    "gross-weight": {
+      "label": "Gross weight (as purchased)",
+      "placeholder": "Weight as you bought it, in kg (e.g. 2.400)",
+      "hint": "Weigh the product before cleaning it."
+    },
+    "net-weight": {
+      "label": "Net weight (clean)",
+      "placeholder": "Weight after cleaning, in kg (e.g. 1.700)",
+      "hint": "Weigh what is ready for the recipe, without trim."
+    }
+  },
+  "outputs": {
+    "waste-weight": "Trim weight",
+    "waste-percentage": "Trim waste %"
+  },
+  "steps": {
+    "waste-weight": "Trim = gross weight − net weight = {grossWeight} kg − {netWeight} kg = {wasteWeight} kg",
+    "waste-percentage": "Trim waste % = trim ÷ gross weight × 100 = {wasteWeight} kg ÷ {grossWeight} kg × 100 = {wastePercentage}"
+  },
+  "examples": {
+    "manual-cleaning": { "title": "Cleaning 2.400 kg that leaves 1.700 kg clean" }
+  },
+  "errors": {
+    "net-weight.must-not-exceed-gross": "The clean weight can't be greater than the gross weight."
+  }
+}

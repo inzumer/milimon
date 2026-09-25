@@ -52,7 +52,7 @@ describe('SiteMenu', () => {
       'true',
     );
     expect(screen.getByRole('navigation', { name: 'Navegación principal' })).toBeInTheDocument();
-    expect(screen.getByRole('listbox', { name: 'Idioma' })).toBeInTheDocument();
+    expect(screen.getByRole('radiogroup', { name: 'Idioma' })).toBeInTheDocument();
     expect(screen.getByRole('switch', { name: 'Modo oscuro' })).toBeInTheDocument();
     expect(sink).toHaveBeenCalledWith('menu_opened', {});
   });

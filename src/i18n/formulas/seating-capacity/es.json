@@ -1,0 +1,31 @@
+{
+  "title": "Cubiertos que entran en un local",
+  "summary": "Cuántos clientes podés sentar en un local según su superficie total.",
+  "inputs": {
+    "premises-area": {
+      "label": "Superficie total del local",
+      "placeholder": "Metros cuadrados del local (ej.: 80)"
+    },
+    "dining-share-percentage": {
+      "label": "Parte destinada al salón",
+      "placeholder": "Porcentaje del local para el salón, entre 45 y 65 (ej.: 55)",
+      "hint": "El resto es cocina (15–25 %) y depósitos y servicios (20–35 %)."
+    },
+    "area-per-customer-with-circulation": {
+      "label": "Superficie por cliente con circulación",
+      "placeholder": "Metros cuadrados por persona con circulación (ej.: 1,30)"
+    }
+  },
+  "outputs": {
+    "dining-area": "Superficie del salón",
+    "capacity": "Capacidad exacta",
+    "capacity-rounded": "Cubiertos que entran"
+  },
+  "steps": {
+    "dining-area": "Salón = superficie del local × {diningSharePercentage} = {premisesArea} m² × {diningSharePercentage} = {diningArea} m²",
+    "capacity": "Cubiertos = salón ÷ superficie por cliente = {diningArea} m² ÷ {areaPerCustomerWithCirculation} m² = {capacity} (se redondea hacia abajo)"
+  },
+  "examples": {
+    "manual-80-m2": { "title": "Local de 80 m² con 55 % de salón y 1,30 m² por cliente" }
+  }
+}

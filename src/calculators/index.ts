@@ -1,2 +1,2 @@
-// Barrel — public exports of src/calculators are added here as the phases land.
-export {};
+export * from './FormulaCalculator';
+export { formatInputValue, formatValue, type FormatContext } from './shared/format-value';

@@ -1,0 +1,37 @@
+{
+  "title": "Merma de cocción",
+  "summary": "Cuánto peso pierde una preparación al cocinarse.",
+  "inputs": {
+    "net-weight": {
+      "label": "Peso limpio",
+      "placeholder": "Peso de la mercadería limpia antes de cocinar, en kg (ej.: 1,200)"
+    },
+    "additions-weight": {
+      "label": "Aderezos o agregados inseparables",
+      "placeholder": "Salsas, rebozados o rellenos que no se pueden separar, en kg (ej.: 0,300)",
+      "hint": "Si no hay, dejá 0."
+    },
+    "cooked-weight": {
+      "label": "Peso cocido",
+      "placeholder": "Peso del producto ya cocido, en kg (ej.: 1,050)"
+    }
+  },
+  "outputs": {
+    "weight-before-cooking": "Peso antes de la cocción",
+    "loss-weight": "Peso de la merma",
+    "loss-percentage": "% de merma"
+  },
+  "steps": {
+    "weight-before-cooking": "Antes de cocción = peso limpio + agregados = {netWeight} kg + {additionsWeight} kg = {weightBeforeCooking} kg",
+    "loss-weight": "Merma = antes de cocción − cocido = {weightBeforeCooking} kg − {cookedWeight} kg = {lossWeight} kg",
+    "loss-percentage": "% de merma = merma ÷ antes de cocción × 100 = {lossWeight} kg ÷ {weightBeforeCooking} kg × 100 = {lossPercentage}"
+  },
+  "examples": {
+    "roast-with-marinade": {
+      "title": "Carne adobada: 1,200 kg + 0,300 kg de adobo que quedan en 1,050 kg"
+    }
+  },
+  "errors": {
+    "cooked-weight.must-not-exceed-gross": "El peso cocido no puede ser mayor que el peso antes de la cocción."
+  }
+}

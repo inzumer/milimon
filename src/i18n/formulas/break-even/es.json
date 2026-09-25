@@ -1,0 +1,55 @@
+{
+  "title": "Punto de equilibrio",
+  "summary": "Cuánto hay que vender para cubrir todos los costos y cuánto para ganar lo que querés.",
+  "inputs": {
+    "gross-sales": {
+      "label": "Ventas brutas",
+      "placeholder": "Ventas del período con impuestos incluidos (ej.: 1118000)"
+    },
+    "taxes": {
+      "label": "Impuestos",
+      "placeholder": "Impuestos sobre las ventas + impuesto a las ganancias (ej.: 332248,05)"
+    },
+    "variable-costs": {
+      "label": "Costos variables",
+      "placeholder": "Costo de mercaderías consumidas del período (ej.: 270000)"
+    },
+    "fixed-costs": {
+      "label": "Costos fijos",
+      "placeholder": "Sueldos, cargas, alquiler, servicios, gastos, amortizaciones y tasas (ej.: 313977)"
+    },
+    "desired-profit-before-tax": {
+      "label": "Ganancia deseada antes de impuestos",
+      "placeholder": "Ganancia mensual que querés, antes del impuesto a las ganancias (ej.: 200000)",
+      "hint": "Si pensás en lo que querés cobrar en limpio, dividilo por (1 − 0,35)."
+    }
+  },
+  "outputs": {
+    "net-sales": "Ventas netas",
+    "tax-rate": "Tasa de impuestos",
+    "variable-cost-rate": "Tasa de costos variables",
+    "contribution-rate": "Tasa de contribución",
+    "break-even-net-sales": "Punto de equilibrio (ventas netas)",
+    "break-even-gross-sales": "Punto de equilibrio (ventas brutas)",
+    "target-net-sales": "Ventas netas para tu ganancia",
+    "target-gross-sales": "Ventas brutas para tu ganancia"
+  },
+  "steps": {
+    "net-sales": "Ventas netas = ventas brutas − impuestos = {grossSales} − {taxes} = {netSales}",
+    "tax-rate": "Tasa de impuestos = ventas brutas ÷ ventas netas = {grossSales} ÷ {netSales} = {taxRate}",
+    "variable-cost-rate": "Tasa de costos variables = costos variables ÷ ventas netas = {variableCosts} ÷ {netSales} = {variableCostRate}",
+    "contribution-rate": "Tasa de contribución = 1 − tasa de costos variables = 1 − {variableCostRate} = {contributionRate}",
+    "break-even": "Punto de equilibrio = costos fijos ÷ tasa de contribución = {fixedCosts} ÷ {contributionRate} = {breakEvenNetSales}",
+    "target-sales": "Ventas netas para tu ganancia = (costos fijos + ganancia antes de impuestos) ÷ tasa de contribución = ({fixedCosts} + {desiredProfitBeforeTax}) ÷ {contributionRate} = {targetNetSales}",
+    "target-gross-sales": "Ventas brutas = ventas netas × tasa de impuestos = {targetNetSales} × {taxRate} = {targetGrossSales}"
+  },
+  "examples": {
+    "manual-break-even": {
+      "title": "Datos del manual, con $ 200.000 de ganancia antes de impuestos"
+    }
+  },
+  "errors": {
+    "taxes.must-not-exceed-gross": "Los impuestos no pueden ser iguales o mayores que las ventas brutas.",
+    "variable-costs.must-not-exceed-gross": "Los costos variables tienen que ser menores que las ventas netas."
+  }
+}

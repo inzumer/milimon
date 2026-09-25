@@ -1,0 +1,46 @@
+{
+  "title": "Recipe costing",
+  "summary": "The cost of each ingredient, of the whole recipe and of each portion.",
+  "inputs": {
+    "servings": {
+      "label": "Yield (portions)",
+      "placeholder": "How many portions the recipe yields (e.g. 10)"
+    },
+    "name": {
+      "label": "Ingredient",
+      "placeholder": "Ingredient name (e.g. Tenderloin)"
+    },
+    "unit": {
+      "label": "Unit",
+      "placeholder": "Unit of measure (e.g. kg)"
+    },
+    "net-quantity": {
+      "label": "Recipe quantity (clean)",
+      "placeholder": "Clean quantity the recipe uses (e.g. 1.800)"
+    },
+    "waste-percentage": {
+      "label": "Trim waste %",
+      "placeholder": "Percentage lost when cleaning it (e.g. 30)"
+    },
+    "unit-price": {
+      "label": "Purchase price",
+      "placeholder": "Price of the product as purchased, per unit (e.g. 10000)",
+      "hint": "Use the same unit as the quantity (if the recipe is in kg, the price per kg)."
+    }
+  },
+  "outputs": {
+    "waste-factor": "Waste factor",
+    "gross-quantity": "Gross quantity",
+    "cost": "Cost",
+    "share": "Share",
+    "recipe-cost": "Recipe cost",
+    "portion-cost": "Cost per portion"
+  },
+  "steps": {
+    "recipe-cost": "Recipe cost = sum of every ingredient cost = {recipeCost}",
+    "portion-cost": "Cost per portion = recipe cost ÷ portions = {recipeCost} ÷ {servings} = {portionCost}"
+  },
+  "examples": {
+    "tournedos-recipe": { "title": "Tournedos with potato galette for 10 portions" }
+  }
+}

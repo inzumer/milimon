@@ -1,17 +1,30 @@
-import type { AnchorHTMLAttributes, ReactNode, Ref } from 'react';
-import { cn } from '@inzumer/ui-library';
-import { buttonLinkStyles, type ButtonLinkVariants } from './ButtonLink.styles';
+import type { AnchorHTMLAttributes, ReactNode } from 'react';
+import { Button, cn } from '@inzumer/ui-library';
 
-export interface ButtonLinkProps
-  extends AnchorHTMLAttributes<HTMLAnchorElement>, ButtonLinkVariants {
+const SIZE_CLASSES = {
+  md: 'min-h-11 px-4 text-base font-semibold',
+  lg: 'min-h-12 px-6 text-lg font-semibold',
+} as const;
+
+export interface ButtonLinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
   href: string;
   children: ReactNode;
-  ref?: Ref<HTMLAnchorElement>;
+  variant?: 'primary' | 'secondary' | 'ghost';
+  size?: keyof typeof SIZE_CLASSES;
 }
 
-/** A navigation link that looks like a button. */
-export const ButtonLink = ({ className, variant, size, children, ...props }: ButtonLinkProps) => (
-  <a className={cn(buttonLinkStyles({ variant, size }), className)} {...props}>
-    {children}
-  </a>
+/**
+ * A navigation link styled as a ui-library `Button` (`asChild`), with a touch target of at least
+ * 44px. It stays a real `<a>` so it works without JavaScript and in static pages.
+ */
+export const ButtonLink = ({
+  variant = 'primary',
+  size = 'md',
+  className,
+  children,
+  ...props
+}: ButtonLinkProps) => (
+  <Button asChild variant={variant} className={cn(SIZE_CLASSES[size], 'no-underline', className)}>
+    <a {...props}>{children}</a>
+  </Button>
 );

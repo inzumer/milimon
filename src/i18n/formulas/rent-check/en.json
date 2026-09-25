@@ -1,0 +1,33 @@
+{
+  "title": "Rent vs. revenue",
+  "summary": "Check whether the rent is reasonable for what you sell.",
+  "inputs": {
+    "rent": {
+      "label": "Monthly rent",
+      "placeholder": "What you pay in rent each month (e.g. 41000)"
+    },
+    "net-sales": {
+      "label": "Monthly net revenue",
+      "placeholder": "Sales for the month excluding taxes (e.g. 785751.95)"
+    }
+  },
+  "outputs": {
+    "rent-share": "Rent as a share of revenue",
+    "status": "Assessment",
+    "sales-for-max-share": "Sales for rent to be 10%",
+    "sales-for-optimal-share": "Sales for rent to be 5%"
+  },
+  "steps": {
+    "rent-share": "Rent ÷ net revenue × 100 = {rent} ÷ {netSales} × 100 = {rentShare}",
+    "sales-for-max-share": "To stay within {maxShare}: {rent} × 100 ÷ 10 = {salesForMaxShare}",
+    "sales-for-optimal-share": "To reach the optimal {optimalShare}: {rent} × 100 ÷ 5 = {salesForOptimalShare}"
+  },
+  "examples": {
+    "manual-statement-rent": { "title": "Handbook rent ($41,000) with its net sales" }
+  },
+  "choices": {
+    "optimal": "Optimal: rent is up to 5% of revenue",
+    "acceptable": "Acceptable: between 5% and 10%",
+    "too-high": "High: more than 10% of revenue"
+  }
+}
