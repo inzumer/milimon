@@ -49,3 +49,6 @@ jobs:
 
       - name: Build
         run: pnpm build
+
+      - name: Accessibility audit
+        run: pnpm audit:a11y

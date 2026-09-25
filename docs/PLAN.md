@@ -399,13 +399,47 @@ Texto propio basado en el manual, no copiado literal.
 
 ---
 
-## 9. Analytics (fase posterior)
+## 9. Analytics y compartir (F8)
 
-- Desde el día uno existe `utils/analytics.ts` con un `track(event, props)` que por ahora no hace nada.
-  Las calculadoras ya lo llaman (`tool_selected`, `calculation_done`, `example_loaded`,
-  `language_changed`, `theme_changed`, `currency_changed`), así que después solo hay que conectar el proveedor.
-- Cuando se defina el proveedor (Vercel Analytics, GA4 vía Partytown, Plausible…) se evalúa si hace
-  falta banner de consentimiento (zamuner ya tiene un componente `Cookies` reutilizable).
+- Desde el día uno existe `utils/analytics.ts` con un `track(event, props)`. Las calculadoras ya lo
+  llaman (`tool_selected`, `calculation_completed`, `example_loaded`, `calculator_reset`,
+  `language_changed`, `theme_changed`, `currency_changed`, `menu_opened`), así que solo hay que
+  conectar el proveedor.
+- **Proveedor: Google Analytics 4** (pedido del proyecto), con el ID en `PUBLIC_GA_MEASUREMENT_ID`.
+  Sin ese ID no se carga nada.
+- GA4 usa cookies → **banner de consentimiento** (reutilizando la idea del componente `Cookies` de
+  zamuner) y **Consent Mode v2**: el script no se carga hasta que la persona acepta; si rechaza, no hay medición.
+  La elección se guarda en el repositorio de configuración.
+- Eventos útiles para decidir: qué calculadoras se usan, cuántas cuentas se completan, qué ejemplos
+  se cargan, idioma, tema y moneda.
+
+### Compartir en redes (Open Graph)
+
+- Ya hay Open Graph básico en todas las páginas (título, descripción, imagen del logo, idioma) e
+  íconos de ventana: favicon, apple-touch, android y manifest.
+- Pendiente de revisar juntos:
+  - Imagen para compartir de 1200 × 630 con la marca (logo + título de la página), una por página
+    o una general. Si ya hay diseños, se usan esos; si no, se pueden generar en el build a partir del
+    título de cada fórmula.
+  - Card `summary_large_image` de X/Twitter.
+  - Probar la vista previa en WhatsApp, LinkedIn y Facebook (este último con su Sharing Debugger).
+
+---
+
+## 9 bis. Monetización (a evaluar, sin implementar)
+
+Ideas para discutir, ordenadas de menor a mayor impacto en la experiencia:
+
+| Opción                          | Cómo sería                                                                                                         | A favor                                            | En contra                                                          |
+| ------------------------------- | ------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------- | ------------------------------------------------------------------ |
+| Donaciones                      | Botón de Cafecito / Mercado Pago / Ko-fi en el footer                                                              | Nada invasivo, se suma en minutos                  | Ingresos bajos e irregulares                                       |
+| Afiliados                       | Links a balanzas, termómetros o libros recomendados en el contenido de estudio                                     | Relevante para el tema                             | Hay que cuidar que no parezca publicidad encubierta                |
+| Plan premium (con cuentas, F10) | Gratis: todas las fórmulas. Premium: recetas ilimitadas guardadas, exportar a PDF/Excel, varios locales, historial | Aprovecha el login; valor claro para profesionales | Requiere cobros (Mercado Pago / Stripe) y soporte                  |
+| Licencias educativas            | Versión para escuelas de gastronomía (el contenido nace de un manual de curso) con cuentas por curso               | Público natural del producto                       | Venta B2B, más lenta                                               |
+| Publicidad (AdSense)            | Anuncios en páginas de estudio                                                                                     | Pasivo                                             | Paga poco con este tráfico, ensucia la marca y pide consentimiento |
+
+Recomendación inicial: arrancar con donaciones y medir con GA4 qué se usa. Si hay tracción, evaluar
+el plan premium sobre las cuentas de F10.
 
 ---
 
@@ -434,22 +468,24 @@ idioma, tema), sus recetas y sus cálculos en un perfil propio.
 
 Cada fase termina con `astro check` + lint + test:coverage en verde y un PR con Conventional Commits.
 
+**Estado (2026-09-26):** F0 a F7 terminadas e integradas en `dev`. Siguen F8 (GA4 + Open Graph), F10 (cuentas) y F9.
+
 Flujo de ramas (gitflow, ver CLAUDE.md): cada fase se trabaja en `feature/*` desde `dev` y se mergea a
 `dev`. El primer release a `main` se hace al terminar F10 (cuentas/login).
 
-| Fase                         | Entregable                                                                                                                                                                                                                                                 |
-| ---------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **F0 · Setup**               | `git init`, Astro + React + TS estricto, Tailwind + preset, aliases, ESLint/Prettier (+ plugins astro), cspell con diccionario español, Vitest 90%, CLAUDE.md, `.claude/`, PR template, CI, `.nvmrc`, README                                               |
-| **F1 · Tema + shell**        | tokens Milimon claro/oscuro, script anti-parpadeo, fuentes self-hosted, layout mobile-first/centrado ≥1024, Header + Drawer hamburguesa, toggles de idioma y tema, Footer, rutas `[lang]`, redirect raíz, 404, traductor tipado + tests de paridad de i18n |
-| **F2 · Dominio**             | fórmulas puras con tests usando los ejemplos del manual (100% de cobertura en `domain/`), parseo/formato de números y moneda, registry, repositorios de persistencia (`local`)                                                                             |
-| **F3 · Calculadoras**        | `NumberField`, `CalculatorForm`, `ResultPanel` con desarrollo de la cuenta, `Select`, una isla por herramienta, `RecipeCostingTable`, panel de configuración (moneda)                                                                                      |
-| **F4 · Páginas de fórmulas** | índice + detalle con explicación, ejemplos del manual, notas de estudio, "Probar este ejemplo" y calculadora embebida; traducciones es/en de cada carpeta                                                                                                  |
-| **F5 · Calculadora general** | página con desplegable, `?tool=`, links a la explicación                                                                                                                                                                                                   |
-| **F6 · Aprender**            | secciones explicativas es/en con links cruzados                                                                                                                                                                                                            |
-| **F7 · Pulido**              | meta/OG/hreflang, sitemap, favicon desde el logo (hoy el PNG pesa 1,6 MB → `astro:assets` a WebP/AVIF), auditoría a11y en ambos temas, Lighthouse, deploy                                                                                                  |
-| **F8 · Analytics**           | conectar `track()` al proveedor elegido + consentimiento si aplica                                                                                                                                                                                         |
-| **F9 · Upstream**            | subir a ui-library los componentes genéricos (Drawer, Accordion, Select, Table, NumberField) con changeset                                                                                                                                                 |
-| **F10 · Cuentas**            | login Google/Facebook, perfiles, repositorios `remote`, migración desde localStorage, privacidad/términos, borrado de cuenta                                                                                                                               |
+| Fase                           | Entregable                                                                                                                                                                                                                                                 |
+| ------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **F0 · Setup**                 | `git init`, Astro + React + TS estricto, Tailwind + preset, aliases, ESLint/Prettier (+ plugins astro), cspell con diccionario español, Vitest 90%, CLAUDE.md, `.claude/`, PR template, CI, `.nvmrc`, README                                               |
+| **F1 · Tema + shell**          | tokens Milimon claro/oscuro, script anti-parpadeo, fuentes self-hosted, layout mobile-first/centrado ≥1024, Header + Drawer hamburguesa, toggles de idioma y tema, Footer, rutas `[lang]`, redirect raíz, 404, traductor tipado + tests de paridad de i18n |
+| **F2 · Dominio**               | fórmulas puras con tests usando los ejemplos del manual (100% de cobertura en `domain/`), parseo/formato de números y moneda, registry, repositorios de persistencia (`local`)                                                                             |
+| **F3 · Calculadoras**          | `NumberField`, `CalculatorForm`, `ResultPanel` con desarrollo de la cuenta, `Select`, una isla por herramienta, `RecipeCostingTable`, panel de configuración (moneda)                                                                                      |
+| **F4 · Páginas de fórmulas**   | índice + detalle con explicación, ejemplos del manual, notas de estudio, "Probar este ejemplo" y calculadora embebida; traducciones es/en de cada carpeta                                                                                                  |
+| **F5 · Calculadora general**   | página con desplegable, `?tool=`, links a la explicación                                                                                                                                                                                                   |
+| **F6 · Aprender**              | secciones explicativas es/en con links cruzados                                                                                                                                                                                                            |
+| **F7 · Pulido**                | meta/OG/hreflang, sitemap, favicon desde el logo (hoy el PNG pesa 1,6 MB → `astro:assets` a WebP/AVIF), auditoría a11y en ambos temas, Lighthouse, deploy                                                                                                  |
+| **F8 · Analytics y compartir** | GA4 con banner de consentimiento y Consent Mode v2, imágenes Open Graph 1200 × 630, card grande de X                                                                                                                                                       |
+| **F9 · Upstream**              | subir a ui-library los componentes genéricos (Drawer, Accordion, Select, Table, NumberField) con changeset                                                                                                                                                 |
+| **F10 · Cuentas**              | login Google/Facebook, perfiles, repositorios `remote`, migración desde localStorage, privacidad/términos, borrado de cuenta                                                                                                                               |
 
 ---
 

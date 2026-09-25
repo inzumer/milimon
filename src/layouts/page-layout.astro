@@ -9,13 +9,14 @@ interface Props {
   lang: Locale;
   title?: string | undefined;
   description?: string | undefined;
+  noindex?: boolean;
 }
 
-const { lang, title, description } = Astro.props;
+const { lang, title, description, noindex = false } = Astro.props;
 const common = getTranslations(lang, 'common');
 ---
 
-<BaseLayout lang={lang} title={title} description={description}>
+<BaseLayout lang={lang} title={title} description={description} noindex={noindex}>
   <a
     href="#main"
     class="sr-only z-50 rounded-lg bg-[var(--btn-primary-bg)] px-4 py-3 font-semibold text-[var(--btn-primary-text)] focus:not-sr-only focus:fixed focus:top-2 focus:left-2"
