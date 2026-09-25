@@ -26,12 +26,12 @@ const Harness = ({ active, empty }: { active: boolean; empty?: boolean }) => (
 );
 
 describe('useFocusTrap', () => {
-  it('moves focus to the first focusable element when activated', () => {
+  it('should move focus to the first focusable element when activated', () => {
     render(<Harness active />);
     expect(screen.getByRole('button', { name: 'first' })).toHaveFocus();
   });
 
-  it('cycles Tab and Shift+Tab inside the container', async () => {
+  it('should cycle Tab and Shift+Tab inside the container', async () => {
     const user = userEvent.setup();
     render(<Harness active />);
 
@@ -43,14 +43,14 @@ describe('useFocusTrap', () => {
     expect(screen.getByRole('button', { name: 'last' })).toHaveFocus();
   });
 
-  it('ignores other keys', async () => {
+  it('should ignore other keys', async () => {
     const user = userEvent.setup();
     render(<Harness active />);
     await user.keyboard('{ArrowDown}');
     expect(screen.getByRole('button', { name: 'first' })).toHaveFocus();
   });
 
-  it('focuses the container and blocks Tab when nothing inside is focusable', async () => {
+  it('should focus the container and block Tab when nothing inside is focusable', async () => {
     const user = userEvent.setup();
     render(<Harness active empty />);
     expect(screen.getByTestId('trap')).toHaveFocus();
@@ -58,7 +58,7 @@ describe('useFocusTrap', () => {
     expect(screen.getByTestId('trap')).toHaveFocus();
   });
 
-  it('restores focus to the previously focused element on deactivation', () => {
+  it('should restore focus to the previously focused element on deactivation', () => {
     const { rerender } = render(<Harness active={false} />);
     screen.getByRole('button', { name: 'outside' }).focus();
 

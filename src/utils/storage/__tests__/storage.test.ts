@@ -2,11 +2,11 @@ import { createMemoryStorage } from '@test/memory-storage';
 import { getBrowserStorage, readJson, writeJson } from '../storage';
 
 describe('storage', () => {
-  it('returns window.localStorage in the browser', () => {
+  it('should return window.localStorage in the browser', () => {
     expect(getBrowserStorage()).toBe(window.localStorage);
   });
 
-  it('returns null when localStorage access throws', () => {
+  it('should return null when localStorage access throws', () => {
     const spy = vi.spyOn(window, 'localStorage', 'get').mockImplementation(() => {
       throw new Error('blocked');
     });
@@ -14,13 +14,13 @@ describe('storage', () => {
     spy.mockRestore();
   });
 
-  it('writes and reads JSON values', () => {
+  it('should write and read JSON values', () => {
     const storage = createMemoryStorage();
     writeJson(storage, 'key', { a: 1 });
     expect(readJson(storage, 'key')).toStrictEqual({ a: 1 });
   });
 
-  it('returns null for missing keys, invalid JSON or no storage', () => {
+  it('should return null for missing keys, invalid JSON or no storage', () => {
     const storage = createMemoryStorage();
     expect(readJson(storage, 'missing')).toBeNull();
     storage.setItem('broken', '{not json');
@@ -28,7 +28,7 @@ describe('storage', () => {
     expect(readJson(null, 'key')).toBeNull();
   });
 
-  it('ignores write errors and missing storage', () => {
+  it('should ignore write errors and missing storage', () => {
     const storage = createMemoryStorage();
     storage.setItem = () => {
       throw new Error('quota');

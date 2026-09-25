@@ -5,18 +5,18 @@ describe('analytics', () => {
     setAnalyticsSink(null);
   });
 
-  it('is a no-op by default', () => {
+  it('should be a no-op by default', () => {
     expect(() => track('menu_opened', {})).not.toThrow();
   });
 
-  it('forwards events to the registered sink', () => {
+  it('should forward events to the registered sink', () => {
     const sink = vi.fn();
     setAnalyticsSink(sink);
     track('theme_changed', { scheme: 'dark' });
     expect(sink).toHaveBeenCalledWith('theme_changed', { scheme: 'dark' });
   });
 
-  it('swallows sink errors', () => {
+  it('should swallow sink errors', () => {
     setAnalyticsSink(() => {
       throw new Error('provider down');
     });

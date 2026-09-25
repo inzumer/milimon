@@ -9,13 +9,13 @@ describe('ThemeToggle', () => {
     delete document.documentElement.dataset['colorScheme'];
   });
 
-  it('is a labelled switch reflecting the applied scheme', () => {
+  it('should be a labelled switch reflecting the applied scheme', () => {
     document.documentElement.dataset['colorScheme'] = 'dark';
     render(<ThemeToggle label="Modo oscuro" />);
     expect(screen.getByRole('switch', { name: 'Modo oscuro' })).toBeChecked();
   });
 
-  it('toggles between dark and light and persists the choice', async () => {
+  it('should toggle between dark and light and persist the choice', async () => {
     const user = userEvent.setup();
     const repository = createLocalSettingsRepository(createMemoryStorage());
     render(<ThemeToggle label="Modo oscuro" repository={repository} />);

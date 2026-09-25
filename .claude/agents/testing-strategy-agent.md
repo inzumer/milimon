@@ -22,6 +22,11 @@ Test behavior, not implementation, and make the formulas provably match the manu
 5. **Accessibility**: `jsx-a11y-x` + `eslint-plugin-astro` at lint time; axe audit in both color
    schemes before releases.
 
+# Naming
+
+- Every `it` / `it.each` title starts with `should …` ("should reject a cooked weight above…").
+  Enforced by ESLint (`vitest/valid-title`); `describe` blocks name the unit.
+
 # Colocation
 
 - Tests live next to the unit in `__tests__/` (`Unit/__tests__/Unit.test.tsx`).

@@ -25,7 +25,7 @@ const standardFormulas = FORMULA_IDS.map(getFormula).filter(
 );
 
 describe('formula registry', () => {
-  it('has one definition per id, keyed by its own id', () => {
+  it('should have one definition per id, keyed by its own id', () => {
     expect(Object.keys(FORMULAS).sort()).toStrictEqual([...FORMULA_IDS].sort());
     for (const id of FORMULA_IDS) {
       expect(FORMULAS[id].id).toBe(id);
@@ -33,7 +33,7 @@ describe('formula registry', () => {
     }
   });
 
-  it('assigns every formula to a known group, and every group has formulas', () => {
+  it('should assign every formula to a known group, and every group has formulas', () => {
     const groups = formulasByGroup();
     expect(Object.keys(groups)).toStrictEqual([...FORMULA_GROUPS]);
     expect(Object.values(groups).flat()).toHaveLength(FORMULA_IDS.length);
@@ -42,13 +42,13 @@ describe('formula registry', () => {
     }
   });
 
-  it('recognizes formula ids', () => {
+  it('should recognize formula ids', () => {
     expect(isFormulaId('cooking-loss')).toBe(true);
     expect(isFormulaId('calc-merma')).toBe(false);
     expect(isFormulaId(42)).toBe(false);
   });
 
-  it('has at least one example per formula, with kebab-case ids', () => {
+  it('should have at least one example per formula, with kebab-case ids', () => {
     for (const id of FORMULA_IDS) {
       const { examples } = getFormula(id);
       expect(examples.length).toBeGreaterThan(0);
@@ -59,7 +59,7 @@ describe('formula registry', () => {
   });
 
   it.each(standardFormulas.map((formula) => [formula.id, formula] as const))(
-    '%s: examples only use declared inputs, cover the required ones and calculate successfully',
+    'should only use declared inputs in the %s examples, cover the required ones and calculate successfully',
     (_id, formula) => {
       const keys = formula.inputs.map((input) => input.key);
       expect(new Set(keys).size).toBe(keys.length);
@@ -78,14 +78,14 @@ describe('formula registry', () => {
   );
 
   it.each(standardFormulas.map((formula) => [formula.id, formula] as const))(
-    '%s: reports errors when the form is empty',
+    'should report errors for %s when the form is empty',
     (_id, formula) => {
       const empty = Object.fromEntries(formula.inputs.map((input) => [input.key, null]));
       expect(formula.calculate(empty).ok).toBe(false);
     },
   );
 
-  it('pre-fills only the parameters the manual gives', () => {
+  it('should pre-fill only the parameters the manual gives', () => {
     const pricing = getFormula('pricing') as StandardFormulaDefinition;
     const values = initialValues(pricing);
     expect(values['vatRate']).toBe(21);
@@ -94,7 +94,7 @@ describe('formula registry', () => {
     expect(values['unitCost']).toBeNull();
   });
 
-  it('passes the card-fee toggle through to the pricing formula', () => {
+  it('should pass the card-fee toggle through to the pricing formula', () => {
     const pricing = getFormula('pricing') as StandardFormulaDefinition;
     const example = pricing.examples[0];
     const withoutCards = pricing.calculate({

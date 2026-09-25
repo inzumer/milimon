@@ -25,14 +25,14 @@ describe('LanguageSwitcher', () => {
     setAnalyticsSink(null);
   });
 
-  it('exposes a labelled group with the current language selected', () => {
+  it('should expose a labelled group with the current language selected', () => {
     setup();
     expect(screen.getByRole('listbox', { name: 'Idioma' })).toBeInTheDocument();
     expect(screen.getByRole('option', { name: 'ES' })).toHaveAttribute('aria-selected', 'true');
     expect(screen.getByRole('option', { name: 'EN' })).toHaveAttribute('aria-selected', 'false');
   });
 
-  it('navigates to the same route in the other language and remembers it', async () => {
+  it('should navigate to the same route in the other language and remember it', async () => {
     const sink = vi.fn();
     setAnalyticsSink(sink);
     const { navigate, repository, user } = setup();
@@ -44,13 +44,13 @@ describe('LanguageSwitcher', () => {
     expect(sink).toHaveBeenCalledWith('language_changed', { from: 'es', to: 'en' });
   });
 
-  it('does nothing when the current language is picked again', async () => {
+  it('should do nothing when the current language is picked again', async () => {
     const { navigate, user } = setup();
     await user.click(screen.getByRole('option', { name: 'ES' }));
     expect(navigate).not.toHaveBeenCalled();
   });
 
-  it('navigates with a full page load by default', async () => {
+  it('should navigate with a full page load by default', async () => {
     const user = userEvent.setup();
     const assign = vi.fn();
     vi.spyOn(window, 'location', 'get').mockReturnValue({ ...window.location, hash: '', assign });

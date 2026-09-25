@@ -21,7 +21,7 @@ describe('recipe-costing', () => {
     ],
   };
 
-  it('computes gross quantity, cost and share per ingredient, recipe and portion cost', () => {
+  it('should compute gross quantity, cost and share per ingredient, recipe and portion cost', () => {
     const result = calculateRecipeCosting(input);
     expect(result.ok).toBe(true);
     if (!result.ok) {
@@ -41,7 +41,7 @@ describe('recipe-costing', () => {
     );
   });
 
-  it('reports a zero share when every ingredient is free', () => {
+  it('should report a zero share when every ingredient is free', () => {
     const result = calculateRecipeCosting({
       servings: 1,
       ingredients: [{ name: 'Agua', unit: 'l', netQuantity: 1, wastePercentage: 0, unitPrice: 0 }],
@@ -49,7 +49,7 @@ describe('recipe-costing', () => {
     expect(result.ok && result.value.ingredients[0]?.share).toBe(0);
   });
 
-  it('reports errors per ingredient row', () => {
+  it('should report errors per ingredient row', () => {
     const result = calculateRecipeCosting({
       servings: 0,
       ingredients: [
@@ -67,7 +67,7 @@ describe('recipe-costing', () => {
     });
   });
 
-  it('requires at least one ingredient', () => {
+  it('should require at least one ingredient', () => {
     expect(calculateRecipeCosting({ servings: 4, ingredients: [] })).toStrictEqual({
       ok: false,
       errors: [{ field: 'ingredients', code: 'required' }],
@@ -76,7 +76,7 @@ describe('recipe-costing', () => {
 });
 
 describe('cost-of-goods (manual: 125.000 + 245.000 − 100.000)', () => {
-  it('computes the cost of goods consumed', () => {
+  it('should compute the cost of goods consumed', () => {
     const result = calculateCostOfGoods({
       openingInventory: 125_000,
       purchases: 245_000,
@@ -89,7 +89,7 @@ describe('cost-of-goods (manual: 125.000 + 245.000 − 100.000)', () => {
     expect(costOfGoodsConsumed(10, 5, 3)).toBe(12);
   });
 
-  it('rejects a closing inventory larger than what was available', () => {
+  it('should reject a closing inventory larger than what was available', () => {
     expect(
       calculateCostOfGoods({ openingInventory: 1, purchases: 1, closingInventory: 3 }),
     ).toStrictEqual({
@@ -120,7 +120,7 @@ describe('pricing (manual, Unidad 3)', () => {
     includeCardFee: true,
   };
 
-  it('reproduces the costs, desired profit and coefficient of the manual', () => {
+  it('should reproduce the costs, desired profit and coefficient of the manual', () => {
     const result = calculatePricing(manual);
     expect(result.ok).toBe(true);
     if (!result.ok) {
@@ -145,12 +145,15 @@ describe('pricing (manual, Unidad 3)', () => {
     ['Mousse de chocolate', 41, 118.7],
     ['Lemon pie', 25, 72.38],
     ['Cheesecake Oreo', 39, 112.91],
-  ])('net price of %s ($ %d) matches the manual table (%d)', (_name, unitCost, expected) => {
-    const result = calculatePricing({ ...manual, unitCost });
-    expect(result.ok && result.value.netPrice).toBeCloseTo(expected, 1);
-  });
+  ])(
+    'should match the manual table for the net price of %s ($ %d → %d)',
+    (_name, unitCost, expected) => {
+      const result = calculatePricing({ ...manual, unitCost });
+      expect(result.ok && result.value.netPrice).toBeCloseTo(expected, 1);
+    },
+  );
 
-  it('shows the tax breakdown: 29,5 % with card fees, 24,5 % (the manual factor 1,245) without', () => {
+  it('should show the tax breakdown: 29,5 % with card fees, 24,5 % (the manual factor 1,245) without', () => {
     expect(salesTaxTotal(DEFAULT_SALES_TAX_RATES, true)).toBe(29.5);
     expect(salesTaxTotal(DEFAULT_SALES_TAX_RATES, false)).toBe(24.5);
     const withCards = calculatePricing(manual);
@@ -160,14 +163,14 @@ describe('pricing (manual, Unidad 3)', () => {
     expect(withoutCards.ok && withoutCards.value.grossPrice).toBeCloseTo(43.25, 2);
   });
 
-  it('exposes the building blocks', () => {
+  it('should expose the building blocks', () => {
     expect(amortization(3_600)).toBe(100);
     expect(grossUpForIncomeTax(130_000, 35)).toBeCloseTo(200_000, 6);
     expect(pricingCoefficient(100, 50, 150)).toBe(2);
     expect(grossPrice(100, 29.5)).toBeCloseTo(129.5, 10);
   });
 
-  it('validates the inputs', () => {
+  it('should validate the inputs', () => {
     const result = calculatePricing({
       ...manual,
       costOfGoodsConsumed: 0,

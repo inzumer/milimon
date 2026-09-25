@@ -95,6 +95,11 @@ export default defineConfig([
       'vitest/no-focused-tests': 'error',
       'vitest/prefer-to-be': 'error',
       'vitest/prefer-to-have-length': 'error',
+      // Every test title starts with "should…" (describe blocks name the unit, not the behavior).
+      'vitest/valid-title': [
+        'error',
+        { mustMatch: { it: ['^should ', 'Test titles must start with "should "'] } },
+      ],
     },
   },
 ]);
