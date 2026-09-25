@@ -25,7 +25,8 @@
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "validate": "pnpm typecheck && pnpm lint && pnpm test:coverage && pnpm build",
-    "audit:a11y": "node scripts/a11y-audit.mjs"
+    "audit:a11y": "node scripts/a11y-audit.mjs",
+    "og:image": "node scripts/og-image.mjs"
   },
   "dependencies": {
     "@astrojs/react": "^7.0.0",

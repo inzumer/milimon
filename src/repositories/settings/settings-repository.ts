@@ -16,7 +16,11 @@ export interface Settings {
   locale: Locale | null;
   /** ISO 4217 code used to display amounts (display only, no conversion). */
   currency: string;
+  /** Analytics cookies: `null` until the person answers the consent banner. */
+  analyticsConsent: AnalyticsConsent | null;
 }
+
+export type AnalyticsConsent = 'granted' | 'denied';
 
 /** Shared with the inline theme/redirect scripts in `.astro` files, which can't import modules. */
 export const SETTINGS_STORAGE_KEY = 'milimon:settings';
@@ -25,6 +29,7 @@ export const DEFAULT_SETTINGS: Readonly<Settings> = {
   colorScheme: null,
   locale: null,
   currency: 'ARS',
+  analyticsConsent: null,
 };
 
 export interface SettingsRepository {
@@ -34,6 +39,9 @@ export interface SettingsRepository {
 
 const isColorScheme = (value: unknown): value is ColorScheme =>
   value === 'light' || value === 'dark';
+
+const isConsent = (value: unknown): value is AnalyticsConsent =>
+  value === 'granted' || value === 'denied';
 
 const isCurrencyCode = (value: unknown): value is string =>
   typeof value === 'string' && /^[A-Z]{3}$/.test(value);
@@ -45,6 +53,7 @@ const sanitize = (raw: unknown): Settings => {
     colorScheme: isColorScheme(data['colorScheme']) ? data['colorScheme'] : null,
     locale: isLocale(data['locale']) ? data['locale'] : null,
     currency: isCurrencyCode(data['currency']) ? data['currency'] : DEFAULT_SETTINGS.currency,
+    analyticsConsent: isConsent(data['analyticsConsent']) ? data['analyticsConsent'] : null,
   };
 };
 

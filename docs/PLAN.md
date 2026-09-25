@@ -399,7 +399,13 @@ Texto propio basado en el manual, no copiado literal.
 
 ---
 
-## 9. Analytics y compartir (F8)
+## 9. Analytics y compartir (F8) — hecho
+
+> Implementado: `services/google-analytics` (Consent Mode v2, script solo tras aceptar),
+> `ConsentBanner`, página `/[lang]/privacy` con el interruptor `AnalyticsPreference`, imágenes
+> `public/og/og-{es,en}.png` generadas con `pnpm og:image` y card `summary_large_image`.
+> Queda por hacer fuera del código: crear la propiedad GA4, cargar el ID en el hosting y probar la
+> vista previa en WhatsApp, LinkedIn y el Sharing Debugger de Facebook.
 
 - Desde el día uno existe `utils/analytics.ts` con un `track(event, props)`. Las calculadoras ya lo
   llaman (`tool_selected`, `calculation_completed`, `example_loaded`, `calculator_reset`,
@@ -468,7 +474,7 @@ idioma, tema), sus recetas y sus cálculos en un perfil propio.
 
 Cada fase termina con `astro check` + lint + test:coverage en verde y un PR con Conventional Commits.
 
-**Estado (2026-09-26):** F0 a F7 terminadas e integradas en `dev`. Siguen F8 (GA4 + Open Graph), F10 (cuentas) y F9.
+**Estado (2026-09-26):** F0 a F8 terminadas e integradas en `dev`. Siguen F10 (cuentas) y F9.
 
 Flujo de ramas (gitflow, ver CLAUDE.md): cada fase se trabaja en `feature/*` desde `dev` y se mergea a
 `dev`. El primer release a `main` se hace al terminar F10 (cuentas/login).

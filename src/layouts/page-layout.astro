@@ -1,6 +1,8 @@
 ---
+import { ConsentBanner } from '@components';
 import { getTranslations } from '@i18n';
-import type { Locale } from '@utils';
+import { isMeasurementId } from '@services';
+import { localizedPath, type Locale } from '@utils';
 import BaseLayout from './base-layout.astro';
 import SiteFooter from './site-footer.astro';
 import SiteHeader from './site-header.astro';
@@ -14,6 +16,8 @@ interface Props {
 
 const { lang, title, description, noindex = false } = Astro.props;
 const common = getTranslations(lang, 'common');
+// Analytics (and its consent banner) only exist when a GA4 measurement ID is configured.
+const analyticsEnabled = isMeasurementId(import.meta.env.PUBLIC_GA_MEASUREMENT_ID);
 ---
 
 <BaseLayout lang={lang} title={title} description={description} noindex={noindex}>
@@ -34,4 +38,18 @@ const common = getTranslations(lang, 'common');
     </main>
     <SiteFooter lang={lang} />
   </div>
+  {analyticsEnabled && (
+    <ConsentBanner
+      client:idle
+      labels={common.consent}
+      privacyHref={localizedPath(lang, 'privacy')}
+    />
+  )}
 </BaseLayout>
+
+<script>
+  import { createLocalSettingsRepository } from '@repositories';
+  import { startGoogleAnalytics } from '@services';
+
+  startGoogleAnalytics(import.meta.env.PUBLIC_GA_MEASUREMENT_ID, createLocalSettingsRepository());
+</script>

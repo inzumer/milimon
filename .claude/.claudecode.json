@@ -89,6 +89,7 @@
         "@calculators",
         "@domain",
         "@repositories",
+        "@services",
         "@hooks",
         "@utils",
         "@i18n",

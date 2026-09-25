@@ -28,7 +28,8 @@
   },
   "footer": {
     "tagline": "A study guide to food cost management.",
-    "source": "Based on the Food & Beverage Administration and Management handbook."
+    "source": "Based on the Food & Beverage Administration and Management handbook.",
+    "privacy": "Privacy"
   },
   "not-found": {
     "title": "Page not found",
@@ -37,5 +38,12 @@
   },
   "settings": {
     "currency": "Currency"
+  },
+  "consent": {
+    "title": "Help us improve?",
+    "message": "We use Google Analytics to learn which formulas are used most and improve the handbook. It only turns on if you accept; we never store the numbers you enter.",
+    "accept": "Accept",
+    "reject": "Reject",
+    "privacy-link": "Privacy policy"
   }
 }

@@ -36,7 +36,7 @@ Key commands (Node from `.nvmrc`, pnpm from `packageManager`):
   by `vitest/valid-title`. `describe` names the unit under test.
 - **Formulas** are pure functions in `src/domain`, registered once in `registry.ts`, tested with
   the manual's worked examples.
-- **Imports**: path aliases (`@components`, `@calculators`, `@domain`, `@repositories`, `@hooks`, `@utils`, `@i18n`,
+- **Imports**: path aliases (`@components`, `@calculators`, `@domain`, `@repositories`, `@services`, `@hooks`, `@utils`, `@i18n`,
   `@layouts/*`, `@assets/*`, `@styles/*`, `@test/*`) for anything outside the current folder. Enforced by ESLint.
 - **Naming**: React components in PascalCase folders; `.astro` files, content folders, slugs and
   i18n keys in kebab-case.
