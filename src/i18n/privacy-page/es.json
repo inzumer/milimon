@@ -1,6 +1,6 @@
 {
   "title": "Privacidad",
-  "description": "Qué datos guarda Milimon Cost Lab, dónde quedan y cómo cambiar tu decisión sobre la analítica.",
+  "description": "Qué datos guarda Milimon Cost Lab, dónde quedan, cómo cambiar tu decisión sobre la analítica y cómo borrarlos.",
   "updated": "Última actualización: septiembre de 2026",
   "sections": {
     "on-device": {
@@ -25,9 +25,19 @@
       ]
     },
     "accounts": {
-      "heading": "Cuentas",
+      "heading": "Cuentas (opcional)",
       "paragraphs": [
-        "Cuando se agregue el inicio de sesión con Google o Facebook, esta página va a explicar qué datos del perfil se guardan y cómo pedir que se borren."
+        "Si iniciás sesión con Google o Facebook, guardamos tu nombre, tu correo y tu foto de perfil tal como los comparte el proveedor, para mostrarte quién tiene la sesión iniciada. Nunca vemos ni guardamos tu contraseña.",
+        "En tu perfil guardamos tu moneda, idioma y tema, y los últimos valores de cada calculadora, para que te sigan a cualquier dispositivo. Los datos se alojan en Supabase y cada fila solo puede leerla su dueño.",
+        "No vendemos ni compartimos estos datos, y no los usamos para publicidad."
+      ]
+    },
+    "data-deletion": {
+      "heading": "Cómo borrar tus datos",
+      "paragraphs": [
+        "Entrá a “Mi cuenta” (desde el menú), elegí “Borrar mi cuenta” y confirmá. Se borran al instante tu perfil, tus cálculos guardados y tu usuario.",
+        "Si iniciaste sesión con Facebook, también podés quitar el acceso de Milimon Cost Lab desde la configuración de Facebook (Configuración y privacidad → Configuración → Apps y sitios web). Quitarlo ahí no borra tu cuenta en Milimon Cost Lab: para eso usá el paso anterior.",
+        "Lo guardado en este dispositivo (sin cuenta) se borra desde la configuración de tu navegador (datos del sitio)."
       ]
     }
   },

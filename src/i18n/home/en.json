@@ -1,7 +1,8 @@
 {
   "hero": {
     "subtitle": "Work out food cost, trim waste and cooking loss in your kitchen, and understand every formula step by step.",
-    "logo-alt": "Milimon: a cook in a chef's hat holding a wooden spoon"
+    "logo-alt": "Milimon: a cook in a chef's hat holding a wooden spoon",
+    "sign-in-hint": "Optional: keep your settings and calculations in your account."
   },
   "calculator-card": {
     "title": "Calculator",

@@ -6,6 +6,10 @@ describe('storage', () => {
     expect(getBrowserStorage()).toBe(window.localStorage);
   });
 
+  it('should return window.sessionStorage when asked for the session storage', () => {
+    expect(getBrowserStorage('session')).toBe(window.sessionStorage);
+  });
+
   it('should return null when localStorage access throws', () => {
     const spy = vi.spyOn(window, 'localStorage', 'get').mockImplementation(() => {
       throw new Error('blocked');

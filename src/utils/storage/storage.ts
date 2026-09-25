@@ -9,9 +9,13 @@ export interface KeyValueStorage {
   removeItem: (key: string) => void;
 }
 
-export const getBrowserStorage = (): KeyValueStorage | null => {
+/** `localStorage` by default; `session` gives `sessionStorage` (cleared when the tab closes). */
+export const getBrowserStorage = (kind: 'local' | 'session' = 'local'): KeyValueStorage | null => {
   try {
-    return typeof window === 'undefined' ? null : window.localStorage;
+    if (typeof window === 'undefined') {
+      return null;
+    }
+    return kind === 'session' ? window.sessionStorage : window.localStorage;
   } catch {
     return null;
   }

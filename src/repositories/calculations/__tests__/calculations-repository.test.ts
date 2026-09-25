@@ -2,6 +2,7 @@ import { createMemoryStorage } from '@test/memory-storage';
 import {
   CALCULATIONS_STORAGE_KEY,
   createLocalCalculationsRepository,
+  onCalculationsChange,
 } from '../calculations-repository';
 
 describe('calculations repository (local)', () => {
@@ -46,5 +47,27 @@ describe('calculations repository (local)', () => {
 
     storage.setItem(CALCULATIONS_STORAGE_KEY, '"oops"');
     expect(repository.loadDraft('pricing')).toBeNull();
+  });
+
+  it('should load and replace every draft at once, dropping invalid ones', () => {
+    const repository = createLocalCalculationsRepository(createMemoryStorage());
+    repository.saveDraft('waste-factor', { wastePercentage: '30' });
+    repository.replaceAll({
+      pricing: { unitCost: '12' },
+      broken: ['not', 'a', 'draft'] as unknown as Record<string, string>,
+    });
+    expect(repository.loadAll()).toStrictEqual({ pricing: { unitCost: '12' } });
+  });
+
+  it('should notify saves and clears but not bulk replacements', () => {
+    const repository = createLocalCalculationsRepository(createMemoryStorage());
+    const listener = vi.fn();
+    const stop = onCalculationsChange(listener);
+    repository.saveDraft('pricing', { unitCost: '12' });
+    repository.clearDraft('pricing');
+    repository.replaceAll({});
+    stop();
+    repository.saveDraft('pricing', { unitCost: '1' });
+    expect(listener.mock.calls).toStrictEqual([['pricing'], ['pricing']]);
   });
 });

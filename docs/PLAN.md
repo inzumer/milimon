@@ -449,7 +449,13 @@ el plan premium sobre las cuentas de F10.
 
 ---
 
-## 10. Cuentas y perfiles (fase final)
+## 10. Cuentas y perfiles (fase final) — hecho
+
+> Implementado según [ADR 0003](adr/0003-accounts-with-supabase.md): Supabase con PKCE, sincronización
+> offline-first, migración de datos locales en el primer inicio, página `/[lang]/account` (cerrar
+> sesión, borrar cuenta), términos, privacidad con instrucciones de borrado y guía de
+> configuración en [ACCOUNTS.md](ACCOUNTS.md). Las recetas guardadas viajan como borradores del
+> costeo de recetas; el historial de cálculos se suma como §10 bis.
 
 Objetivo: que cualquier persona, en cualquier país, guarde su configuración (moneda, formato,
 idioma, tema), sus recetas y sus cálculos en un perfil propio.
@@ -470,11 +476,23 @@ idioma, tema), sus recetas y sus cálculos en un perfil propio.
 
 ---
 
+## 10 bis. Historial de cálculos
+
+- Botón **"Guardar en el historial"** en cada calculadora (explícito: guardar en cada tecla
+  llenaría el historial de cuentas a medio hacer).
+- **Hasta 15 cálculos** por persona; al guardar el 16.º se descarta el más viejo. El límite se
+  aplica en el cliente y también en la base (trigger), para que nadie lo saltee.
+- Cada entrada guarda la fórmula, los valores cargados, el resultado principal y la fecha.
+- Funciona **sin cuenta** (`localStorage`) y se sincroniza con la cuenta igual que la
+  configuración: en el primer inicio se ofrece importarlo.
+- Página `/[lang]/history`: lista con fecha, fórmula y resultado, "Abrir en la calculadora" (carga
+  los valores) y "Borrar".
+
 ## 11. Fases
 
 Cada fase termina con `astro check` + lint + test:coverage en verde y un PR con Conventional Commits.
 
-**Estado (2026-09-26):** F0 a F8 terminadas e integradas en `dev`. Siguen F10 (cuentas) y F9.
+**Estado (2026-09-26):** F0 a F8 y F10 (cuentas) terminadas e integradas en `dev`. Siguen el historial de cálculos (§10 bis), el pase a `main` y F9.
 
 Flujo de ramas (gitflow, ver CLAUDE.md): cada fase se trabaja en `feature/*` desde `dev` y se mergea a
 `dev`. El primer release a `main` se hace al terminar F10 (cuentas/login).

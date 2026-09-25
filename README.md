@@ -51,10 +51,14 @@ solo, sin configuración.
 
 Variables de entorno (ver `.env.example`):
 
-| Variable                   | Para qué                                                                             |
-| -------------------------- | ------------------------------------------------------------------------------------ |
-| `SITE_URL`                 | URL pública: canónicas, `hreflang`, sitemap y Open Graph (obligatoria en producción) |
-| `PUBLIC_GA_MEASUREMENT_ID` | ID de Google Analytics 4 (`G-…`). Vacío = sin analítica ni banner de cookies         |
+| Variable                          | Para qué                                                                             |
+| --------------------------------- | ------------------------------------------------------------------------------------ |
+| `SITE_URL`                        | URL pública: canónicas, `hreflang`, sitemap y Open Graph (obligatoria en producción) |
+| `PUBLIC_GA_MEASUREMENT_ID`        | ID de Google Analytics 4 (`G-…`). Vacío = sin analítica ni banner de cookies         |
+| `PUBLIC_SUPABASE_URL`             | URL del proyecto de Supabase (cuentas). Vacío = sin login                            |
+| `PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Clave publicable de Supabase (pública por diseño; los datos se protegen con RLS)     |
+
+Para activar el login con Google y Facebook, seguí [docs/ACCOUNTS.md](docs/ACCOUNTS.md).
 
 ## Estructura
 
@@ -66,9 +70,11 @@ src/
   calculators/  islas de React, una por calculadora
   domain/       fórmulas puras + registry
   repositories/ persistencia (configuración, borradores) detrás de interfaces
-  services/     integraciones externas (Google Analytics)
+  services/     integraciones externas (Google Analytics, cuentas con Supabase)
   i18n/         traducciones en carpetas kebab-case: <carpeta>/{es,en}.json
   hooks/ utils/ styles/ assets/ test/
+supabase/
+  migrations/   tablas y políticas RLS de las cuentas
 docs/
   PLAN.md       plan maestro
   adr/          decisiones de arquitectura

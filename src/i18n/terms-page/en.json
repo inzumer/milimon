@@ -1,0 +1,38 @@
+{
+  "title": "Terms of use",
+  "description": "The conditions for using Milimon Cost Lab, its calculator and its study content.",
+  "updated": "Last updated: September 2026",
+  "sections": {
+    "the-service": {
+      "heading": "The service",
+      "paragraphs": [
+        "Milimon Cost Lab is a free tool to study and calculate food costs. You can use it without an account; the account is optional and keeps your settings and calculations."
+      ]
+    },
+    "results": {
+      "heading": "Using the results",
+      "paragraphs": [
+        "The formulas and examples follow the Food & Beverage Administration and Management handbook and are meant for learning. Results depend on the data you enter: check them before using them to set prices, buy or make business decisions.",
+        "The example taxes and rates are Argentina's and may change; check the current ones in your country."
+      ]
+    },
+    "your-account": {
+      "heading": "Your account",
+      "paragraphs": [
+        "You sign in with your Google or Facebook account, and their own terms apply too. You are responsible for what you do with your session. You can delete your account at any time from “My account”."
+      ]
+    },
+    "content": {
+      "heading": "Content",
+      "paragraphs": [
+        "The texts, explanations, logo and design are part of Milimon Cost Lab. You may use them to study; ask for permission to republish them."
+      ]
+    },
+    "changes": {
+      "heading": "Changes",
+      "paragraphs": [
+        "We may update these terms or the tool. If a change is significant, this page will show it with the update date."
+      ]
+    }
+  }
+}

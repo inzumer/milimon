@@ -1,4 +1,6 @@
 import type { Locale } from '@utils/locale';
+import accountPageEn from './account-page/en.json';
+import accountPageEs from './account-page/es.json';
 import calculatorPageEn from './calculator-page/en.json';
 import calculatorPageEs from './calculator-page/es.json';
 import calculatorEn from './calculator/en.json';
@@ -13,6 +15,8 @@ import learnPageEn from './learn-page/en.json';
 import learnPageEs from './learn-page/es.json';
 import privacyPageEn from './privacy-page/en.json';
 import privacyPageEs from './privacy-page/es.json';
+import termsPageEn from './terms-page/en.json';
+import termsPageEs from './terms-page/es.json';
 
 /**
  * Translations live in kebab-case folders, one JSON file per language: `src/i18n/<folder>/{es,en}.json`.
@@ -30,7 +34,9 @@ const dictionaries = {
     en: calculatorPageEn satisfies typeof calculatorPageEs,
   },
   'formula-page': { es: formulaPageEs, en: formulaPageEn satisfies typeof formulaPageEs },
+  'account-page': { es: accountPageEs, en: accountPageEn satisfies typeof accountPageEs },
   'privacy-page': { es: privacyPageEs, en: privacyPageEn satisfies typeof privacyPageEs },
+  'terms-page': { es: termsPageEs, en: termsPageEn satisfies typeof termsPageEs },
 } as const;
 
 export type Namespace = keyof typeof dictionaries;
