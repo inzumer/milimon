@@ -1,0 +1,35 @@
+{
+  "title": "Costo de mercaderías consumidas",
+  "summary": "Cuánta mercadería se usó en el período, a partir de los inventarios y las compras.",
+  "inputs": {
+    "opening-inventory": {
+      "label": "Existencia inicial",
+      "placeholder": "Valor del inventario al empezar el período (ej.: 125000)"
+    },
+    "purchases": {
+      "label": "Compras del período",
+      "placeholder": "Suma de las compras de mercadería del período (ej.: 245000)"
+    },
+    "closing-inventory": {
+      "label": "Existencia final",
+      "placeholder": "Valor del inventario al cerrar el período (ej.: 100000)",
+      "hint": "Valorizalo con el mismo método que la existencia inicial."
+    }
+  },
+  "outputs": {
+    "available-for-use": "Mercadería disponible",
+    "cost-of-goods-consumed": "Costo de mercaderías consumidas"
+  },
+  "steps": {
+    "available-for-use": "Disponible = existencia inicial + compras = {openingInventory} + {purchases} = {availableForUse}",
+    "cost-of-goods-consumed": "Consumido = disponible − existencia final = {availableForUse} − {closingInventory} = {costOfGoodsConsumed}"
+  },
+  "examples": {
+    "manual-month": {
+      "title": "Mes del manual: $ 125.000 inicial, $ 245.000 de compras, $ 100.000 final"
+    }
+  },
+  "errors": {
+    "closing-inventory.must-not-exceed-gross": "La existencia final no puede superar a la inicial más las compras."
+  }
+}

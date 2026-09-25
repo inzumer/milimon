@@ -1,0 +1,101 @@
+{
+  "title": "Coeficiente y precio de venta",
+  "summary": "El precio teórico de cada producto: costo × coeficiente, más impuestos y cargos.",
+  "inputs": {
+    "unit-cost": {
+      "label": "Costo estándar unitario",
+      "placeholder": "Costo de materia prima del producto según su ficha técnica (ej.: 12)"
+    },
+    "cost-of-goods-consumed": {
+      "label": "Costo de mercaderías consumidas (mes)",
+      "placeholder": "Existencia inicial + compras − existencia final (ej.: 270000)"
+    },
+    "salaries": {
+      "label": "Sueldos (mes)",
+      "placeholder": "Total de sueldos del personal, incluido el del dueño si trabaja (ej.: 57000)"
+    },
+    "social-charges-rate": {
+      "label": "Cargas sociales",
+      "placeholder": "Porcentaje sobre los sueldos (ej.: 48)"
+    },
+    "rent": {
+      "label": "Alquiler (mes)",
+      "placeholder": "Alquiler mensual del local (ej.: 41000)"
+    },
+    "services": {
+      "label": "Servicios (mes)",
+      "placeholder": "Luz, gas, agua, internet y demás servicios (ej.: 13000)"
+    },
+    "general-expenses": {
+      "label": "Gastos generales (mes)",
+      "placeholder": "Limpieza, lavadero, papelería, honorarios, etc. (ej.: 90000)"
+    },
+    "investment": {
+      "label": "Inversión",
+      "placeholder": "Total invertido para abrir el negocio (ej.: 3000000)"
+    },
+    "amortization-months": {
+      "label": "Meses de amortización",
+      "placeholder": "En cuántos meses se amortiza la inversión (ej.: 36)",
+      "hint": "El manual supone que a los 3 años los equipos valen cero."
+    },
+    "annual-return-rate": {
+      "label": "Retorno anual esperado sobre la inversión",
+      "placeholder": "Porcentaje anual que querés ganar como inversor (ej.: 32)",
+      "hint": "Como mínimo, el doble de lo que rinde un título público."
+    },
+    "monthly-withdrawal": {
+      "label": "Retiro mensual del dueño",
+      "placeholder": "Lo que querés retirar por mes por tu trabajo, neto (ej.: 50000)"
+    },
+    "income-tax-rate": {
+      "label": "Impuesto a las ganancias",
+      "placeholder": "Alícuota sobre la ganancia (ej.: 35)"
+    },
+    "vat-rate": {
+      "label": "IVA",
+      "placeholder": "Alícuota de IVA (ej.: 21)"
+    },
+    "gross-income-tax-rate": {
+      "label": "Ingresos Brutos",
+      "placeholder": "Alícuota de IIBB (ej.: 3)"
+    },
+    "safety-hygiene-rate": {
+      "label": "Seguridad e Higiene",
+      "placeholder": "Tasa municipal (ej.: 0,5)"
+    },
+    "include-card-fee": {
+      "label": "¿Cobrás con tarjeta?",
+      "placeholder": "Sumar la comisión de tarjetas al precio"
+    },
+    "card-fee-rate": {
+      "label": "Comisión de tarjetas",
+      "placeholder": "Porcentaje que cobra la tarjeta (ej.: 5)"
+    }
+  },
+  "outputs": {
+    "non-raw-material-costs": "Costos no relacionados con la materia prima",
+    "gross-profit": "Ganancia deseada antes de impuestos",
+    "coefficient": "Coeficiente",
+    "net-price": "Precio neto",
+    "sales-tax-rate": "Impuestos y cargos sobre el precio",
+    "gross-price": "Precio de carta"
+  },
+  "steps": {
+    "social-charges": "Cargas sociales = sueldos × {socialChargesRate} = {salaries} × {socialChargesRate} = {socialCharges}",
+    "amortization": "Amortización = inversión ÷ meses = {investment} ÷ {amortizationMonths} = {amortization}",
+    "non-raw-material-costs": "Costos no MP = sueldos + cargas + alquiler + servicios + gastos generales + amortización = {salaries} + {socialCharges} + {rent} + {services} + {generalExpenses} + {amortization} = {nonRawMaterialCosts}",
+    "monthly-return": "Retorno mensual = inversión × {annualReturnRate} ÷ 12 = {investment} × {annualReturnRate} ÷ 12 = {monthlyReturn}",
+    "net-profit": "Ganancia neta deseada = retorno mensual + retiro = {monthlyReturn} + {monthlyWithdrawal} = {netProfit}",
+    "gross-profit": "Ganancia antes de impuestos = ganancia neta ÷ (1 − {incomeTaxRate}) = {netProfit} ÷ (1 − {incomeTaxRate}) = {grossProfit}",
+    "coefficient": "Coeficiente = 1 + (costos no MP + ganancia antes de impuestos) ÷ CMC = 1 + ({nonRawMaterialCosts} + {grossProfit}) ÷ {costOfGoodsConsumed} = {coefficient}",
+    "net-price": "Precio neto = costo unitario × coeficiente = {unitCost} × {coefficient} = {netPrice}",
+    "sales-tax-rate": "Impuestos y cargos = IVA + IIBB + tarjetas + Seguridad e Higiene = {vatRate} + {grossIncomeTaxRate} + {cardFeeRate} + {safetyHygieneRate} = {salesTaxRate}",
+    "gross-price": "Precio de carta = precio neto × (1 + {salesTaxRate}) = {netPrice} × (1 + {salesTaxRate}) = {grossPrice}"
+  },
+  "examples": {
+    "manual-croissants": {
+      "title": "Medialunas del manual: costo $ 12 (sin comisión de tarjetas, como el ejemplo)"
+    }
+  }
+}

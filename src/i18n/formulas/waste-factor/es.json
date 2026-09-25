@@ -1,0 +1,22 @@
+{
+  "title": "Factor de desecho",
+  "summary": "El número por el que multiplicás lo limpio para saber cuánto comprar sucio.",
+  "inputs": {
+    "waste-percentage": {
+      "label": "% de desecho",
+      "placeholder": "Porcentaje que se pierde al limpiar (ej.: 30)",
+      "hint": "Si no lo sabés, calculalo con la fórmula de % de desecho."
+    }
+  },
+  "outputs": {
+    "usable-percentage": "% aprovechable",
+    "waste-factor": "Factor de desecho"
+  },
+  "steps": {
+    "usable-percentage": "Lo aprovechable = 100 % − % de desecho = 100 % − {wastePercentage} = {usablePercentage}",
+    "waste-factor": "Factor = % de desecho ÷ (100 − % de desecho) + 1 = {wastePercentage} ÷ {usablePercentage} + 1 = {wasteFactor}"
+  },
+  "examples": {
+    "manual-tenderloin": { "title": "Lomo para tournedó con 30 % de desecho" }
+  }
+}

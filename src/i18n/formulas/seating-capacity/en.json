@@ -1,0 +1,31 @@
+{
+  "title": "Seating capacity of the premises",
+  "summary": "How many customers you can seat in a space based on its total area.",
+  "inputs": {
+    "premises-area": {
+      "label": "Total area of the premises",
+      "placeholder": "Square meters of the premises (e.g. 80)"
+    },
+    "dining-share-percentage": {
+      "label": "Share for the dining room",
+      "placeholder": "Percentage of the premises for dining, between 45 and 65 (e.g. 55)",
+      "hint": "The rest is kitchen (15–25%) and storage and services (20–35%)."
+    },
+    "area-per-customer-with-circulation": {
+      "label": "Area per customer with circulation",
+      "placeholder": "Square meters per person including walkways (e.g. 1.30)"
+    }
+  },
+  "outputs": {
+    "dining-area": "Dining room area",
+    "capacity": "Exact capacity",
+    "capacity-rounded": "Covers that fit"
+  },
+  "steps": {
+    "dining-area": "Dining room = premises area × {diningSharePercentage} = {premisesArea} m² × {diningSharePercentage} = {diningArea} m²",
+    "capacity": "Covers = dining room ÷ area per customer = {diningArea} m² ÷ {areaPerCustomerWithCirculation} m² = {capacity} (rounded down)"
+  },
+  "examples": {
+    "manual-80-m2": { "title": "80 m² premises with 55% dining room and 1.30 m² per customer" }
+  }
+}

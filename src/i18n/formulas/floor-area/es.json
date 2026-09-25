@@ -1,0 +1,31 @@
+{
+  "title": "Superficie del salón",
+  "summary": "Cuántos metros cuadrados de salón necesitás para la cantidad de cubiertos que querés.",
+  "inputs": {
+    "area-per-customer": {
+      "label": "Superficie por cliente",
+      "placeholder": "Metros cuadrados por persona, entre 1,10 y 1,50 (ej.: 1,10)",
+      "hint": "Más separación entre mesas = más categoría y más metros."
+    },
+    "circulation-percentage": {
+      "label": "Circulación",
+      "placeholder": "Porcentaje extra para circular, entre 10 y 20 (ej.: 20)"
+    },
+    "customers": {
+      "label": "Cubiertos",
+      "placeholder": "Cantidad de clientes sentados al mismo tiempo (ej.: 20)"
+    }
+  },
+  "outputs": {
+    "area-per-customer-with-circulation": "Superficie por cliente con circulación",
+    "required-area": "Superficie exacta",
+    "required-area-rounded": "Superficie de salón necesaria"
+  },
+  "steps": {
+    "area-per-customer": "Por cliente con circulación = {areaPerCustomer} m² × (1 + {circulationPercentage}) = {areaPerCustomerWithCirculation} m²",
+    "required-area": "Superficie = por cliente × cubiertos = {areaPerCustomerWithCirculation} m² × {customers} = {requiredArea} m² (se redondea hacia arriba)"
+  },
+  "examples": {
+    "manual-tea-house": { "title": "Casa de té de 20 cubiertos (1,10 m² + 20 %)" }
+  }
+}

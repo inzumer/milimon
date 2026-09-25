@@ -1,0 +1,42 @@
+{
+  "title": "Cantidad bruta a comprar",
+  "summary": "Cuánto comprar sucio para que, después de limpiar, te alcance para todas las porciones.",
+  "inputs": {
+    "servings": {
+      "label": "Comensales o porciones",
+      "placeholder": "Cantidad de porciones a servir (ej.: 200)"
+    },
+    "net-portion": {
+      "label": "Porción limpia por comensal",
+      "placeholder": "Cantidad limpia de la receta por porción, en kg (ej.: 0,180)"
+    },
+    "waste-percentage": {
+      "label": "% de desecho",
+      "placeholder": "Porcentaje que se pierde al limpiar (ej.: 30)"
+    },
+    "rounding-step": {
+      "label": "Redondear la compra a múltiplos de",
+      "placeholder": "Unidad de compra hacia la que redondeás, en kg (ej.: 1)",
+      "hint": "El manual redondea hacia arriba a kilos enteros: 51,429 kg → 52 kg."
+    }
+  },
+  "outputs": {
+    "net-required": "Cantidad limpia necesaria",
+    "waste-factor": "Factor de desecho",
+    "gross-quantity": "Cantidad bruta exacta",
+    "purchase-quantity": "Cantidad a comprar",
+    "naive-quantity": "Si solo sumaras el % (no alcanza)"
+  },
+  "steps": {
+    "net-required": "Limpio necesario = porciones × porción limpia = {servings} × {netPortion} kg = {netRequired} kg",
+    "waste-factor": "Factor de desecho para {wastePercentage} = {wasteFactor}",
+    "gross-quantity": "Bruto = limpio × factor = {netRequired} kg × {wasteFactor} = {grossQuantity} kg",
+    "rule-of-three": "Comprobación por regla de tres: {netRequired} kg × 100 ÷ (100 − {wastePercentage}) = {grossQuantity} kg",
+    "purchase-quantity": "Redondeando hacia arriba a múltiplos de {roundingStep} kg: comprás {purchaseQuantity} kg"
+  },
+  "examples": {
+    "manual-tournedos": {
+      "title": "Tournedó para 200 personas (0,180 kg de lomo, 30 % de desecho)"
+    }
+  }
+}

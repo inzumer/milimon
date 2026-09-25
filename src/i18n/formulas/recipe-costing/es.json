@@ -1,0 +1,46 @@
+{
+  "title": "Costeo de recetas",
+  "summary": "El costo de cada ingrediente, de la receta completa y de cada porción.",
+  "inputs": {
+    "servings": {
+      "label": "Rendimiento (porciones)",
+      "placeholder": "Cuántas porciones rinde la receta (ej.: 10)"
+    },
+    "name": {
+      "label": "Ingrediente",
+      "placeholder": "Nombre del ingrediente (ej.: Lomo)"
+    },
+    "unit": {
+      "label": "Unidad",
+      "placeholder": "Unidad de medida (ej.: kg)"
+    },
+    "net-quantity": {
+      "label": "Cantidad de la receta (limpia)",
+      "placeholder": "Cantidad limpia que usa la receta (ej.: 1,800)"
+    },
+    "waste-percentage": {
+      "label": "% de desecho",
+      "placeholder": "Porcentaje que se pierde al limpiarlo (ej.: 30)"
+    },
+    "unit-price": {
+      "label": "Precio de compra",
+      "placeholder": "Precio de la mercadería sucia por unidad (ej.: 10000)",
+      "hint": "Usá la misma unidad que la cantidad (si la receta va en kg, el precio por kg)."
+    }
+  },
+  "outputs": {
+    "waste-factor": "Factor de desecho",
+    "gross-quantity": "Cantidad bruta",
+    "cost": "Costo",
+    "share": "Incidencia",
+    "recipe-cost": "Costo de la receta",
+    "portion-cost": "Costo por porción"
+  },
+  "steps": {
+    "recipe-cost": "Costo de la receta = suma del costo de cada ingrediente = {recipeCost}",
+    "portion-cost": "Costo por porción = costo de la receta ÷ porciones = {recipeCost} ÷ {servings} = {portionCost}"
+  },
+  "examples": {
+    "tournedos-recipe": { "title": "Tournedó con galette de papas para 10 porciones" }
+  }
+}

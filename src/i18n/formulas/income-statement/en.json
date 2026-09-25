@@ -1,0 +1,77 @@
+{
+  "title": "Income statement",
+  "summary": "Revenue minus costs for the month: how much the business earns before and after income tax.",
+  "inputs": {
+    "food-sales": {
+      "label": "Food sales",
+      "placeholder": "Food revenue for the period (e.g. 820000)"
+    },
+    "beverage-sales": {
+      "label": "Beverage sales",
+      "placeholder": "Beverage revenue for the period (e.g. 298000)"
+    },
+    "food-cost": {
+      "label": "Food cost",
+      "placeholder": "Cost of food consumed (e.g. 200000)"
+    },
+    "beverage-cost": {
+      "label": "Beverage cost",
+      "placeholder": "Cost of beverages consumed (e.g. 70000)"
+    },
+    "salaries": {
+      "label": "Salaries",
+      "placeholder": "Total salaries for the period (e.g. 57000)"
+    },
+    "social-charges": {
+      "label": "Payroll charges",
+      "placeholder": "Employer contributions on salaries (e.g. 27360)"
+    },
+    "rent": {
+      "label": "Rent",
+      "placeholder": "Rent for the period (e.g. 41000)"
+    },
+    "services": {
+      "label": "Utilities",
+      "placeholder": "Electricity, gas, water, internet, etc. (e.g. 13000)"
+    },
+    "general-expenses": {
+      "label": "General expenses",
+      "placeholder": "Cleaning, laundry, professional fees, etc. (e.g. 90000)"
+    },
+    "amortization": {
+      "label": "Amortization",
+      "placeholder": "Investment ÷ amortization months (e.g. 83333)"
+    },
+    "sales-taxes": {
+      "label": "Taxes on sales",
+      "placeholder": "VAT, gross income tax and other taxes for the period (e.g. 223600)"
+    },
+    "municipal-fees": {
+      "label": "Municipal fees",
+      "placeholder": "Municipal fees for the period (e.g. 2284)"
+    },
+    "income-tax-rate": {
+      "label": "Income tax",
+      "placeholder": "Rate on the result (e.g. 35)"
+    }
+  },
+  "outputs": {
+    "total-sales": "Sales revenue",
+    "cost-of-sales": "Cost of sales",
+    "operating-costs": "Operating costs",
+    "result-before-income-tax": "Result before income tax",
+    "income-tax": "Income tax",
+    "net-result": "Net result"
+  },
+  "steps": {
+    "total-sales": "Revenue = food + beverages = {foodSales} + {beverageSales} = {totalSales}",
+    "cost-of-sales": "Cost of sales = food + beverages = {foodCost} + {beverageCost} = {costOfSales}",
+    "operating-costs": "Operating costs = fixed costs + taxes on sales = {fixedCosts} + {salesTaxes} = {operatingCosts}",
+    "result-before-income-tax": "Result before income tax = revenue − cost of sales − operating costs = {totalSales} − {costOfSales} − {operatingCosts} = {resultBeforeIncomeTax}",
+    "income-tax": "Income tax = result × {incomeTaxRate} = {resultBeforeIncomeTax} × {incomeTaxRate} = {incomeTax}",
+    "net-result": "Net result = result − tax = {resultBeforeIncomeTax} − {incomeTax} = {netResult}"
+  },
+  "examples": {
+    "manual-statement": { "title": "Handbook statement: $1,118,000 in sales" }
+  }
+}

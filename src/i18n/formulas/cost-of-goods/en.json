@@ -1,0 +1,35 @@
+{
+  "title": "Cost of goods consumed",
+  "summary": "How much stock was used in the period, from the inventories and purchases.",
+  "inputs": {
+    "opening-inventory": {
+      "label": "Opening inventory",
+      "placeholder": "Value of the stock at the start of the period (e.g. 125000)"
+    },
+    "purchases": {
+      "label": "Purchases in the period",
+      "placeholder": "Total stock purchases in the period (e.g. 245000)"
+    },
+    "closing-inventory": {
+      "label": "Closing inventory",
+      "placeholder": "Value of the stock at the end of the period (e.g. 100000)",
+      "hint": "Value it with the same method as the opening inventory."
+    }
+  },
+  "outputs": {
+    "available-for-use": "Stock available",
+    "cost-of-goods-consumed": "Cost of goods consumed"
+  },
+  "steps": {
+    "available-for-use": "Available = opening inventory + purchases = {openingInventory} + {purchases} = {availableForUse}",
+    "cost-of-goods-consumed": "Consumed = available − closing inventory = {availableForUse} − {closingInventory} = {costOfGoodsConsumed}"
+  },
+  "examples": {
+    "manual-month": {
+      "title": "Handbook month: $125,000 opening, $245,000 purchases, $100,000 closing"
+    }
+  },
+  "errors": {
+    "closing-inventory.must-not-exceed-gross": "The closing inventory can't exceed the opening inventory plus purchases."
+  }
+}

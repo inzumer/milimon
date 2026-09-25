@@ -1,0 +1,37 @@
+{
+  "title": "Cooking loss",
+  "summary": "How much weight a preparation loses when it is cooked.",
+  "inputs": {
+    "net-weight": {
+      "label": "Clean weight",
+      "placeholder": "Weight of the clean product before cooking, in kg (e.g. 1.200)"
+    },
+    "additions-weight": {
+      "label": "Inseparable additions",
+      "placeholder": "Sauces, coatings or fillings that can't be separated, in kg (e.g. 0.300)",
+      "hint": "If there are none, leave 0."
+    },
+    "cooked-weight": {
+      "label": "Cooked weight",
+      "placeholder": "Weight of the cooked product, in kg (e.g. 1.050)"
+    }
+  },
+  "outputs": {
+    "weight-before-cooking": "Weight before cooking",
+    "loss-weight": "Loss weight",
+    "loss-percentage": "Cooking loss %"
+  },
+  "steps": {
+    "weight-before-cooking": "Before cooking = clean weight + additions = {netWeight} kg + {additionsWeight} kg = {weightBeforeCooking} kg",
+    "loss-weight": "Loss = before cooking − cooked = {weightBeforeCooking} kg − {cookedWeight} kg = {lossWeight} kg",
+    "loss-percentage": "Cooking loss % = loss ÷ before cooking × 100 = {lossWeight} kg ÷ {weightBeforeCooking} kg × 100 = {lossPercentage}"
+  },
+  "examples": {
+    "roast-with-marinade": {
+      "title": "Marinated meat: 1.200 kg + 0.300 kg marinade ending at 1.050 kg"
+    }
+  },
+  "errors": {
+    "cooked-weight.must-not-exceed-gross": "The cooked weight can't be greater than the weight before cooking."
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "title": "Precio limpio equivalente",
+  "summary": "Compará si conviene comprar la mercadería sucia (con desechos) o ya limpia.",
+  "inputs": {
+    "gross-price": {
+      "label": "Precio de la mercadería sucia",
+      "placeholder": "Precio por kg tal como viene, con desechos (ej.: 10000)"
+    },
+    "waste-percentage": {
+      "label": "% de desecho",
+      "placeholder": "Porcentaje que se pierde al limpiarla (ej.: 30)"
+    },
+    "supplier-clean-price": {
+      "label": "Precio de la mercadería limpia",
+      "placeholder": "Precio por kg que ofrece el proveedor ya limpio (ej.: 15000)"
+    }
+  },
+  "outputs": {
+    "waste-factor": "Factor de desecho",
+    "equivalent-clean-price": "Tu precio limpio equivalente",
+    "difference": "Diferencia con el precio limpio del proveedor",
+    "choice": "Qué conviene por precio"
+  },
+  "steps": {
+    "waste-factor": "Factor de desecho para {wastePercentage} = {wasteFactor}",
+    "equivalent-clean-price": "Precio limpio equivalente = precio sucio × factor = {grossPrice} × {wasteFactor} = {equivalentCleanPrice}",
+    "comparison": "Precio limpio del proveedor − tu equivalente = {supplierCleanPrice} − {equivalentCleanPrice} = {difference}"
+  },
+  "examples": {
+    "tenderloin-offer": { "title": "Lomo sucio a $ 10.000/kg vs. limpio a $ 15.000/kg" }
+  },
+  "choices": {
+    "buy-gross": "Comprar sucio y limpiarlo vos",
+    "buy-clean": "Comprar limpio al proveedor",
+    "same": "Da lo mismo por precio: decidí por mano de obra, urgencia o espacio"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "title": "Alquiler vs. facturación",
+  "summary": "Revisá si el alquiler del local es razonable para lo que vendés.",
+  "inputs": {
+    "rent": {
+      "label": "Alquiler mensual",
+      "placeholder": "Lo que pagás de alquiler por mes (ej.: 41000)"
+    },
+    "net-sales": {
+      "label": "Facturación neta mensual",
+      "placeholder": "Ventas del mes sin impuestos (ej.: 785751,95)"
+    }
+  },
+  "outputs": {
+    "rent-share": "Alquiler sobre la facturación",
+    "status": "Evaluación",
+    "sales-for-max-share": "Ventas para que el alquiler sea el 10 %",
+    "sales-for-optimal-share": "Ventas para que el alquiler sea el 5 %"
+  },
+  "steps": {
+    "rent-share": "Alquiler ÷ facturación neta × 100 = {rent} ÷ {netSales} × 100 = {rentShare}",
+    "sales-for-max-share": "Para no pasar el {maxShare}: {rent} × 100 ÷ 10 = {salesForMaxShare}",
+    "sales-for-optimal-share": "Para llegar al óptimo de {optimalShare}: {rent} × 100 ÷ 5 = {salesForOptimalShare}"
+  },
+  "examples": {
+    "manual-statement-rent": { "title": "Alquiler del manual ($ 41.000) con sus ventas netas" }
+  },
+  "choices": {
+    "optimal": "Óptimo: el alquiler es hasta el 5 % de la facturación",
+    "acceptable": "Aceptable: entre el 5 % y el 10 %",
+    "too-high": "Alto: supera el 10 % de la facturación"
+  }
+}

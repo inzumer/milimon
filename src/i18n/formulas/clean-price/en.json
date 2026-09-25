@@ -1,0 +1,37 @@
+{
+  "title": "Equivalent clean price",
+  "summary": "Compare whether buying the product as purchased (with trim) or already clean is cheaper.",
+  "inputs": {
+    "gross-price": {
+      "label": "Price as purchased",
+      "placeholder": "Price per kg as it comes, with trim (e.g. 10000)"
+    },
+    "waste-percentage": {
+      "label": "Trim waste %",
+      "placeholder": "Percentage lost when cleaning it (e.g. 30)"
+    },
+    "supplier-clean-price": {
+      "label": "Clean product price",
+      "placeholder": "Price per kg the supplier charges already clean (e.g. 15000)"
+    }
+  },
+  "outputs": {
+    "waste-factor": "Waste factor",
+    "equivalent-clean-price": "Your equivalent clean price",
+    "difference": "Difference with the supplier's clean price",
+    "choice": "Cheapest option"
+  },
+  "steps": {
+    "waste-factor": "Waste factor for {wastePercentage} = {wasteFactor}",
+    "equivalent-clean-price": "Equivalent clean price = price as purchased × factor = {grossPrice} × {wasteFactor} = {equivalentCleanPrice}",
+    "comparison": "Supplier clean price − your equivalent = {supplierCleanPrice} − {equivalentCleanPrice} = {difference}"
+  },
+  "examples": {
+    "tenderloin-offer": { "title": "Untrimmed tenderloin at $10,000/kg vs. trimmed at $15,000/kg" }
+  },
+  "choices": {
+    "buy-gross": "Buy it as purchased and clean it yourself",
+    "buy-clean": "Buy it clean from the supplier",
+    "same": "Same price: decide on labor, urgency or storage space"
+  }
+}

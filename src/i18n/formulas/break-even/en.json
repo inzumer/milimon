@@ -1,0 +1,53 @@
+{
+  "title": "Break-even point",
+  "summary": "How much you need to sell to cover every cost, and how much to earn what you want.",
+  "inputs": {
+    "gross-sales": {
+      "label": "Gross sales",
+      "placeholder": "Sales for the period including taxes (e.g. 1118000)"
+    },
+    "taxes": {
+      "label": "Taxes",
+      "placeholder": "Taxes on sales + income tax (e.g. 332248.05)"
+    },
+    "variable-costs": {
+      "label": "Variable costs",
+      "placeholder": "Cost of goods consumed in the period (e.g. 270000)"
+    },
+    "fixed-costs": {
+      "label": "Fixed costs",
+      "placeholder": "Salaries, charges, rent, utilities, expenses, amortization and fees (e.g. 313977)"
+    },
+    "desired-profit-before-tax": {
+      "label": "Desired profit before tax",
+      "placeholder": "Monthly profit you want, before income tax (e.g. 200000)",
+      "hint": "If you think in take-home terms, divide it by (1 − 0.35)."
+    }
+  },
+  "outputs": {
+    "net-sales": "Net sales",
+    "tax-rate": "Tax rate",
+    "variable-cost-rate": "Variable cost rate",
+    "contribution-rate": "Contribution rate",
+    "break-even-net-sales": "Break-even point (net sales)",
+    "break-even-gross-sales": "Break-even point (gross sales)",
+    "target-net-sales": "Net sales for your profit",
+    "target-gross-sales": "Gross sales for your profit"
+  },
+  "steps": {
+    "net-sales": "Net sales = gross sales − taxes = {grossSales} − {taxes} = {netSales}",
+    "tax-rate": "Tax rate = gross sales ÷ net sales = {grossSales} ÷ {netSales} = {taxRate}",
+    "variable-cost-rate": "Variable cost rate = variable costs ÷ net sales = {variableCosts} ÷ {netSales} = {variableCostRate}",
+    "contribution-rate": "Contribution rate = 1 − variable cost rate = 1 − {variableCostRate} = {contributionRate}",
+    "break-even": "Break-even point = fixed costs ÷ contribution rate = {fixedCosts} ÷ {contributionRate} = {breakEvenNetSales}",
+    "target-sales": "Net sales for your profit = (fixed costs + profit before tax) ÷ contribution rate = ({fixedCosts} + {desiredProfitBeforeTax}) ÷ {contributionRate} = {targetNetSales}",
+    "target-gross-sales": "Gross sales = net sales × tax rate = {targetNetSales} × {taxRate} = {targetGrossSales}"
+  },
+  "examples": {
+    "manual-break-even": { "title": "Handbook data, with $200,000 profit before tax" }
+  },
+  "errors": {
+    "taxes.must-not-exceed-gross": "Taxes can't be equal to or greater than gross sales.",
+    "variable-costs.must-not-exceed-gross": "Variable costs must be lower than net sales."
+  }
+}

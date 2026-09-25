@@ -1,0 +1,22 @@
+{
+  "title": "Waste factor",
+  "summary": "The number you multiply the clean quantity by to know how much to buy as purchased.",
+  "inputs": {
+    "waste-percentage": {
+      "label": "Trim waste %",
+      "placeholder": "Percentage lost when cleaning (e.g. 30)",
+      "hint": "If you don't know it, work it out with the trim waste % formula."
+    }
+  },
+  "outputs": {
+    "usable-percentage": "Usable %",
+    "waste-factor": "Waste factor"
+  },
+  "steps": {
+    "usable-percentage": "Usable part = 100% − trim waste % = 100% − {wastePercentage} = {usablePercentage}",
+    "waste-factor": "Factor = trim waste % ÷ (100 − trim waste %) + 1 = {wastePercentage} ÷ {usablePercentage} + 1 = {wasteFactor}"
+  },
+  "examples": {
+    "manual-tenderloin": { "title": "Beef tenderloin for tournedos with 30% trim" }
+  }
+}
