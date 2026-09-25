@@ -4,12 +4,14 @@ allowBuilds:
   # Ships prebuilt bindings via optionalDependencies; its postinstall is only a fallback.
   unrs-resolver: false
 
+# Our own packages (ui-library, tokens) are consumed right after we publish them; the release-age
+# delay only protects against compromised third-party releases.
+minimumReleaseAgeExclude:
+  - '@inzumer/*'
+
 # Also install the WebAssembly builds of native packages (napi-rs). Their loaders fall back to WASM
 # automatically when a native binary can't be loaded — e.g. Windows Smart App Control blocking a
 # freshly released, not-yet-reputable `.node` file. Native binaries are still preferred when they load.
-minimumReleaseAgeExclude:
-  - '@inzumer/ui-library@1.1.0'
-
 supportedArchitectures:
   os:
     - current

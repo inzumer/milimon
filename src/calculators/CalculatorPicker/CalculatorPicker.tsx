@@ -1,4 +1,5 @@
-import { useCallback, useEffect, useId, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { Select } from '@inzumer/ui-library';
 import { FormulaCalculator } from '@calculators/FormulaCalculator/FormulaCalculator';
 import { OmnesCalculator } from '@calculators/OmnesCalculator/OmnesCalculator';
 import { RecipeCostingCalculator } from '@calculators/RecipeCostingCalculator/RecipeCostingCalculator';
@@ -49,7 +50,6 @@ export const CalculatorPicker = ({
   ui,
   loadText = loadCalculatorText,
 }: CalculatorPickerProps) => {
-  const selectId = useId();
   const [state, setState] = useState<LoadState>({ status: 'idle' });
 
   // Latest requested formula: a slow response for an older pick must not replace a newer one.
@@ -92,37 +92,32 @@ export const CalculatorPicker = ({
 
   return (
     <div className="flex flex-col gap-8">
-      <div className="flex flex-col gap-1.5">
-        <label htmlFor={selectId} className="text-lg font-bold">
-          {page['select-label']}
-        </label>
-        <select
-          id={selectId}
-          value={selected}
-          onChange={(event) => {
-            const id = event.target.value;
-            if (isFormulaId(id)) {
-              writeToolToUrl(id);
-              track('tool_selected', { formula: id });
-              select(id);
-            }
-          }}
-          className="min-h-12 rounded-md border border-[var(--input-border)] bg-[var(--input-bg)] px-3 text-lg text-[var(--input-text)] focus-visible:border-[var(--input-border-focus)] focus-visible:ring-2 focus-visible:ring-[var(--border-focus)] focus-visible:outline-none"
-        >
-          <option value="" disabled>
-            {page['select-placeholder']}
-          </option>
-          {groups.map((group) => (
-            <optgroup key={group.group} label={group.label}>
-              {group.formulas.map((formula) => (
-                <option key={formula.id} value={formula.id}>
-                  {formula.title}
-                </option>
-              ))}
-            </optgroup>
-          ))}
-        </select>
-      </div>
+      <Select
+        label={page['select-label']}
+        inputSize="lg"
+        value={selected}
+        onChange={(event) => {
+          const id = event.target.value;
+          if (isFormulaId(id)) {
+            writeToolToUrl(id);
+            track('tool_selected', { formula: id });
+            select(id);
+          }
+        }}
+      >
+        <option value="" disabled>
+          {page['select-placeholder']}
+        </option>
+        {groups.map((group) => (
+          <optgroup key={group.group} label={group.label}>
+            {group.formulas.map((formula) => (
+              <option key={formula.id} value={formula.id}>
+                {formula.title}
+              </option>
+            ))}
+          </optgroup>
+        ))}
+      </Select>
 
       <div aria-live="polite">
         {state.status === 'idle' && <p className="text-[var(--text-secondary)]">{page.empty}</p>}
