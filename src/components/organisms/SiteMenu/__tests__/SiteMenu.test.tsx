@@ -34,14 +34,14 @@ describe('SiteMenu', () => {
     setAnalyticsSink(null);
   });
 
-  it('renders a collapsed hamburger button', () => {
+  it('should render a collapsed hamburger button', () => {
     render(<SiteMenu {...props} />);
     const trigger = screen.getByRole('button', { name: 'Abrir menú' });
     expect(trigger).toHaveAttribute('aria-expanded', 'false');
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
   });
 
-  it('opens a modal dialog with the navigation and preferences', async () => {
+  it('should open a modal dialog with the navigation and preferences', async () => {
     const sink = vi.fn();
     setAnalyticsSink(sink);
     await openMenu();
@@ -57,18 +57,18 @@ describe('SiteMenu', () => {
     expect(sink).toHaveBeenCalledWith('menu_opened', {});
   });
 
-  it('marks the current section with aria-current', async () => {
+  it('should mark the current section with aria-current', async () => {
     await openMenu();
     expect(screen.getByRole('link', { name: 'Fórmulas' })).toHaveAttribute('aria-current', 'page');
     expect(screen.getByRole('link', { name: 'Inicio' })).not.toHaveAttribute('aria-current');
   });
 
-  it('moves focus into the dialog', async () => {
+  it('should move focus into the dialog', async () => {
     await openMenu();
     expect(screen.getByRole('button', { name: 'Cerrar menú' })).toHaveFocus();
   });
 
-  it('closes with the close button and returns focus to the trigger', async () => {
+  it('should close with the close button and return focus to the trigger', async () => {
     const user = await openMenu();
     await user.click(screen.getByRole('button', { name: 'Cerrar menú' }));
 
@@ -76,13 +76,13 @@ describe('SiteMenu', () => {
     expect(screen.getByRole('button', { name: 'Abrir menú' })).toHaveFocus();
   });
 
-  it('closes with Escape', async () => {
+  it('should close with Escape', async () => {
     const user = await openMenu();
     await user.keyboard('{Escape}');
     await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument());
   });
 
-  it('locks page scroll while open', async () => {
+  it('should lock page scroll while open', async () => {
     const user = await openMenu();
     expect(document.body.style.overflow).toBe('hidden');
     await user.keyboard('{Escape}');

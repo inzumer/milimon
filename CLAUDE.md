@@ -32,6 +32,8 @@ Key commands (Node from `.nvmrc`, pnpm from `packageManager`):
 - **Translations** in kebab-case folders, one file per language: `src/i18n/<folder>/{es,en}.json`.
   Folder name = formula id = route slug. `es` and `en` must have exactly the same keys.
 - **Every input** has a visible label and a descriptive placeholder (what, unit, example from the manual).
+- **Tests**: every test title starts with `should …` (e.g. `it('should render the menu')`), enforced
+  by `vitest/valid-title`. `describe` names the unit under test.
 - **Formulas** are pure functions in `src/domain`, registered once in `registry.ts`, tested with
   the manual's worked examples.
 - **Imports**: path aliases (`@components`, `@calculators`, `@domain`, `@repositories`, `@hooks`, `@utils`, `@i18n`,

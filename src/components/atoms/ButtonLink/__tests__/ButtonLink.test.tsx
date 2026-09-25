@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { ButtonLink } from '../ButtonLink';
 
 describe('ButtonLink', () => {
-  it('renders a link with its href and accessible name', () => {
+  it('should render a link with its href and accessible name', () => {
     render(<ButtonLink href="/es/calculator">Ir a la calculadora</ButtonLink>);
     expect(screen.getByRole('link', { name: 'Ir a la calculadora' })).toHaveAttribute(
       'href',
@@ -10,7 +10,7 @@ describe('ButtonLink', () => {
     );
   });
 
-  it('merges custom classes and forwards attributes', () => {
+  it('should merge custom classes and forward attributes', () => {
     render(
       <ButtonLink href="/es" variant="secondary" size="lg" className="w-full" aria-current="page">
         Inicio

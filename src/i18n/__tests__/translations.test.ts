@@ -27,12 +27,12 @@ const leafValues = (value: unknown): unknown[] =>
   typeof value === 'object' && value !== null ? Object.values(value).flatMap(leafValues) : [value];
 
 describe('translations', () => {
-  it('finds translation folders', () => {
+  it('should find translation folders', () => {
     expect(folders).toContain('common');
     expect(folders).toContain('home');
   });
 
-  it.each(folders)('"%s" is kebab-case and has exactly one file per locale', (folder) => {
+  it.each(folders)('should name "%s" in kebab-case with exactly one file per locale', (folder) => {
     for (const segment of folder.split('/')) {
       expect(segment).toMatch(KEBAB_CASE);
     }
@@ -46,7 +46,7 @@ describe('translations', () => {
     expect(inFolder.sort()).toStrictEqual(LOCALES.map((lang) => `${lang}.json`).sort());
   });
 
-  it.each(folders)('"%s" has the same keys in every locale (kebab-case)', (folder) => {
+  it.each(folders)('should have the same kebab-case keys in every locale for "%s"', (folder) => {
     const [source, ...others] = LOCALES.map((lang) =>
       keyPaths(files[`../${folder}/${lang}.json`]).sort(),
     );
@@ -60,7 +60,7 @@ describe('translations', () => {
     }
   });
 
-  it.each(folders)('"%s" has no empty strings', (folder) => {
+  it.each(folders)('should have no empty strings in "%s"', (folder) => {
     for (const lang of LOCALES) {
       for (const value of leafValues(files[`../${folder}/${lang}.json`])) {
         expect(typeof value === 'string' ? value.trim() : value).toBeTruthy();
@@ -68,7 +68,7 @@ describe('translations', () => {
     }
   });
 
-  it('returns the dictionary for the requested locale and namespace', () => {
+  it('should return the dictionary for the requested locale and namespace', () => {
     expect(getTranslations('es', 'common').nav.home).toBe('Inicio');
     expect(getTranslations('en', 'common').nav.home).toBe('Home');
     expect(getTranslations('en', 'home')['calculator-card'].title).toBe('Calculator');

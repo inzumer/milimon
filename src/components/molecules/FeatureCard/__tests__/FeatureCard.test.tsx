@@ -9,7 +9,7 @@ const props = {
 };
 
 describe('FeatureCard', () => {
-  it('renders the title as a heading, the description and the call to action', () => {
+  it('should render the title as a heading, the description and the call to action', () => {
     render(<FeatureCard {...props} />);
     expect(screen.getByRole('heading', { level: 3, name: 'Calculadora' })).toBeInTheDocument();
     expect(screen.getByText('Elegí la cuenta que necesitás.')).toBeInTheDocument();
@@ -19,7 +19,7 @@ describe('FeatureCard', () => {
     );
   });
 
-  it('supports a custom heading level and the highlighted style', () => {
+  it('should support a custom heading level and the highlighted style', () => {
     render(<FeatureCard {...props} headingLevel="h2" highlighted />);
     expect(screen.getByRole('heading', { level: 2, name: 'Calculadora' })).toBeInTheDocument();
   });

@@ -10,7 +10,7 @@ describe('useColorScheme', () => {
     setAnalyticsSink(null);
   });
 
-  it('syncs with the scheme applied by the head script', () => {
+  it('should sync with the scheme applied by the head script', () => {
     document.documentElement.dataset['colorScheme'] = 'dark';
     const { result } = renderHook(() =>
       useColorScheme(createLocalSettingsRepository(createMemoryStorage())),
@@ -18,14 +18,14 @@ describe('useColorScheme', () => {
     expect(result.current.scheme).toBe('dark');
   });
 
-  it('defaults to light when no scheme is applied', () => {
+  it('should default to light when no scheme is applied', () => {
     const { result } = renderHook(() =>
       useColorScheme(createLocalSettingsRepository(createMemoryStorage())),
     );
     expect(result.current.scheme).toBe('light');
   });
 
-  it('applies, persists and tracks a new scheme', () => {
+  it('should apply, persist and track a new scheme', () => {
     const repository = createLocalSettingsRepository(createMemoryStorage());
     const sink = vi.fn();
     setAnalyticsSink(sink);
@@ -41,7 +41,7 @@ describe('useColorScheme', () => {
     expect(sink).toHaveBeenCalledWith('theme_changed', { scheme: 'dark' });
   });
 
-  it('uses localStorage by default', () => {
+  it('should use localStorage by default', () => {
     const { result } = renderHook(() => useColorScheme());
     act(() => {
       result.current.setScheme('light');

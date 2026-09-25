@@ -6,17 +6,17 @@ import {
 } from '../settings-repository';
 
 describe('settings repository (local)', () => {
-  it('returns defaults when nothing is stored', () => {
+  it('should return defaults when nothing is stored', () => {
     const repository = createLocalSettingsRepository(createMemoryStorage());
     expect(repository.load()).toStrictEqual(DEFAULT_SETTINGS);
   });
 
-  it('defaults to Argentine pesos and follows the system color scheme', () => {
+  it('should default to Argentine pesos and follow the system color scheme', () => {
     expect(DEFAULT_SETTINGS.currency).toBe('ARS');
     expect(DEFAULT_SETTINGS.colorScheme).toBeNull();
   });
 
-  it('persists partial updates and keeps the other fields', () => {
+  it('should persist partial updates and keep the other fields', () => {
     const storage = createMemoryStorage();
     const repository = createLocalSettingsRepository(storage);
 
@@ -27,7 +27,7 @@ describe('settings repository (local)', () => {
     expect(createLocalSettingsRepository(storage).load()).toStrictEqual(saved);
   });
 
-  it('discards invalid or unknown stored values', () => {
+  it('should discard invalid or unknown stored values', () => {
     const storage = createMemoryStorage();
     storage.setItem(
       SETTINGS_STORAGE_KEY,
@@ -36,18 +36,18 @@ describe('settings repository (local)', () => {
     expect(createLocalSettingsRepository(storage).load()).toStrictEqual(DEFAULT_SETTINGS);
   });
 
-  it('handles non-object stored data', () => {
+  it('should handle non-object stored data', () => {
     const storage = createMemoryStorage();
     storage.setItem(SETTINGS_STORAGE_KEY, '42');
     expect(createLocalSettingsRepository(storage).load()).toStrictEqual(DEFAULT_SETTINGS);
   });
 
-  it('accepts any ISO 4217 currency code', () => {
+  it('should accept any ISO 4217 currency code', () => {
     const repository = createLocalSettingsRepository(createMemoryStorage());
     expect(repository.save({ currency: 'USD' }).currency).toBe('USD');
   });
 
-  it('works without storage (private mode)', () => {
+  it('should work without storage (private mode)', () => {
     const repository = createLocalSettingsRepository(null);
     expect(repository.save({ colorScheme: 'light' }).colorScheme).toBe('light');
     expect(repository.load()).toStrictEqual(DEFAULT_SETTINGS);
