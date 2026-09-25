@@ -1,15 +1,10 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { formatInputValue } from '@calculators/shared/format-value';
+import { useCurrency } from '@calculators/shared/useCurrency';
+import { useDraft } from '@calculators/shared/useDraft';
 import type { FormulaValues, StandardFormulaDefinition } from '@domain/registry';
 import type { ErrorCode } from '@domain/shared';
-import {
-  createLocalCalculationsRepository,
-  createLocalSettingsRepository,
-  DEFAULT_SETTINGS,
-  type CalculationsRepository,
-  type CalculatorDraft,
-  type SettingsRepository,
-} from '@repositories';
+import type { CalculationsRepository, CalculatorDraft, SettingsRepository } from '@repositories';
 import { parseDecimal, track, type Locale } from '@utils';
 
 export type FieldErrorCode = ErrorCode | 'invalid-number';
@@ -21,7 +16,10 @@ export interface UseFormulaCalculatorOptions {
   settings?: SettingsRepository;
 }
 
-const toDraft = (values: Record<string, number | boolean | null>, lang: Locale): CalculatorDraft =>
+export const toDraft = (
+  values: Record<string, number | boolean | null>,
+  lang: Locale,
+): CalculatorDraft =>
   Object.fromEntries(
     Object.entries(values).map(([key, value]) => [
       key,
@@ -38,37 +36,22 @@ const defaultDraft = (formula: StandardFormulaDefinition, lang: Locale): Calcula
 /**
  * State and logic of a standard calculator: raw text per field, parsing (comma or dot decimals),
  * live calculation, errors shown only for fields the person already left, examples and persistence.
- * The first render always uses the defaults so server and client markup match; the saved draft
- * and currency are applied right after hydration.
  */
 export const useFormulaCalculator = ({
   formula,
   lang,
-  calculations = createLocalCalculationsRepository(),
-  settings = createLocalSettingsRepository(),
+  calculations,
+  settings,
 }: UseFormulaCalculatorOptions) => {
-  const [draft, setDraft] = useState<CalculatorDraft>(() => defaultDraft(formula, lang));
-  const [touched, setTouched] = useState<ReadonlySet<string>>(new Set());
-  const [currency, setCurrency] = useState(DEFAULT_SETTINGS.currency);
-  const repositories = useRef({ calculations, settings });
-
-  useEffect(() => {
-    const saved = repositories.current.calculations.loadDraft(formula.id);
-    if (saved) {
-      setDraft((current) => ({ ...current, ...saved }));
-    }
-    setCurrency(repositories.current.settings.load().currency);
-  }, [formula.id]);
-
-  const update = useCallback(
-    (next: CalculatorDraft) => {
-      setDraft(next);
-      repositories.current.calculations.saveDraft(formula.id, next);
-    },
-    [formula.id],
+  const { draft, setDraft, resetDraft } = useDraft(
+    formula.id,
+    defaultDraft(formula, lang),
+    calculations,
   );
+  const currency = useCurrency(settings);
+  const [touched, setTouched] = useState<ReadonlySet<string>>(new Set());
 
-  const setField = (key: string, value: string | boolean) => update({ ...draft, [key]: value });
+  const setField = (key: string, value: string | boolean) => setDraft({ ...draft, [key]: value });
 
   const touch = (key: string) => setTouched((current) => new Set(current).add(key));
 
@@ -77,15 +60,14 @@ export const useFormulaCalculator = ({
     if (!example) {
       return;
     }
-    update({ ...defaultDraft(formula, lang), ...toDraft(example.values, lang) });
+    setDraft({ ...defaultDraft(formula, lang), ...toDraft(example.values, lang) });
     setTouched(new Set(formula.inputs.map((input) => input.key)));
     track('example_loaded', { formula: formula.id, example: exampleId });
   };
 
   const reset = () => {
-    setDraft(defaultDraft(formula, lang));
+    resetDraft();
     setTouched(new Set());
-    repositories.current.calculations.clearDraft(formula.id);
     track('calculator_reset', { formula: formula.id });
   };
 

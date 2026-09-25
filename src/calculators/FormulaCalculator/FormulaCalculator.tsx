@@ -6,7 +6,7 @@ import {
   type FormulaId,
   type StandardFormulaDefinition,
 } from '@domain/registry';
-import type { FormulaTranslation } from '@i18n/formulas';
+import { formulaText, type FormulaTranslation } from '@i18n/formulas';
 import type { Translations } from '@i18n/translations';
 import type { CalculationsRepository, SettingsRepository } from '@repositories';
 import type { Locale } from '@utils';
@@ -58,7 +58,7 @@ export const FormulaCalculator = ({
                 className="min-h-11"
                 onClick={() => calculator.loadExample(example.id)}
               >
-                {ui['load-example']}: {text.examples[example.id]?.title}
+                {ui['load-example']}: {formulaText(text).example(example.id)}
               </Button>
               <span className="text-sm text-[var(--text-secondary)]">
                 {ui['example-source'][example.source]}

@@ -1,7 +1,9 @@
 import { createMemoryStorage } from '@test/memory-storage';
 import {
   createLocalSettingsRepository,
+  CURRENCIES,
   DEFAULT_SETTINGS,
+  onSettingsChange,
   SETTINGS_STORAGE_KEY,
 } from '../settings-repository';
 
@@ -51,5 +53,28 @@ describe('settings repository (local)', () => {
     const repository = createLocalSettingsRepository(null);
     expect(repository.save({ colorScheme: 'light' }).colorScheme).toBe('light');
     expect(repository.load()).toStrictEqual(DEFAULT_SETTINGS);
+  });
+});
+
+describe('settings change notifications', () => {
+  it('should notify subscribers after every save until they unsubscribe', () => {
+    const listener = vi.fn();
+    const unsubscribe = onSettingsChange(listener);
+    const repository = createLocalSettingsRepository(createMemoryStorage());
+
+    repository.save({ currency: 'EUR' });
+    expect(listener).toHaveBeenCalledExactlyOnceWith({
+      colorScheme: null,
+      locale: null,
+      currency: 'EUR',
+    });
+
+    unsubscribe();
+    repository.save({ currency: 'USD' });
+    expect(listener).toHaveBeenCalledTimes(1);
+  });
+
+  it('should offer Argentine pesos first among the currencies', () => {
+    expect(CURRENCIES[0]).toBe('ARS');
   });
 });

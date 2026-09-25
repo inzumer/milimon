@@ -34,18 +34,28 @@
     "ticket-range": "Rango sano del ticket (±10 %): de {lowerBound} a {upperBound}"
   },
   "examples": {
-    "sixteen-cakes": { "title": "Pastelería con 16 tortas entre $ 40 y $ 115" }
+    "sixteen-cakes": {
+      "title": "Pastelería con 16 tortas entre $ 40 y $ 115"
+    }
   },
   "choices": {
     "ideal": "Ideal: el más caro cuesta hasta el doble del más barato",
     "acceptable": "Aceptable: el más caro cuesta entre 2 y 3 veces el más barato",
     "too-wide": "Demasiado amplio: el más caro supera 3 veces al más barato",
-    "balanced": "Equilibrado",
-    "unbalanced": "Desequilibrado: la zona media debería tener tantos productos como las otras dos juntas",
+    "balanced": "Adecuados: el ticket promedio está dentro del ±10 % del precio promedio",
     "too-expensive": "Precios muy altos: los clientes gastan menos del 90 % del promedio",
     "too-cheap": "Precios muy bajos: los clientes gastan más del 110 % del promedio",
     "low": "En la zona de precios baratos (debería estar en la media)",
     "medium": "En la zona de precios medios, como corresponde",
-    "high": "En la zona de precios caros (debería estar en la media)"
+    "high": "En la zona de precios caros (debería estar en la media)",
+    "distribution-balanced": "Equilibrado: la zona media tiene tantos productos como las otras dos juntas",
+    "distribution-unbalanced": "Desequilibrado: la zona media debería tener tantos productos como las otras dos juntas"
+  },
+  "labels": {
+    "prices-hint": "Escribí un precio por línea (también podés separarlos con espacios o punto y coma).",
+    "prices-count": "{count} precios cargados",
+    "invalid-prices": "Revisá estos valores, no son números válidos: {values}",
+    "ticket-missing": "Cargá el ticket promedio para evaluar la adecuación de precios.",
+    "daily-special-missing": "Cargá el precio de la sugerencia del día para ubicarla en una zona."
   }
 }

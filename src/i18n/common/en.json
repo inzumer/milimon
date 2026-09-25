@@ -32,5 +32,8 @@
     "title": "Page not found",
     "description": "The page you are looking for doesn't exist or isn't available yet.",
     "back-home": "Back to home"
+  },
+  "settings": {
+    "currency": "Currency"
   }
 }

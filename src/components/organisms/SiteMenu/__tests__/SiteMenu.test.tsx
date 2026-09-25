@@ -19,6 +19,7 @@ const props: SiteMenuProps = {
     preferences: 'Preferencias',
     language: 'Idioma',
     darkMode: 'Modo oscuro',
+    currency: 'Moneda',
   },
 };
 
@@ -54,6 +55,8 @@ describe('SiteMenu', () => {
     expect(screen.getByRole('navigation', { name: 'Navegación principal' })).toBeInTheDocument();
     expect(screen.getByRole('radiogroup', { name: 'Idioma' })).toBeInTheDocument();
     expect(screen.getByRole('switch', { name: 'Modo oscuro' })).toBeInTheDocument();
+    expect(screen.getByRole('combobox', { name: 'Moneda' })).toHaveValue('ARS');
+    expect(screen.getByRole('combobox', { name: 'Moneda' })).toHaveValue('ARS');
     expect(sink).toHaveBeenCalledWith('menu_opened', {});
   });
 

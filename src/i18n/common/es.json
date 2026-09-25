@@ -32,5 +32,8 @@
     "title": "Página no encontrada",
     "description": "La página que buscás no existe o todavía no está disponible.",
     "back-home": "Volver al inicio"
+  },
+  "settings": {
+    "currency": "Moneda"
   }
 }

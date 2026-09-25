@@ -2,7 +2,7 @@ import { cn } from '@inzumer/ui-library';
 import { formatValue, type FormatContext } from '@calculators/shared/format-value';
 import type { OutputDefinition } from '@domain/registry';
 import type { FormulaTranslation } from '@i18n/formulas';
-import { toKebabCase } from '@i18n/formulas';
+import { formulaText, toKebabCase } from '@i18n/formulas';
 
 export interface ResultPanelProps {
   outputs: OutputDefinition[];
@@ -19,7 +19,7 @@ const display = (
 ) =>
   typeof value === 'number'
     ? formatValue(value, output.kind, context)
-    : (text.choices?.[String(value)] ?? String(value));
+    : formulaText(text).choice(String(value));
 
 /** Main results first and larger; the rest as a definition list. */
 export const ResultPanel = ({ outputs, values, text, context }: ResultPanelProps) => (
@@ -42,7 +42,7 @@ export const ResultPanel = ({ outputs, values, text, context }: ResultPanelProps
               output.primary ? 'font-semibold' : 'text-[var(--text-secondary)]',
             )}
           >
-            {text.outputs[toKebabCase(output.key)]}
+            {formulaText(text).output(toKebabCase(output.key))}
           </dt>
           <dd className={cn('font-bold tabular-nums', output.primary ? 'text-3xl' : 'text-xl')}>
             {display(output, values[output.key], text, context)}

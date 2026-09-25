@@ -52,6 +52,7 @@ tenés
 testid
 tipado
 tournedó
+ubicarla
 valorizalo
 vendés
 wght
