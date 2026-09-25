@@ -1,4 +1,12 @@
 import { Component, type ReactNode } from 'react';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeaderCell,
+  TableRow,
+} from '@inzumer/ui-library';
 import { FormulaResult } from '@calculators/FormulaCalculator/FormulaResult';
 import { OmnesResult } from '@calculators/OmnesCalculator/OmnesResult';
 import { RecipeCostingResult } from '@calculators/RecipeCostingCalculator/RecipeCostingResult';
@@ -100,42 +108,32 @@ const SavedInputs = ({ entry, text: copy, ui, labels }: Omit<SavedCalculationPro
     return (
       <>
         <Lines lines={[[t.input('servings').label, text(draft, 'servings')]]} />
-        <div className="overflow-x-auto rounded-lg border border-[var(--border-default)] bg-[var(--surface-primary)]">
-          <table className="w-full min-w-80 text-left tabular-nums">
-            <thead className="border-b border-[var(--border-default)] text-sm text-[var(--text-secondary)]">
-              <tr>
-                <th scope="col" className="p-3">
-                  {labels.ingredient}
-                </th>
-                <th scope="col" className="p-3 text-right">
-                  {t.input('net-quantity').label}
-                </th>
-                <th scope="col" className="p-3 text-right">
-                  {t.input('waste-percentage').label}
-                </th>
-                <th scope="col" className="p-3 text-right">
-                  {t.input('unit-price').label}
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {ingredients.map((row) => (
-                <tr key={row.key} className="border-b border-[var(--border-muted)] last:border-0">
-                  <th scope="row" className="p-3 font-semibold">
-                    {asText(row.name)}
-                  </th>
-                  <td className="p-3 text-right">
-                    {withUnit(asText(row.netQuantity), asText(row.unit))}
-                  </td>
-                  <td className="p-3 text-right">
-                    {withUnit(asText(row.wastePercentage), ui.units.percentage)}
-                  </td>
-                  <td className="p-3 text-right">{withUnit(asText(row.unitPrice), currency)}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <Table caption={t.label('ingredients-title')} captionHidden>
+          <TableHead>
+            <TableRow>
+              <TableHeaderCell>{labels.ingredient}</TableHeaderCell>
+              <TableHeaderCell align="end">{t.input('net-quantity').label}</TableHeaderCell>
+              <TableHeaderCell align="end">{t.input('waste-percentage').label}</TableHeaderCell>
+              <TableHeaderCell align="end">{t.input('unit-price').label}</TableHeaderCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {ingredients.map((row) => (
+              <TableRow key={row.key}>
+                <TableHeaderCell scope="row" className="font-semibold">
+                  {asText(row.name)}
+                </TableHeaderCell>
+                <TableCell align="end">
+                  {withUnit(asText(row.netQuantity), asText(row.unit))}
+                </TableCell>
+                <TableCell align="end">
+                  {withUnit(asText(row.wastePercentage), ui.units.percentage)}
+                </TableCell>
+                <TableCell align="end">{withUnit(asText(row.unitPrice), currency)}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
       </>
     );
   }

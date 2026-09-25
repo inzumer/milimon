@@ -1,4 +1,4 @@
-import { cn } from '@inzumer/ui-library';
+import { Accordion, cn } from '@inzumer/ui-library';
 import { isActivePath } from '@utils';
 import { navLinkStyles } from './SiteMenu.styles';
 
@@ -11,7 +11,7 @@ export interface SiteMenuItem {
 
 const normalize = (path: string) => path.replace(/\/+$/, '') || '/';
 
-/** A main-menu entry: a link, or a native <details> group (keyboard accessible, no extra JS). */
+/** A main-menu entry: a link, or a collapsible group (ui-library `Accordion`, native `<details>`). */
 export const NavEntry = ({ item, pathname }: { item: SiteMenuItem; pathname: string }) => {
   const current = normalize(pathname) === normalize(item.href);
   const inSection = isActivePath(pathname, item.href);
@@ -29,21 +29,12 @@ export const NavEntry = ({ item, pathname }: { item: SiteMenuItem; pathname: str
   }
 
   return (
-    <details open={inSection} className="group">
-      <summary
-        className={cn(
-          navLinkStyles({ active: inSection }),
-          'cursor-pointer list-none justify-between [&::-webkit-details-marker]:hidden',
-        )}
-      >
-        {item.label}
-        <span
-          aria-hidden="true"
-          className="inline-block transition-transform group-open:rotate-180"
-        >
-          ▾
-        </span>
-      </summary>
+    <Accordion
+      open={inSection}
+      summary={item.label}
+      summaryClassName={navLinkStyles({ active: inSection })}
+      contentClassName="px-0"
+    >
       <ul className="mt-1 flex flex-col gap-1 border-l-2 border-[var(--border-default)] pl-3">
         {item.children.map((child) => {
           const childCurrent = normalize(pathname) === normalize(child.href);
@@ -60,6 +51,6 @@ export const NavEntry = ({ item, pathname }: { item: SiteMenuItem; pathname: str
           );
         })}
       </ul>
-    </details>
+    </Accordion>
   );
 };
