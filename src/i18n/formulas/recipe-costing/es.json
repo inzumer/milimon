@@ -41,6 +41,18 @@
     "portion-cost": "Costo por porción = costo de la receta ÷ porciones = {recipeCost} ÷ {servings} = {portionCost}"
   },
   "examples": {
-    "tournedos-recipe": { "title": "Tournedó con galette de papas para 10 porciones" }
+    "tournedos-recipe": {
+      "title": "Tournedó con galette de papas para 10 porciones"
+    }
+  },
+  "labels": {
+    "ingredients-title": "Ingredientes",
+    "ingredient-number": "Ingrediente {number}",
+    "add-ingredient": "Agregar ingrediente",
+    "remove-ingredient": "Quitar {name}",
+    "table-caption": "Costo por ingrediente",
+    "tenderloin": "Lomo",
+    "potatoes": "Papas",
+    "butter": "Manteca"
   }
 }

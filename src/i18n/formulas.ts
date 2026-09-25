@@ -26,6 +26,8 @@ export const formulaTranslationSchema = z.object({
   choices: z.record(z.string(), text).optional(),
   /** Field-specific error messages: `<input-key>.<error-code>`. */
   errors: z.record(z.string(), text).optional(),
+  /** Extra UI strings used by custom calculators (buttons, table headers, example item names…). */
+  labels: z.record(z.string(), text).optional(),
 });
 
 export type FormulaTranslation = z.infer<typeof formulaTranslationSchema>;
@@ -39,6 +41,27 @@ export const getFormulaTranslation = (lang: Locale, id: FormulaId): FormulaTrans
   }
   return formulaTranslationSchema.parse(raw);
 };
+
+const required = <T>(record: Record<string, T> | undefined, key: string, section: string): T => {
+  const value = record?.[key];
+  if (value === undefined) {
+    throw new Error(`Missing formula translation ${section}.${key}`);
+  }
+  return value;
+};
+
+/**
+ * Typed accessors for a formula translation. Every key is validated by the i18n tests, so a
+ * missing one is a bug: fail loudly instead of rendering a fallback key on screen.
+ */
+export const formulaText = (text: FormulaTranslation) => ({
+  input: (key: string) => required(text.inputs, key, 'inputs'),
+  output: (key: string) => required(text.outputs, key, 'outputs'),
+  example: (key: string) => required(text.examples, key, 'examples').title,
+  choice: (key: string) => required(text.choices, key, 'choices'),
+  label: (key: string) => required(text.labels, key, 'labels'),
+  error: (key: string): string | undefined => text.errors?.[key],
+});
 
 /** `grossWeight` → `gross-weight`: registry keys are camelCase, translation keys kebab-case. */
 export const toKebabCase = (value: string): string =>

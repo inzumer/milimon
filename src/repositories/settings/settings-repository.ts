@@ -56,6 +56,22 @@ export const createLocalSettingsRepository = (
   save: (patch) => {
     const next = sanitize({ ...sanitize(readJson(storage, SETTINGS_STORAGE_KEY)), ...patch });
     writeJson(storage, SETTINGS_STORAGE_KEY, next);
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent<Settings>(SETTINGS_CHANGED_EVENT, { detail: next }));
+    }
     return next;
   },
 });
+
+/** Fired on `window` after every save, so every island (menu, calculators) stays in sync. */
+export const SETTINGS_CHANGED_EVENT = 'milimon:settings-changed';
+
+/** Subscribes to settings changes; returns the unsubscribe function. */
+export const onSettingsChange = (listener: (settings: Settings) => void): (() => void) => {
+  const handler = (event: Event) => listener((event as CustomEvent<Settings>).detail);
+  window.addEventListener(SETTINGS_CHANGED_EVENT, handler);
+  return () => window.removeEventListener(SETTINGS_CHANGED_EVENT, handler);
+};
+
+/** Currencies offered in the settings (display only; any ISO 4217 code is accepted). */
+export const CURRENCIES = ['ARS', 'USD', 'EUR', 'MXN', 'CLP', 'UYU', 'COP', 'PEN', 'BRL'] as const;

@@ -1,6 +1,7 @@
 import { useCallback, useId, useRef, useState } from 'react';
 import { Button, useDelayedUnmount, useDismissableLayer } from '@inzumer/ui-library';
 import { CloseIcon, MenuIcon } from '@components/atoms/Icons';
+import { CurrencySelect } from '@components/molecules/CurrencySelect';
 import { LanguageSwitcher } from '@components/molecules/LanguageSwitcher';
 import { ThemeToggle } from '@components/molecules/ThemeToggle';
 import { useFocusTrap, useScrollLock } from '@hooks';
@@ -22,6 +23,7 @@ export interface SiteMenuLabels {
   preferences: string;
   language: string;
   darkMode: string;
+  currency: string;
 }
 
 export interface SiteMenuProps {
@@ -120,6 +122,7 @@ export const SiteMenu = ({ lang, pathname, items, labels }: SiteMenuProps) => {
               </h3>
               <LanguageSwitcher lang={lang} pathname={pathname} label={labels.language} />
               <ThemeToggle label={labels.darkMode} />
+              <CurrencySelect lang={lang} label={labels.currency} />
             </section>
           </div>
         </div>

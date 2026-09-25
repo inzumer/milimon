@@ -5,7 +5,7 @@ import {
   type StandardFormulaDefinition,
 } from '@domain/registry';
 import { LOCALES } from '@utils';
-import { getFormulaTranslation, toKebabCase } from '../formulas';
+import { formulaText, getFormulaTranslation, toKebabCase } from '../formulas';
 
 const standardFormulas = FORMULA_IDS.map(getFormula).filter(
   (formula): formula is StandardFormulaDefinition => formula.layout === 'standard',
@@ -88,5 +88,17 @@ describe('formula translations', () => {
         expect(translation.choices?.[String(value[output.key])]).toBeTruthy();
       }
     }
+  });
+});
+
+describe('formulaText', () => {
+  it('should read translations and fail loudly on a missing key', () => {
+    const text = formulaText(getFormulaTranslation('es', 'rent-check'));
+    expect(text.input('rent').label).toBe('Alquiler mensual');
+    expect(text.output('rent-share')).toBe('Alquiler sobre la facturación');
+    expect(text.example('manual-statement-rent')).toMatch(/Alquiler del manual/);
+    expect(text.choice('optimal')).toMatch(/^Óptimo/);
+    expect(text.error('rent.required')).toBeUndefined();
+    expect(() => text.label('nope')).toThrow('Missing formula translation labels.nope');
   });
 });

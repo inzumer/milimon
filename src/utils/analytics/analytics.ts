@@ -6,6 +6,7 @@ export interface AnalyticsEvents {
   language_changed: { from: string; to: string };
   theme_changed: { scheme: 'light' | 'dark' };
   menu_opened: Record<string, never>;
+  currency_changed: { currency: string };
   example_loaded: { formula: string; example: string };
   calculation_completed: { formula: string };
   calculator_reset: { formula: string };

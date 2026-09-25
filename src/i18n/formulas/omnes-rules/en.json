@@ -34,18 +34,28 @@
     "ticket-range": "Healthy ticket range (±10%): from {lowerBound} to {upperBound}"
   },
   "examples": {
-    "sixteen-cakes": { "title": "Bakery with 16 cakes between $40 and $115" }
+    "sixteen-cakes": {
+      "title": "Bakery with 16 cakes between $40 and $115"
+    }
   },
   "choices": {
     "ideal": "Ideal: the most expensive costs up to twice the cheapest",
     "acceptable": "Acceptable: the most expensive costs 2 to 3 times the cheapest",
     "too-wide": "Too wide: the most expensive is more than 3 times the cheapest",
-    "balanced": "Balanced",
-    "unbalanced": "Unbalanced: the medium zone should have as many items as the other two combined",
+    "balanced": "Suitable: the average ticket is within ±10% of the average price",
     "too-expensive": "Prices too high: customers spend less than 90% of the average",
     "too-cheap": "Prices too low: customers spend more than 110% of the average",
     "low": "In the cheap zone (it should be in the medium one)",
     "medium": "In the medium zone, as it should",
-    "high": "In the expensive zone (it should be in the medium one)"
+    "high": "In the expensive zone (it should be in the medium one)",
+    "distribution-balanced": "Balanced: the medium zone has as many items as the other two combined",
+    "distribution-unbalanced": "Unbalanced: the medium zone should have as many items as the other two combined"
+  },
+  "labels": {
+    "prices-hint": "Write one price per line (you can also separate them with spaces or semicolons).",
+    "prices-count": "{count} prices entered",
+    "invalid-prices": "Check these values, they are not valid numbers: {values}",
+    "ticket-missing": "Enter the average ticket to check whether prices fit demand.",
+    "daily-special-missing": "Enter the daily special price to place it in a zone."
   }
 }

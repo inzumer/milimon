@@ -41,6 +41,18 @@
     "portion-cost": "Cost per portion = recipe cost ÷ portions = {recipeCost} ÷ {servings} = {portionCost}"
   },
   "examples": {
-    "tournedos-recipe": { "title": "Tournedos with potato galette for 10 portions" }
+    "tournedos-recipe": {
+      "title": "Tournedos with potato galette for 10 portions"
+    }
+  },
+  "labels": {
+    "ingredients-title": "Ingredients",
+    "ingredient-number": "Ingredient {number}",
+    "add-ingredient": "Add ingredient",
+    "remove-ingredient": "Remove {name}",
+    "table-caption": "Cost per ingredient",
+    "tenderloin": "Tenderloin",
+    "potatoes": "Potatoes",
+    "butter": "Butter"
   }
 }
