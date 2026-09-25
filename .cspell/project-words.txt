@@ -8,6 +8,7 @@ bachas
 bloqueante
 buscá
 buscás
+cafecito
 calculalo
 calculá
 cargá
@@ -52,6 +53,7 @@ maître
 mergea
 milimon
 mirá
+monetización
 monotributo
 montos
 multiplicá

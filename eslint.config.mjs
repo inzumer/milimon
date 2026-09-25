@@ -64,6 +64,12 @@ export default defineConfig([
     },
   },
 
+  // Command-line scripts report through the console.
+  {
+    files: ['scripts/**'],
+    rules: { 'no-console': 'off' },
+  },
+
   // A unit's own tests import that exact unit relatively (../unit), same as ui-library.
   {
     files: ['**/__tests__/**'],

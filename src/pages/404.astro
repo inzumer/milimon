@@ -14,7 +14,7 @@ const messages = LOCALES.map((lang) => ({
 const title = getTranslations(DEFAULT_LOCALE, 'common')['not-found'].title;
 ---
 
-<PageLayout lang={DEFAULT_LOCALE} title={title}>
+<PageLayout lang={DEFAULT_LOCALE} title={title} noindex>
   {messages.map(({ lang, text, home }) => (
     <section
       data-not-found={lang}

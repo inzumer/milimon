@@ -2,20 +2,33 @@
 import '@styles/global.css';
 import nunitoLatin from '@fontsource-variable/nunito/files/nunito-latin-wght-normal.woff2?url';
 import lobsterLatin from '@fontsource/lobster-two/files/lobster-two-latin-700-normal.woff2?url';
+import { getImage } from 'astro:assets';
+import logo from '@assets/logo.png';
 import { getTranslations } from '@i18n';
 import { SETTINGS_STORAGE_KEY } from '@repositories';
-import type { Locale } from '@utils';
+import { LOCALES, switchLocalePath, type Locale } from '@utils';
 
 interface Props {
   lang: Locale;
   title?: string | undefined;
   description?: string | undefined;
+  /** Keep the page out of search results (404, language redirect). */
+  noindex?: boolean;
 }
 
-const { lang, title, description } = Astro.props;
+const { lang, title, description, noindex = false } = Astro.props;
 const common = getTranslations(lang, 'common');
 const pageTitle = title ? `${title} · ${common['app-name']}` : common['app-name'];
 const pageDescription = description ?? common.meta.description;
+const site = Astro.site ?? Astro.url;
+const canonical = new URL(Astro.url.pathname, site).href;
+const alternates = LOCALES.map((locale) => ({
+  hreflang: locale,
+  href: new URL(switchLocalePath(Astro.url.pathname, locale), site).href,
+}));
+const OG_LOCALES: Record<Locale, string> = { es: 'es_AR', en: 'en_US' };
+const ogImage = await getImage({ src: logo, width: 600, height: 600, format: 'png' });
+const ogImageUrl = new URL(ogImage.src, site).href;
 ---
 
 <!doctype html>
@@ -29,6 +42,30 @@ const pageDescription = description ?? common.meta.description;
     <meta name="theme-color" content="#2F201B" media="(prefers-color-scheme: dark)" />
     <title>{pageTitle}</title>
     <meta name="description" content={pageDescription} />
+    {noindex && <meta name="robots" content="noindex" />}
+    {!noindex && <link rel="canonical" href={canonical} />}
+    {!noindex &&
+      alternates.map((alternate) => (
+        <link rel="alternate" hreflang={alternate.hreflang} href={alternate.href} />
+      ))}
+    {!noindex && <link rel="alternate" hreflang="x-default" href={new URL('/', site).href} />}
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={common['app-name']} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDescription} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:alt" content={common['app-name']} />
+    <meta property="og:locale" content={OG_LOCALES[lang]} />
+    {LOCALES.filter((locale) => locale !== lang).map((locale) => (
+      <meta property="og:locale:alternate" content={OG_LOCALES[locale]} />
+    ))}
+    <meta name="twitter:card" content="summary" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
     <link rel="preload" href={nunitoLatin} as="font" type="font/woff2" crossorigin />
     <link rel="preload" href={lobsterLatin} as="font" type="font/woff2" crossorigin />
     {/*

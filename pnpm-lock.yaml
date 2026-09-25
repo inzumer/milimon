@@ -257,6 +257,9 @@ importers:
       astro-eslint-parser:
         specifier: ^3.2.0
         version: 3.2.0
+      axe-core:
+        specifier: ^4.13.0
+        version: 4.13.0
       cspell:
         specifier: ^10.3.3
         version: 10.3.3

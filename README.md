@@ -29,18 +29,30 @@ pnpm install
 pnpm dev          # http://localhost:4321 → redirige a /es
 ```
 
-| Script               | Descripción                              |
-| -------------------- | ---------------------------------------- |
-| `pnpm dev`           | Servidor de desarrollo                   |
-| `pnpm build`         | Build estático en `dist/`                |
-| `pnpm preview`       | Sirve el build                           |
-| `pnpm typecheck`     | `astro check`                            |
-| `pnpm lint`          | ESLint                                   |
-| `pnpm test`          | Tests                                    |
-| `pnpm test:coverage` | Tests con umbral de cobertura del 90%    |
-| `pnpm format`        | Prettier                                 |
-| `pnpm spellcheck`    | Corrector ortográfico (inglés + español) |
-| `pnpm validate`      | typecheck + lint + test:coverage + build |
+| Script               | Descripción                                                                         |
+| -------------------- | ----------------------------------------------------------------------------------- |
+| `pnpm dev`           | Servidor de desarrollo                                                              |
+| `pnpm build`         | Build estático en `dist/`                                                           |
+| `pnpm preview`       | Sirve el build                                                                      |
+| `pnpm typecheck`     | `astro check`                                                                       |
+| `pnpm lint`          | ESLint                                                                              |
+| `pnpm test`          | Tests                                                                               |
+| `pnpm test:coverage` | Tests con umbral de cobertura del 90%                                               |
+| `pnpm format`        | Prettier                                                                            |
+| `pnpm spellcheck`    | Corrector ortográfico (inglés + español)                                            |
+| `pnpm validate`      | typecheck + lint + test:coverage + build                                            |
+| `pnpm audit:a11y`    | axe-core en todas las páginas, tema claro y oscuro (requiere `pnpm build` y Chrome) |
+
+## Deploy
+
+El sitio es estático (`dist/`), así que sirve cualquier hosting estático. En Vercel se detecta Astro
+solo, sin configuración.
+
+Variables de entorno (ver `.env.example`):
+
+| Variable   | Para qué                                                                             |
+| ---------- | ------------------------------------------------------------------------------------ |
+| `SITE_URL` | URL pública: canónicas, `hreflang`, sitemap y Open Graph (obligatoria en producción) |
 
 ## Estructura
 
