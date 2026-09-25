@@ -1,0 +1,61 @@
+{
+  "title": "Purchasing and receiving",
+  "summary": "Planning purchases and checking what comes in prevents shortages, losses and overpaying.",
+  "sections": [
+    {
+      "heading": "Why plan purchases",
+      "paragraphs": [
+        "Food service works with perishables, so improvising is expensive. A planned purchase has several advantages:"
+      ],
+      "items": [
+        "Goods arrive on time, with no shortages that stop you from preparing a dish.",
+        "You can compare suppliers and negotiate prices without the pressure of urgency.",
+        "You buy just enough: less spoilage in perishables and less tied-up capital in non-perishables.",
+        "It's easier to keep the quality you require."
+      ]
+    },
+    {
+      "heading": "Choosing and evaluating suppliers",
+      "paragraphs": [
+        "The final decision is the owner's, but it's worth listening to everyone involved in purchasing or using the supplies: manager, chef, maître d' and accounting. The handbook recommends a monthly meeting to evaluate:"
+      ],
+      "items": [
+        "The price-quality ratio.",
+        "Meeting delivery dates and quantities.",
+        "Respecting the agreed payment terms.",
+        "The supplier's business ethics.",
+        "Price comparisons."
+      ]
+    },
+    {
+      "heading": "The purchase order",
+      "paragraphs": [
+        "Many orders are placed by phone, email or when the sales rep visits, and often the supplier records the order but the business doesn't. That makes it easy to receive too much or too little, or for prices to rise unnoticed.",
+        "That's why every purchase is documented in a purchase order: product, quantity and agreed price. A simple spreadsheet can hold stock by product family, the supplier list and the price of the last purchase."
+      ]
+    },
+    {
+      "heading": "Checks at receiving",
+      "paragraphs": [
+        "Suppliers shouldn't walk into the kitchen or storerooms: ideally there's a receiving area with a counter, scales, sinks and a thermometer, and deliveries arrive between 7 and 12, away from lunch service. At receiving you check:"
+      ],
+      "items": [
+        "Quantities: what is bought by the unit is counted and what is bought by weight is weighed. Open boxes one by one.",
+        "Units of measure: they must match the invoice (for example, 1-liter, ¾ or 375 cc bottles).",
+        "Quality: tip out crates and bags to check top and bottom, and reject what doesn't meet the agreed specs.",
+        "Labels and temperature: 4 °C for chilled and −18 °C for frozen goods.",
+        "Trim: if in doubt, work out the trim waste % and compare it with your reference."
+      ]
+    },
+    {
+      "heading": "Checks on the invoice",
+      "items": [
+        "Separate and destroy duplicates so the same invoice is never paid twice.",
+        "Compare invoiced prices with the purchase order.",
+        "Check agreed discounts and free goods (for example, 3 for 1 = 25%, 2 for 1 = 33%).",
+        "Check that VAT and excise taxes were applied correctly.",
+        "Double-check multiplications, sums and percentages."
+      ]
+    }
+  ]
+}

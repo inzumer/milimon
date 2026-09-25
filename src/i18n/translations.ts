@@ -9,6 +9,8 @@ import formulaPageEn from './formula-page/en.json';
 import formulaPageEs from './formula-page/es.json';
 import homeEn from './home/en.json';
 import homeEs from './home/es.json';
+import learnPageEn from './learn-page/en.json';
+import learnPageEs from './learn-page/es.json';
 
 /**
  * Translations live in kebab-case folders, one JSON file per language: `src/i18n/<folder>/{es,en}.json`.
@@ -19,6 +21,7 @@ import homeEs from './home/es.json';
 const dictionaries = {
   common: { es: commonEs, en: commonEn satisfies typeof commonEs },
   home: { es: homeEs, en: homeEn satisfies typeof homeEs },
+  'learn-page': { es: learnPageEs, en: learnPageEn satisfies typeof learnPageEs },
   calculator: { es: calculatorEs, en: calculatorEn satisfies typeof calculatorEs },
   'calculator-page': {
     es: calculatorPageEs,

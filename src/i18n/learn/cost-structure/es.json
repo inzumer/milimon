@@ -1,0 +1,28 @@
+{
+  "title": "Costos fijos, variables y punto de equilibrio",
+  "summary": "Separar los costos según cómo se comportan con las ventas permite saber cuánto hay que vender.",
+  "sections": [
+    {
+      "heading": "Fijos y variables",
+      "paragraphs": [
+        "Los costos fijos no cambian con el volumen de ventas en el corto plazo: seguros, impuestos inmobiliarios, amortizaciones, personal estable. \"Fijos\" no quiere decir que nunca cambian, sino que no dependen directamente de cuánto vendés.",
+        "Los costos variables suben y bajan con las ventas: materias primas, bebidas, IVA, Ingresos Brutos, Seguridad e Higiene y comisiones de tarjetas.",
+        "La mano de obra es un caso especial: dentro del mes es casi toda fija (los camareros se contratan antes de saber si viene gente), por eso se la considera semifija. En un catering, en cambio, gran parte es variable."
+      ]
+    },
+    {
+      "heading": "La relación entre ventas, costos y ganancia",
+      "paragraphs": [
+        "Ventas brutas − impuestos = ventas netas.",
+        "Ventas netas = costos variables + costos fijos + ganancia."
+      ]
+    },
+    {
+      "heading": "La contribución",
+      "paragraphs": [
+        "Lo que queda de cada venta después de pagar los costos variables es la contribución: lo que aporta a cubrir los costos fijos y a generar ganancia.",
+        "Una vez superado el punto de equilibrio, cada peso extra de venta genera una ganancia igual a su contribución. La misma fórmula te permite ver rápido el impacto de subir o bajar costos o precios."
+      ]
+    }
+  ]
+}

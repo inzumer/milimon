@@ -1,0 +1,61 @@
+{
+  "title": "Compras y recepción",
+  "summary": "Planificar las compras y controlar lo que entra evita faltantes, pérdidas y pagos de más.",
+  "sections": [
+    {
+      "heading": "Por qué planificar las compras",
+      "paragraphs": [
+        "En gastronomía se trabaja con productos perecederos, así que improvisar sale caro. Una compra planificada trae varias ventajas:"
+      ],
+      "items": [
+        "La mercadería llega en tiempo y forma, sin faltantes que impidan preparar algún plato.",
+        "Podés comparar proveedores y negociar precios sin la presión de la urgencia.",
+        "Comprás lo justo: menos decomiso en perecederos y menos capital inmovilizado en los no perecederos.",
+        "Es más fácil cuidar la calidad exigida."
+      ]
+    },
+    {
+      "heading": "Elegir y evaluar proveedores",
+      "paragraphs": [
+        "La decisión final es del dueño, pero conviene escuchar a todos los que intervienen en las compras o usan los insumos: gerente, chef, maître y administración. El manual recomienda reunirse una vez por mes para evaluar:"
+      ],
+      "items": [
+        "La relación precio-calidad.",
+        "El cumplimiento de plazos y cantidades de entrega.",
+        "El respeto de las condiciones de pago pactadas.",
+        "La ética comercial del proveedor.",
+        "Las comparativas de precios."
+      ]
+    },
+    {
+      "heading": "La orden de compra",
+      "paragraphs": [
+        "Muchas compras se hacen por teléfono, por mail o cuando pasa el vendedor, y a menudo el proveedor registra el pedido pero el negocio no. Así es fácil recibir de más o de menos, o que suban los precios sin que nadie lo note.",
+        "Por eso todo lo que se compra se documenta en una orden de compra: producto, cantidad y precio pactado. Con una planilla simple podés tener el stock por familia de productos, la lista de proveedores y el precio de la última compra."
+      ]
+    },
+    {
+      "heading": "Controles en la recepción",
+      "paragraphs": [
+        "Los proveedores no deberían entrar a la cocina ni a los depósitos: lo ideal es un espacio de recepción con mesada, balanzas, bachas y termómetro, y recibir entre las 7 y las 12, lejos del servicio del almuerzo. En la recepción se controla:"
+      ],
+      "items": [
+        "Cantidades: lo que se compra por unidad se cuenta y lo que se compra por peso se pesa. Abrí las cajas una por una.",
+        "Unidades de medida: que coincidan con las facturadas (por ejemplo, botellas de 1 litro, ¾, 375 cc).",
+        "Calidad: volcá cajones y bultos para revisar arriba y abajo, y rechazá lo que no cumpla lo pactado.",
+        "Rótulos y temperatura: 4 °C para refrigerados y −18 °C para congelados.",
+        "Desechos: ante la duda, calculá el % de desecho y comparalo con tu referencia."
+      ]
+    },
+    {
+      "heading": "Controles sobre la factura",
+      "items": [
+        "Separá y destruí los duplicados para no pagar dos veces la misma factura.",
+        "Compará los precios facturados con los de la orden de compra.",
+        "Verificá descuentos y bonificaciones acordados (por ejemplo, 3 × 1 = 25 %, 2 × 1 = 33 %).",
+        "Controlá que el IVA y los impuestos internos aplicados sean los correctos.",
+        "Revisá multiplicaciones, sumas y porcentajes."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "title": "Standardized recipes",
+  "summary": "A written, costed recipe for every dish is the basis of quality, cost and price.",
+  "sections": [
+    {
+      "heading": "What every recipe needs",
+      "items": [
+        "Dish name, total portion yield and portion size.",
+        "Ingredients with their unit of measure and quantity.",
+        "Preparation method, cooking time and temperature.",
+        "A photo of the dish and special instructions.",
+        "Unit purchase cost, cost of each ingredient, of the recipe and of the portion.",
+        "Selling price and the ratio between raw material cost and sales."
+      ]
+    },
+    {
+      "heading": "Advantages",
+      "items": [
+        "Consistency regardless of who cooks: the dish comes out the same.",
+        "Training: new staff learn much faster.",
+        "Continuity: returning customers look for the dish they tried; losing that consistency is one of the most common causes of failure.",
+        "Costing: you know how much each ingredient weighs in the cost and where to adjust.",
+        "Pricing: comparing cost and price shows each dish's profitability.",
+        "Stock control: the system deducts recipe quantities when a dish is sold."
+      ]
+    },
+    {
+      "heading": "Adjusting the content",
+      "paragraphs": [
+        "With a costed recipe, the chef can work \"in the lab\" to lower costs without losing quality:"
+      ],
+      "items": [
+        "Ingredient prices: look for better suppliers for the most expensive ones.",
+        "Each ingredient's share: review proportions between the main item and the side.",
+        "Substitutions: replace an ingredient with a cheaper one within good culinary practice (for example, passion fruit instead of berry cheesecake)."
+      ]
+    }
+  ]
+}

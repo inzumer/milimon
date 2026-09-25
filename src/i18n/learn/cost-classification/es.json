@@ -1,0 +1,33 @@
+{
+  "title": "Qué es un costo",
+  "summary": "Los elementos del costo en gastronomía y los costos que no son materia prima.",
+  "sections": [
+    {
+      "heading": "Costo y cómputo",
+      "paragraphs": [
+        "Un cómputo es solo una cantidad. Cuando esa cantidad se multiplica por un valor, obtenés un costo. En gastronomía, el costo son los cómputos valorizados de materias primas, mano de obra, gastos generales e impuestos consumidos para producir ciertas cantidades."
+      ]
+    },
+    {
+      "heading": "Los elementos del costo",
+      "items": [
+        "Materias primas: carnes, vegetales, lácteos, almacén, especias… la parte física de las comidas.",
+        "Mano de obra: todo el personal, del gerente a la recepcionista. Si el dueño trabaja en el local, tiene que cobrar el sueldo de su puesto para no distorsionar los costos.",
+        "Cargas sociales: los aportes y contribuciones que paga el empleador por ley o convenio (aguinaldo, jubilación, obra social, licencias…). Las retenciones al empleado no son costo.",
+        "Impuestos: nacionales (monotributo, IVA, ganancias), provinciales (Ingresos Brutos) y municipales (tasas).",
+        "Gastos generales: alquileres, promoción, lavadero, seguros, descartables, limpieza, reposición de vajilla, seguridad…"
+      ]
+    },
+    {
+      "heading": "Costos que no son materia prima",
+      "items": [
+        "Personal: dotación permanente (con indemnización y preaviso) y dotación extra (eventual). Ambos llevan cargas sociales y ART.",
+        "Gastos generales: pequeños gastos que pueden estimarse en un 10 % del resto de los costos (sin ganancias ni honorarios).",
+        "Alquiler: idealmente 5 % de la facturación neta, y nunca más del 10 %.",
+        "Servicios: luz, gas, agua, internet, sistema de gestión.",
+        "Amortizaciones: la inversión en equipos e instalaciones repartida en 36 meses, porque a los 3 años su valor de reventa es casi nulo.",
+        "Impuestos y cargos: Ingresos Brutos, Seguridad e Higiene, IVA, comisiones de tarjetas e impuesto a las ganancias."
+      ]
+    }
+  ]
+}
