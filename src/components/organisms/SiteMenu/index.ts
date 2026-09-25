@@ -1,1 +1,2 @@
-export { SiteMenu, type SiteMenuItem, type SiteMenuLabels, type SiteMenuProps } from './SiteMenu';
+export { type SiteMenuItem } from './NavEntry';
+export { SiteMenu, type SiteMenuLabels, type SiteMenuProps } from './SiteMenu';

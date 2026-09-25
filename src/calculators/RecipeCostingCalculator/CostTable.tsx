@@ -1,12 +1,12 @@
 import { formatValue, type FormatContext } from '@calculators/shared/format-value';
 import type { RecipeCostingOutput } from '@domain/formulas/recipe-costing';
-import { formulaText, type FormulaTranslation } from '@i18n/formulas';
+import { formulaText, type CalculatorText } from '@i18n/formulas';
 
 export interface CostTableProps {
   value: RecipeCostingOutput;
   /** Ids of the input rows, in the same order as `value.ingredients` (stable React keys). */
   ids: string[];
-  text: FormulaTranslation;
+  text: CalculatorText;
   context: FormatContext;
 }
 

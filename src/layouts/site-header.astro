@@ -2,7 +2,8 @@
 import { Image } from 'astro:assets';
 import logo from '@assets/logo.png';
 import { SiteMenu } from '@components';
-import { getTranslations } from '@i18n';
+import { FORMULA_IDS } from '@domain/registry';
+import { getFormulaTranslation, getTranslations } from '@i18n';
 import { localizedPath, type Locale } from '@utils';
 
 interface Props {
@@ -16,7 +17,17 @@ const common = getTranslations(lang, 'common');
 const items = [
   { href: localizedPath(lang, 'home'), label: common.nav.home },
   { href: localizedPath(lang, 'calculator'), label: common.nav.calculator },
-  { href: localizedPath(lang, 'formulas'), label: common.nav.formulas },
+  {
+    href: localizedPath(lang, 'formulas'),
+    label: common.nav.formulas,
+    children: [
+      { href: localizedPath(lang, 'formulas'), label: common.nav['all-formulas'] },
+      ...FORMULA_IDS.map((id) => ({
+        href: localizedPath(lang, 'formulas', id),
+        label: getFormulaTranslation(lang, id).title,
+      })),
+    ],
+  },
   { href: localizedPath(lang, 'learn'), label: common.nav.learn },
 ];
 

@@ -1,6 +1,61 @@
 {
   "title": "Waste factor",
   "summary": "The number you multiply the clean quantity by to know how much to buy as purchased.",
+  "study": {
+    "what": [
+      "The waste factor is the number you multiply a clean quantity by to know how much to buy as purchased. It also turns an as-purchased price into its equivalent clean price.",
+      "The handbook prefers to work it out from the trim waste %, because you'll need that percentage for many other calculations."
+    ],
+    "formula": [
+      "Factor = trim waste % ÷ (100 − trim waste %) + 1",
+      "Same as: Factor = 100 ÷ (100 − trim waste %)",
+      "Another way: Factor = gross weight ÷ net weight"
+    ],
+    "variables": [
+      {
+        "name": "Trim waste %",
+        "description": "How much of the purchased product is lost when cleaning it."
+      },
+      {
+        "name": "100 − trim waste %",
+        "description": "The usable part: what is left clean from every 100 you buy."
+      },
+      {
+        "name": "Waste factor",
+        "description": "How many times more you must buy as purchased compared with what you need clean."
+      }
+    ],
+    "steps": [
+      "Take the trim waste % of the raw material.",
+      "Work out the usable part: 100 − trim waste %.",
+      "Divide the trim waste % by the usable part.",
+      "Add 1."
+    ],
+    "examples": [
+      {
+        "title": "Beef tenderloin for tournedos (handbook)",
+        "paragraphs": [
+          "The tenderloin has 30% trim, so 70% is usable.",
+          "Factor = 30 ÷ 70 + 1 = 0.4286 + 1 = 1.429.",
+          "For every clean kilo you need, you must buy 1.429 kg of whole tenderloin."
+        ]
+      }
+    ],
+    "notes": [
+      {
+        "type": "common-mistake",
+        "text": "With 30% trim the factor isn't 1.30. If you just add 30%, the extra you bought also loses 30% when cleaned — the \"trim of the trim\" — so it's never enough."
+      },
+      {
+        "type": "rounding",
+        "text": "Both formulas give the same result. Any small difference comes from rounding decimals."
+      },
+      {
+        "type": "tip",
+        "text": "A factor of 1 means there's no trim: the product is used exactly as purchased."
+      }
+    ]
+  },
   "inputs": {
     "waste-percentage": {
       "label": "Trim waste %",
@@ -17,6 +72,8 @@
     "waste-factor": "Factor = trim waste % ÷ (100 − trim waste %) + 1 = {wastePercentage} ÷ {usablePercentage} + 1 = {wasteFactor}"
   },
   "examples": {
-    "manual-tenderloin": { "title": "Beef tenderloin for tournedos with 30% trim" }
+    "manual-tenderloin": {
+      "title": "Beef tenderloin for tournedos with 30% trim"
+    }
   }
 }

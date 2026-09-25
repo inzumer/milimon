@@ -6,7 +6,7 @@ import {
   type FormulaId,
   type StandardFormulaDefinition,
 } from '@domain/registry';
-import { formulaText, type FormulaTranslation } from '@i18n/formulas';
+import { formulaText, type CalculatorText } from '@i18n/formulas';
 import type { Translations } from '@i18n/translations';
 import type { CalculationsRepository, SettingsRepository } from '@repositories';
 import type { Locale } from '@utils';
@@ -19,7 +19,7 @@ export interface FormulaCalculatorProps {
   formulaId: FormulaId;
   lang: Locale;
   /** Translations are resolved on the server and passed in, so no dictionary ships to the client. */
-  text: FormulaTranslation;
+  text: CalculatorText;
   ui: Translations<'calculator'>;
   calculations?: CalculationsRepository;
   settings?: SettingsRepository;
@@ -113,6 +113,7 @@ export const FormulaCalculator = ({
               values={calculator.result.value as Record<string, unknown>}
               text={text}
               context={context}
+              units={ui.units}
             />
             <h4 className="font-bold">{ui['steps-title']}</h4>
             <StepList

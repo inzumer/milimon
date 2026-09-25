@@ -1,6 +1,65 @@
 {
   "title": "Reglas de Omnes",
   "summary": "Revisá si los precios de tu carta están bien distribuidos entre baratos, medios y caros.",
+  "study": {
+    "what": [
+      "Una vez fijados los precios, conviene que la carta esté distribuida de forma armoniosa entre productos baratos, medios y caros, con opciones adecuadas para tus clientes.",
+      "Las reglas de Omnes son cuatro principios comerciales: proporcionalidad de precios, proporcionalidad de cantidades por zona, adecuación entre precios ofrecidos y demandados, y ubicación de la sugerencia del día."
+    ],
+    "formula": [
+      "Proporcionalidad: precio más caro ≤ 2 a 3 × precio más barato",
+      "Ancho de cada zona = (precio más caro − precio más barato) ÷ 3",
+      "Carta equilibrada: la mitad de los productos en la zona media y un cuarto en cada extremo",
+      "Ticket promedio dentro de ±10 % del precio promedio de la oferta",
+      "Sugerencia del día en la zona de precios medios"
+    ],
+    "variables": [
+      {
+        "name": "Precio promedio de la oferta",
+        "description": "La suma de todos los precios de la carta dividida por la cantidad de productos."
+      },
+      {
+        "name": "Ticket promedio",
+        "description": "Lo que pagan en promedio los clientes."
+      },
+      {
+        "name": "Zonas",
+        "description": "Tres rangos del mismo ancho: baratos, medios y caros."
+      }
+    ],
+    "steps": [
+      "Buscá el precio más barato y el más caro, y compará la relación entre ambos.",
+      "Dividí la diferencia en tres zonas iguales.",
+      "Contá cuántos productos caen en cada zona.",
+      "Calculá el precio promedio de la oferta y comparalo con el ticket promedio.",
+      "Revisá en qué zona está la sugerencia del día."
+    ],
+    "examples": [
+      {
+        "title": "Pastelería con 16 tortas (manual)",
+        "paragraphs": [
+          "Los precios van de $ 40 a $ 115: una diferencia de $ 75, es decir, zonas de $ 25.",
+          "Baratos: de $ 40 a $ 65; medios: más de $ 65 hasta $ 90; caros: más de $ 90 hasta $ 115.",
+          "Una carta equilibrada tiene 4 productos baratos, 8 medios y 4 caros.",
+          "Si el precio promedio es $ 77,50, un ticket promedio sano va de $ 69,75 a $ 85,25."
+        ]
+      }
+    ],
+    "notes": [
+      {
+        "type": "tip",
+        "text": "La clientela se mueve dentro de ciertos rangos de precios según sus ingresos: un negocio no puede ser caro y barato al mismo tiempo."
+      },
+      {
+        "type": "tip",
+        "text": "Si competís por precio, poné los precios encolumnados a la derecha de la carta; si competís por producto, ubicá el precio cerca de la descripción del plato."
+      },
+      {
+        "type": "manual-difference",
+        "text": "El manual da el rango de precios y la cantidad de tortas por zona, pero no la lista de precios: la del ejemplo es ilustrativa y respeta esa distribución."
+      }
+    ]
+  },
   "inputs": {
     "prices": {
       "label": "Precios de la carta",

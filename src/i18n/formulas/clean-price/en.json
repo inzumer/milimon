@@ -1,6 +1,54 @@
 {
   "title": "Equivalent clean price",
   "summary": "Compare whether buying the product as purchased (with trim) or already clean is cheaper.",
+  "study": {
+    "what": [
+      "Many raw materials can be bought untrimmed (with trim) or trimmed. The trimmed price is always higher, because the supplier absorbs the trim and the labor of cleaning.",
+      "You can't compare an untrimmed price with a trimmed one directly: first work out your own equivalent clean price."
+    ],
+    "formula": ["Equivalent clean price = as-purchased price × waste factor"],
+    "variables": [
+      {
+        "name": "As-purchased price",
+        "description": "What you pay per kilo for the product as it comes."
+      },
+      {
+        "name": "Waste factor",
+        "description": "Comes from the trim waste % of that product."
+      },
+      {
+        "name": "Equivalent clean price",
+        "description": "What each clean kilo really costs you if you buy it untrimmed."
+      }
+    ],
+    "steps": [
+      "Find out the trim waste % of the product.",
+      "Work out the waste factor.",
+      "Multiply the as-purchased price by the factor.",
+      "Compare it with the supplier's clean price.",
+      "Before deciding, weigh other factors: whether you have staff to clean it, urgency and storage space."
+    ],
+    "examples": [
+      {
+        "title": "Whole vs. trimmed tenderloin (illustrative)",
+        "paragraphs": [
+          "The handbook leaves this exercise to be completed in class. With sample numbers: whole tenderloin at $10,000 per kilo with 30% trim, and trimmed tenderloin at $15,000 per kilo.",
+          "Factor = 1.429. Equivalent clean price = $10,000 × 1.429 = $14,285.71 per kilo.",
+          "The supplier's trimmed tenderloin costs $15,000: on price alone, buying it whole and cleaning it yourself is cheaper ($714.29 less per kilo), as long as you have the time and staff."
+        ]
+      }
+    ],
+    "notes": [
+      {
+        "type": "tip",
+        "text": "The same comparison works between two suppliers of the same product with different trim: cured ham, squid, eggplants, oranges…"
+      },
+      {
+        "type": "tip",
+        "text": "The cheapest isn't always the best buy: the handbook recommends the most convenient one, also considering quality and supplier reliability."
+      }
+    ]
+  },
   "inputs": {
     "gross-price": {
       "label": "Price as purchased",
@@ -27,7 +75,9 @@
     "comparison": "Supplier clean price − your equivalent = {supplierCleanPrice} − {equivalentCleanPrice} = {difference}"
   },
   "examples": {
-    "tenderloin-offer": { "title": "Untrimmed tenderloin at $10,000/kg vs. trimmed at $15,000/kg" }
+    "tenderloin-offer": {
+      "title": "Untrimmed tenderloin at $10,000/kg vs. trimmed at $15,000/kg"
+    }
   },
   "choices": {
     "buy-gross": "Buy it as purchased and clean it yourself",

@@ -1,6 +1,62 @@
 {
   "title": "Cantidad bruta a comprar",
   "summary": "Cuánto comprar sucio para que, después de limpiar, te alcance para todas las porciones.",
+  "study": {
+    "what": [
+      "Las recetas indican cantidades limpias. Para comprar necesitás saber la cantidad bruta: cuánto pedir sucio para que, después de limpiar, alcance para todas las porciones.",
+      "El manual lo resuelve con el factor de desecho o con una regla de tres, y redondea hacia arriba la cantidad a comprar."
+    ],
+    "formula": [
+      "Cantidad limpia necesaria = porciones × porción limpia",
+      "Cantidad bruta = cantidad limpia × factor de desecho",
+      "Regla de tres: cantidad bruta = cantidad limpia × 100 ÷ (100 − % de desecho)"
+    ],
+    "variables": [
+      {
+        "name": "Porciones",
+        "description": "Cuántos comensales o porciones vas a servir."
+      },
+      {
+        "name": "Porción limpia",
+        "description": "Cuánto lleva cada porción del ingrediente ya limpio, según la receta."
+      },
+      {
+        "name": "Factor de desecho",
+        "description": "Sale del % de desecho de la materia prima."
+      },
+      {
+        "name": "Cantidad bruta",
+        "description": "Lo que tenés que comprar, antes de redondear."
+      }
+    ],
+    "steps": [
+      "Multiplicá las porciones por la cantidad limpia de cada una.",
+      "Calculá el factor de desecho de la materia prima.",
+      "Multiplicá la cantidad limpia necesaria por el factor.",
+      "Redondeá hacia arriba a la unidad en la que comprás."
+    ],
+    "examples": [
+      {
+        "title": "Tournedó con galette de papas para 200 personas (manual)",
+        "paragraphs": [
+          "Cada porción lleva 0,180 kg de lomo limpio: 200 × 0,180 = 36,000 kg limpios.",
+          "El lomo tiene 30 % de desecho, así que el factor es 1,429.",
+          "Cantidad bruta = 36,000 kg × 1,429 = 51,429 kg. Con regla de tres: si el 70 % son 36,000 kg, el 100 % es 36,000 × 100 ÷ 70 = 51,429 kg.",
+          "Redondeando hacia arriba, se compran 52 kg."
+        ]
+      }
+    ],
+    "notes": [
+      {
+        "type": "common-mistake",
+        "text": "Sumar el 30 % a los 36 kg da 46,8 kg, pero al limpiar esa cantidad quedan solo 32,76 kg: faltan más de 3 kg. Por eso se usa el factor y no un simple porcentaje."
+      },
+      {
+        "type": "rounding",
+        "text": "Por practicidad se redondea hacia arriba (51,429 → 52 kg). Siempre es preferible que sobre un poco a que falte."
+      }
+    ]
+  },
   "inputs": {
     "servings": {
       "label": "Comensales o porciones",

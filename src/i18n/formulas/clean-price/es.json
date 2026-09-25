@@ -1,6 +1,54 @@
 {
   "title": "Precio limpio equivalente",
   "summary": "Compará si conviene comprar la mercadería sucia (con desechos) o ya limpia.",
+  "study": {
+    "what": [
+      "Muchas materias primas se pueden comprar sucias (con desechos) o limpias. El precio limpio siempre es más alto, porque el proveedor absorbe el desecho y la mano de obra de limpiar.",
+      "No se puede comparar directamente un precio sucio con uno limpio: primero hay que calcular tu propio precio limpio equivalente."
+    ],
+    "formula": ["Precio limpio equivalente = precio sucio (bruto) × factor de desecho"],
+    "variables": [
+      {
+        "name": "Precio sucio",
+        "description": "Lo que pagás por kilo de la mercadería tal como viene."
+      },
+      {
+        "name": "Factor de desecho",
+        "description": "Sale del % de desecho que tiene esa mercadería."
+      },
+      {
+        "name": "Precio limpio equivalente",
+        "description": "Lo que te termina costando cada kilo limpio si comprás sucio."
+      }
+    ],
+    "steps": [
+      "Averiguá el % de desecho de la mercadería.",
+      "Calculá el factor de desecho.",
+      "Multiplicá el precio sucio por el factor.",
+      "Comparalo con el precio limpio del proveedor.",
+      "Antes de decidir, sumá otras variables: si tenés mano de obra para limpiar, la urgencia y el espacio de almacenamiento."
+    ],
+    "examples": [
+      {
+        "title": "Lomo entero vs. lomo limpio (ilustrativo)",
+        "paragraphs": [
+          "El manual deja este ejercicio para completar en clase. Con números de ejemplo: lomo entero a $ 10.000 el kilo con 30 % de desecho, y lomo limpio a $ 15.000 el kilo.",
+          "Factor = 1,429. Precio limpio equivalente = $ 10.000 × 1,429 = $ 14.285,71 por kilo.",
+          "El limpio del proveedor cuesta $ 15.000: por precio conviene comprar entero y limpiarlo vos (ahorrás $ 714,29 por kilo), siempre que tengas el tiempo y la mano de obra."
+        ]
+      }
+    ],
+    "notes": [
+      {
+        "type": "tip",
+        "text": "La misma comparación sirve entre dos proveedores del mismo producto con distinto desecho: jamón crudo, calamares, berenjenas, naranjas…"
+      },
+      {
+        "type": "tip",
+        "text": "El más barato no siempre es la mejor compra: el manual recomienda elegir el más conveniente, mirando también la calidad y el cumplimiento del proveedor."
+      }
+    ]
+  },
   "inputs": {
     "gross-price": {
       "label": "Precio de la mercadería sucia",
@@ -27,7 +75,9 @@
     "comparison": "Precio limpio del proveedor − tu equivalente = {supplierCleanPrice} − {equivalentCleanPrice} = {difference}"
   },
   "examples": {
-    "tenderloin-offer": { "title": "Lomo sucio a $ 10.000/kg vs. limpio a $ 15.000/kg" }
+    "tenderloin-offer": {
+      "title": "Lomo sucio a $ 10.000/kg vs. limpio a $ 15.000/kg"
+    }
   },
   "choices": {
     "buy-gross": "Comprar sucio y limpiarlo vos",

@@ -1,6 +1,70 @@
 {
   "title": "Recipe costing",
   "summary": "The cost of each ingredient, of the whole recipe and of each portion.",
+  "study": {
+    "what": [
+      "With a standardized recipe you can cost every dish: how much each ingredient, the whole recipe and each portion cost. It's the basis for pricing and for adjusting the content of dishes.",
+      "You need four pieces of data per ingredient: the clean quantity the recipe uses, its unit of measure, its trim waste % and its purchase price in that same unit."
+    ],
+    "formula": [
+      "Gross quantity = recipe quantity × waste factor",
+      "Ingredient cost = gross quantity × purchase price",
+      "Recipe cost = sum of the ingredient costs",
+      "Cost per portion = recipe cost ÷ yield"
+    ],
+    "variables": [
+      {
+        "name": "Recipe quantity",
+        "description": "Clean, ready-to-cook quantity of each ingredient."
+      },
+      {
+        "name": "Purchase price",
+        "description": "Price of the product as purchased, in the same unit as the quantity."
+      },
+      {
+        "name": "Yield",
+        "description": "How many portions the recipe makes."
+      },
+      {
+        "name": "Share",
+        "description": "What percentage of the total cost each ingredient represents."
+      }
+    ],
+    "steps": [
+      "Columns 1 and 2: the ingredient and its unit of measure.",
+      "Column 3: the recipe quantity (clean).",
+      "Columns 4 and 5: the trim waste % and its factor.",
+      "Column 6: gross quantity = column 3 × column 5.",
+      "Column 7: the as-purchased price, in the same unit.",
+      "Column 8: cost = column 6 × column 7.",
+      "Add up the costs and divide by the yield to get the cost per portion."
+    ],
+    "examples": [
+      {
+        "title": "Tournedos with potato galette for 10 portions (illustrative)",
+        "paragraphs": [
+          "Tenderloin: 1.800 kg clean with 30% trim → 2.571 kg gross × $10,000 = $25,714.29.",
+          "Potatoes: 2.000 kg with 20% trim → 2.500 kg × $1,500 = $3,750.",
+          "Butter: 0.200 kg with no trim × $8,000 = $1,600.",
+          "Recipe cost: $31,064.29. Cost per portion: $3,106.43. The tenderloin is 82.8% of the cost."
+        ]
+      }
+    ],
+    "notes": [
+      {
+        "type": "tip",
+        "text": "With each ingredient's share you can adjust the content: negotiate the price of the most expensive ingredients, review proportions (smaller main item, bigger side?) or substitute ingredients within good culinary practice."
+      },
+      {
+        "type": "common-mistake",
+        "text": "Use the same unit for the price and the recipe: if you buy pears by the crate but the recipe uses kilos, convert the price to kilos."
+      },
+      {
+        "type": "tip",
+        "text": "Small savings per dish add up: $2 less on each of 10,000 units sold a month is $20,000 a month and $240,000 a year."
+      }
+    ]
+  },
   "inputs": {
     "servings": {
       "label": "Yield (portions)",

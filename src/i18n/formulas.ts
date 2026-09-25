@@ -10,6 +10,18 @@ const inputTextSchema = z.object({
   hint: text.optional(),
 });
 
+export const NOTE_TYPES = ['tip', 'common-mistake', 'rounding', 'manual-difference'] as const;
+
+/** Study-manual content of a formula page (our own wording, based on the manual). */
+const studySchema = z.object({
+  what: z.array(text).min(1),
+  formula: z.array(text).min(1),
+  variables: z.array(z.object({ name: text, description: text })).min(1),
+  steps: z.array(text).min(1),
+  examples: z.array(z.object({ title: text, paragraphs: z.array(text).min(1) })).min(1),
+  notes: z.array(z.object({ type: z.enum(NOTE_TYPES), text })).min(1),
+});
+
 /**
  * Shape of `src/i18n/formulas/<formula-id>/{es,en}.json`. Keys are kebab-case versions of the
  * registry keys (`grossWeight` → `gross-weight`). Validated when loaded, so broken content fails
@@ -18,6 +30,7 @@ const inputTextSchema = z.object({
 export const formulaTranslationSchema = z.object({
   title: text,
   summary: text,
+  study: studySchema,
   inputs: z.record(z.string(), inputTextSchema),
   outputs: z.record(z.string(), text),
   steps: z.record(z.string(), text),
@@ -31,6 +44,13 @@ export const formulaTranslationSchema = z.object({
 });
 
 export type FormulaTranslation = z.infer<typeof formulaTranslationSchema>;
+
+/** What a calculator island needs: everything except the (long, static) study content. */
+export type CalculatorText = Omit<FormulaTranslation, 'study'>;
+
+/** Strips the study content so it isn't serialized into island props. */
+export const toCalculatorText = ({ study: _study, ...text }: FormulaTranslation): CalculatorText =>
+  text;
 
 const files = import.meta.glob<unknown>('./formulas/*/*.json', { eager: true, import: 'default' });
 
@@ -54,7 +74,7 @@ const required = <T>(record: Record<string, T> | undefined, key: string, section
  * Typed accessors for a formula translation. Every key is validated by the i18n tests, so a
  * missing one is a bug: fail loudly instead of rendering a fallback key on screen.
  */
-export const formulaText = (text: FormulaTranslation) => ({
+export const formulaText = (text: CalculatorText) => ({
   input: (key: string) => required(text.inputs, key, 'inputs'),
   output: (key: string) => required(text.outputs, key, 'outputs'),
   example: (key: string) => required(text.examples, key, 'examples').title,

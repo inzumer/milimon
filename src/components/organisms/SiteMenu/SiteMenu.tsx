@@ -5,15 +5,11 @@ import { CurrencySelect } from '@components/molecules/CurrencySelect';
 import { LanguageSwitcher } from '@components/molecules/LanguageSwitcher';
 import { ThemeToggle } from '@components/molecules/ThemeToggle';
 import { useFocusTrap, useScrollLock } from '@hooks';
-import { isActivePath, track, type Locale } from '@utils';
-import { navLinkStyles, overlayStyles, panelStyles } from './SiteMenu.styles';
+import { track, type Locale } from '@utils';
+import { NavEntry, type SiteMenuItem } from './NavEntry';
+import { overlayStyles, panelStyles } from './SiteMenu.styles';
 
 const EXIT_DURATION_MS = 200;
-
-export interface SiteMenuItem {
-  href: string;
-  label: string;
-}
 
 export interface SiteMenuLabels {
   open: string;
@@ -96,20 +92,11 @@ export const SiteMenu = ({ lang, pathname, items, labels }: SiteMenuProps) => {
 
             <nav aria-label={labels.navigation}>
               <ul className="flex flex-col gap-1">
-                {items.map((item) => {
-                  const active = isActivePath(pathname, item.href);
-                  return (
-                    <li key={item.href}>
-                      <a
-                        href={item.href}
-                        aria-current={active ? 'page' : undefined}
-                        className={navLinkStyles({ active })}
-                      >
-                        {item.label}
-                      </a>
-                    </li>
-                  );
-                })}
+                {items.map((item) => (
+                  <li key={item.href}>
+                    <NavEntry item={item} pathname={pathname} />
+                  </li>
+                ))}
               </ul>
             </nav>
 

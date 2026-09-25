@@ -1,6 +1,46 @@
 {
   "title": "Alquiler vs. facturación",
   "summary": "Revisá si el alquiler del local es razonable para lo que vendés.",
+  "study": {
+    "what": [
+      "El alquiler es uno de los costos fijos más pesados. El manual propone que no supere el 10 % de la facturación neta, y considera óptimo un 5 %.",
+      "Conviene proyectar las ventas antes de firmar, para saber si el alquiler del local que te interesa está dentro de esos parámetros."
+    ],
+    "formula": [
+      "% del alquiler = alquiler ÷ facturación neta × 100",
+      "Facturación para el 10 % = alquiler × 100 ÷ 10",
+      "Facturación para el 5 % = alquiler × 100 ÷ 5"
+    ],
+    "variables": [
+      {
+        "name": "Alquiler",
+        "description": "Lo que pagás por mes por el local."
+      },
+      {
+        "name": "Facturación neta",
+        "description": "Las ventas del mes sin impuestos."
+      }
+    ],
+    "steps": [
+      "Dividí el alquiler por la facturación neta y multiplicá por 100.",
+      "Compará el resultado con el 5 % (óptimo) y el 10 % (máximo)."
+    ],
+    "examples": [
+      {
+        "title": "Alquiler del manual",
+        "paragraphs": [
+          "Con un alquiler de $ 41.000 y ventas netas de $ 785.751,95, el alquiler es el 5,22 % de la facturación: aceptable, apenas por encima del óptimo.",
+          "Para que fuera el 5 %, habría que facturar $ 820.000 netos por mes."
+        ]
+      }
+    ],
+    "notes": [
+      {
+        "type": "tip",
+        "text": "Si el local es más grande de lo que necesitás, intentá negociar el alquiler en proporción a los metros que realmente vas a usar."
+      }
+    ]
+  },
   "inputs": {
     "rent": {
       "label": "Alquiler mensual",
@@ -23,7 +63,9 @@
     "sales-for-optimal-share": "Para llegar al óptimo de {optimalShare}: {rent} × 100 ÷ 5 = {salesForOptimalShare}"
   },
   "examples": {
-    "manual-statement-rent": { "title": "Alquiler del manual ($ 41.000) con sus ventas netas" }
+    "manual-statement-rent": {
+      "title": "Alquiler del manual ($ 41.000) con sus ventas netas"
+    }
   },
   "choices": {
     "optimal": "Óptimo: el alquiler es hasta el 5 % de la facturación",

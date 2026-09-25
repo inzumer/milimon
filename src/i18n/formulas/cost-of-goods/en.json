@@ -1,6 +1,53 @@
 {
   "title": "Cost of goods consumed",
   "summary": "How much stock was used in the period, from the inventories and purchases.",
+  "study": {
+    "what": [
+      "Of all the figures in the income statement, the hardest to get is the cost of goods consumed (or sold). It's worked out from two inventory counts and the purchases of the period.",
+      "Regular inventories also help you spot shortages, plan purchases, reduce spoilage and apply FIFO (first in, first out)."
+    ],
+    "formula": ["COGS = opening inventory + purchases in the period − closing inventory"],
+    "variables": [
+      {
+        "name": "Opening inventory",
+        "description": "The stock counted and valued at the start of the period."
+      },
+      {
+        "name": "Purchases in the period",
+        "description": "Everything that came into the business during the period."
+      },
+      {
+        "name": "Closing inventory",
+        "description": "The stock counted at the end of the period, valued with the same method."
+      }
+    ],
+    "steps": [
+      "Count the stock at the start of the period and value it.",
+      "Add the purchases of the period.",
+      "Count the stock at the end of the period and value it with the same method.",
+      "Subtract the closing inventory from the previous sum."
+    ],
+    "examples": [
+      {
+        "title": "Handbook month",
+        "paragraphs": [
+          "Opening inventory $125,000 + purchases $245,000 = $370,000 available.",
+          "Closing inventory: $100,000.",
+          "Cost of goods consumed = 370,000 − 100,000 = $270,000. This figure is then used to work out the pricing coefficient."
+        ]
+      }
+    ],
+    "notes": [
+      {
+        "type": "tip",
+        "text": "If you compare what was consumed according to inventory with what was recorded in orders or invoices, you'll spot shortages, leaks or errors worth investigating."
+      },
+      {
+        "type": "common-mistake",
+        "text": "Use the same valuation method for both inventories; otherwise the difference doesn't reflect actual consumption."
+      }
+    ]
+  },
   "inputs": {
     "opening-inventory": {
       "label": "Opening inventory",

@@ -1,0 +1,34 @@
+{
+  "index": {
+    "title": "Fórmulas",
+    "intro": "Todas las cuentas del manual, explicadas paso a paso y con su calculadora para practicar con tus propios números.",
+    "open": "Ver fórmula y calculadora"
+  },
+  "groups": {
+    "waste-and-loss": "Desechos y mermas",
+    "recipes": "Recetas y stock",
+    "pricing": "Precios",
+    "results": "Resultados",
+    "premises": "El local"
+  },
+  "sections": {
+    "what": "Qué es y para qué sirve",
+    "formula": "La fórmula",
+    "variables": "Qué significa cada dato",
+    "steps": "Paso a paso",
+    "examples": "Ejemplos resueltos",
+    "notes": "Notas de estudio",
+    "calculator": "Calculadora",
+    "related": "Fórmulas relacionadas"
+  },
+  "notes": {
+    "tip": "Consejo",
+    "common-mistake": "Error común",
+    "rounding": "Redondeo",
+    "manual-difference": "Diferencia con el manual"
+  },
+  "breadcrumbs": {
+    "label": "Estás en"
+  },
+  "try-calculator": "Probar en la calculadora"
+}

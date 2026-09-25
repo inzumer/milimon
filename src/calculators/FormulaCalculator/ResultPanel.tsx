@@ -1,28 +1,38 @@
 import { cn } from '@inzumer/ui-library';
 import { formatValue, type FormatContext } from '@calculators/shared/format-value';
 import type { OutputDefinition } from '@domain/registry';
-import type { FormulaTranslation } from '@i18n/formulas';
+import type { CalculatorText } from '@i18n/formulas';
 import { formulaText, toKebabCase } from '@i18n/formulas';
 
 export interface ResultPanelProps {
   outputs: OutputDefinition[];
   values: Record<string, unknown>;
-  text: FormulaTranslation;
+  text: CalculatorText;
   context: FormatContext;
+  /** Unit words appended to plain numbers (kg, m², months); currency and % carry their own symbol. */
+  units?: Partial<Record<'weight' | 'area' | 'months', string>>;
 }
 
 const display = (
   output: OutputDefinition,
   value: unknown,
-  text: FormulaTranslation,
+  text: CalculatorText,
   context: FormatContext,
-) =>
-  typeof value === 'number'
-    ? formatValue(value, output.kind, context)
-    : formulaText(text).choice(String(value));
+  units: ResultPanelProps['units'],
+) => {
+  if (typeof value !== 'number') {
+    return formulaText(text).choice(String(value));
+  }
+  const unit =
+    output.kind === 'weight' || output.kind === 'area' || output.kind === 'months'
+      ? units?.[output.kind]
+      : undefined;
+  const formatted = formatValue(value, output.kind, context);
+  return unit ? `${formatted} ${unit}` : formatted;
+};
 
 /** Main results first and larger; the rest as a definition list. */
-export const ResultPanel = ({ outputs, values, text, context }: ResultPanelProps) => (
+export const ResultPanel = ({ outputs, values, text, context, units }: ResultPanelProps) => (
   <dl className="grid gap-3">
     {[...outputs]
       .sort((a, b) => Number(Boolean(b.primary)) - Number(Boolean(a.primary)))
@@ -45,7 +55,7 @@ export const ResultPanel = ({ outputs, values, text, context }: ResultPanelProps
             {formulaText(text).output(toKebabCase(output.key))}
           </dt>
           <dd className={cn('font-bold tabular-nums', output.primary ? 'text-3xl' : 'text-xl')}>
-            {display(output, values[output.key], text, context)}
+            {display(output, values[output.key], text, context, units)}
           </dd>
         </div>
       ))}

@@ -1,7 +1,7 @@
 import { Switch } from '@inzumer/ui-library';
 import { NumberField } from '@components/molecules/NumberField';
 import type { InputDefinition } from '@domain/registry';
-import type { FormulaTranslation } from '@i18n/formulas';
+import type { CalculatorText } from '@i18n/formulas';
 import { formulaText, toKebabCase } from '@i18n/formulas';
 import type { Translations } from '@i18n/translations';
 import type { CalculatorDraft } from '@repositories';
@@ -14,7 +14,7 @@ export interface FormulaFieldsProps {
   draft: CalculatorDraft;
   errors: Record<string, FieldErrorCode>;
   currency: string;
-  text: FormulaTranslation;
+  text: CalculatorText;
   ui: Translations<'calculator'>;
   onChange: (key: string, value: string | boolean) => void;
   onBlur: (key: string) => void;

@@ -1,6 +1,62 @@
 {
   "title": "Cooking loss",
   "summary": "How much weight a preparation loses when it is cooked.",
+  "study": {
+    "what": [
+      "Cooking always reduces weight: first liquids, juices and fats evaporate, and with long cooking almost everything but the minerals. That loss is cooking loss.",
+      "Cooking loss changes with the type, method and equipment (boiling, frying, convection oven, griddle, grill…) and with the degree of doneness. Measuring it lets you choose, within good culinary practice, the method that loses the least."
+    ],
+    "formula": [
+      "Weight before cooking = clean weight + inseparable additions",
+      "Loss = weight before cooking − cooked weight",
+      "Cooking loss % = loss ÷ weight before cooking × 100"
+    ],
+    "variables": [
+      {
+        "name": "Clean weight",
+        "description": "The clean product, before cooking it."
+      },
+      {
+        "name": "Inseparable additions",
+        "description": "Dressings, sauces, liquids, coatings or fillings that can't be separated afterwards."
+      },
+      {
+        "name": "Cooked weight",
+        "description": "What the finished preparation weighs, ready to serve."
+      }
+    ],
+    "steps": [
+      "Weigh the clean product.",
+      "Add the dressings, sauces, coatings or fillings that can't be separated.",
+      "Cook the preparation.",
+      "Weigh the cooked product.",
+      "Subtract the weights and work out the percentage on the weight before cooking."
+    ],
+    "examples": [
+      {
+        "title": "Marinated meat (illustrative)",
+        "paragraphs": [
+          "The handbook shows the worksheet without numbers. Example: 1.200 kg of clean meat with 0.300 kg of marinade that can't be separated make 1.500 kg before cooking.",
+          "After cooking it weighs 1.050 kg: loss = 1.500 − 1.050 = 0.450 kg.",
+          "Cooking loss % = 0.450 ÷ 1.500 × 100 = 30%."
+        ]
+      }
+    ],
+    "notes": [
+      {
+        "type": "common-mistake",
+        "text": "The percentage is worked out on the weight before cooking (including additions), not on the gross weight you bought."
+      },
+      {
+        "type": "tip",
+        "text": "Besides cooking loss there's thawing loss (slowly freezing and thawing products that contain water) and drip loss (portioning too far in advance)."
+      },
+      {
+        "type": "tip",
+        "text": "To avoid thawing loss, the handbook recommends a blast chiller, or buying fresh products more often and keeping them refrigerated at 4 °C."
+      }
+    ]
+  },
   "inputs": {
     "net-weight": {
       "label": "Clean weight",
