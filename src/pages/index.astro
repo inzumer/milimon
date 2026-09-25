@@ -1,0 +1,7 @@
+---
+import { DEFAULT_LOCALE } from '@utils';
+
+// Static output: Astro emits an HTML redirect to the default locale.
+// Browser-language detection is added in phase F1.
+return Astro.redirect(`/${DEFAULT_LOCALE}`);
+---

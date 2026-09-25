@@ -1,0 +1,29 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+.astro/
+*.tsbuildinfo
+
+# Tests / coverage
+coverage/
+
+# Lint cache
+.eslintcache
+
+# Logs
+pnpm-debug.log*
+npm-debug.log*
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# OS / editor
+.DS_Store
+*.local
+
+# Phase/task plans are local working notes (docs/PLAN.md is the versioned master plan).
+docs/plans/

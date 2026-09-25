@@ -1,0 +1,64 @@
+# Milimon Cost Lab
+
+Manual de estudio y calculadoras de costos, desechos y mermas en gastronomía. Bilingüe
+(`/es`, `/en`), mobile-first, con modo claro y oscuro.
+
+Basado en el manual _Administración y Gestión gastronómica_. Plan completo en
+[docs/PLAN.md](./docs/PLAN.md).
+
+## Stack
+
+- [Astro](https://astro.build) (salida estática) + islas de React 19
+- TypeScript estricto
+- Tailwind CSS v4 + [`@inzumer/tokens`](https://www.npmjs.com/package/@inzumer/tokens)
+- Componentes de [`@inzumer/ui-library`](https://www.npmjs.com/package/@inzumer/ui-library)
+- Vitest + Testing Library (cobertura mínima 90%)
+- ESLint 10, Prettier, cspell
+
+Detalle de versiones y excepciones: [docs/adr/0002-tooling-versions.md](./docs/adr/0002-tooling-versions.md).
+
+## Requisitos
+
+- Node **24.21.0** (ver `.nvmrc`; con nvm: `nvm install` + `nvm use`)
+- pnpm **12** (`npm install -g pnpm@12` o `corepack enable`)
+
+## Uso
+
+```bash
+pnpm install
+pnpm dev          # http://localhost:4321 → redirige a /es
+```
+
+| Script               | Descripción                              |
+| -------------------- | ---------------------------------------- |
+| `pnpm dev`           | Servidor de desarrollo                   |
+| `pnpm build`         | Build estático en `dist/`                |
+| `pnpm preview`       | Sirve el build                           |
+| `pnpm typecheck`     | `astro check`                            |
+| `pnpm lint`          | ESLint                                   |
+| `pnpm test`          | Tests                                    |
+| `pnpm test:coverage` | Tests con umbral de cobertura del 90%    |
+| `pnpm format`        | Prettier                                 |
+| `pnpm spellcheck`    | Corrector ortográfico (inglés + español) |
+| `pnpm validate`      | typecheck + lint + test:coverage + build |
+
+## Estructura
+
+```
+src/
+  pages/        rutas (.astro): /[lang]/…
+  layouts/      layouts .astro
+  components/   UI reutilizable (atoms / molecules / organisms / templates)
+  calculators/  islas de React, una por calculadora
+  domain/       fórmulas puras + registry
+  i18n/         traducciones en carpetas kebab-case: <carpeta>/{es,en}.json
+  hooks/ utils/ styles/ assets/ test/
+docs/
+  PLAN.md       plan maestro
+  adr/          decisiones de arquitectura
+```
+
+## Convenciones
+
+Ver [CLAUDE.md](./CLAUDE.md): Conventional Commits, aliases de imports, traducciones en
+kebab-case, rutas en inglés, placeholders descriptivos y tokens de color para claro y oscuro.

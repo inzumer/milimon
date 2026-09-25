@@ -1,0 +1,13 @@
+/*
+ * Global stylesheet — Tailwind v4 + @inzumer/tokens.
+ * Brand overrides (Milimon palette, light/dark) and fonts are added in phase F1.
+ */
+@import 'tailwindcss';
+@import '@inzumer/tokens/css/reset' layer(base);
+@import '@inzumer/tokens/css/variables';
+@import '@inzumer/tokens/css/typography' layer(base);
+
+@config '../../tailwind.config.ts';
+
+/* ui-library ships Tailwind class names (no CSS), so its dist must be scanned. */
+@source '../../node_modules/@inzumer/ui-library/dist';

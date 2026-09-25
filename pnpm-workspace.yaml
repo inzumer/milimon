@@ -1,0 +1,15 @@
+# pnpm 12 blocks dependency install scripts by default; only these are allowed/denied explicitly.
+allowBuilds:
+  esbuild: true
+  # Ships prebuilt bindings via optionalDependencies; its postinstall is only a fallback.
+  unrs-resolver: false
+
+# Also install the WebAssembly builds of native packages (napi-rs). Their loaders fall back to WASM
+# automatically when a native binary can't be loaded — e.g. Windows Smart App Control blocking a
+# freshly released, not-yet-reputable `.node` file. Native binaries are still preferred when they load.
+supportedArchitectures:
+  os:
+    - current
+  cpu:
+    - current
+    - wasm32

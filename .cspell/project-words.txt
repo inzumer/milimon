@@ -1,0 +1,24 @@
+# Project dictionary — brand names, tech terms and Rioplatense Spanish (voseo) not in the es-ES dictionary.
+bloqueante
+claude
+claudecode
+cobrás
+coef
+dismissable
+editables
+entregable
+firestore
+milimon
+montos
+nunito
+omnes
+parseo
+partytown
+prerenderizado
+quedás
+querés
+recalculan
+renderizan
+supabase
+tipado
+prerendered

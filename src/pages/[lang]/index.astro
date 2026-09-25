@@ -1,0 +1,16 @@
+---
+import BaseLayout from '@layouts/base-layout.astro';
+import { LOCALES, toLocale } from '@utils';
+
+export function getStaticPaths() {
+  return LOCALES.map((lang) => ({ params: { lang } }));
+}
+
+const lang = toLocale(Astro.params.lang);
+---
+
+<BaseLayout lang={lang}>
+  <main>
+    <h1>Milimon Cost Lab</h1>
+  </main>
+</BaseLayout>
