@@ -5,7 +5,7 @@ import { formatValue, type FormatContext } from '@calculators/shared/format-valu
 import { NumberField } from '@components/molecules/NumberField';
 import type { OmnesOutput } from '@domain/formulas/omnes-rules';
 import type { ValueKind } from '@domain/registry';
-import { formulaText, type CalculatorText } from '@i18n/formulas';
+import { formulaText, type CalculatorText } from '@i18n/formula-text';
 import type { Translations } from '@i18n/translations';
 import type { CalculationsRepository, SettingsRepository } from '@repositories';
 import { interpolate, type Locale } from '@utils';

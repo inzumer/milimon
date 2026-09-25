@@ -1,0 +1,10 @@
+{
+  "title": "Calculadora",
+  "intro": "Elegí la cuenta que necesitás, cargá tus datos y mirá el resultado con todo el desarrollo. Si tenés dudas, cada cuenta tiene su explicación paso a paso.",
+  "select-label": "¿Qué querés calcular?",
+  "select-placeholder": "Elegí una cuenta…",
+  "how-it-works": "¿Cómo se calcula? Ver la explicación",
+  "loading": "Cargando la calculadora…",
+  "load-error": "No pudimos cargar la calculadora. Probá de nuevo.",
+  "empty": "Elegí una cuenta en la lista para empezar."
+}

@@ -1,8 +1,8 @@
 import { cn } from '@inzumer/ui-library';
 import { formatValue, type FormatContext } from '@calculators/shared/format-value';
 import type { OutputDefinition } from '@domain/registry';
-import type { CalculatorText } from '@i18n/formulas';
-import { formulaText, toKebabCase } from '@i18n/formulas';
+import type { CalculatorText } from '@i18n/formula-text';
+import { formulaText, toKebabCase } from '@i18n/formula-text';
 
 export interface ResultPanelProps {
   outputs: OutputDefinition[];

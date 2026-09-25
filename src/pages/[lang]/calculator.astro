@@ -1,0 +1,42 @@
+---
+import { Breadcrumbs } from '@inzumer/ui-library';
+import { CalculatorPicker } from '@calculators';
+import { FORMULA_GROUPS, formulasByGroup } from '@domain/registry';
+import { getFormulaTranslation, getTranslations } from '@i18n';
+import PageLayout from '@layouts/page-layout.astro';
+import { LOCALES, localizedPath, toLocale } from '@utils';
+
+export function getStaticPaths() {
+  return LOCALES.map((lang) => ({ params: { lang } }));
+}
+
+const lang = toLocale(Astro.params.lang);
+const common = getTranslations(lang, 'common');
+const page = getTranslations(lang, 'calculator-page');
+const formulaPage = getTranslations(lang, 'formula-page');
+const ui = getTranslations(lang, 'calculator');
+const byGroup = formulasByGroup();
+// Only titles travel to the island; each formula's texts are loaded when it's picked.
+const groups = FORMULA_GROUPS.map((group) => ({
+  group,
+  label: formulaPage.groups[group],
+  formulas: byGroup[group].map((formula) => ({
+    id: formula.id,
+    title: getFormulaTranslation(lang, formula.id).title,
+  })),
+}));
+---
+
+<PageLayout lang={lang} title={page.title} description={page.intro}>
+  <Breadcrumbs
+    aria-label={formulaPage.breadcrumbs.label}
+    items={[{ label: common.nav.home, href: localizedPath(lang, 'home') }]}
+    current={page.title}
+    className="mb-6"
+  />
+  <header class="mb-8 flex flex-col gap-3">
+    <h1 class="text-5xl">{page.title}</h1>
+    <p class="max-w-2xl text-lg text-[var(--text-secondary)]">{page.intro}</p>
+  </header>
+  <CalculatorPicker client:load lang={lang} groups={groups} page={page} ui={ui} />
+</PageLayout>

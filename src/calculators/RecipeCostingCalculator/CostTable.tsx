@@ -1,6 +1,6 @@
 import { formatValue, type FormatContext } from '@calculators/shared/format-value';
 import type { RecipeCostingOutput } from '@domain/formulas/recipe-costing';
-import { formulaText, type CalculatorText } from '@i18n/formulas';
+import { formulaText, type CalculatorText } from '@i18n/formula-text';
 
 export interface CostTableProps {
   value: RecipeCostingOutput;
