@@ -65,8 +65,8 @@ Button/
 
 ## Imports
 
-- Aliases for anything outside the current folder (`@components`, `@calculators`, `@domain`,
-  `@hooks`, `@utils`, `@i18n`, `@layouts/*`, `@assets/*`, `@styles/*`).
+- Aliases for anything outside the current folder (`@components`, `@calculators`, `@domain`, `@repositories`,
+  `@hooks`, `@utils`, `@i18n`, `@layouts/*`, `@assets/*`, `@styles/*`, `@test/*`).
 - Bare barrels preferred over deep paths.
 - Relative imports only for same-folder siblings and a unit's own test (`../unit`).
 

@@ -34,8 +34,8 @@ Key commands (Node from `.nvmrc`, pnpm from `packageManager`):
 - **Every input** has a visible label and a descriptive placeholder (what, unit, example from the manual).
 - **Formulas** are pure functions in `src/domain`, registered once in `registry.ts`, tested with
   the manual's worked examples.
-- **Imports**: path aliases (`@components`, `@calculators`, `@domain`, `@hooks`, `@utils`, `@i18n`,
-  `@layouts/*`, `@assets/*`, `@styles/*`) for anything outside the current folder. Enforced by ESLint.
+- **Imports**: path aliases (`@components`, `@calculators`, `@domain`, `@repositories`, `@hooks`, `@utils`, `@i18n`,
+  `@layouts/*`, `@assets/*`, `@styles/*`, `@test/*`) for anything outside the current folder. Enforced by ESLint.
 - **Naming**: React components in PascalCase folders; `.astro` files, content folders, slugs and
   i18n keys in kebab-case.
 - **Theming**: colors only via CSS variables (`src/styles/theme.css`); light and dark mode must both work.

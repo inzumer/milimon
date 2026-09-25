@@ -37,7 +37,10 @@
       "@i18n/*": ["./src/i18n/*"],
       "@layouts/*": ["./src/layouts/*"],
       "@assets/*": ["./src/assets/*"],
-      "@styles/*": ["./src/styles/*"]
+      "@styles/*": ["./src/styles/*"],
+      "@repositories": ["./src/repositories/index.ts"],
+      "@repositories/*": ["./src/repositories/*"],
+      "@test/*": ["./src/test/*"]
     }
   },
   "include": [".astro/types.d.ts", "**/*"],

@@ -1,2 +1,1 @@
-// Barrel — public exports of src/i18n are added here as the phases land.
-export {};
+export { getTranslations, type Namespace, type Translations } from './translations';

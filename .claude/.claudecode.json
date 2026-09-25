@@ -13,19 +13,58 @@
     "includeProblemsPanel": true
   },
   "agents": [
-    { "name": "workflow-orchestrator", "path": "./agents/workflow-orchestrator-agent.md" },
-    { "name": "policy-engine", "path": "./agents/policy-engine.md" },
-    { "name": "planner", "path": "./agents/planner-agent.md" },
-    { "name": "architect", "path": "./agents/architect-agent.md" },
-    { "name": "content-i18n", "path": "./agents/content-i18n-agent.md" },
-    { "name": "a11y", "path": "./agents/a11y-agent.md" },
-    { "name": "performance", "path": "./agents/performance-agent.md" },
-    { "name": "design-system", "path": "./agents/design-system-agent.md" },
-    { "name": "task-runner", "path": "./agents/task-runner-agent.md" },
-    { "name": "testing-strategy", "path": "./agents/testing-strategy-agent.md" },
-    { "name": "documentation", "path": "./agents/documentation-agent.md" },
-    { "name": "repository-governance", "path": "./agents/repository-governance-agent.md" },
-    { "name": "context-manager", "path": "./agents/context-manager-agent.md" }
+    {
+      "name": "workflow-orchestrator",
+      "path": "./agents/workflow-orchestrator-agent.md"
+    },
+    {
+      "name": "policy-engine",
+      "path": "./agents/policy-engine.md"
+    },
+    {
+      "name": "planner",
+      "path": "./agents/planner-agent.md"
+    },
+    {
+      "name": "architect",
+      "path": "./agents/architect-agent.md"
+    },
+    {
+      "name": "content-i18n",
+      "path": "./agents/content-i18n-agent.md"
+    },
+    {
+      "name": "a11y",
+      "path": "./agents/a11y-agent.md"
+    },
+    {
+      "name": "performance",
+      "path": "./agents/performance-agent.md"
+    },
+    {
+      "name": "design-system",
+      "path": "./agents/design-system-agent.md"
+    },
+    {
+      "name": "task-runner",
+      "path": "./agents/task-runner-agent.md"
+    },
+    {
+      "name": "testing-strategy",
+      "path": "./agents/testing-strategy-agent.md"
+    },
+    {
+      "name": "documentation",
+      "path": "./agents/documentation-agent.md"
+    },
+    {
+      "name": "repository-governance",
+      "path": "./agents/repository-governance-agent.md"
+    },
+    {
+      "name": "context-manager",
+      "path": "./agents/context-manager-agent.md"
+    }
   ],
   "rules": {
     "typescript": {
@@ -49,12 +88,14 @@
         "@components",
         "@calculators",
         "@domain",
+        "@repositories",
         "@hooks",
         "@utils",
         "@i18n",
         "@layouts",
         "@assets",
-        "@styles"
+        "@styles",
+        "@test"
       ]
     },
     "i18n": {

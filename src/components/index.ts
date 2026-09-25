@@ -1,2 +1,6 @@
-// Barrel — public exports of src/components are added here as the phases land.
-export {};
+export * from './atoms/ButtonLink';
+export * from './atoms/Icons';
+export * from './molecules/FeatureCard';
+export * from './molecules/LanguageSwitcher';
+export * from './molecules/ThemeToggle';
+export * from './organisms/SiteMenu';

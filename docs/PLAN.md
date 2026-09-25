@@ -41,7 +41,7 @@ sobre `@inzumer/ui-library` + `@inzumer/tokens` personalizados con la identidad 
   puro sin JavaScript, así que carga rápido y es bueno para SEO.
 - Las calculadoras se hidratan como islas (`client:visible`), así que solo se descarga el JS de la
   calculadora que está en pantalla.
-- Tiene i18n y content collections nativas: las traducciones por carpeta (§3) se validan en el build.
+- Tiene i18n nativo; las traducciones por carpeta (§3) se validan con TypeScript y tests.
 - Sigue siendo Vite: los aliases de `tsconfig`, Vitest y Tailwind funcionan igual que en ui-library.
 
 ### Notas de ecosistema
@@ -216,10 +216,12 @@ Ejemplo de `formulas/cooking-loss/es.json`:
 }
 ```
 
-- Las carpetas se registran como **content collections de tipo `data`** con schema zod: el build
-  falla si falta un idioma, una clave o un input que exista en `domain/registry.ts`.
-- Un test además compara que `es` y `en` tengan exactamente las mismas claves.
-- Traductor propio `t(lang, namespace)` tipado, que funciona igual en `.astro` y en React. Las islas
+- Cada carpeta se importa como JSON tipado en `src/i18n/translations.ts`: TypeScript exige que `en`
+  tenga la forma de `es` (el español es el idioma fuente).
+- `src/i18n/__tests__/translations.test.ts` recorre **todas** las carpetas automáticamente y exige: un
+  archivo por idioma, las mismas claves en ambos (en las dos direcciones), claves y carpetas en
+  kebab-case y ningún texto vacío. En F3/F4 se suma: cada input del registry tiene label y placeholder.
+- Traductor propio `getTranslations(lang, namespace)` tipado, que funciona igual en `.astro` y en React. Las islas
   reciben ya resueltos solo los textos que usan (como props), así que no se manda i18next al cliente.
 - Claves en kebab-case.
 - **Placeholders:** cada input tiene un placeholder descriptivo que indica qué va, en qué unidad y
@@ -431,19 +433,19 @@ idioma, tema), sus recetas y sus cálculos en un perfil propio.
 
 Cada fase termina con `astro check` + lint + test:coverage en verde y un PR con Conventional Commits.
 
-| Fase                         | Entregable                                                                                                                                                                                                                                            |
-| ---------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **F0 · Setup**               | `git init`, Astro + React + TS estricto, Tailwind + preset, aliases, ESLint/Prettier (+ plugins astro), cspell con diccionario español, Vitest 90%, CLAUDE.md, `.claude/`, PR template, CI, `.nvmrc`, README                                          |
-| **F1 · Tema + shell**        | tokens Milimon claro/oscuro, script anti-parpadeo, fuentes self-hosted, layout mobile-first/centrado ≥1024, Header + Drawer hamburguesa, toggles de idioma y tema, Footer, rutas `[lang]`, redirect raíz, 404, traductor tipado + collections de i18n |
-| **F2 · Dominio**             | fórmulas puras con tests usando los ejemplos del manual (100% de cobertura en `domain/`), parseo/formato de números y moneda, registry, repositorios de persistencia (`local`)                                                                        |
-| **F3 · Calculadoras**        | `NumberField`, `CalculatorForm`, `ResultPanel` con desarrollo de la cuenta, `Select`, una isla por herramienta, `RecipeCostingTable`, panel de configuración (moneda)                                                                                 |
-| **F4 · Páginas de fórmulas** | índice + detalle con explicación, ejemplos del manual, notas de estudio, "Probar este ejemplo" y calculadora embebida; traducciones es/en de cada carpeta                                                                                             |
-| **F5 · Calculadora general** | página con desplegable, `?tool=`, links a la explicación                                                                                                                                                                                              |
-| **F6 · Aprender**            | secciones explicativas es/en con links cruzados                                                                                                                                                                                                       |
-| **F7 · Pulido**              | meta/OG/hreflang, sitemap, favicon desde el logo (hoy el PNG pesa 1,6 MB → `astro:assets` a WebP/AVIF), auditoría a11y en ambos temas, Lighthouse, deploy                                                                                             |
-| **F8 · Analytics**           | conectar `track()` al proveedor elegido + consentimiento si aplica                                                                                                                                                                                    |
-| **F9 · Upstream**            | subir a ui-library los componentes genéricos (Drawer, Accordion, Select, Table, NumberField) con changeset                                                                                                                                            |
-| **F10 · Cuentas**            | login Google/Facebook, perfiles, repositorios `remote`, migración desde localStorage, privacidad/términos, borrado de cuenta                                                                                                                          |
+| Fase                         | Entregable                                                                                                                                                                                                                                                 |
+| ---------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **F0 · Setup**               | `git init`, Astro + React + TS estricto, Tailwind + preset, aliases, ESLint/Prettier (+ plugins astro), cspell con diccionario español, Vitest 90%, CLAUDE.md, `.claude/`, PR template, CI, `.nvmrc`, README                                               |
+| **F1 · Tema + shell**        | tokens Milimon claro/oscuro, script anti-parpadeo, fuentes self-hosted, layout mobile-first/centrado ≥1024, Header + Drawer hamburguesa, toggles de idioma y tema, Footer, rutas `[lang]`, redirect raíz, 404, traductor tipado + tests de paridad de i18n |
+| **F2 · Dominio**             | fórmulas puras con tests usando los ejemplos del manual (100% de cobertura en `domain/`), parseo/formato de números y moneda, registry, repositorios de persistencia (`local`)                                                                             |
+| **F3 · Calculadoras**        | `NumberField`, `CalculatorForm`, `ResultPanel` con desarrollo de la cuenta, `Select`, una isla por herramienta, `RecipeCostingTable`, panel de configuración (moneda)                                                                                      |
+| **F4 · Páginas de fórmulas** | índice + detalle con explicación, ejemplos del manual, notas de estudio, "Probar este ejemplo" y calculadora embebida; traducciones es/en de cada carpeta                                                                                                  |
+| **F5 · Calculadora general** | página con desplegable, `?tool=`, links a la explicación                                                                                                                                                                                                   |
+| **F6 · Aprender**            | secciones explicativas es/en con links cruzados                                                                                                                                                                                                            |
+| **F7 · Pulido**              | meta/OG/hreflang, sitemap, favicon desde el logo (hoy el PNG pesa 1,6 MB → `astro:assets` a WebP/AVIF), auditoría a11y en ambos temas, Lighthouse, deploy                                                                                                  |
+| **F8 · Analytics**           | conectar `track()` al proveedor elegido + consentimiento si aplica                                                                                                                                                                                         |
+| **F9 · Upstream**            | subir a ui-library los componentes genéricos (Drawer, Accordion, Select, Table, NumberField) con changeset                                                                                                                                                 |
+| **F10 · Cuentas**            | login Google/Facebook, perfiles, repositorios `remote`, migración desde localStorage, privacidad/términos, borrado de cuenta                                                                                                                               |
 
 ---
 
