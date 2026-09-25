@@ -1,0 +1,30 @@
+{
+  "title": "Your account",
+  "description": "Sign in with Google or Facebook to keep your currency, preferences and calculations on any device.",
+  "disabled": "Accounts aren't available yet. Meanwhile, everything you enter is saved on this device.",
+  "privacy-note": "What we store and how to delete it:",
+  "privacy-link": "privacy policy",
+  "panel": {
+    "loading": "Loading your account…",
+    "signed-out-intro": "You don't need an account to use the calculator. With one, your settings and calculations follow you to any device.",
+    "continue-with": "Continue with {provider}",
+    "sign-in-error": "We couldn't sign you in. Please try again in a few minutes.",
+    "signed-in-as": "Signed in as",
+    "sync-note": "Your currency, preferences and the latest values of each calculator are saved to your account automatically.",
+    "sign-out": "Sign out",
+    "signed-out": "You signed out. Your data stays saved in your account.",
+    "migration-title": "We found data on this device",
+    "migration-description": "You have settings or calculations saved on this device. Do you want to move them to your account?",
+    "migration-import": "Yes, save them to my account",
+    "migration-fresh": "No, start fresh",
+    "delete-title": "Delete account",
+    "delete-description": "Your profile and all your saved calculations are deleted. This can't be undone.",
+    "delete": "Delete my account",
+    "delete-confirm": "Yes, delete everything",
+    "delete-cancel": "Cancel",
+    "delete-question": "Are you sure? This can't be undone.",
+    "deleted": "Your account and all your data were deleted.",
+    "error": "Something went wrong while syncing your account. Check your connection.",
+    "retry": "Try again"
+  }
+}

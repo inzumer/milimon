@@ -17,8 +17,11 @@ export default defineConfig({
     react(),
     sitemap({
       i18n: { defaultLocale: 'es', locales: { es: 'es-AR', en: 'en-US' } },
-      // The root only redirects by language and 404 isn't a real page.
-      filter: (page) => new URL(page).pathname !== '/' && !page.includes('404'),
+      // The root only redirects by language, 404 isn't a real page and the account page is personal.
+      filter: (page) => {
+        const { pathname } = new URL(page);
+        return pathname !== '/' && !pathname.includes('404') && !pathname.endsWith('/account');
+      },
     }),
   ],
   i18n: {

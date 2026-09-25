@@ -11,7 +11,9 @@
     "formulas": "Formulas",
     "learn": "Learn",
     "all-formulas": "All formulas",
-    "all-topics": "All topics"
+    "all-topics": "All topics",
+    "account": "My account",
+    "sign-in": "Sign in"
   },
   "menu": {
     "open": "Open menu",
@@ -29,7 +31,8 @@
   "footer": {
     "tagline": "A study guide to food cost management.",
     "source": "Based on the Food & Beverage Administration and Management handbook.",
-    "privacy": "Privacy"
+    "privacy": "Privacy",
+    "terms": "Terms"
   },
   "not-found": {
     "title": "Page not found",

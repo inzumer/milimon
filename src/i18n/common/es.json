@@ -11,7 +11,9 @@
     "formulas": "Fórmulas",
     "learn": "Aprender",
     "all-formulas": "Todas las fórmulas",
-    "all-topics": "Todos los temas"
+    "all-topics": "Todos los temas",
+    "account": "Mi cuenta",
+    "sign-in": "Iniciar sesión"
   },
   "menu": {
     "open": "Abrir menú",
@@ -29,7 +31,8 @@
   "footer": {
     "tagline": "Manual de estudio de costos en gastronomía.",
     "source": "Basado en el manual de Administración y Gestión gastronómica.",
-    "privacy": "Privacidad"
+    "privacy": "Privacidad",
+    "terms": "Términos"
   },
   "not-found": {
     "title": "Página no encontrada",

@@ -49,7 +49,14 @@ const analyticsEnabled = isMeasurementId(import.meta.env.PUBLIC_GA_MEASUREMENT_I
 
 <script>
   import { createLocalSettingsRepository } from '@repositories';
-  import { startGoogleAnalytics } from '@services';
+  import { getAccountSession, hasStoredSession, startGoogleAnalytics } from '@services';
 
   startGoogleAnalytics(import.meta.env.PUBLIC_GA_MEASUREMENT_ID, createLocalSettingsRepository());
+
+  // Signed-in people get their profile synced on every page. Guests never download the auth SDK.
+  if (hasStoredSession()) {
+    getAccountSession()
+      .then((session) => session?.sync.start())
+      .catch((error: unknown) => console.warn('[account] could not start', error));
+  }
 </script>

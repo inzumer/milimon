@@ -7,6 +7,8 @@ export const ROUTES = {
   formulas: 'formulas',
   learn: 'learn',
   privacy: 'privacy',
+  terms: 'terms',
+  account: 'account',
 } as const;
 
 export type RouteName = keyof typeof ROUTES;

@@ -1,7 +1,8 @@
 {
   "hero": {
     "subtitle": "Calculá costos, desechos y mermas de tu cocina, y entendé cada fórmula paso a paso.",
-    "logo-alt": "Milimon: una cocinera con gorro de chef y una cuchara de madera"
+    "logo-alt": "Milimon: una cocinera con gorro de chef y una cuchara de madera",
+    "sign-in-hint": "Opcional: guardá tu configuración y tus cálculos en tu cuenta."
   },
   "calculator-card": {
     "title": "Calculadora",

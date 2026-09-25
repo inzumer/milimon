@@ -1,9 +1,7 @@
 ---
 import { Breadcrumbs } from '@inzumer/ui-library';
-import { AnalyticsPreference } from '@components';
 import { getTranslations } from '@i18n';
 import PageLayout from '@layouts/page-layout.astro';
-import { isMeasurementId } from '@services';
 import { LOCALES, localizedPath, toLocale } from '@utils';
 
 export function getStaticPaths() {
@@ -12,9 +10,8 @@ export function getStaticPaths() {
 
 const lang = toLocale(Astro.params.lang);
 const common = getTranslations(lang, 'common');
-const page = getTranslations(lang, 'privacy-page');
+const page = getTranslations(lang, 'terms-page');
 const breadcrumbs = getTranslations(lang, 'formula-page').breadcrumbs;
-const analyticsEnabled = isMeasurementId(import.meta.env.PUBLIC_GA_MEASUREMENT_ID);
 ---
 
 <PageLayout lang={lang} title={page.title} description={page.description}>
@@ -36,12 +33,6 @@ const analyticsEnabled = isMeasurementId(import.meta.env.PUBLIC_GA_MEASUREMENT_I
         {section.paragraphs.map((paragraph) => (
           <p>{paragraph}</p>
         ))}
-        {key === 'your-choice' &&
-          (analyticsEnabled ? (
-            <AnalyticsPreference client:visible label={page['preference-label']} />
-          ) : (
-            <p class="text-[var(--text-secondary)]">{page['analytics-disabled']}</p>
-          ))}
       </section>
     ))}
   </article>

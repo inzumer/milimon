@@ -1,0 +1,38 @@
+{
+  "title": "Términos de uso",
+  "description": "Las condiciones para usar Milimon Cost Lab, su calculadora y su contenido de estudio.",
+  "updated": "Última actualización: septiembre de 2026",
+  "sections": {
+    "the-service": {
+      "heading": "El servicio",
+      "paragraphs": [
+        "Milimon Cost Lab es una herramienta gratuita de estudio y cálculo de costos gastronómicos. Podés usarla sin cuenta; la cuenta es opcional y sirve para guardar tu configuración y tus cálculos."
+      ]
+    },
+    "results": {
+      "heading": "Uso de los resultados",
+      "paragraphs": [
+        "Las fórmulas y los ejemplos siguen el manual de Administración y Gestión gastronómica y buscan enseñar. Los resultados dependen de los datos que cargues: revisalos antes de usarlos para fijar precios, comprar o tomar decisiones de tu negocio.",
+        "Los impuestos y porcentajes de ejemplo corresponden a Argentina y pueden cambiar; verificá los vigentes en tu país."
+      ]
+    },
+    "your-account": {
+      "heading": "Tu cuenta",
+      "paragraphs": [
+        "Para iniciar sesión usás tu cuenta de Google o Facebook, y sus propias condiciones también aplican. Sos responsable de lo que hagas con tu sesión. Podés borrar tu cuenta cuando quieras desde “Mi cuenta”."
+      ]
+    },
+    "content": {
+      "heading": "Contenido",
+      "paragraphs": [
+        "Los textos, las explicaciones, el logo y el diseño son parte de Milimon Cost Lab. Podés usarlos para estudiar; para republicarlos, pedí permiso."
+      ]
+    },
+    "changes": {
+      "heading": "Cambios",
+      "paragraphs": [
+        "Podemos actualizar estos términos o la herramienta. Si el cambio es importante, lo vas a ver indicado en esta página con la fecha de actualización."
+      ]
+    }
+  }
+}
