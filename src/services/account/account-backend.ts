@@ -1,4 +1,4 @@
-import type { CalculatorDraft, CalculatorDrafts, ColorScheme } from '@repositories';
+import type { CalculatorDraft, CalculatorDrafts, ColorScheme, HistoryEntry } from '@repositories';
 import type { Locale } from '@utils';
 
 export type AuthProvider = 'google' | 'facebook';
@@ -39,4 +39,8 @@ export interface AccountBackend {
   fetchDrafts: () => Promise<CalculatorDrafts>;
   saveDraft: (formulaId: string, draft: CalculatorDraft) => Promise<void>;
   deleteDraft: (formulaId: string) => Promise<void>;
+  /** Saved calculations, newest first (the server keeps the latest `HISTORY_LIMIT`). */
+  fetchHistory: () => Promise<HistoryEntry[]>;
+  saveHistoryEntry: (entry: HistoryEntry) => Promise<void>;
+  deleteHistoryEntry: (id: string) => Promise<void>;
 }

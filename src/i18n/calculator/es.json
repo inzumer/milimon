@@ -27,5 +27,11 @@
     "must-not-exceed-gross": "No puede ser mayor que el total.",
     "must-be-integer": "Tiene que ser un número entero.",
     "needs-at-least-two": "Cargá al menos dos valores."
+  },
+  "history": {
+    "save": "Guardar en el historial",
+    "saved": "Guardado en tu historial.",
+    "view": "Ver historial",
+    "note": "Se guardan tus últimos 15 cálculos, con los datos, el resultado y el desarrollo."
   }
 }

@@ -1,0 +1,49 @@
+---
+import { Breadcrumbs } from '@inzumer/ui-library';
+import { HistoryList } from '@calculators';
+import { FORMULA_IDS } from '@domain/registry';
+import { getFormulaTranslation, getTranslations } from '@i18n';
+import PageLayout from '@layouts/page-layout.astro';
+import { readAccountConfig } from '@services';
+import { LOCALES, localizedPath, toLocale } from '@utils';
+
+export function getStaticPaths() {
+  return LOCALES.map((lang) => ({ params: { lang } }));
+}
+
+const lang = toLocale(Astro.params.lang);
+const common = getTranslations(lang, 'common');
+const page = getTranslations(lang, 'history-page');
+const breadcrumbs = getTranslations(lang, 'formula-page').breadcrumbs;
+const ui = getTranslations(lang, 'calculator');
+// Titles and output labels for the summaries; the full texts load when a calculation is opened.
+const formulas = Object.fromEntries(
+  FORMULA_IDS.map((id) => {
+    const text = getFormulaTranslation(lang, id);
+    return [id, { title: text.title, outputs: text.outputs }];
+  }),
+);
+const accountHref = readAccountConfig(import.meta.env) ? localizedPath(lang, 'account') : undefined;
+---
+
+<PageLayout lang={lang} title={page.title} description={page.description} noindex>
+  <Breadcrumbs
+    aria-label={breadcrumbs.label}
+    items={[{ label: common.nav.home, href: localizedPath(lang, 'home') }]}
+    current={page.title}
+    className="mb-6"
+  />
+  <header class="mb-8 flex flex-col gap-3">
+    <h1 class="text-5xl">{page.title}</h1>
+    <p class="max-w-2xl text-lg text-[var(--text-secondary)]">{page.description}</p>
+  </header>
+  <HistoryList
+    client:load
+    lang={lang}
+    labels={page.list}
+    ui={ui}
+    formulas={formulas}
+    calculatorHref={localizedPath(lang, 'calculator')}
+    accountHref={accountHref}
+  />
+</PageLayout>

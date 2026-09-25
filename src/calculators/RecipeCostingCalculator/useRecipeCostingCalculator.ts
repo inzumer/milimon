@@ -107,6 +107,8 @@ export const useRecipeCostingCalculator = ({
   }, [servings, rows, lang]);
 
   return {
+    /** Raw values as saved (for the history). */
+    draft,
     currency,
     servings,
     rows,

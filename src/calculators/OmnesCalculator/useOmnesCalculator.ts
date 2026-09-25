@@ -67,6 +67,8 @@ export const useOmnesCalculator = ({
   }, [prices, averageTicket, dailySpecialPrice, lang]);
 
   return {
+    /** Raw values as saved (for the history). */
+    draft,
     currency,
     prices,
     averageTicket,
