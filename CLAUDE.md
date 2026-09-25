@@ -70,6 +70,17 @@ Breaking changes: append `!` before the colon and/or add a `BREAKING CHANGE:` fo
 
 Suggested scopes: `domain`, `calculators`, `ui`, `i18n`, `theme`, `pages`, `deps`, `ci`.
 
+## Git workflow (gitflow)
+
+- `main`: production. Only receives `release/*` (and `hotfix/*`) merges, tagged `vX.Y.Z`.
+- `dev`: integration branch. Every feature is merged here with `--no-ff`.
+- `feature/<kebab-name>` from `dev` → back into `dev`. One phase (or part of one) per feature branch.
+- `release/<version>` from `dev` → `main` (tag) and back into `dev`.
+- `hotfix/<kebab-name>` from `main` → `main` (tag) and `dev`.
+- Current plan: keep merging features into `dev`; the first release to `main` happens once
+  accounts/login (phase F10) is done.
+- Never commit directly on `main` or `dev`, and never commit or push unless asked.
+
 ## Pull requests
 
 Every PR must use [.github/PULL_REQUEST_TEMPLATE.md](./.github/PULL_REQUEST_TEMPLATE.md) filled out

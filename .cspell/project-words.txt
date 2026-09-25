@@ -13,7 +13,9 @@ entendé
 entregable
 estudiá
 firestore
+gitflow
 latin
+mergea
 milimon
 mirá
 montos
@@ -28,8 +30,10 @@ quedás
 querés
 recalculan
 renderizan
+sachertorte
 supabase
 tenés
 testid
 tipado
+tournedó
 wght

@@ -1,0 +1,178 @@
+import { calculateCleanPrice, equivalentCleanPrice } from '../clean-price';
+import { calculateCookingLoss } from '../cooking-loss';
+import { calculateGrossQuantity, grossByRuleOfThree, grossFromNet } from '../gross-quantity';
+import {
+  calculateWasteFactor,
+  wasteFactorFromPercentage,
+  wasteFactorFromWeights,
+} from '../waste-factor';
+import { calculateWastePercentage, wastePercentage } from '../waste-percentage';
+
+describe('waste-percentage (manual: 2,400 kg bruto → 1,700 kg neto)', () => {
+  it('computes the waste weight and percentage', () => {
+    const result = calculateWastePercentage({ grossWeight: 2.4, netWeight: 1.7 });
+    expect(result.ok).toBe(true);
+    if (!result.ok) {
+      return;
+    }
+    expect(result.value.wasteWeight).toBeCloseTo(0.7, 10);
+    // The manual shows "30 %"; the exact value is 29.17 % (0.700 / 2.400 × 100).
+    expect(result.value.wastePercentage).toBeCloseTo(29.1667, 4);
+    expect(result.steps.map((step) => step.id)).toStrictEqual(['waste-weight', 'waste-percentage']);
+  });
+
+  it('is 0 % when nothing is discarded', () => {
+    expect(wastePercentage(3, 3)).toBe(0);
+  });
+
+  it('validates the inputs', () => {
+    expect(calculateWastePercentage({ grossWeight: null, netWeight: -1 })).toStrictEqual({
+      ok: false,
+      errors: [
+        { field: 'grossWeight', code: 'required' },
+        { field: 'netWeight', code: 'must-be-non-negative' },
+      ],
+    });
+    expect(calculateWastePercentage({ grossWeight: 1, netWeight: 2 })).toStrictEqual({
+      ok: false,
+      errors: [{ field: 'netWeight', code: 'must-not-exceed-gross' }],
+    });
+  });
+});
+
+describe('waste-factor (manual: 30 % → 1,429)', () => {
+  it('computes the factor with the first formula', () => {
+    const result = calculateWasteFactor({ wastePercentage: 30 });
+    expect(result.ok && result.value.usablePercentage).toBe(70);
+    expect(result.ok && result.value.wasteFactor).toBeCloseTo(1.428571, 6);
+  });
+
+  it('matches the second formula (bruto / neto)', () => {
+    expect(wasteFactorFromWeights(2.4, 1.7)).toBeCloseTo(
+      wasteFactorFromPercentage(wastePercentage(2.4, 1.7)),
+      10,
+    );
+  });
+
+  it('is 1 with no waste and rejects 100 %', () => {
+    expect(wasteFactorFromPercentage(0)).toBe(1);
+    expect(calculateWasteFactor({ wastePercentage: 100 })).toStrictEqual({
+      ok: false,
+      errors: [{ field: 'wastePercentage', code: 'must-be-below-100' }],
+    });
+  });
+});
+
+describe('gross-quantity (manual: tournedó para 200 personas, 0,180 kg, 30 %)', () => {
+  const input = { servings: 200, netPortion: 0.18, wastePercentage: 30, roundingStep: 1 };
+
+  it('computes net, gross and the rounded-up purchase', () => {
+    const result = calculateGrossQuantity(input);
+    expect(result.ok).toBe(true);
+    if (!result.ok) {
+      return;
+    }
+    expect(result.value.netRequired).toBeCloseTo(36, 10);
+    expect(result.value.grossQuantity).toBeCloseTo(51.428571, 6);
+    expect(result.value.purchaseQuantity).toBe(52);
+    expect(result.steps).toHaveLength(5);
+  });
+
+  it('shows why adding the waste % is not enough', () => {
+    const result = calculateGrossQuantity(input);
+    // 36 kg + 30 % = 46,8 kg, and cleaning that yields only 32,76 kg (< 36 kg).
+    expect(result.ok && result.value.naiveQuantity).toBeCloseTo(46.8, 10);
+    expect(46.8 * 0.7).toBeLessThan(36);
+  });
+
+  it('gives the same result with the factor and the rule of three', () => {
+    expect(grossFromNet(36, wasteFactorFromPercentage(30))).toBeCloseTo(
+      grossByRuleOfThree(36, 30),
+      10,
+    );
+  });
+
+  it('validates the inputs', () => {
+    const result = calculateGrossQuantity({ ...input, servings: 0, roundingStep: null });
+    expect(result).toStrictEqual({
+      ok: false,
+      errors: [
+        { field: 'servings', code: 'must-be-positive' },
+        { field: 'roundingStep', code: 'required' },
+      ],
+    });
+  });
+});
+
+describe('clean-price', () => {
+  it('computes the equivalent clean price (bruto × factor)', () => {
+    expect(equivalentCleanPrice(10_000, wasteFactorFromPercentage(30))).toBeCloseTo(14_285.71, 2);
+  });
+
+  it('recommends buying gross when the supplier clean price is higher', () => {
+    const result = calculateCleanPrice({
+      grossPrice: 10_000,
+      wastePercentage: 30,
+      supplierCleanPrice: 15_000,
+    });
+    expect(result.ok && result.value.choice).toBe('buy-gross');
+    expect(result.ok && result.value.difference).toBeCloseTo(714.29, 2);
+  });
+
+  it('recommends buying clean when it is cheaper, or reports a tie', () => {
+    const cheaper = calculateCleanPrice({
+      grossPrice: 10_000,
+      wastePercentage: 30,
+      supplierCleanPrice: 14_000,
+    });
+    expect(cheaper.ok && cheaper.value.choice).toBe('buy-clean');
+    const same = calculateCleanPrice({
+      grossPrice: 7_000,
+      wastePercentage: 30,
+      supplierCleanPrice: 10_000,
+    });
+    expect(same.ok && same.value.choice).toBe('same');
+  });
+
+  it('validates the inputs', () => {
+    expect(
+      calculateCleanPrice({ grossPrice: 0, wastePercentage: 30, supplierCleanPrice: 1 }).ok,
+    ).toBe(false);
+  });
+});
+
+describe('cooking-loss', () => {
+  it('computes the loss including inseparable additions', () => {
+    const result = calculateCookingLoss({
+      netWeight: 1.2,
+      additionsWeight: 0.3,
+      cookedWeight: 1.05,
+    });
+    expect(result.ok).toBe(true);
+    if (!result.ok) {
+      return;
+    }
+    expect(result.value.weightBeforeCooking).toBeCloseTo(1.5, 10);
+    expect(result.value.lossWeight).toBeCloseTo(0.45, 10);
+    expect(result.value.lossPercentage).toBeCloseTo(30, 10);
+    expect(result.value.cookedYield).toBeCloseTo(0.7, 10);
+  });
+
+  it('rejects a cooked weight above the weight before cooking', () => {
+    expect(
+      calculateCookingLoss({ netWeight: 1, additionsWeight: 0, cookedWeight: 1.1 }),
+    ).toStrictEqual({
+      ok: false,
+      errors: [{ field: 'cookedWeight', code: 'must-not-exceed-gross' }],
+    });
+  });
+
+  it('requires every value', () => {
+    const result = calculateCookingLoss({
+      netWeight: null,
+      additionsWeight: null,
+      cookedWeight: null,
+    });
+    expect(result.ok ? [] : result.errors).toHaveLength(3);
+  });
+});
