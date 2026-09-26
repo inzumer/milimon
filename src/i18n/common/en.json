@@ -23,7 +23,8 @@
     "blog-group": "Blog",
     "all-recipes": "All recipes",
     "all-articles": "All articles",
-    "featured": "Featured"
+    "featured": "Featured",
+    "about": "About me"
   },
   "menu": {
     "open": "Open menu",
@@ -48,7 +49,8 @@
     "terms": "Terms",
     "cookie-preferences": "Cookie preferences",
     "disclaimer": "Developed by {author} — or Nahuel Zamuner, if you prefer.",
-    "legal-nav": "Legal"
+    "legal-nav": "Legal",
+    "about": "About me"
   },
   "not-found": {
     "title": "Page not found",

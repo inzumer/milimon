@@ -42,5 +42,14 @@
   "account-section": {
     "title": "Tu cuenta",
     "intro": "Tus preferencias y tus cálculos, en todos tus dispositivos."
+  },
+  "about-section": {
+    "title": "Sobre mí",
+    "intro": "Quién está detrás de Milimon."
+  },
+  "about-card": {
+    "title": "Milagros Tessey",
+    "description": "Pastelera recibida en el IAG de Buenos Aires, estudiante de Profesional Gastronómico y hoy en Zaragoza, España. Así nació Milimon.",
+    "cta": "Conocerme"
   }
 }

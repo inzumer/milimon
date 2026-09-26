@@ -34,6 +34,15 @@ const linkClass =
       <ul class="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm">
         <li>
           <a
+            id={trackingId('footer', 'link', 'about')}
+            href={localizedPath(lang, 'about')}
+            class={linkClass}
+          >
+            {common.footer.about}
+          </a>
+        </li>
+        <li>
+          <a
             id={trackingId('footer', 'link', 'privacy')}
             href={localizedPath(lang, 'privacy')}
             class={linkClass}

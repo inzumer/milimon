@@ -42,5 +42,14 @@
   "account-section": {
     "title": "Your account",
     "intro": "Your preferences and calculations, on all your devices."
+  },
+  "about-section": {
+    "title": "About me",
+    "intro": "Who is behind Milimon."
+  },
+  "about-card": {
+    "title": "Milagros Tessey",
+    "description": "IAG-trained pastry chef from Buenos Aires, Culinary Professional student, now living in Zaragoza, Spain. This is how Milimon came to be.",
+    "cta": "Get to know me"
   }
 }
