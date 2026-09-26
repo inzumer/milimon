@@ -9,3 +9,6 @@ export const GTM_CONTAINER_ID_PATTERN = /^GTM-[A-Z0-9]{4,}$/;
  * state, in milliseconds (Consent Mode v2 `wait_for_update`).
  */
 export const CONSENT_WAIT_FOR_UPDATE_MS = 500;
+
+/** Fired on `window` to open the cookie preferences (the footer button sends it). */
+export const OPEN_COOKIE_PREFERENCES_EVENT = 'milimon:open-cookie-preferences';

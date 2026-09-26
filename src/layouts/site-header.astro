@@ -40,8 +40,20 @@ const items = [
     ],
   },
   { href: localizedPath(lang, 'history'), label: common.nav.history },
-  { href: localizedPath(lang, 'account'), label: common.nav.account },
 ];
+
+const account = {
+  loginHref: localizedPath(lang, 'login'),
+  accountHref: localizedPath(lang, 'account'),
+  labels: {
+    title: common.menu.account,
+    signedInAs: common.menu['signed-in-as'],
+    signIn: common.nav['sign-in'],
+    signOut: common.menu['sign-out'],
+    account: common.nav.account,
+    signedOutHint: common.menu['signed-out-hint'],
+  },
+};
 
 const labels = {
   open: common.menu.open,
@@ -72,6 +84,13 @@ const labels = {
       />
       <span class="font-display text-2xl font-bold">{common['app-name']}</span>
     </a>
-    <SiteMenu client:load lang={lang} pathname={pathname} items={items} labels={labels} />
+    <SiteMenu
+      client:load
+      lang={lang}
+      pathname={pathname}
+      items={items}
+      labels={labels}
+      account={account}
+    />
   </div>
 </header>

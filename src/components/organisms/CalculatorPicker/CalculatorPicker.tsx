@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Select } from '@inzumer/ui-library';
-import { FormulaCalculator } from '@calculators/FormulaCalculator/FormulaCalculator';
-import { OmnesCalculator } from '@calculators/OmnesCalculator/OmnesCalculator';
-import { RecipeCostingCalculator } from '@calculators/RecipeCostingCalculator/RecipeCostingCalculator';
 import { ButtonLink } from '@components/atoms/ButtonLink';
+import { FormulaCalculator } from '@components/organisms/FormulaCalculator';
+import { OmnesCalculator } from '@components/organisms/OmnesCalculator';
+import { RecipeCostingCalculator } from '@components/organisms/RecipeCostingCalculator';
 import type { CalculatorText } from '@i18n/formula-text';
 import { loadCalculatorText, type CalculatorTextLoader } from '@i18n/load-calculator-text';
 import type { Translations } from '@i18n/translations';

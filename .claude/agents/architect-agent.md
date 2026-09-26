@@ -16,7 +16,7 @@ where interaction is needed, business logic isolated from UI.
 ## Layers (dependency direction →)
 
 ```txt
-src/utils  →  src/hooks + src/components  →  src/calculators  →  src/pages / src/layouts
+src/utils  →  src/hooks  →  src/components  →  src/pages / src/layouts
  (pure)        (state / reusable UI)           (React islands)       (.astro, static)
 ```
 
@@ -25,7 +25,6 @@ src/utils  →  src/hooks + src/components  →  src/calculators  →  src/pages
 - `src/hooks`: React state (calculator hooks, drafts, currency, color scheme).
 - `src/components`: every reusable UI piece (atoms / molecules / organisms), wrapping `@inzumer/ui-library` where possible —
   including result panels, step lists and cost tables used by the calculators.
-- `src/calculators`: only the calculator islands and the calculator picker.
 - `src/constants`: tunable values. `src/services`: external integrations (API, GTM, sign-in SDKs).
 - `src/pages` + `src/layouts`: `.astro` files. Static rendering, data from `getStaticPaths` and i18n collections.
 - Persistence goes through repositories (`SettingsRepository`, `RecipesRepository`, …), never
@@ -69,7 +68,7 @@ Button/
 
 ## Imports
 
-- Aliases for anything outside the current folder (`@components`, `@calculators`, `@repositories`,
+- Aliases for anything outside the current folder (`@components`, `@repositories`,
   `@hooks`, `@utils`, `@i18n`, `@layouts/*`, `@assets/*`, `@styles/*`, `@test/*`).
 - Bare barrels preferred over deep paths.
 - Relative imports only for same-folder siblings and a unit's own test (`../unit`).

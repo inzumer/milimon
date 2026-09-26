@@ -20,7 +20,11 @@
     "open": "Open menu",
     "close": "Close menu",
     "title": "Menu",
-    "preferences": "Preferences"
+    "preferences": "Preferences",
+    "account": "Your account",
+    "signed-in-as": "Signed in as",
+    "sign-out": "Sign out",
+    "signed-out-hint": "Keep your settings and calculations in your account."
   },
   "language": {
     "label": "Language",
@@ -33,7 +37,8 @@
     "tagline": "A study guide to food cost management.",
     "source": "Based on the Food & Beverage Administration and Management handbook.",
     "privacy": "Privacy",
-    "terms": "Terms"
+    "terms": "Terms",
+    "cookie-preferences": "Cookie preferences"
   },
   "not-found": {
     "title": "Page not found",
@@ -48,7 +53,23 @@
     "message": "We use Google tools (Tag Manager and Analytics) to learn which formulas are used most and improve the handbook. They only turn on if you accept; we never store the numbers you enter.",
     "accept": "Accept",
     "reject": "Reject",
-    "privacy-link": "Privacy policy"
+    "privacy-link": "Privacy policy",
+    "customize": "Customize",
+    "preferences-title": "Cookie preferences",
+    "preferences-description": "Choose what we can use. You can change it anytime from \"Cookie preferences\" at the bottom of every page.",
+    "required": "Always on",
+    "save": "Save preferences",
+    "cancel": "Cancel",
+    "categories": {
+      "necessary": {
+        "title": "Necessary",
+        "description": "Keep your theme, language, currency, the latest values of each calculator and your session (if you signed in) on this device. The site does not work without them."
+      },
+      "analytics": {
+        "title": "Analytics",
+        "description": "Google Tag Manager and Google Analytics: which pages are visited and which tools are used, in aggregate. Never the numbers you enter."
+      }
+    }
   },
   "migration": {
     "title": "We found data on this device",
