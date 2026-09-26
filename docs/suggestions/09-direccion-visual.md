@@ -40,8 +40,8 @@ moodboard lo confirma); siempre validando contraste AA en los dos modos.
 **Uso de imágenes** (referencia 3): fotos del plato o el producto **vistas desde arriba**,
 recortadas sobre fondo liso del color de la página, **centradas** y con una **sombra suave**; mucho
 aire alrededor y una sola imagen protagonista por pantalla. En modo oscuro, las fotos a sangre con
-degradado (referencias 1 y 2). Conviene definir una guía de fotografía (ángulo, luz, fondo) para
-que las fotos de Milagros se vean todas de la misma familia.
+degradado (referencias 1 y 2). La guía completa (luz, ángulos, distancia, foco, fondos, formatos
+y edición) está en [11 · Guía de fotografía](./11-guia-de-fotografia.md).
 
 **Componentes que inspira**
 

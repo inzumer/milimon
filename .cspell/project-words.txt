@@ -232,3 +232,13 @@ isotipo
 logotipo
 carrusel
 autoplay
+galletitas
+repasador
+Lightroom
+Snapseed
+sobresaturar
+Canva
+maicena
+VSCO
+presets
+quitafondos

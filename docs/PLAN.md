@@ -538,6 +538,9 @@ Ideas y análisis de cada tema en [docs/suggestions](./suggestions/README.md).
   flotantes, carrusel, chips de filtro, ficha de receta con modo "Empezar a cocinar"; evaluar una
   escala de color terracota y un isotipo nuevo. Ver [09](./suggestions/09-direccion-visual.md).
 
+- **Fotografía**: aplicar la [guía de fotografía](./suggestions/11-guia-de-fotografia.md) (luz,
+  ángulos, distancia y foco, fondos, formatos, edición) y armar un preset de edición común.
+
 **Técnico**
 
 - Renombrar las carpetas locales (`milimon`, `api-milimon`) con VS Code, Codex, Docker y
