@@ -4,11 +4,11 @@ import { FormulaCalculator } from '@calculators/FormulaCalculator/FormulaCalcula
 import { OmnesCalculator } from '@calculators/OmnesCalculator/OmnesCalculator';
 import { RecipeCostingCalculator } from '@calculators/RecipeCostingCalculator/RecipeCostingCalculator';
 import { ButtonLink } from '@components/atoms/ButtonLink';
-import { isFormulaId, type FormulaGroup, type FormulaId } from '@domain/registry';
 import type { CalculatorText } from '@i18n/formula-text';
 import { loadCalculatorText, type CalculatorTextLoader } from '@i18n/load-calculator-text';
 import type { Translations } from '@i18n/translations';
 import { localizedPath, track, trackingId, type Locale } from '@utils';
+import { isFormulaId, type FormulaGroup, type FormulaId } from '@utils/formulas';
 
 export interface CalculatorPickerGroup {
   group: FormulaGroup;

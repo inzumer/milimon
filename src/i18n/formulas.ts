@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import type { FormulaId } from '@domain/registry';
+import type { FormulaId } from '@utils/formulas';
 import type { Locale } from '@utils/locale';
 
 const text = z.string().trim().min(1);

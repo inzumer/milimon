@@ -1,7 +1,9 @@
 import { useId } from 'react';
 import { Button, Textarea } from '@inzumer/ui-library';
-import { SaveToHistory } from '@calculators/shared/SaveToHistory';
 import { NumberField } from '@components/molecules/NumberField';
+import { SaveToHistory } from '@components/molecules/SaveToHistory';
+import { OmnesResult } from '@components/organisms/OmnesResult';
+import { OMNES_EXAMPLE, useOmnesCalculator, type OptionalField } from '@hooks/useOmnesCalculator';
 import { formulaText, type CalculatorText } from '@i18n/formula-text';
 import type { Translations } from '@i18n/translations';
 import type { CalculationsRepository, HistoryRepository, SettingsRepository } from '@repositories';
@@ -12,8 +14,6 @@ import {
   trackingId,
   type Locale,
 } from '@utils';
-import { OmnesResult } from './OmnesResult';
-import { OMNES_EXAMPLE, useOmnesCalculator, type OptionalField } from './useOmnesCalculator';
 
 /** Tracking scope: the formula id. */
 const SCOPE = 'omnes-rules';

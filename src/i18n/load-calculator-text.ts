@@ -1,4 +1,4 @@
-import type { FormulaId } from '@domain/registry';
+import type { FormulaId } from '@utils/formulas';
 import type { Locale } from '@utils/locale';
 import type { CalculatorText } from './formula-text';
 import type { FormulaTranslation } from './formulas';

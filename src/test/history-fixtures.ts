@@ -1,8 +1,8 @@
-import { headlineFor } from '@calculators/shared/history';
-import { calculateOmnesRules } from '@domain/formulas/omnes-rules';
-import { calculateRecipeCosting } from '@domain/formulas/recipe-costing';
-import { getFormula, type FormulaId, type StandardFormulaDefinition } from '@domain/registry';
 import type { CalculatorDraft, HistoryEntry } from '@repositories';
+import { getFormula, type FormulaId, type StandardFormulaDefinition } from '@utils/formulas';
+import { calculateOmnesRules } from '@utils/formulas/omnes-rules';
+import { calculateRecipeCosting } from '@utils/formulas/recipe-costing';
+import { headlineFor } from '@utils/history';
 
 /** Builds a saved entry from real domain results, as the calculators do. */
 const entry = (

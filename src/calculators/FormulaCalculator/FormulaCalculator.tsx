@@ -1,14 +1,14 @@
 import { useId } from 'react';
 import { Button } from '@inzumer/ui-library';
-import { SaveToHistory } from '@calculators/shared/SaveToHistory';
-import { getFormula, type FormulaId, type StandardFormulaDefinition } from '@domain/registry';
+import { FormulaFields } from '@components/molecules/FormulaFields';
+import { SaveToHistory } from '@components/molecules/SaveToHistory';
+import { FormulaResult } from '@components/organisms/FormulaResult';
+import { useFormulaCalculator } from '@hooks/useFormulaCalculator';
 import { formulaText, type CalculatorText } from '@i18n/formula-text';
 import type { Translations } from '@i18n/translations';
 import type { CalculationsRepository, HistoryRepository, SettingsRepository } from '@repositories';
 import { localizedPath, trackingId, type Locale } from '@utils';
-import { FormulaFields } from './FormulaFields';
-import { FormulaResult } from './FormulaResult';
-import { useFormulaCalculator } from './useFormulaCalculator';
+import { getFormula, type FormulaId, type StandardFormulaDefinition } from '@utils/formulas';
 
 export interface FormulaCalculatorProps {
   formulaId: FormulaId;
