@@ -12,7 +12,7 @@ export const SectionLabel = ({ className, children, ...props }: SectionLabelProp
     variant="h3"
     className={cn(
       'flex cursor-default items-center gap-3 text-xs font-bold tracking-widest text-[var(--text-accent)] uppercase select-none',
-      'after:h-px after:flex-1 after:bg-[var(--border-default)] after:content-[""]',
+      'after:h-px after:min-w-8 after:flex-1 after:bg-[var(--border-default)] after:content-[""]',
       className,
     )}
     {...props}

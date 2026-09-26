@@ -3,7 +3,7 @@ import { Button, Image, RichText } from '@inzumer/ui-library';
 import facebookIcon from '@assets/facebook.png';
 import { ButtonLink } from '@components/atoms/ButtonLink';
 import { MigrationPrompt } from '@components/molecules/MigrationPrompt';
-import { API_SLOW_REQUEST_MS } from '@constants';
+import { API_SLOW_REQUEST_MS, PROVIDER_BUTTON_WIDTH } from '@constants';
 import type { Translations } from '@i18n/translations';
 import {
   FacebookLoginCancelledError,
@@ -38,8 +38,6 @@ type View =
   | { kind: 'signing-in'; slow: boolean }
   | { kind: 'migration' }
   | { kind: 'signed-in'; user: AccountUser };
-
-const GOOGLE_BUTTON_WIDTH = 320;
 
 const colorScheme = (): 'light' | 'dark' =>
   document.documentElement.dataset['colorScheme'] === 'dark' ? 'dark' : 'light';
@@ -138,7 +136,7 @@ export const LoginPanel = ({
       .renderGoogle(container, {
         clientId: googleClientId,
         lang,
-        width: GOOGLE_BUTTON_WIDTH,
+        width: PROVIDER_BUTTON_WIDTH,
         theme: colorScheme(),
         onCredential: (credential) =>
           void signIn('google', (session) => session.backend.signInWithGoogle(credential)),
@@ -228,7 +226,9 @@ export const LoginPanel = ({
               id={trackingId('login', 'button', 'facebook')}
               type="button"
               variant="secondary"
-              className="min-h-11 w-full max-w-80 rounded-full"
+              // Same pill as Google's button: logo pinned at the start, text centered.
+              className="relative min-h-10 max-w-full justify-center rounded-full px-12 text-sm font-medium"
+              style={{ width: PROVIDER_BUTTON_WIDTH }}
               disabled={signingIn || !facebookAppId}
               aria-describedby={facebookAppId ? undefined : `${id}-facebook-soon`}
               onClick={() => {
@@ -249,7 +249,7 @@ export const LoginPanel = ({
                 lazy={false}
                 width={20}
                 height={20}
-                className="size-[1.25em] shrink-0"
+                className="absolute top-1/2 left-3 size-5 -translate-y-1/2"
               />
               {labels['continue-with-facebook']}
             </Button>

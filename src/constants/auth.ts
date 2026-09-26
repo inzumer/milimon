@@ -20,3 +20,6 @@ export const PROVIDER_LOCALES = {
   es: { google: 'es-419', facebook: 'es_LA' },
   en: { google: 'en', facebook: 'en_US' },
 } as const;
+
+/** Width (px) of the sign-in buttons: Google renders its own at this size and Facebook's matches it. */
+export const PROVIDER_BUTTON_WIDTH = 320;
