@@ -3,14 +3,7 @@ import { Image } from 'astro:assets';
 import { RichText } from '@inzumer/ui-library';
 import logo from '@assets/logo.png';
 import { SiteMenu } from '@components';
-import {
-  BLOG_ARTICLE_IDS,
-  getBlogArticle,
-  getFormulaTranslation,
-  getLearnTopic,
-  getTranslations,
-  LEARN_TOPIC_IDS,
-} from '@i18n';
+import { getFormulaTranslation, getLearnTopic, getTranslations, LEARN_TOPIC_IDS } from '@i18n';
 import { localizedPath, type Locale } from '@utils';
 import { FORMULA_IDS } from '@utils/formulas';
 
@@ -71,12 +64,11 @@ const groups = [
   {
     title: common.nav['blog-group'],
     items: [
-      { href: localizedPath(lang, 'blog'), label: common.nav['all-articles'] },
-      ...BLOG_ARTICLE_IDS.map((id) => ({
-        href: localizedPath(lang, 'blog', id),
-        label: getBlogArticle(lang, id).title,
-        badge: common.nav.featured,
-      })),
+      {
+        href: localizedPath(lang, 'blog'),
+        label: common.nav['all-articles'],
+        badge: common.nav.new,
+      },
     ],
   },
 ];
