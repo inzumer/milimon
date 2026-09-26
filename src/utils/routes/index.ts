@@ -1,4 +1,5 @@
 export {
+  canonicalPath,
   isActivePath,
   localizedPath,
   ROUTES,

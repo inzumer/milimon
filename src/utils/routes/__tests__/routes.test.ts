@@ -1,6 +1,20 @@
-import { isActivePath, localizedPath, stripBase, switchLocalePath, withBase } from '../routes';
+import {
+  canonicalPath,
+  isActivePath,
+  localizedPath,
+  stripBase,
+  switchLocalePath,
+  withBase,
+} from '../routes';
 
 describe('routes', () => {
+  it('should turn built file paths into the clean public path', () => {
+    expect(canonicalPath('/milimon/es/blog/milicitos.html')).toBe('/milimon/es/blog/milicitos');
+    expect(canonicalPath('/es/index.html')).toBe('/es');
+    expect(canonicalPath('/es/learn')).toBe('/es/learn');
+    expect(canonicalPath('/index.html')).toBe('/');
+  });
+
   it('should build localized paths with English slugs', () => {
     expect(localizedPath('es', 'home')).toBe('/es');
     expect(localizedPath('en', 'calculator')).toBe('/en/calculator');

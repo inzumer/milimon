@@ -1,6 +1,6 @@
 ---
 import { Image } from 'astro:assets';
-import { Breadcrumbs, RichText } from '@inzumer/ui-library';
+import { RichText } from '@inzumer/ui-library';
 import star from '@assets/star.png';
 import { ButtonLink } from '@components';
 import { getTranslations } from '@i18n';
@@ -16,7 +16,6 @@ interface Props {
 const { lang, section } = Astro.props;
 const common = getTranslations(lang, 'common');
 const page = getTranslations(lang, 'coming-soon');
-const breadcrumbs = getTranslations(lang, 'formula-page').breadcrumbs;
 const text = page[section];
 ---
 
@@ -26,13 +25,8 @@ const text = page[section];
   title={text.title}
   description={text.description}
   noindex
+  breadcrumbs={[{ label: common.nav.home, href: localizedPath(lang, 'home') }]}
 >
-  <Breadcrumbs
-    aria-label={breadcrumbs.label}
-    items={[{ label: common.nav.home, href: localizedPath(lang, 'home') }]}
-    current={text.title}
-    className="mb-6"
-  />
   <section class="flex flex-col items-center gap-4 py-6 text-center">
     <Image
       src={star}

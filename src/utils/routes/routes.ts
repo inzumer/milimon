@@ -37,6 +37,13 @@ export const stripBase = (pathname: string, base: string = SITE_BASE): string =>
     ? pathname.slice(base.length) || '/'
     : pathname;
 
+/**
+ * Public URL path of a page: the build writes one `.html` file per page (`build.format: 'file'`),
+ * but links, the sitemap and canonical URLs use the clean path: `/es/blog.html` → `/es/blog`.
+ */
+export const canonicalPath = (pathname: string): string =>
+  pathname.replace(/\.html$/, '').replace(/\/index$/, '') || '/';
+
 /** Builds `{base}/{lang}/{route}[/...rest]`. */
 export const localizedPath = (lang: Locale, route: RouteName, ...rest: string[]): string =>
   withBase(join(lang, ROUTES[route], ...rest));

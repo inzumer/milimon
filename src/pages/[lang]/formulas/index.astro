@@ -1,5 +1,5 @@
 ---
-import { Breadcrumbs, RichText } from '@inzumer/ui-library';
+import { RichText } from '@inzumer/ui-library';
 import { FeatureCard } from '@components';
 import { getFormulaTranslation, getTranslations } from '@i18n';
 import PageLayout from '@layouts/page-layout.astro';
@@ -21,13 +21,8 @@ const groups = formulasByGroup();
   lang={lang}
   title={page.index.title}
   description={page.index.intro}
+  breadcrumbs={[{ label: common.nav.home, href: localizedPath(lang, 'home') }]}
 >
-  <Breadcrumbs
-    aria-label={page.breadcrumbs.label}
-    items={[{ label: common.nav.home, href: localizedPath(lang, 'home') }]}
-    current={page.index.title}
-    className="mb-6"
-  />
   <header class="mb-10 flex flex-col gap-3">
     <RichText variant="h1" bold className="font-display text-5xl">
       {page.index.title}

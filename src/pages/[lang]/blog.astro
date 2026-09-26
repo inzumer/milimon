@@ -1,5 +1,5 @@
 ---
-import { Breadcrumbs, RichText } from '@inzumer/ui-library';
+import { RichText } from '@inzumer/ui-library';
 import { FeatureCard } from '@components';
 import { BLOG_ARTICLE_IDS, getBlogArticle, getTranslations } from '@i18n';
 import PageLayout from '@layouts/page-layout.astro';
@@ -12,7 +12,6 @@ export function getStaticPaths() {
 const lang = toLocale(Astro.params.lang);
 const common = getTranslations(lang, 'common');
 const blog = getTranslations(lang, 'blog');
-const breadcrumbs = getTranslations(lang, 'formula-page').breadcrumbs;
 const dateFormat = new Intl.DateTimeFormat(lang === 'es' ? 'es-AR' : 'en-US', {
   dateStyle: 'long',
 });
@@ -24,13 +23,8 @@ const articles = BLOG_ARTICLE_IDS.map((id) => ({ id, ...getBlogArticle(lang, id)
   lang={lang}
   title={blog.index.title}
   description={blog.index.description}
+  breadcrumbs={[{ label: common.nav.home, href: localizedPath(lang, 'home') }]}
 >
-  <Breadcrumbs
-    aria-label={breadcrumbs.label}
-    items={[{ label: common.nav.home, href: localizedPath(lang, 'home') }]}
-    current={blog.index.title}
-    className="mb-6"
-  />
   <header class="mb-8 flex flex-col gap-3">
     <RichText variant="h1" bold className="font-display text-5xl">
       {blog.index.title}

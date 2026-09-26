@@ -1,11 +1,11 @@
 ---
 import { getImage } from 'astro:assets';
-import { Breadcrumbs, RichText } from '@inzumer/ui-library';
+import { RichText } from '@inzumer/ui-library';
 import star from '@assets/star.png';
 import { MilicitosRating } from '@components';
 import { BLOG_ARTICLE_IDS, getBlogArticle, getTranslations, type BlogArticleId } from '@i18n';
 import PageLayout from '@layouts/page-layout.astro';
-import { interpolate, LOCALES, localizedPath, toLocale } from '@utils';
+import { blogPostingSchema, interpolate, LOCALES, localizedPath, toLocale, withBase } from '@utils';
 
 export function getStaticPaths() {
   return LOCALES.flatMap((lang) =>
@@ -18,24 +18,37 @@ const id = Astro.params.article as BlogArticleId;
 const article = getBlogArticle(lang, id);
 const common = getTranslations(lang, 'common');
 const blog = getTranslations(lang, 'blog');
-const breadcrumbs = getTranslations(lang, 'formula-page').breadcrumbs;
 const dateFormat = new Intl.DateTimeFormat(lang === 'es' ? 'es-AR' : 'en-US', {
   dateStyle: 'long',
 });
 // One small milicito, shared by every rating on the page.
 const milicito = await getImage({ src: star, width: 64, height: 64, format: 'webp' });
+const site = Astro.site ?? Astro.url;
+const aboutHref = localizedPath(lang, 'about');
+const posting = blogPostingSchema({
+  site,
+  url: new URL(localizedPath(lang, 'blog', id), site).href,
+  aboutHref,
+  title: article.title,
+  description: article.description,
+  datePublished: article.date,
+  image: new URL(withBase(`/og/og-blog-${lang}.png`), site).href,
+  lang,
+});
 ---
 
-<PageLayout ogSection="blog" lang={lang} title={article.title} description={article.description}>
-  <Breadcrumbs
-    aria-label={breadcrumbs.label}
-    items={[
-      { label: common.nav.home, href: localizedPath(lang, 'home') },
-      { label: blog.index.title, href: localizedPath(lang, 'blog') },
-    ]}
-    current={article.title}
-    className="mb-6"
-  />
+<PageLayout
+  ogSection="blog"
+  lang={lang}
+  title={article.title}
+  structuredData={[posting]}
+  article={{ publishedTime: article.date, authorUrl: new URL(aboutHref, site).href }}
+  description={article.description}
+  breadcrumbs={[
+    { label: common.nav.home, href: localizedPath(lang, 'home') },
+    { label: blog.index.title, href: localizedPath(lang, 'blog') },
+  ]}
+>
   <article class="flex max-w-3xl flex-col gap-6">
     <header class="flex flex-col gap-3">
       <RichText variant="h1" bold className="font-display text-5xl">
