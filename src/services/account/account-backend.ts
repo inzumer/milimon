@@ -1,4 +1,4 @@
-import type { CalculatorDraft, CalculatorDrafts, ColorScheme, HistoryEntry } from '@repositories';
+import type { CalculatorDraft, CalculatorDrafts, ColorScheme, HistoryEntry } from '@stores';
 import type { Locale } from '@utils';
 
 export type AuthProvider = 'google' | 'facebook';
@@ -19,7 +19,7 @@ export interface RemoteProfile {
 }
 
 /**
- * Everything the app needs from the accounts API (`api-milimon-cost-lab`). `api-backend.ts`
+ * Everything the app needs from the accounts API (`api-milimon`). `api-backend.ts`
  * implements it over HTTP; tests use an in-memory fake. Every data method acts on the signed-in
  * person only.
  */

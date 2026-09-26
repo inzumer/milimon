@@ -1,4 +1,4 @@
-import { languageRedirectScript, themeScript } from '../inline-scripts';
+import { languageRedirectScript, notFoundLanguageScript, themeScript } from '../inline-scripts';
 
 const run = (script: string) => new Function(script)();
 
@@ -43,12 +43,12 @@ describe('inline scripts', () => {
       storageKey: 'milimon:settings',
       locales: ['es', 'en'],
       fallbackLocale: 'es',
-      base: '/milimon-cost-lab',
+      base: '/milimon',
     };
 
     localStorage.setItem('milimon:settings', JSON.stringify({ locale: 'en' }));
     run(languageRedirectScript(options));
-    expect(replace).toHaveBeenLastCalledWith('/milimon-cost-lab/en');
+    expect(replace).toHaveBeenLastCalledWith('/milimon/en');
 
     localStorage.clear();
     vi.stubGlobal('navigator', { languages: ['fr-FR', 'en-US'], language: 'fr' });
@@ -58,6 +58,25 @@ describe('inline scripts', () => {
     vi.stubGlobal('navigator', { languages: [], language: 'de' });
     localStorage.setItem('milimon:settings', '{broken');
     run(languageRedirectScript(options));
-    expect(replace).toHaveBeenLastCalledWith('/milimon-cost-lab/es');
+    expect(replace).toHaveBeenLastCalledWith('/milimon/es');
+  });
+
+  it('should show the 404 message in the language of the requested URL, under the base', () => {
+    document.body.innerHTML =
+      '<section data-not-found="es"></section><section data-not-found="en" hidden></section>';
+    const [es, en] = document.querySelectorAll<HTMLElement>('[data-not-found]');
+    const script = notFoundLanguageScript({ locales: ['es', 'en'], base: '/milimon' });
+
+    window.history.replaceState(null, '', '/milimon/en/missing');
+    run(script);
+    expect(document.documentElement.lang).toBe('en');
+    expect([es?.hidden, en?.hidden]).toStrictEqual([true, false]);
+
+    window.history.replaceState(null, '', '/milimon/unknown');
+    document.documentElement.lang = 'es';
+    run(script);
+    expect(document.documentElement.lang).toBe('es');
+    window.history.replaceState(null, '', '/');
+    document.body.innerHTML = '';
   });
 });

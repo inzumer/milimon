@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useCurrency } from '@hooks/useCurrency';
 import { useDraft } from '@hooks/useDraft';
-import type { CalculationsRepository, CalculatorDraft, SettingsRepository } from '@repositories';
+import type { CalculatorDraft } from '@stores';
 import { parseDecimal, track, type Locale } from '@utils';
 import type { ErrorCode } from '@utils/calculation';
 import { formatInputValue } from '@utils/format-value';
@@ -12,8 +12,6 @@ export type FieldErrorCode = ErrorCode | 'invalid-number';
 export interface UseFormulaCalculatorOptions {
   formula: StandardFormulaDefinition;
   lang: Locale;
-  calculations?: CalculationsRepository;
-  settings?: SettingsRepository;
 }
 
 export const toDraft = (
@@ -37,18 +35,9 @@ const defaultDraft = (formula: StandardFormulaDefinition, lang: Locale): Calcula
  * State and logic of a standard calculator: raw text per field, parsing (comma or dot decimals),
  * live calculation, errors shown only for fields the person already left, examples and persistence.
  */
-export const useFormulaCalculator = ({
-  formula,
-  lang,
-  calculations,
-  settings,
-}: UseFormulaCalculatorOptions) => {
-  const { draft, setDraft, resetDraft } = useDraft(
-    formula.id,
-    defaultDraft(formula, lang),
-    calculations,
-  );
-  const currency = useCurrency(settings);
+export const useFormulaCalculator = ({ formula, lang }: UseFormulaCalculatorOptions) => {
+  const { draft, setDraft, resetDraft } = useDraft(formula.id, defaultDraft(formula, lang));
+  const currency = useCurrency();
   const [touched, setTouched] = useState<ReadonlySet<string>>(new Set());
 
   const setField = (key: string, value: string | boolean) => setDraft({ ...draft, [key]: value });

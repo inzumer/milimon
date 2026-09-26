@@ -31,33 +31,29 @@ describe('routes', () => {
   });
 
   describe('under a base path (GitHub Pages)', () => {
-    const BASE = '/milimon-cost-lab';
+    const BASE = '/milimon';
 
     it('should add and remove the base', () => {
-      expect(withBase('/og/og-es.png', BASE)).toBe('/milimon-cost-lab/og/og-es.png');
-      expect(withBase('favicon.ico', BASE)).toBe('/milimon-cost-lab/favicon.ico');
+      expect(withBase('/og/og-es.png', BASE)).toBe('/milimon/og/og-es.png');
+      expect(withBase('favicon.ico', BASE)).toBe('/milimon/favicon.ico');
       expect(withBase('/es', '')).toBe('/es');
-      expect(stripBase('/milimon-cost-lab/es/learn', BASE)).toBe('/es/learn');
-      expect(stripBase('/milimon-cost-lab', BASE)).toBe('/');
-      expect(stripBase('/milimon-cost-labs/es', BASE)).toBe('/milimon-cost-labs/es');
+      expect(stripBase('/milimon/es/learn', BASE)).toBe('/es/learn');
+      expect(stripBase('/milimon', BASE)).toBe('/');
+      expect(stripBase('/milimon-app/es', BASE)).toBe('/milimon-app/es');
       expect(stripBase('/es', '')).toBe('/es');
     });
 
     it('should switch languages keeping the base', () => {
-      expect(switchLocalePath('/milimon-cost-lab/es/formulas/cooking-loss', 'en', BASE)).toBe(
-        '/milimon-cost-lab/en/formulas/cooking-loss',
+      expect(switchLocalePath('/milimon/es/formulas/cooking-loss', 'en', BASE)).toBe(
+        '/milimon/en/formulas/cooking-loss',
       );
-      expect(switchLocalePath('/milimon-cost-lab/', 'es', BASE)).toBe('/milimon-cost-lab/es');
+      expect(switchLocalePath('/milimon/', 'es', BASE)).toBe('/milimon/es');
     });
 
     it('should detect the active section with the base', () => {
-      expect(isActivePath('/milimon-cost-lab/es', '/milimon-cost-lab/es', BASE)).toBe(true);
-      expect(isActivePath('/milimon-cost-lab/es/formulas/x', '/milimon-cost-lab/es', BASE)).toBe(
-        false,
-      );
-      expect(
-        isActivePath('/milimon-cost-lab/es/formulas/x', '/milimon-cost-lab/es/formulas', BASE),
-      ).toBe(true);
+      expect(isActivePath('/milimon/es', '/milimon/es', BASE)).toBe(true);
+      expect(isActivePath('/milimon/es/formulas/x', '/milimon/es', BASE)).toBe(false);
+      expect(isActivePath('/milimon/es/formulas/x', '/milimon/es/formulas', BASE)).toBe(true);
     });
   });
 });

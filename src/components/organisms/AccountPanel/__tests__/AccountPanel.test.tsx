@@ -1,12 +1,8 @@
 import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { getTranslations } from '@i18n';
-import {
-  createLocalCalculationsRepository,
-  createLocalHistoryRepository,
-  createLocalSettingsRepository,
-} from '@repositories';
 import { createAccountSync, SessionExpiredError, type AccountSession } from '@services/account';
+import { useSettingsStore } from '@stores';
 import { createFakeAccountBackend, TEST_USER } from '@test/fake-account-backend';
 import { createMemoryStorage } from '@test/memory-storage';
 import { AccountPanel } from '../AccountPanel';
@@ -25,15 +21,11 @@ const CONFIG = {
 
 const setup = (remote: Parameters<typeof createFakeAccountBackend>[0] = {}) => {
   const backend = createFakeAccountBackend(remote);
-  const settings = createLocalSettingsRepository(createMemoryStorage());
   const session: AccountSession = {
     config: CONFIG,
     backend,
     sync: createAccountSync({
       backend,
-      settings,
-      calculations: createLocalCalculationsRepository(createMemoryStorage()),
-      history: createLocalHistoryRepository(createMemoryStorage()),
       session: createMemoryStorage(),
       debounceMs: 0,
     }),
@@ -48,7 +40,7 @@ const setup = (remote: Parameters<typeof createFakeAccountBackend>[0] = {}) => {
         loadSession={loadSession}
       />,
     );
-  return { backend, settings, session, user: userEvent.setup(), renderPanel };
+  return { backend, session, user: userEvent.setup(), renderPanel };
 };
 
 describe('AccountPanel', () => {
@@ -102,8 +94,8 @@ describe('AccountPanel', () => {
     [migration.import, 'USD'],
     [migration.fresh, 'ARS'],
   ])('should resolve the first sign-in with "%s"', async (button, currency) => {
-    const { backend, settings, user, renderPanel } = setup({ user: TEST_USER });
-    settings.save({ currency: 'USD' });
+    const { backend, user, renderPanel } = setup({ user: TEST_USER });
+    useSettingsStore.getState().update({ currency: 'USD' });
     renderPanel();
     expect(await screen.findByRole('heading', { name: migration.title })).toBeInTheDocument();
 

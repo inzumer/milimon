@@ -1,18 +1,15 @@
 import {
   DEFAULT_SETTINGS,
-  onCalculationsChange,
-  onHistoryChange,
-  onSettingsChange,
-  type CalculationsRepository,
-  type HistoryRepository,
+  useDraftsStore,
+  useHistoryStore,
+  useSettingsStore,
   type Settings,
-  type SettingsRepository,
-} from '@repositories';
+} from '@stores';
 import { readJson, writeJson, type KeyValueStorage } from '@utils';
 import type { AccountBackend, AccountUser, RemoteProfile } from './account-backend';
 
 /**
- * Keeps the local repositories (what the UI reads, synchronously and offline) in sync with the
+ * Keeps the local stores (what the UI reads, synchronously and offline) in sync with the
  * signed-in person's profile:
  *
  * 1. On sign-in (once per browser session) the remote profile wins and is copied locally.
@@ -26,9 +23,6 @@ export type SignInOutcome = 'restored' | 'created' | 'needs-migration';
 
 export interface AccountSyncOptions {
   backend: AccountBackend;
-  settings: SettingsRepository;
-  calculations: CalculationsRepository;
-  history: HistoryRepository;
   /** Remembers, per browser session, that the remote profile was already pulled. */
   session: KeyValueStorage | null;
   debounceMs?: number;
@@ -56,11 +50,13 @@ export const toRemoteProfile = ({ currency, locale, colorScheme }: Settings): Re
   colorScheme,
 });
 
+const profileChanged = (next: Settings, previous: Settings) =>
+  next.currency !== previous.currency ||
+  next.locale !== previous.locale ||
+  next.colorScheme !== previous.colorScheme;
+
 export const createAccountSync = ({
   backend,
-  settings,
-  calculations,
-  history,
   session,
   debounceMs = 800,
 }: AccountSyncOptions): AccountSync => {
@@ -88,22 +84,38 @@ export const createAccountSync = ({
     if (unsubscribe) {
       return;
     }
-    const stopSettings = onSettingsChange((next) => {
-      if (!applyingRemote) {
+    const stopSettings = useSettingsStore.subscribe((next, previous) => {
+      if (!applyingRemote && profileChanged(next, previous)) {
         later('profile', () => backend.saveProfile(toRemoteProfile(next)));
       }
     });
-    const stopDrafts = onCalculationsChange((formulaId) => {
-      later(`draft:${formulaId}`, () => {
-        const draft = calculations.loadDraft(formulaId);
-        return draft ? backend.saveDraft(formulaId, draft) : backend.deleteDraft(formulaId);
-      });
+    const stopDrafts = useDraftsStore.subscribe(({ drafts }, previous) => {
+      if (applyingRemote) {
+        return;
+      }
+      const ids = new Set([...Object.keys(drafts), ...Object.keys(previous.drafts)]);
+      for (const formulaId of ids) {
+        if (drafts[formulaId] !== previous.drafts[formulaId]) {
+          later(`draft:${formulaId}`, () => {
+            const draft = useDraftsStore.getState().drafts[formulaId];
+            return draft ? backend.saveDraft(formulaId, draft) : backend.deleteDraft(formulaId);
+          });
+        }
+      }
     });
-    const stopHistory = onHistoryChange((change) => {
-      if (change.type === 'added') {
-        backend.saveHistoryEntry(change.entry).catch(report);
-      } else if (change.type === 'removed') {
-        backend.deleteHistoryEntry(change.id).catch(report);
+    const stopHistory = useHistoryStore.subscribe(({ entries }, previous) => {
+      if (applyingRemote) {
+        return;
+      }
+      const before = new Set(previous.entries.map((entry) => entry.id));
+      const added = entries.filter((entry) => !before.has(entry.id));
+      added.forEach((entry) => backend.saveHistoryEntry(entry).catch(report));
+      // An entry that falls off the end when adding is trimmed by the API as well.
+      if (added.length === 0) {
+        const after = new Set(entries.map((entry) => entry.id));
+        previous.entries
+          .filter((entry) => !after.has(entry.id))
+          .forEach((entry) => backend.deleteHistoryEntry(entry.id).catch(report));
       }
     });
     unsubscribe = () => {
@@ -121,22 +133,22 @@ export const createAccountSync = ({
   };
 
   const uploadLocal = async () => {
-    await backend.saveProfile(toRemoteProfile(settings.load()));
+    await backend.saveProfile(toRemoteProfile(useSettingsStore.getState()));
     await Promise.all(
-      Object.entries(calculations.loadAll()).map(([formulaId, draft]) =>
+      Object.entries(useDraftsStore.getState().drafts).map(([formulaId, draft]) =>
         backend.saveDraft(formulaId, draft),
       ),
     );
     // Oldest first, so the server keeps the same latest entries if it has to trim.
-    for (const entry of [...history.list()].reverse()) {
+    for (const entry of [...useHistoryStore.getState().entries].reverse()) {
       await backend.saveHistoryEntry(entry);
     }
   };
 
   const hasLocalData = () =>
-    settings.load().currency !== DEFAULT_SETTINGS.currency ||
-    Object.keys(calculations.loadAll()).length > 0 ||
-    history.list().length > 0;
+    useSettingsStore.getState().currency !== DEFAULT_SETTINGS.currency ||
+    Object.keys(useDraftsStore.getState().drafts).length > 0 ||
+    useHistoryStore.getState().entries.length > 0;
 
   const resolveSignIn = async (): Promise<SignInOutcome> => {
     if (readJson<boolean>(session, SYNCED_KEY) === true) {
@@ -147,9 +159,9 @@ export const createAccountSync = ({
       const [drafts, entries] = await Promise.all([backend.fetchDrafts(), backend.fetchHistory()]);
       applyingRemote = true;
       try {
-        settings.save(profile);
-        calculations.replaceAll(drafts);
-        history.replaceAll(entries);
+        useSettingsStore.getState().update(profile);
+        useDraftsStore.getState().replaceAll(drafts);
+        useHistoryStore.getState().replaceAll(entries);
       } finally {
         applyingRemote = false;
       }
@@ -170,9 +182,9 @@ export const createAccountSync = ({
     pending = null;
     applyingRemote = true;
     try {
-      settings.save({ currency: DEFAULT_SETTINGS.currency });
-      calculations.replaceAll({});
-      history.replaceAll([]);
+      useSettingsStore.getState().update({ currency: DEFAULT_SETTINGS.currency });
+      useDraftsStore.getState().replaceAll({});
+      useHistoryStore.getState().replaceAll([]);
     } finally {
       applyingRemote = false;
     }

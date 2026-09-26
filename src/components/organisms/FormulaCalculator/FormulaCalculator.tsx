@@ -6,7 +6,6 @@ import { FormulaResult } from '@components/organisms/FormulaResult';
 import { useFormulaCalculator } from '@hooks/useFormulaCalculator';
 import { formulaText, type CalculatorText } from '@i18n/formula-text';
 import type { Translations } from '@i18n/translations';
-import type { CalculationsRepository, HistoryRepository, SettingsRepository } from '@repositories';
 import { localizedPath, trackingId, type Locale } from '@utils';
 import { getFormula, type FormulaId, type StandardFormulaDefinition } from '@utils/formulas';
 
@@ -15,28 +14,15 @@ export interface FormulaCalculatorProps {
   lang: Locale;
   text: CalculatorText;
   ui: Translations<'calculator'>;
-  calculations?: CalculationsRepository;
-  settings?: SettingsRepository;
-  history?: HistoryRepository;
 }
 
 /** Interactive calculator for any standard formula of the registry (React island). */
-export const FormulaCalculator = ({
-  formulaId,
-  lang,
-  text,
-  ui,
-  calculations,
-  settings,
-  history,
-}: FormulaCalculatorProps) => {
+export const FormulaCalculator = ({ formulaId, lang, text, ui }: FormulaCalculatorProps) => {
   const formula = getFormula(formulaId) as StandardFormulaDefinition;
   const id = useId();
   const calculator = useFormulaCalculator({
     formula,
     lang,
-    ...(calculations ? { calculations } : {}),
-    ...(settings ? { settings } : {}),
   });
   const context = { lang, currency: calculator.currency };
 
@@ -121,7 +107,6 @@ export const FormulaCalculator = ({
               result={calculator.result}
               labels={ui.history}
               historyHref={localizedPath(lang, 'history')}
-              {...(history ? { repository: history } : {})}
             />
           </>
         ) : (

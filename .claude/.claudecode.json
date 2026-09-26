@@ -1,8 +1,8 @@
 {
   "$schema": "https://claude.ai/schemas/claudecode.json",
   "project": {
-    "name": "milimon-cost-lab",
-    "description": "Milimon Cost Lab: bilingual (es/en) study manual and calculators for food cost, waste and cooking loss. Astro static site + React islands on @inzumer/ui-library."
+    "name": "milimon",
+    "description": "Milimon: bilingual (es/en) study manual and calculators for food cost, waste and cooking loss. Astro static site + React islands on @inzumer/ui-library."
   },
   "context": {
     "maxTokens": 120000,
@@ -86,7 +86,7 @@
       "forbidDeepRelativeImports": true,
       "allowedAliases": [
         "@components",
-        "@repositories",
+        "@stores",
         "@services",
         "@hooks",
         "@utils",

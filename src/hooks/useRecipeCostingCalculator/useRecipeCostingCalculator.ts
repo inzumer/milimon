@@ -1,7 +1,6 @@
 import { useMemo, useState } from 'react';
 import { useCurrency } from '@hooks/useCurrency';
 import { useDraft } from '@hooks/useDraft';
-import type { CalculationsRepository, SettingsRepository } from '@repositories';
 import { parseDecimal, track, type Locale } from '@utils';
 import type { ErrorCode } from '@utils/calculation';
 import { formatInputValue } from '@utils/format-value';
@@ -61,17 +60,13 @@ const readRows = (raw: unknown): IngredientRow[] => {
 export const useRecipeCostingCalculator = ({
   lang,
   exampleNames,
-  calculations,
-  settings,
 }: {
   lang: Locale;
   /** Translated names for the example ingredients, keyed by `nameKey`. */
   exampleNames: Record<string, string>;
-  calculations?: CalculationsRepository;
-  settings?: SettingsRepository;
 }) => {
-  const { draft, setDraft, resetDraft } = useDraft('recipe-costing', INITIAL, calculations);
-  const currency = useCurrency(settings);
+  const { draft, setDraft, resetDraft } = useDraft('recipe-costing', INITIAL);
+  const currency = useCurrency();
   const [touched, setTouched] = useState<ReadonlySet<string>>(new Set());
   const servings = typeof draft['servings'] === 'string' ? draft['servings'] : '';
   const rowsJson =

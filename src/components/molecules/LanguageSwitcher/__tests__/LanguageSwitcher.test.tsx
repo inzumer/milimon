@@ -1,23 +1,13 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { createLocalSettingsRepository } from '@repositories';
-import { createMemoryStorage } from '@test/memory-storage';
+import { useSettingsStore } from '@stores';
 import { setAnalyticsSink } from '@utils';
 import { LanguageSwitcher } from '../LanguageSwitcher';
 
 const setup = (pathname = '/es/formulas/cooking-loss') => {
   const navigate = vi.fn();
-  const repository = createLocalSettingsRepository(createMemoryStorage());
-  render(
-    <LanguageSwitcher
-      lang="es"
-      pathname={pathname}
-      label="Idioma"
-      navigate={navigate}
-      repository={repository}
-    />,
-  );
-  return { navigate, repository, user: userEvent.setup() };
+  render(<LanguageSwitcher lang="es" pathname={pathname} label="Idioma" navigate={navigate} />);
+  return { navigate, user: userEvent.setup() };
 };
 
 describe('LanguageSwitcher', () => {
@@ -35,12 +25,12 @@ describe('LanguageSwitcher', () => {
   it('should navigate to the same route in the other language and remember it', async () => {
     const sink = vi.fn();
     setAnalyticsSink(sink);
-    const { navigate, repository, user } = setup();
+    const { navigate, user } = setup();
 
     await user.click(screen.getByRole('radio', { name: 'EN' }));
 
     expect(navigate).toHaveBeenCalledWith('/en/formulas/cooking-loss');
-    expect(repository.load().locale).toBe('en');
+    expect(useSettingsStore.getState().locale).toBe('en');
     expect(sink).toHaveBeenCalledWith('language_changed', { from: 'es', to: 'en' });
   });
 

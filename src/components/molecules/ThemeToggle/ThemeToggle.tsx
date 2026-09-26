@@ -1,16 +1,14 @@
 import { Switch } from '@inzumer/ui-library';
 import { useColorScheme } from '@hooks';
-import type { SettingsRepository } from '@repositories';
 import { trackingId } from '@utils';
 
 export interface ThemeToggleProps {
   label: string;
-  repository?: SettingsRepository;
 }
 
-/** Dark mode switch (ui-library `Switch`), persisted through the settings repository. */
-export const ThemeToggle = ({ label, repository }: ThemeToggleProps) => {
-  const { scheme, setScheme } = useColorScheme(repository);
+/** Dark mode switch (ui-library `Switch`), saved in the settings store. */
+export const ThemeToggle = ({ label }: ThemeToggleProps) => {
+  const { scheme, setScheme } = useColorScheme();
 
   return (
     <Switch

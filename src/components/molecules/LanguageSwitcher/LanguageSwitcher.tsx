@@ -1,5 +1,5 @@
 import { Language } from '@inzumer/ui-library';
-import { createLocalSettingsRepository, type SettingsRepository } from '@repositories';
+import { useSettingsStore } from '@stores';
 import { isLocale, LOCALES, switchLocalePath, track, trackingId, type Locale } from '@utils';
 
 const OPTIONS = LOCALES.map((value) => ({ value, label: value.toUpperCase() }));
@@ -9,7 +9,6 @@ export interface LanguageSwitcherProps {
   pathname: string;
   label: string;
   navigate?: (href: string) => void;
-  repository?: SettingsRepository;
 }
 
 const defaultNavigate = (href: string) => {
@@ -25,7 +24,6 @@ export const LanguageSwitcher = ({
   pathname,
   label,
   navigate = defaultNavigate,
-  repository = createLocalSettingsRepository(),
 }: LanguageSwitcherProps) => (
   <Language
     id={trackingId('settings', 'select', 'language')}
@@ -36,7 +34,7 @@ export const LanguageSwitcher = ({
       if (!isLocale(next) || next === lang) {
         return;
       }
-      repository.save({ locale: next });
+      useSettingsStore.getState().update({ locale: next });
       track('language_changed', { from: lang, to: next });
       navigate(`${switchLocalePath(pathname, next)}${window.location.hash}`);
     }}

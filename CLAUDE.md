@@ -4,7 +4,7 @@ Guidance for Claude Code (and any other AI coding agent) working in this reposit
 
 ## Project
 
-**Milimon Cost Lab** (`milimon-cost-lab`): a bilingual (`/es`, `/en`) study manual and set of
+**Milimon** (`milimon`): a bilingual (`/es`, `/en`) study manual and set of
 calculators for food cost, waste (desechos) and cooking loss (mermas) in gastronomy.
 
 - Master plan and decisions: [docs/PLAN.md](./docs/PLAN.md). Architecture decisions: [docs/adr](./docs/adr).
@@ -36,7 +36,7 @@ Key commands (Node from `.nvmrc`, pnpm from `packageManager`):
   by `vitest/valid-title`. `describe` names the unit under test.
 - **Formulas** are pure functions in `src/utils/formulas`, registered once in `registry.ts`, tested with
   the manual's worked examples.
-- **Imports**: path aliases (`@components`, `@constants`, `@repositories`, `@services`, `@hooks`, `@utils`, `@i18n`,
+- **Imports**: path aliases (`@components`, `@constants`, `@stores`, `@services`, `@hooks`, `@utils`, `@i18n`,
   `@layouts/*`, `@assets/*`, `@styles/*`, `@test/*`) for anything outside the current folder. Enforced by ESLint.
 - **Constants**: limits, retries, timeouts, patterns and other tunable values live in `src/constants`
   (`@constants`), never as magic numbers inside components or services.
@@ -45,16 +45,19 @@ Key commands (Node from `.nvmrc`, pnpm from `packageManager`):
 - **Placement**: every UI piece lives in `src/components` (atoms / molecules / organisms),
   calculator islands included (organisms); hooks in `src/hooks`, pure helpers and formulas in `src/utils`,
   tunable values in `src/constants`, external integrations (API, GTM, sign-in SDKs) in `src/services`.
+- **Text**: headings, paragraphs and inline text use the ui-library `RichText` (`variant` h1–h6,
+  s1–s4, p1–p4; `as` for another element), in `.tsx` and `.astro` alike, never bare `<p>`/`<h*>`.
+  Images use `astro:assets` in `.astro` and the ui-library `Image` in React.
 - **Naming**: React components in PascalCase folders; `.astro` files, content folders, slugs and
   i18n keys in kebab-case.
 - **Theming**: colors only via CSS variables (`src/styles/theme.css`); light and dark mode must both work.
 - **Layout**: mobile-first; one layout up to 1024px, centered container above.
-- **Base path**: the site is served under `/milimon-cost-lab` on GitHub Pages. Build internal URLs
+- **Base path**: the site is served under `/milimon` on GitHub Pages. Build internal URLs
   with `localizedPath`/`withBase` (never hard-coded `/es/...` or `/favicon.ico`).
 - **Security**: a strict Content-Security-Policy (hash-only scripts) is generated at build time
   (`security.csp` in `astro.config.mjs`); a new external script or API origin must be added there.
 - **Static first**: no `client:*` directive unless the component is interactive.
-- **Persistence**: through repositories only (localStorage now, accounts later). **Analytics**: through `track()` only.
+- **Persistence**: through the zustand stores in `src/stores` only (persisted to localStorage, synced to the account by `services/account`). **Analytics**: through `track()` only.
 - **Dependencies**: latest compatible versions, `pnpm audit` clean. Exceptions documented in
   [docs/adr/0002-tooling-versions.md](./docs/adr/0002-tooling-versions.md).
 

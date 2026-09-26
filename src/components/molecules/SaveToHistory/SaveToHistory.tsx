@@ -1,11 +1,7 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { Button } from '@inzumer/ui-library';
 import type { Translations } from '@i18n/translations';
-import {
-  createLocalHistoryRepository,
-  type CalculatorDraft,
-  type HistoryRepository,
-} from '@repositories';
+import { useHistoryStore, type CalculatorDraft } from '@stores';
 import { track, trackingId } from '@utils';
 import type { Step } from '@utils/calculation';
 import type { FormulaId } from '@utils/formulas';
@@ -18,7 +14,6 @@ export interface SaveToHistoryProps {
   result: { value: object; steps: Step[] };
   labels: Translations<'calculator'>['history'];
   historyHref: string;
-  repository?: HistoryRepository;
 }
 
 /**
@@ -32,16 +27,14 @@ export const SaveToHistory = ({
   result,
   labels,
   historyHref,
-  repository = createLocalHistoryRepository(),
 }: SaveToHistoryProps) => {
-  const historyRef = useRef(repository);
   const [savedSnapshot, setSavedSnapshot] = useState<string | null>(null);
   const snapshot = JSON.stringify([draft, currency]);
   const saved = savedSnapshot === snapshot;
 
   const save = () => {
     const value = { ...(result.value as Record<string, unknown>) };
-    historyRef.current.add({
+    useHistoryStore.getState().add({
       formulaId,
       draft,
       currency,
