@@ -46,14 +46,16 @@ pnpm dev          # http://localhost:4321 → redirige a /es
 
 ## Deploy
 
-El sitio es estático (`dist/`), así que sirve cualquier hosting estático. En Vercel se detecta Astro
-solo, sin configuración.
+El sitio es estático y se publica en **GitHub Pages**: <https://inzumer.github.io/milimon-cost-lab/>.
+El workflow `.github/workflows/pages.yml` compila y despliega cada push a `main` (es decir, cada
+release). Las variables `PUBLIC_*` se cargan como variables del repositorio (Settings → Secrets and
+variables → Actions → Variables). La API de cuentas se despliega aparte, en Render (ver su repo).
 
 Variables de entorno (ver `.env.example`):
 
 | Variable                                             | Para qué                                                                                                                           |
 | ---------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| `SITE_URL`                                           | URL pública: canónicas, `hreflang`, sitemap y Open Graph (obligatoria en producción)                                               |
+| `SITE_URL` / `BASE_PATH`                             | Origen y ruta base del sitio (`https://inzumer.github.io` + `/milimon-cost-lab`): canónicas, `hreflang`, sitemap y Open Graph      |
 | `PUBLIC_GTM_ID`                                      | Contenedor de Google Tag Manager (`GTM-…`). Vacío = sin analítica ni banner de cookies                                             |
 | `PUBLIC_API_URL`                                     | URL de la API de cuentas ([api-milimon-cost-lab](https://github.com/inzumer/api-milimon-cost-lab)). Vacío = cuentas no disponibles |
 | `PUBLIC_API_KEY` / `PUBLIC_API_APP_ID`               | Identificación del cliente ante la API (públicas por diseño)                                                                       |

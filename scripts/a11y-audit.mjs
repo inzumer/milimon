@@ -2,7 +2,8 @@
 // so contrast is checked too), in light and dark mode, with the hamburger menu closed and open.
 //
 // Usage: pnpm build && pnpm audit:a11y
-// Env: CHROME_PATH (optional) — path to Chrome/Chromium; PORT (optional, default 4329).
+// Env: CHROME_PATH (optional) — path to Chrome/Chromium; PORT (optional, default 4329);
+// BASE_PATH (optional) — same value used for the build.
 import { spawn } from 'node:child_process';
 import { readdirSync, readFileSync, statSync } from 'node:fs';
 import { createRequire } from 'node:module';
@@ -12,7 +13,9 @@ import { launchChrome, sleep } from './lib/chrome.mjs';
 const require = createRequire(import.meta.url);
 const axeSource = readFileSync(require.resolve('axe-core/axe.min.js'), 'utf8');
 const PORT = Number(process.env.PORT ?? 4329);
-const BASE = `http://localhost:${PORT}`;
+// The site's base path (BASE_PATH, e.g. /milimon-cost-lab on GitHub Pages) must match the build.
+const SITE_BASE = (process.env.BASE_PATH ?? '').replace(/\/+$/, '');
+const BASE = `http://localhost:${PORT}${SITE_BASE}`;
 
 const pages = (function collect(dir) {
   return readdirSync(dir).flatMap((entry) => {

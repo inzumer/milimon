@@ -1,5 +1,5 @@
 import { Accordion, cn } from '@inzumer/ui-library';
-import { isActivePath, trackingId } from '@utils';
+import { isActivePath, stripBase, trackingId } from '@utils';
 import { navLinkStyles } from './SiteMenu.styles';
 
 export interface SiteMenuItem {
@@ -12,7 +12,7 @@ const normalize = (path: string) => path.replace(/\/+$/, '') || '/';
 
 /** `/es/formulas/cooking-loss` → `menu-link-formulas-cooking-loss` (the language is left out). */
 const linkId = (href: string) => {
-  const route = href.split('/').filter(Boolean).slice(1);
+  const route = stripBase(href).split('/').filter(Boolean).slice(1);
   return trackingId('menu', 'link', ...(route.length > 0 ? route : ['home']));
 };
 
