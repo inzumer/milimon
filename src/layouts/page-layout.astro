@@ -1,5 +1,6 @@
 ---
-import { ConsentBanner } from '@components';
+import { ConsentBanner, SharePage } from '@components';
+import { type OgSection } from '@constants';
 import { getTranslations } from '@i18n';
 import { isContainerId } from '@services';
 import { localizedPath, type Locale } from '@utils';
@@ -12,15 +13,25 @@ interface Props {
   title?: string | undefined;
   description?: string | undefined;
   noindex?: boolean;
+  ogSection?: OgSection;
 }
 
-const { lang, title, description, noindex = false } = Astro.props;
+const { lang, title, description, noindex = false, ogSection = 'home' } = Astro.props;
 const common = getTranslations(lang, 'common');
 // Analytics (and its consent banner) only exist when a GA4 measurement ID is configured.
 const analyticsEnabled = isContainerId(import.meta.env.PUBLIC_GTM_ID);
+// Public pages end with "Share this page" (its canonical URL and full title).
+const shareUrl = new URL(Astro.url.pathname, Astro.site ?? Astro.url).href;
+const shareTitle = title ? `${title} · ${common['app-name']}` : common['app-name'];
 ---
 
-<BaseLayout lang={lang} title={title} description={description} noindex={noindex}>
+<BaseLayout
+  lang={lang}
+  title={title}
+  description={description}
+  noindex={noindex}
+  ogSection={ogSection}
+>
   <a
     href="#main"
     class="sr-only z-50 rounded-lg bg-[var(--btn-primary-bg)] px-4 py-3 font-semibold text-[var(--btn-primary-text)] focus:not-sr-only focus:fixed focus:top-2 focus:left-2"
@@ -35,6 +46,9 @@ const analyticsEnabled = isContainerId(import.meta.env.PUBLIC_GTM_ID);
       class="mx-auto w-full max-w-layout flex-1 px-4 py-8 focus:outline-none"
     >
       <slot />
+      {!noindex && (
+        <SharePage client:visible url={shareUrl} title={shareTitle} labels={common.share} />
+      )}
     </main>
     <SiteFooter lang={lang} />
   </div>

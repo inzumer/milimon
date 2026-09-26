@@ -2,8 +2,9 @@
 import { Image } from 'astro:assets';
 import { RichText } from '@inzumer/ui-library';
 import logo from '@assets/logo.png';
-import { FeatureCard } from '@components';
-import { getTranslations } from '@i18n';
+import star from '@assets/star.png';
+import { ButtonLink, FeatureCard } from '@components';
+import { BLOG_ARTICLE_IDS, getBlogArticle, getTranslations } from '@i18n';
 import PageLayout from '@layouts/page-layout.astro';
 import { LOCALES, localizedPath, toLocale, trackingId } from '@utils';
 
@@ -14,6 +15,8 @@ export function getStaticPaths() {
 const lang = toLocale(Astro.params.lang);
 const common = getTranslations(lang, 'common');
 const home = getTranslations(lang, 'home');
+const comingSoon = getTranslations(lang, 'coming-soon');
+const blog = getTranslations(lang, 'blog');
 ---
 
 <PageLayout lang={lang}>
@@ -36,20 +39,23 @@ const home = getTranslations(lang, 'home');
     </RichText>
   </section>
 
-  <section class="flex flex-col gap-6">
+  <section aria-labelledby="management" class="flex flex-col gap-6">
+    <header class="flex flex-col gap-2">
+      <RichText variant="h2" bold id="management" className="font-display text-3xl">
+        {home['management-section'].title}
+      </RichText>
+      <RichText className="text-[var(--text-secondary)]">
+        {home['management-section'].intro}
+      </RichText>
+    </header>
     <FeatureCard
       highlighted
-      headingLevel="h2"
       title={home['calculator-card'].title}
       description={home['calculator-card'].description}
       cta={home['calculator-card'].cta}
       href={localizedPath(lang, 'calculator')}
       ctaId={trackingId('home', 'link', 'calculator')}
     />
-
-    <RichText variant="h2" bold className="font-display pt-4 text-3xl">
-      {home['sections-title']}
-    </RichText>
     <div class="grid gap-6 lg:grid-cols-2">
       <FeatureCard
         title={home['formulas-card'].title}
@@ -65,13 +71,79 @@ const home = getTranslations(lang, 'home');
         href={localizedPath(lang, 'learn')}
         ctaId={trackingId('home', 'link', 'learn')}
       />
-      <FeatureCard
-        title={home['account-card'].title}
-        description={home['account-card'].description}
-        cta={home['account-card'].cta}
-        href={localizedPath(lang, 'login')}
-        ctaId={trackingId('home', 'link', 'sign-in')}
-      />
     </div>
+  </section>
+
+  <section aria-labelledby="recipes" class="mt-12 flex flex-col gap-6">
+    <header class="flex flex-col gap-2">
+      <RichText variant="h2" bold id="recipes" className="font-display text-3xl">
+        {home['recipes-section'].title}
+      </RichText>
+      <RichText className="text-[var(--text-secondary)]">{home['recipes-section'].intro}</RichText>
+    </header>
+    <div class="flex flex-col items-center gap-6 rounded-xl border border-[var(--border-default)] bg-[var(--surface-primary)] p-6 text-center shadow-sm sm:flex-row sm:text-left">
+      <Image
+        src={star}
+        alt={comingSoon['star-alt']}
+        width={112}
+        height={112}
+        densities={[1, 2]}
+        class="size-28 shrink-0"
+      />
+      <div class="flex flex-col items-center gap-3 sm:items-start">
+        <RichText
+          as="p"
+          variant="s4"
+          bold
+          className="rounded-full bg-primary-500 px-3 py-1 tracking-wide text-neutral-950 uppercase"
+        >
+          {comingSoon.badge}
+        </RichText>
+        <RichText className="text-[var(--text-secondary)]">
+          {home['recipes-card'].description}
+        </RichText>
+        <ButtonLink
+          id={trackingId('home', 'link', 'recipes')}
+          href={localizedPath(lang, 'recipes')}
+          variant="secondary"
+        >
+          {common.nav.recipes}
+        </ButtonLink>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="blog" class="mt-12 flex flex-col gap-6">
+    <header class="flex flex-col gap-2">
+      <RichText variant="h2" bold id="blog" className="font-display text-3xl">
+        {home['blog-section'].title}
+      </RichText>
+      <RichText className="text-[var(--text-secondary)]">{home['blog-section'].intro}</RichText>
+    </header>
+    <div class="grid gap-6 lg:grid-cols-2">
+      {BLOG_ARTICLE_IDS.map((id) => {
+        const article = getBlogArticle(lang, id);
+        return (
+          <FeatureCard
+            title={article.title}
+            description={article.description}
+            cta={blog.index['read-more']}
+            href={localizedPath(lang, 'blog', id)}
+            ctaId={trackingId('home', 'link', 'blog', id)}
+          />
+        );
+      })}
+    </div>
+  </section>
+
+  <section class="mt-12">
+    <FeatureCard
+      headingLevel="h2"
+      title={home['account-card'].title}
+      description={home['account-card'].description}
+      cta={home['account-card'].cta}
+      href={localizedPath(lang, 'login')}
+      ctaId={trackingId('home', 'link', 'sign-in')}
+    />
   </section>
 </PageLayout>

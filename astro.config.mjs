@@ -128,7 +128,11 @@ export default defineConfig({
       filter: (page) => {
         const { pathname } = new URL(page);
         const route = pathname.slice(base.replace(/\/+$/, '').length) || '/';
-        return route !== '/' && !route.includes('404') && !/\/(account|history|login)$/.test(route);
+        return (
+          route !== '/' &&
+          !route.includes('404') &&
+          !/\/(account|history|login|recipes)$/.test(route)
+        );
       },
     }),
   ],

@@ -6,5 +6,6 @@ export * from './load-script';
 export * from './locale';
 export * from './numbers';
 export * from './routes';
+export * from './share';
 export * from './storage';
 export * from './tracking';

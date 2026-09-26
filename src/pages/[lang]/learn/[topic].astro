@@ -27,7 +27,7 @@ const related = LEARN_TOPICS.find((item) => item.id === id)?.related ?? [];
 const { previous, next } = adjacentTopics(id);
 ---
 
-<PageLayout lang={lang} title={topic.title} description={topic.summary}>
+<PageLayout ogSection="management" lang={lang} title={topic.title} description={topic.summary}>
   <Breadcrumbs
     aria-label={formulaPage.breadcrumbs.label}
     items={[

@@ -1,6 +1,6 @@
 {
   "hero": {
-    "subtitle": "Work out food cost, trim waste and cooking loss in your kitchen, and understand every formula step by step.",
+    "subtitle": "Cooking and restaurant management in one place: tools to keep your business numbers in order, recipes and a blog.",
     "logo-alt": "Milimon: a cook in a chef's hat holding a wooden spoon"
   },
   "calculator-card": {
@@ -8,7 +8,6 @@
     "description": "Pick the calculation you need, enter your values and see the result with the full working.",
     "cta": "Go to the calculator"
   },
-  "sections-title": "Study the topics",
   "formulas-card": {
     "title": "Formulas",
     "description": "Every formula explained: what each value means, the step-by-step method and worked examples from the handbook.",
@@ -21,7 +20,22 @@
   },
   "account-card": {
     "title": "Your account",
-    "description": "Sign in with Google or Facebook and take your settings, calculations and history to any device. It is free and you can delete your account anytime.",
+    "description": "Sign in with Google (Facebook coming soon) and take your settings, calculations and history to any device. It is free and you can delete your account anytime.",
     "cta": "Sign in"
+  },
+  "management-section": {
+    "title": "Restaurant management",
+    "intro": "Work out food cost, trim waste and cooking loss, and understand every formula step by step with the handbook’s examples."
+  },
+  "recipes-card": {
+    "description": "We are preparing the first recipes, each with its cost per portion and its milicitos."
+  },
+  "recipes-section": {
+    "title": "Recipes",
+    "intro": "Recipes for professional kitchens, with their cost per portion worked out."
+  },
+  "blog-section": {
+    "title": "Blog",
+    "intro": "What we cook, what we taste and what we learn along the way."
   }
 }

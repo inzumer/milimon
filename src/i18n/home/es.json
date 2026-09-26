@@ -1,6 +1,6 @@
 {
   "hero": {
-    "subtitle": "Calculá costos, desechos y mermas de tu cocina, y entendé cada fórmula paso a paso.",
+    "subtitle": "Cocina y administración gastronómica en un solo lugar: herramientas para llevar los números de tu negocio, recetas y un blog.",
     "logo-alt": "Milimon: una cocinera con gorro de chef y una cuchara de madera"
   },
   "calculator-card": {
@@ -8,7 +8,6 @@
     "description": "Elegí la cuenta que necesitás, cargá tus valores y mirá el resultado con todo el desarrollo.",
     "cta": "Ir a la calculadora"
   },
-  "sections-title": "Estudiá los temas",
   "formulas-card": {
     "title": "Fórmulas",
     "description": "Cada fórmula explicada: qué significa cada dato, el paso a paso y ejemplos resueltos del manual.",
@@ -21,7 +20,22 @@
   },
   "account-card": {
     "title": "Tu cuenta",
-    "description": "Iniciá sesión con Google o Facebook y llevá tu configuración, tus cálculos y tu historial a cualquier dispositivo. Es gratis y podés borrar tu cuenta cuando quieras.",
+    "description": "Iniciá sesión con Google (y pronto con Facebook) y llevá tu configuración, tus cálculos y tu historial a cualquier dispositivo. Es gratis y podés borrar tu cuenta cuando quieras.",
     "cta": "Iniciar sesión"
+  },
+  "management-section": {
+    "title": "Administración gastronómica",
+    "intro": "Calculá costos, desechos y mermas, y entendé cada fórmula paso a paso con los ejemplos del manual."
+  },
+  "recipes-card": {
+    "description": "Estamos preparando las primeras recetas, cada una con su costo por porción y sus milicitos."
+  },
+  "recipes-section": {
+    "title": "Recetas",
+    "intro": "Recetas para la cocina profesional, con su costo por porción calculado."
+  },
+  "blog-section": {
+    "title": "Blog",
+    "intro": "Lo que cocinamos, lo que probamos y lo que aprendemos en el camino."
   }
 }
