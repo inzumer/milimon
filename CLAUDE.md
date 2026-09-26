@@ -37,7 +37,7 @@ Key commands (Node from `.nvmrc`, pnpm from `packageManager`):
 - **Tests**: every test title starts with `should …` (e.g. `it('should render the menu')`), enforced
   by `vitest/valid-title`. `describe` names the unit under test.
 - **Formulas** are pure functions in `src/utils/formulas`, registered once in `registry.ts`, tested with
-  our own worked examples (expected values computed by hand in the test comments).
+  our own worked examples (expected values computed by hand, not by the code under test).
 - **Imports**: path aliases (`@components`, `@constants`, `@stores`, `@services`, `@hooks`, `@utils`, `@i18n`,
   `@layouts/*`, `@assets/*`, `@styles/*`, `@test/*`) for anything outside the current folder. Enforced by ESLint.
 - **Constants**: limits, retries, timeouts, patterns and other tunable values live in `src/constants`
