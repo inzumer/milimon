@@ -12,7 +12,6 @@ interface Props {
   section: 'recipes';
 }
 
-// Placeholder for the sections that will come from the CMS: same URL now and later.
 const { lang, section } = Astro.props;
 const common = getTranslations(lang, 'common');
 const page = getTranslations(lang, 'coming-soon');

@@ -21,7 +21,6 @@ const blog = getTranslations(lang, 'blog');
 const dateFormat = new Intl.DateTimeFormat(lang === 'es' ? 'es-AR' : 'en-US', {
   dateStyle: 'long',
 });
-// One small milicito, shared by every rating on the page.
 const milicito = await getImage({ src: star, width: 64, height: 64, format: 'webp' });
 const site = Astro.site ?? Astro.url;
 const aboutHref = localizedPath(lang, 'about');

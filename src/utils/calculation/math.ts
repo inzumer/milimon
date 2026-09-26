@@ -1,12 +1,10 @@
 /**
  * Numeric helpers. Formulas always compute with full precision; rounding happens only for display
- * or when the manual explicitly rounds (e.g. buying whole kilograms).
+ * or when a purchase is rounded on purpose (e.g. buying whole kilograms).
  */
 
 /** Rounds half away from zero to `decimals` places, avoiding binary artifacts (1.005 → 1.01). */
 export const roundTo = (value: number, decimals: number): number => {
-  // Shift the decimal point through exponent notation instead of multiplying:
-  // 1.005 * 100 is 100.49999… in binary, while Number('1.005e2') is exactly 100.5.
   const shift = (number: number, places: number): number => {
     const [mantissa, exponent = '0'] = String(number).split('e');
     return Number(`${mantissa}e${Number(exponent) + places}`);

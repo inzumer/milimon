@@ -16,7 +16,6 @@ export interface FeatureCardProps {
   href: string;
   cta: string;
   highlighted?: boolean;
-  /** Pill above the title, e.g. "Featured". */
   badge?: string;
   headingLevel?: 'h2' | 'h3';
   ctaId: string;

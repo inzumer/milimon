@@ -1,10 +1,5 @@
 import type { FormulaTranslation } from './formulas';
 
-/*
- * Client-safe helpers for formula translations (no zod, no eager JSON): calculator islands import
- * from here so the validation schema and all translations stay out of the browser bundle.
- */
-
 export type CalculatorText = Omit<FormulaTranslation, 'study'>;
 
 /** Strips the study content so it isn't serialized into island props. */

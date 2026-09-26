@@ -24,7 +24,6 @@ const history = {
   remove: useHistoryStore.getState().remove,
 };
 
-// Syncs subscribe to the shared stores, so each test stops the ones it started.
 const started: AccountSync[] = [];
 
 const setup = (remote: Parameters<typeof createFakeAccountBackend>[0] = { user: TEST_USER }) => {
@@ -142,7 +141,6 @@ describe('account sync', () => {
     calculations.saveDraft('pricing', { unitCost: '12' });
     await vi.runAllTimersAsync();
     expect(backend.remote.profile?.currency).toBe('USD');
-    // Profile creation plus a single debounced push.
     expect(backend.saveProfile).toHaveBeenCalledTimes(2);
     expect(backend.remote.drafts).toStrictEqual({ pricing: { unitCost: '12' } });
 

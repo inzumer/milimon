@@ -21,9 +21,12 @@ npm-debug.log*
 .env.*
 !.env.example
 
-# OS / editor
+# OS / editor (the shared .vscode settings and recommended extensions stay versioned)
 .DS_Store
 *.local
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
 
 # Phase/task plans are local working notes (docs/PLAN.md is the versioned master plan).
 docs/plans/

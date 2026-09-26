@@ -23,6 +23,10 @@ personalizado** con el nombre del evento, y **Variables de la capa de datos** pa
 | `theme_changed`         | `scheme`             | Cambio de tema                                |
 | `currency_changed`      | `currency`           | Cambio de moneda                              |
 | `menu_opened`           | —                    | Se abre el menú                               |
+| `sign_in`               | `provider`           | Se inicia sesión (Google o Facebook)          |
+| `sign_in_failed`        | `provider`, `reason` | Falla o se cancela el inicio de sesión        |
+| `sign_out`              | —                    | Se cierra la sesión                           |
+| `page_shared`           | `method`, `path`     | Se comparte una página (red o copiar enlace)  |
 
 Nunca se envían los números que la persona carga.
 

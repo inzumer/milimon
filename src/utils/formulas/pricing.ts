@@ -11,7 +11,7 @@ import {
 import type { CalculationResult } from '@utils/calculation';
 
 /**
- * Fijación de precios (manual, Unidad 3).
+ * Fijación de precios.
  *
  * Costos no relacionados con la materia prima = sueldos + cargas sociales + alquiler + servicios
  *   + gastos generales + amortizaciones (inversión / meses de amortización).

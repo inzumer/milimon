@@ -28,10 +28,6 @@ export class NetworkError extends Error {
 export interface RequestOptions {
   retries?: number;
   timeoutMs?: number;
-  /**
-   * Whether the request may be repeated when it may already have reached the server (network
-   * errors, 500, 408). Off for single-use operations such as rotating a refresh token.
-   */
   retryAmbiguous?: boolean;
   fetchImpl?: typeof fetch;
   sleep?: (ms: number) => Promise<void>;

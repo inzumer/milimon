@@ -5,13 +5,11 @@ import { navLinkStyles } from './SiteMenu.styles';
 export interface SiteMenuItem {
   href: string;
   label: string;
-  /** Short tag next to the label, e.g. "Coming soon". */
   badge?: string;
   children?: SiteMenuItem[];
 }
 
 export interface SiteMenuGroup {
-  /** Heading shown above the group; the first group (home) has none. */
   title?: string;
   items: SiteMenuItem[];
 }
@@ -37,7 +35,6 @@ export const NavEntry = ({ item, pathname }: { item: SiteMenuItem; pathname: str
         aria-current={current ? 'page' : undefined}
         className={navLinkStyles({ active: inSection })}
       >
-        {/* One inline run, so the pill follows the last word even when the label wraps. */}
         <RichText as="span" variant="s1" className="font-semibold text-inherit">
           {item.label}
           {item.badge && (

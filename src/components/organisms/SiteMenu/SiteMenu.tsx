@@ -67,8 +67,6 @@ export const SiteMenu = ({ lang, pathname, groups, labels, account }: SiteMenuPr
         onClose={close}
         title={labels.title}
         titleClassName="font-display text-3xl"
-        // 85% of the screen on phones (labels fit on one line), 20rem from 768px up. The title row is as
-        // tall as the site header with the same padding, so the close button sits where the menu one is.
         className="w-[85vw] max-w-none px-4 pt-0 md:w-full md:max-w-80 [&>div:first-child]:h-header [&>div:first-child]:shrink-0"
         closeLabel={labels.close}
         footer={

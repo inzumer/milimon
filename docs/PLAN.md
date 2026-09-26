@@ -505,15 +505,41 @@ idioma, tema), sus recetas y sus cálculos en un perfil propio.
 
 ### Pendientes
 
-- **CMS para recetas y blog**: elegir el CMS (headless, con plan gratuito) y cómo se integra con el
-  build estático (rebuild por webhook), el modelo de contenido (receta con ingredientes y costo por
-  porción, artículo, puntaje en milicitos) y la migración del artículo actual.
-- **Emails** a suscriptores cuando haya recetas o artículos nuevos: alta y baja con doble
-  confirmación, proveedor de envío y consentimiento (se integra con las cuentas o con un formulario
-  propio).
-- **Google Tag Manager**: crear el contenedor y cargar `PUBLIC_GTM_ID` (activa el banner de cookies).
-- **Meta (Facebook Login)**: crear la app cuando Meta lo permita y cargar el App ID y el secreto;
-  hasta entonces el botón queda deshabilitado con el aviso "Próximamente".
+Ideas y análisis de cada tema en [docs/suggestions](./suggestions/README.md).
+
+**Para lanzar**
+
+- **Deploy oficial con dominio propio** (Cloudflare Pages o similar) y **auditoría de seguridad**:
+  cabeceras HTTP, escaneos externos, revisión de la API y aviso legal (RGPD/LSSI). Ver
+  [01](./suggestions/01-deploy-y-seguridad.md).
+- **API en Render**: crear el servicio desde el Blueprint con el `DATABASE_URL` de Neon.
+- **Google Cloud**: orígenes autorizados (`https://inzumer.github.io` hoy, el dominio propio después).
+- **Search Console y Bing Webmaster Tools**: verificar el sitio y enviar el sitemap.
+- **Google Tag Manager**: contenedor + `PUBLIC_GTM_ID` (activa el banner de cookies). Ver [04](./suggestions/04-medicion-y-cuentas.md).
+- **Meta (Facebook Login)**: crear la app cuando Meta lo permita; hasta entonces el botón queda
+  deshabilitado con el aviso "Próximamente".
+
+**Contenido**
+
+- **CMS sin dependencia técnica** para que Milagros gestione recetas, blog, guías, "Sobre mí", textos
+  del inicio y secciones nuevas (recomendado: Keystatic + Keystatic Cloud), migrando los textos
+  que hoy están en `src/i18n`; **emails** a suscriptores (RSS a email). Ver [02](./suggestions/02-cms-y-emails.md).
+- Revisión del texto de "Sobre mí" por Milagros.
+- Comparar el texto explicativo con el material del curso (hace falta el PDF) para confirmar que no
+  quedó ninguna frase igual.
+
+- **Emails transaccionales** (bienvenida al registrarse, confirmación al eliminar la cuenta) con un
+  paquete `@inzumer/email` (React Email + tokens) y envío desde la API. Ver
+  [10](./suggestions/10-emails-transaccionales.md).
+- **Dirección visual** más fina y editorial, conservando la ilustración y los milicitos. Ver
+  [09](./suggestions/09-direccion-visual.md) y animaciones en [06](./suggestions/06-animaciones.md).
+
+**Técnico**
+
+- Renombrar las carpetas locales (`milimon`, `api-milimon`) con VS Code, Codex, Docker y
+  `pnpm dev` cerrados.
+- `.gitattributes` en `ui-library` (finales de línea).
+- Tests e2e con Playwright y auditoría a11y en CI. Ver [08](./suggestions/08-calidad-y-tests.md).
 
 ## 11. Fases
 

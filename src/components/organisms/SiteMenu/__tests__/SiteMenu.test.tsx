@@ -91,7 +91,6 @@ describe('SiteMenu', () => {
 
   it('should mark only the exact current page with aria-current', async () => {
     await openMenu();
-    // pathname is /es/formulas/cooking-loss: the Fórmulas section is highlighted but isn't the page.
     expect(screen.getByRole('link', { name: 'Fórmulas' })).not.toHaveAttribute('aria-current');
     expect(screen.getByRole('link', { name: 'Inicio' })).not.toHaveAttribute('aria-current');
   });

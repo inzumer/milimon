@@ -16,7 +16,6 @@ const page = getTranslations(lang, 'calculator-page');
 const formulaPage = getTranslations(lang, 'formula-page');
 const ui = getTranslations(lang, 'calculator');
 const byGroup = formulasByGroup();
-// Only titles travel to the island; each formula's texts are loaded when it's picked.
 const groups = FORMULA_GROUPS.map((group) => ({
   group,
   label: formulaPage.groups[group],
