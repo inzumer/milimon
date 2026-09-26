@@ -109,6 +109,9 @@ export default defineConfig({
   base,
   output: 'static',
   trailingSlash: 'never',
+  // One HTML file per page (es/login.html): GitHub Pages serves /es/login directly, without the
+  // redirect to /es/login/ that folder-style output causes.
+  build: { format: 'file' },
   security: { csp },
   integrations: [
     react(),
