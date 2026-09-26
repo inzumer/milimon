@@ -35,7 +35,47 @@ la salida también es gratis: **Keystatic en modo GitHub** o **Decap CMS** con e
 resuelto por nuestra propia API (sin costo, a cambio de que la editora tenga una cuenta de GitHub),
 o **Sanity** en su plan gratuito.
 
-## Sincronizar lo que hoy está fijo con lo que será dinámico
+## Keystatic: vista previa y acceso solo para admins
+
+Decisión: **Keystatic** (revisado y aprobado), con dos requisitos: que quien administra vea cómo va
+a quedar el contenido antes de publicarlo, y que el editor solo sea accesible para **perfiles con
+rol admin** de las cuentas de Milimon.
+
+### Dónde vive el editor
+
+El editor de Keystatic se sirve en el propio sitio (`/keystatic`) y necesita unas rutas de
+servidor (`/api/keystatic`). Hoy el sitio es 100 % estático en GitHub Pages, que no ejecuta código
+de servidor. En **Cloudflare Pages** (el hosting propuesto en [01](./01-deploy-y-seguridad.md)) se
+resuelve con el adaptador `@astrojs/cloudflare`: todo sigue estático y **solo** `/keystatic` y
+`/api/keystatic` corren como funciones (dentro del plan gratuito). Por eso el CMS llega junto con el
+deploy oficial.
+
+### Acceso solo para admins
+
+1. **Rol en las cuentas** (`api-milimon`): columna `role` (`user` | `admin`) en el usuario, incluida
+   en el token y en `/me`; los admins se asignan a mano (Milagros y el equipo técnico). Esto se
+   puede adelantar ya.
+2. **Sesión en cookie**: en el dominio propio, la sesión pasa a una cookie `HttpOnly`, `Secure`,
+   `SameSite` (también es una mejora de seguridad, ver [01](./01-deploy-y-seguridad.md)), así el
+   servidor puede leerla.
+3. **Tokens verificables sin secreto**: la API firma los tokens con clave asimétrica (EdDSA o RS256)
+   y publica la clave pública; el sitio verifica el token sin conocer ningún secreto.
+4. **Middleware de Astro** en `/keystatic` y `/api/keystatic`: sin sesión redirige al login; con
+   sesión pero sin rol admin, responde 403. Nadie más ve ni el editor ni su API.
+5. **Segunda llave del lado del contenido**: Keystatic Cloud (o GitHub) solo acepta a las mismas
+   personas invitadas; aunque alguien saltara el middleware, no podría guardar cambios.
+6. En el menú de la cuenta, un enlace "Administrar contenido" visible solo para admins.
+
+### Vista previa antes de publicar
+
+- Cada cambio se guarda primero en una **rama de borrador** (Keystatic trabaja con ramas).
+- Cloudflare Pages crea una **URL de vista previa por rama** automáticamente: el mismo sitio, con el
+  contenido nuevo, en una dirección privada (`borrador-….milimon.pages.dev`).
+- En Keystatic se configura `previewUrl` para que cada entrada tenga el botón **"Ver vista previa"**
+  que abre esa URL en la página exacta (la receta, el artículo).
+- Las vistas previas llevan `noindex` y el mismo control de acceso que el editor.
+- **Publicar** = fusionar el borrador: el deploy de producción sale solo.
+- Mientras se escribe, el editor muestra una vista previa rápida del texto con los estilos del sitio.
 
 Hoy los textos viven en `src/i18n/<carpeta>/{es,en}.json`. El plan es mover al CMS **las mismas
 estructuras**, para que la migración sea un script y las páginas no cambien de diseño.
