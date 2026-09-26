@@ -54,7 +54,6 @@ describe('SharePage', () => {
 
   it('should copy the link and say so for a while', async () => {
     vi.useFakeTimers({ shouldAdvanceTime: true });
-    // user-event installs its own clipboard, so it's set up before the stub.
     const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime });
     const writeText = vi.fn(async () => undefined);
     vi.stubGlobal('navigator', { ...navigator, clipboard: { writeText } });

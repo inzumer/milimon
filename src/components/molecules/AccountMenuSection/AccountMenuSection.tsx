@@ -44,7 +44,6 @@ export const AccountMenuSection = ({
   const titleId = useId();
   const depsRef = useRef({ store, loadSession });
   const [busy, setBusy] = useState(false);
-  // A JSON snapshot keeps it stable between reads; on the server nobody is signed in.
   const snapshot = useSyncExternalStore(
     (onChange) => depsRef.current.store.subscribe(onChange),
     () => JSON.stringify(depsRef.current.store.read()?.user ?? null),

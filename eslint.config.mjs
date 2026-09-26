@@ -1,9 +1,4 @@
 // @ts-check
-// Mirrors @inzumer/eslint-config (ui-library: base + react + testing), updated for ESLint 10.
-// Plugins that don't support ESLint 10 are replaced by their maintained successors
-// (see docs/adr/0002-tooling-versions.md):
-//   eslint-plugin-react    → @eslint-react/eslint-plugin
-//   eslint-plugin-jsx-a11y → eslint-plugin-jsx-a11y-x
 import eslintReact from '@eslint-react/eslint-plugin';
 import vitest from '@vitest/eslint-plugin';
 import astro from 'eslint-plugin-astro';
@@ -18,7 +13,6 @@ import tseslint from 'typescript-eslint';
 export default defineConfig([
   globalIgnores(['dist/**', '.astro/**', 'coverage/**', 'node_modules/**', 'public/**']),
 
-  // Base (all JS/TS)
   {
     files: ['**/*.{js,mjs,cjs,ts,tsx,astro}'],
     extends: [tseslint.configs.recommended],
@@ -44,9 +38,7 @@ export default defineConfig([
         'warn',
         { vars: 'all', varsIgnorePattern: '^_', args: 'after-used', argsIgnorePattern: '^_' },
       ],
-      // Import order is Prettier's job (@ianvs/prettier-plugin-sort-imports).
       'import-x/no-duplicates': 'error',
-      // Relative imports only inside the same folder; anything else goes through an alias.
       'no-restricted-imports': [
         'error',
         {
@@ -64,19 +56,16 @@ export default defineConfig([
     },
   },
 
-  // Command-line scripts report through the console.
   {
     files: ['scripts/**'],
     rules: { 'no-console': 'off' },
   },
 
-  // A unit's own tests import that exact unit relatively (../unit), same as ui-library.
   {
     files: ['**/__tests__/**'],
     rules: { 'no-restricted-imports': 'off' },
   },
 
-  // React (islands and components)
   {
     files: ['**/*.tsx'],
     extends: [
@@ -86,11 +75,9 @@ export default defineConfig([
     ],
   },
 
-  // Astro
   ...astro.configs['flat/recommended'],
   ...astro.configs['flat/jsx-a11y-recommended'],
 
-  // Tests
   {
     files: ['**/*.test.{ts,tsx}', 'src/test/**'],
     extends: [vitest.configs.recommended],
@@ -101,7 +88,6 @@ export default defineConfig([
       'vitest/no-focused-tests': 'error',
       'vitest/prefer-to-be': 'error',
       'vitest/prefer-to-have-length': 'error',
-      // Every test title starts with "should…" (describe blocks name the unit, not the behavior).
       'vitest/valid-title': [
         'error',
         { mustMatch: { it: ['^should ', 'Test titles must start with "should "'] } },

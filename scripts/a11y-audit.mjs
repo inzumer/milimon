@@ -1,9 +1,3 @@
-// Accessibility audit of every built page with axe-core in headless Chrome (real layout and colors,
-// so contrast is checked too), in light and dark mode, with the hamburger menu closed and open.
-//
-// Usage: pnpm build && pnpm audit:a11y
-// Env: CHROME_PATH (optional) — path to Chrome/Chromium; PORT (optional, default 4329);
-// BASE_PATH (optional) — same value used for the build.
 import { spawn } from 'node:child_process';
 import { readdirSync, readFileSync, statSync } from 'node:fs';
 import { createRequire } from 'node:module';
@@ -13,7 +7,6 @@ import { launchChrome, sleep } from './lib/chrome.mjs';
 const require = createRequire(import.meta.url);
 const axeSource = readFileSync(require.resolve('axe-core/axe.min.js'), 'utf8');
 const PORT = Number(process.env.PORT ?? 4329);
-// The site's base path (BASE_PATH, e.g. /milimon on GitHub Pages) must match the build.
 const SITE_BASE = (process.env.BASE_PATH ?? '').replace(/\/+$/, '');
 const BASE = `http://localhost:${PORT}${SITE_BASE}`;
 
@@ -47,7 +40,6 @@ try {
     previewExited = true;
   });
   let ready = false;
-  // Up to 60 s: the first start after a build can be slow on a busy machine.
   for (let i = 0; i < 120 && !ready && !previewExited; i += 1) {
     try {
       ready = (await fetch(`${BASE}/es`)).ok;
@@ -86,7 +78,6 @@ try {
         throw new Error(`Could not load ${page}: ${navigation.result.errorText}`);
       }
       await sleep(700);
-      // Open the menu on one page per language to audit the drawer as well.
       const withMenu = index < 2;
       if (withMenu) {
         await evaluate(`document.querySelector('button[aria-controls]')?.click()`);

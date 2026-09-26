@@ -20,7 +20,6 @@ export interface TagManager {
 
 export const createTagManager = (containerId: string): TagManager => {
   const dataLayer = (window.dataLayer = window.dataLayer ?? []);
-  // Consent commands must be pushed as `arguments` objects (the gtag.js format GTM reads).
   const gtag: Gtag = function gtag() {
     // eslint-disable-next-line prefer-rest-params -- the consent API requires `arguments`.
     dataLayer.push(arguments);

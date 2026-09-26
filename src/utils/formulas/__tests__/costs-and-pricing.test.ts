@@ -126,18 +126,14 @@ describe('pricing (the café example)', () => {
     if (!result.ok) {
       return;
     }
-    // 95.000 × 45 % = 42.750; 4.800.000 / 48 = 100.000.
     expect(result.value.socialCharges).toBe(42_750);
     expect(result.value.amortization).toBe(100_000);
-    // 95.000 + 42.750 + 60.000 + 22.000 + 70.000 + 100.000.
     expect(result.value.nonRawMaterialCosts).toBe(389_750);
-    // 4.800.000 × 30 % / 12 = 120.000, + 80.000 withdrawal = 200.000 net; / 0,65 before tax.
     expect(result.value.monthlyReturn).toBeCloseTo(120_000, 6);
     expect(result.value.netProfit).toBeCloseTo(200_000, 6);
     expect(result.value.grossProfit).toBeCloseTo(307_692.31, 2);
-    // 1 + (389.750 + 307.692,31) / 440.000.
     expect(result.value.coefficient).toBeCloseTo(2.5851, 4);
-    expect(result.value.netPrice).toBeCloseTo(51.7, 2); // Toastie: $ 20 × 2,5851
+    expect(result.value.netPrice).toBeCloseTo(51.7, 2);
     expect(result.steps).toHaveLength(10);
   });
 
@@ -158,7 +154,6 @@ describe('pricing (the café example)', () => {
     expect(salesTaxTotal(DEFAULT_SALES_TAX_RATES, false)).toBe(25.5);
     const withCards = calculatePricing(cafe);
     const withoutCards = calculatePricing({ ...cafe, includeCardFee: false });
-    // 51,70 × 1,295 and 51,70 × 1,255.
     expect(withCards.ok && withCards.value.grossPrice).toBeCloseTo(66.95, 2);
     expect(withoutCards.ok && withoutCards.value.grossPrice).toBeCloseTo(64.89, 2);
   });

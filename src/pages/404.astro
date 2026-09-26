@@ -14,8 +14,6 @@ import {
   trackingId,
 } from '@utils';
 
-// One static 404 for every URL: both languages are rendered and the one matching the URL prefix
-// is shown (Spanish by default, and without JavaScript).
 const messages = LOCALES.map((lang) => ({
   lang,
   text: getTranslations(lang, 'common')['not-found'],

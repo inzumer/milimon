@@ -51,10 +51,8 @@ export const CalculatorPicker = ({
 }: CalculatorPickerProps) => {
   const [state, setState] = useState<LoadState>({ status: 'idle' });
 
-  // Latest requested formula: a slow response for an older pick must not replace a newer one.
   const requestedRef = useRef<FormulaId | null>(null);
 
-  /** Loads a formula's texts; state only changes when the promise settles. */
   const load = useCallback(
     (id: FormulaId) => {
       requestedRef.current = id;
@@ -74,7 +72,6 @@ export const CalculatorPicker = ({
     [lang, loadText],
   );
 
-  // After hydration: the static HTML can't know the query string.
   useEffect(() => {
     const initial = readToolFromUrl();
     if (initial) {

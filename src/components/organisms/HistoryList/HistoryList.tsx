@@ -38,7 +38,6 @@ export const HistoryList = ({
   const id = useId();
   const loadTextRef = useRef(loadText);
   const stored = useHistoryStore((state) => state.entries);
-  // `null` until hydrated: the server can't know what this browser saved.
   const entries = useHydrated() ? stored : null;
   const [expanded, setExpanded] = useState<ReadonlySet<string>>(() => new Set());
   const [texts, setTexts] = useState<Texts>({});

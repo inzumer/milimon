@@ -15,7 +15,6 @@ const lang = toLocale(Astro.params.lang);
 const common = getTranslations(lang, 'common');
 const page = getTranslations(lang, 'history-page');
 const ui = getTranslations(lang, 'calculator');
-// Titles and output labels for the summaries; the full texts load when a calculation is opened.
 const formulas = Object.fromEntries(
   FORMULA_IDS.map((id) => {
     const text = getFormulaTranslation(lang, id);

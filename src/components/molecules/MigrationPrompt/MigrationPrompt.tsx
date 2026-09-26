@@ -5,7 +5,6 @@ import { trackingId } from '@utils';
 
 export interface MigrationPromptProps {
   labels: Translations<'common'>['migration'];
-  /** Tracking scope of the page that shows it (`login` or `account`). */
   scope: string;
   busy: boolean;
   onImport: () => void;

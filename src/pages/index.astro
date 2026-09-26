@@ -2,8 +2,6 @@
 import { SETTINGS_STORAGE_KEY } from '@constants';
 import { DEFAULT_LOCALE, languageRedirectScript, LOCALES, SITE_BASE, withBase } from '@utils';
 
-// Static output: pick the language on the client. Saved choice → browser languages → default.
-// Without JavaScript, the <noscript> refresh sends visitors to the default locale.
 const fallback = withBase(`/${DEFAULT_LOCALE}`);
 ---
 

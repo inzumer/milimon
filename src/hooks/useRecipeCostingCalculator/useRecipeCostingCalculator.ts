@@ -17,7 +17,7 @@ export interface IngredientRow {
 
 export type IngredientField = Exclude<keyof IngredientRow, 'id'>;
 
-/** Illustrative recipe (the manual gives the costing sheet, not numbers): names are label keys. */
+/** Illustrative recipe for the example button: names are label keys. */
 export const RECIPE_EXAMPLE = {
   id: 'tournedos-recipe',
   servings: 10,
@@ -62,7 +62,6 @@ export const useRecipeCostingCalculator = ({
   exampleNames,
 }: {
   lang: Locale;
-  /** Translated names for the example ingredients, keyed by `nameKey`. */
   exampleNames: Record<string, string>;
 }) => {
   const { draft, setDraft, resetDraft } = useDraft('recipe-costing', INITIAL);
@@ -102,7 +101,6 @@ export const useRecipeCostingCalculator = ({
   }, [servings, rows, lang]);
 
   return {
-    /** Raw values as saved (for the history). */
     draft,
     currency,
     servings,

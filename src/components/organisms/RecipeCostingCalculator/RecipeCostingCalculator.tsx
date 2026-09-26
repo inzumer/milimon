@@ -18,7 +18,7 @@ export interface RecipeCostingCalculatorProps {
   ui: Translations<'calculator'>;
 }
 
-/** Recipe costing sheet (manual, columns 1–8): ingredients → gross quantity → cost → portion cost. */
+/** Recipe costing sheet: ingredients → gross quantity → cost → portion cost. */
 export const RecipeCostingCalculator = ({ lang, text, ui }: RecipeCostingCalculatorProps) => {
   const id = useId();
   const t = formulaText(text);

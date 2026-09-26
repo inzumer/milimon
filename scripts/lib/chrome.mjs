@@ -1,5 +1,3 @@
-// Minimal headless Chrome driver over the DevTools protocol (no Puppeteer dependency).
-// Used by the accessibility audit and the Open Graph image generator.
 import { spawn } from 'node:child_process';
 import { existsSync } from 'node:fs';
 import { join } from 'node:path';

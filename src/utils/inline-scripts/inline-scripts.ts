@@ -13,7 +13,6 @@ export interface LanguageRedirectOptions {
   storageKey: string;
   locales: readonly string[];
   fallbackLocale: string;
-  /** Site base without trailing slash (`''` or `/milimon`). */
   base: string;
 }
 
@@ -28,7 +27,6 @@ export const languageRedirectScript = ({
 
 export interface NotFoundLanguageOptions {
   locales: readonly string[];
-  /** Site base without trailing slash (`''` or `/milimon`). */
   base: string;
 }
 

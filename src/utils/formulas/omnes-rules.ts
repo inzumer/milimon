@@ -2,7 +2,7 @@ import { failure, positive, success, sum } from '@utils/calculation';
 import type { CalculationResult, FieldError } from '@utils/calculation';
 
 /**
- * Reglas de Omnes (manual, Unidad 3 — distribución armoniosa de precios).
+ * Reglas de Omnes (distribución armoniosa de precios).
  * 1. Proporcionalidad: el más caro cuesta hasta 2–3 veces el más barato.
  * 2. Zonas: rango (máx − mín) dividido en 3 zonas iguales; la zona media debería tener tantos
  *    productos como las zonas baja y alta juntas (25 % / 50 % / 25 %).

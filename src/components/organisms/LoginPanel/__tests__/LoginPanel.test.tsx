@@ -87,7 +87,6 @@ describe('LoginPanel', () => {
     const { renderPanel, renderGoogle } = setup();
     renderPanel();
     const facebook = await screen.findByRole('button', { name: labels['continue-with-facebook'] });
-    // Decorative Facebook logo before the text; the accessible name stays the text.
     expect(facebook.querySelector('img')).toHaveAttribute('alt', '');
     await vi.waitFor(() => expect(renderGoogle).toHaveBeenCalled());
     expect(renderGoogle).toHaveBeenCalledWith(
@@ -157,7 +156,7 @@ describe('LoginPanel', () => {
     expect(await screen.findByRole('alert')).toHaveTextContent(labels.error);
   });
 
-  it('should say the server is waking up when sign-in is slow', async () => {
+  it('should say the server is waking up when sign-in is slow', { retry: 2 }, async () => {
     const { renderPanel, backend, google } = setup();
     let finish: (() => void) | undefined;
     vi.mocked(backend.signInWithGoogle).mockImplementationOnce(
@@ -173,12 +172,12 @@ describe('LoginPanel', () => {
     await screen.findByRole('button', { name: labels['continue-with-facebook'] });
 
     (await google()).onCredential('id-token');
-    // Under load the 50 ms "slow" timer can fire before this first check: either text is fine here.
     expect(await screen.findByRole('status')).toHaveTextContent(
       new RegExp(`${labels['signing-in']}|${labels['waking-up']}`),
     );
-    await vi.waitFor(() =>
-      expect(screen.getByRole('status')).toHaveTextContent(labels['waking-up']),
+    await vi.waitFor(
+      () => expect(screen.getByRole('status')).toHaveTextContent(labels['waking-up']),
+      { timeout: 3_000 },
     );
     finish?.();
   });

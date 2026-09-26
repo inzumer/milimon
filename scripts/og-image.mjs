@@ -1,10 +1,3 @@
-// Generates the Open Graph / Twitter share images (1200×630, one per section and language) into
-// public/og/og-<section>-<lang>.png. Texts come from src/i18n/common/<lang>.json (`og`).
-// Rendered by headless Chrome so the brand fonts (Lobster Two, Nunito) and colors are exact.
-// The PNGs are committed: run this only when the logo, the texts or the brand change.
-//
-// Usage: pnpm og:image
-// Env: CHROME_PATH (optional) — path to Chrome/Chromium.
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import { tmpdir } from 'node:os';
@@ -25,7 +18,6 @@ const nunito = dataUrl(
 );
 const logo = dataUrl('src/assets/logo.png', 'image/png');
 const star = dataUrl('src/assets/star.png', 'image/png');
-// Recipes and blog use the star (milicitos); the rest, the logo.
 const IMAGES = { home: logo, management: logo, recipes: star, blog: star };
 const LANGS = ['es', 'en'];
 const texts = (lang) => JSON.parse(readFileSync(`src/i18n/common/${lang}.json`, 'utf8')).og;
