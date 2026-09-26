@@ -1,6 +1,6 @@
 {
   "hero": {
-    "subtitle": "Cooking and restaurant management in one place: tools to keep your business numbers in order, recipes and a blog.",
+    "subtitle": "Cooking and restaurant management in one place: tools to keep your business numbers in order, recipes and a blog where I share my take on the things I try as I go through life.",
     "logo-alt": "Milimon: a cook in a chef's hat holding a wooden spoon"
   },
   "calculator-card": {
@@ -19,7 +19,7 @@
     "cta": "Start learning"
   },
   "account-card": {
-    "title": "Your account",
+    "title": "Sign in for free",
     "description": "Sign in with Google (Facebook coming soon) and take your settings, calculations and history to any device. It is free and you can delete your account anytime.",
     "cta": "Sign in"
   },
@@ -28,7 +28,8 @@
     "intro": "Work out food cost, trim waste and cooking loss, and understand every formula step by step with the handbook’s examples."
   },
   "recipes-card": {
-    "description": "We are preparing the first recipes, each with its cost per portion and its milicitos."
+    "description": "We are preparing the first recipes, each with its cost per portion and its milicitos.",
+    "cta": "Read the blog"
   },
   "recipes-section": {
     "title": "Recipes",
@@ -37,5 +38,9 @@
   "blog-section": {
     "title": "Blog",
     "intro": "What we cook, what we taste and what we learn along the way."
+  },
+  "account-section": {
+    "title": "Your account",
+    "intro": "Your preferences and calculations, on all your devices."
   }
 }

@@ -1,6 +1,7 @@
 import { useId, useMemo, useRef, useState, useSyncExternalStore } from 'react';
 import { Button, RichText } from '@inzumer/ui-library';
 import { ButtonLink } from '@components/atoms/ButtonLink';
+import { SectionLabel } from '@components/atoms/SectionLabel';
 import {
   createSessionStore,
   disableGoogleAutoSelect,
@@ -69,13 +70,7 @@ export const AccountMenuSection = ({
 
   return (
     <section aria-labelledby={titleId} className="flex flex-col gap-3">
-      <RichText
-        variant="h3"
-        id={titleId}
-        className="text-sm font-bold tracking-wide text-[var(--text-secondary)] uppercase"
-      >
-        {labels.title}
-      </RichText>
+      <SectionLabel id={titleId}>{labels.title}</SectionLabel>
       {user ? (
         <>
           <RichText className="flex flex-col">

@@ -1,4 +1,12 @@
-import { Card, CardDescription, CardFooter, CardHeader, CardTitle, cn } from '@inzumer/ui-library';
+import {
+  Card,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+  cn,
+  RichText,
+} from '@inzumer/ui-library';
 import { ButtonLink } from '@components/atoms/ButtonLink';
 import { ArrowRightIcon } from '@components/atoms/Icons';
 
@@ -8,6 +16,8 @@ export interface FeatureCardProps {
   href: string;
   cta: string;
   highlighted?: boolean;
+  /** Pill above the title, e.g. "Featured". */
+  badge?: string;
   headingLevel?: 'h2' | 'h3';
   ctaId: string;
 }
@@ -19,6 +29,7 @@ export const FeatureCard = ({
   href,
   cta,
   highlighted = false,
+  badge,
   headingLevel = 'h3',
   ctaId,
 }: FeatureCardProps) => (
@@ -32,6 +43,16 @@ export const FeatureCard = ({
     )}
   >
     <CardHeader className="gap-3">
+      {badge && (
+        <RichText
+          as="p"
+          variant="s4"
+          bold
+          className="self-start rounded-full bg-primary-500 px-3 py-1 tracking-wide text-neutral-950 uppercase"
+        >
+          {badge}
+        </RichText>
+      )}
       <CardTitle
         as={headingLevel}
         className={cn('text-2xl leading-tight font-bold', highlighted && 'text-neutral-950')}

@@ -5,7 +5,7 @@
     "title": "Recetas",
     "description": "Recetas pensadas para la cocina profesional, con su costo por porción calculado y listas para adaptar a tu carta."
   },
-  "meanwhile": "Mientras tanto, podés usar la calculadora o repasar las fórmulas.",
+  "meanwhile": "Mientras tanto, leé el blog o usá la calculadora.",
   "calculator-cta": "Ir a la calculadora",
-  "formulas-cta": "Ver fórmulas"
+  "blog-cta": "Leer el blog"
 }

@@ -103,11 +103,11 @@ const blog = getTranslations(lang, 'blog');
           {home['recipes-card'].description}
         </RichText>
         <ButtonLink
-          id={trackingId('home', 'link', 'recipes')}
-          href={localizedPath(lang, 'recipes')}
+          id={trackingId('home', 'link', 'recipes-blog')}
+          href={localizedPath(lang, 'blog')}
           variant="secondary"
         >
-          {common.nav.recipes}
+          {home['recipes-card'].cta}
         </ButtonLink>
       </div>
     </div>
@@ -125,6 +125,7 @@ const blog = getTranslations(lang, 'blog');
         const article = getBlogArticle(lang, id);
         return (
           <FeatureCard
+            badge={common.nav.featured}
             title={article.title}
             description={article.description}
             cta={blog.index['read-more']}
@@ -136,9 +137,14 @@ const blog = getTranslations(lang, 'blog');
     </div>
   </section>
 
-  <section class="mt-12">
+  <section aria-labelledby="account" class="mt-12 flex flex-col gap-6">
+    <header class="flex flex-col gap-2">
+      <RichText variant="h2" bold id="account" className="font-display text-3xl">
+        {home['account-section'].title}
+      </RichText>
+      <RichText className="text-[var(--text-secondary)]">{home['account-section'].intro}</RichText>
+    </header>
     <FeatureCard
-      headingLevel="h2"
       title={home['account-card'].title}
       description={home['account-card'].description}
       cta={home['account-card'].cta}

@@ -70,6 +70,7 @@ const groups = [
       ...BLOG_ARTICLE_IDS.map((id) => ({
         href: localizedPath(lang, 'blog', id),
         label: getBlogArticle(lang, id).title,
+        badge: common.nav.featured,
       })),
     ],
   },

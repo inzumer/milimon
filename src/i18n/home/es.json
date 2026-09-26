@@ -1,6 +1,6 @@
 {
   "hero": {
-    "subtitle": "Cocina y administración gastronómica en un solo lugar: herramientas para llevar los números de tu negocio, recetas y un blog.",
+    "subtitle": "Cocina y administración gastronómica en un solo lugar: herramientas para llevar los números de tu negocio, recetas y un blog donde comparto la opinión de las cosas que pruebo mientras vivo.",
     "logo-alt": "Milimon: una cocinera con gorro de chef y una cuchara de madera"
   },
   "calculator-card": {
@@ -19,7 +19,7 @@
     "cta": "Empezar a aprender"
   },
   "account-card": {
-    "title": "Tu cuenta",
+    "title": "Iniciá sesión gratis",
     "description": "Iniciá sesión con Google (y pronto con Facebook) y llevá tu configuración, tus cálculos y tu historial a cualquier dispositivo. Es gratis y podés borrar tu cuenta cuando quieras.",
     "cta": "Iniciar sesión"
   },
@@ -28,7 +28,8 @@
     "intro": "Calculá costos, desechos y mermas, y entendé cada fórmula paso a paso con los ejemplos del manual."
   },
   "recipes-card": {
-    "description": "Estamos preparando las primeras recetas, cada una con su costo por porción y sus milicitos."
+    "description": "Estamos preparando las primeras recetas, cada una con su costo por porción y sus milicitos.",
+    "cta": "Leer el blog"
   },
   "recipes-section": {
     "title": "Recetas",
@@ -37,5 +38,9 @@
   "blog-section": {
     "title": "Blog",
     "intro": "Lo que cocinamos, lo que probamos y lo que aprendemos en el camino."
+  },
+  "account-section": {
+    "title": "Tu cuenta",
+    "intro": "Tus preferencias y tus cálculos, en todos tus dispositivos."
   }
 }
