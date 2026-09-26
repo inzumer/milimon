@@ -30,7 +30,7 @@ const pages = (function collect(dir) {
       `/${relative('dist', path)
         .split(sep)
         .join('/')
-        .replace(/\/?index\.html$/, '')}`,
+        .replace(/(\/?index)?\.html$/, '')}`,
     ];
   });
 })('dist');
