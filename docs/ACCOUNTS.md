@@ -29,3 +29,16 @@ disponibles. Cada botón de login aparece solo si su id está configurado.
    `WEB_API_KEY` de la API y los ids de Google/Facebook (con `http://localhost:4321` como origen
    autorizado en ambos).
 3. `pnpm dev` → `/es/login`.
+
+## Roles y administración
+
+- Cada cuenta tiene un rol: **usuario** (todos), **editor** (gestiona el contenido del sitio) o
+  **admin** (contenido y roles). La fuente de verdad es la base de datos de la API.
+- **Primer admin**: en Render, la variable `BOOTSTRAP_ADMIN_EMAILS` (emails separados por coma)
+  convierte en admin a esas personas la primera vez que inician sesión con ese email verificado.
+  Después, los roles se gestionan desde **Administración** (`/es/admin`), no desde la variable.
+- **Administración** (en el menú, solo para editores y admins): la sección de contenido (donde irá
+  el CMS) y, para admins, la lista de cuentas con búsqueda, el cambio de rol con confirmación y el
+  registro de cambios.
+- Reglas (las aplica la API): nadie cambia su propio rol, siempre queda al menos un admin y cada
+  cambio queda registrado con quién lo hizo y cuándo. Detalle en `docs/SECURITY.md` de la API.

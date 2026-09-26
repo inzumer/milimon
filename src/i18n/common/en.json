@@ -35,7 +35,8 @@
     "account": "Your account",
     "signed-in-as": "Signed in as",
     "sign-out": "Sign out",
-    "signed-out-hint": "Keep your settings and calculations in your account."
+    "signed-out-hint": "Keep your settings and calculations in your account.",
+    "admin": "Administration"
   },
   "language": {
     "label": "Language",

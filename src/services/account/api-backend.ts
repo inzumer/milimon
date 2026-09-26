@@ -1,7 +1,15 @@
 import { ACCESS_TOKEN_REFRESH_MARGIN_MS, API_HEADERS } from '@constants';
 import { isDraft, normalizeHistory, type CalculatorDrafts, type HistoryEntry } from '@stores';
 import { HttpError, isLocale, requestJson, type RequestOptions } from '@utils';
-import type { AccountBackend, AccountUser, RemoteProfile } from './account-backend';
+import {
+  isAccountRole,
+  type AccountBackend,
+  type AccountUser,
+  type AdminUser,
+  type AdminUserPage,
+  type RemoteProfile,
+  type RoleChange,
+} from './account-backend';
 import type { AccountConfig } from './account-config';
 import { createSessionStore, type SessionStore, type StoredSession } from './session-store';
 
@@ -44,6 +52,12 @@ export interface ApiBackendOptions {
  * refreshed ahead of expiry (one refresh at a time) and once more on a 401. When the session
  * can't be refreshed it is cleared and `SessionExpiredError` is thrown.
  */
+/** The session user as the API sends it; accounts from before roles existed read as "user". */
+export const toAccountUser = (user: AccountUser): AccountUser => ({
+  ...user,
+  role: isAccountRole(user.role) ? user.role : 'user',
+});
+
 export const createApiBackend = (
   config: AccountConfig,
   { store = createSessionStore(), request = {}, now = Date.now }: ApiBackendOptions = {},
@@ -72,11 +86,12 @@ export const createApiBackend = (
     );
 
   const saveSession = (response: SessionResponse): StoredSession => {
+    const user = toAccountUser(response.user);
     const session: StoredSession = {
       accessToken: response.accessToken,
       refreshToken: response.refreshToken,
       expiresAt: now() + response.expiresIn * 1000,
-      user: response.user,
+      user,
     };
     store.write(session);
     return session;
@@ -173,5 +188,26 @@ export const createApiBackend = (
     deleteHistoryEntry: async (id) => {
       await authed(`/me/history/${encodeURIComponent(id)}`, { method: 'DELETE' });
     },
+    fetchMe: async () => {
+      const user = toAccountUser(await authed<AccountUser>('/me'));
+      const session = store.read();
+      if (session) {
+        store.write({ ...session, user });
+      }
+      return user;
+    },
+    listUsers: async (search, page) => {
+      const query = new URLSearchParams({ page: String(page) });
+      if (search.trim()) {
+        query.set('search', search.trim());
+      }
+      return authed<AdminUserPage>(`/admin/users?${query.toString()}`);
+    },
+    setUserRole: async (userId, role) =>
+      authed<AdminUser>(`/admin/users/${encodeURIComponent(userId)}/role`, {
+        method: 'PATCH',
+        body: { role },
+      }),
+    listRoleChanges: async (page) => authed<RoleChange[]>(`/admin/role-changes?page=${page}`),
   };
 };

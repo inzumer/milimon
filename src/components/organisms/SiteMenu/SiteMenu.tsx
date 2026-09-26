@@ -28,7 +28,12 @@ export interface SiteMenuProps {
   pathname: string;
   groups: SiteMenuGroup[];
   labels: SiteMenuLabels;
-  account: { labels: AccountMenuSectionLabels; loginHref: string; accountHref: string };
+  account: {
+    labels: AccountMenuSectionLabels;
+    loginHref: string;
+    accountHref: string;
+    adminHref: string;
+  };
 }
 
 /**
@@ -75,6 +80,7 @@ export const SiteMenu = ({ lang, pathname, groups, labels, account }: SiteMenuPr
               labels={account.labels}
               loginHref={account.loginHref}
               accountHref={account.accountHref}
+              adminHref={account.adminHref}
             />
             <section aria-labelledby={preferencesId} className="flex flex-col gap-4">
               <SectionLabel id={preferencesId}>{labels.preferences}</SectionLabel>

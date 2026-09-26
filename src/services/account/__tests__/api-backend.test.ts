@@ -10,7 +10,13 @@ const CONFIG = {
   facebookAppId: 'f',
 };
 const NOW = 1_000_000;
-const USER = { id: 'u1', name: 'Ada', email: 'ada@example.com', avatarUrl: null };
+const USER = {
+  id: 'u1',
+  name: 'Ada',
+  email: 'ada@example.com',
+  avatarUrl: null,
+  role: 'user' as const,
+};
 
 const sessionResponse = (suffix = '1') => ({
   accessToken: `access-${suffix}`,
@@ -103,6 +109,47 @@ describe('api backend', () => {
       colorScheme: 'dark',
     });
     expect(calls[0]?.headers['authorization']).toBe('Bearer access-0');
+  });
+
+  it('should read accounts from before roles as plain users', async () => {
+    const { backend, store, queue } = setup();
+    const { role: _role, ...legacy } = USER;
+    queue(reply(200, { ...sessionResponse(), user: legacy }));
+
+    await expect(backend.signInWithGoogle('credential')).resolves.toMatchObject({ role: 'user' });
+    expect(store.read()?.user.role).toBe('user');
+  });
+
+  it('should refresh the signed-in person and keep the stored session in step', async () => {
+    const { backend, store, calls, queue } = setup(fresh);
+    queue(reply(200, { ...USER, role: 'admin' }));
+
+    await expect(backend.fetchMe()).resolves.toMatchObject({ role: 'admin' });
+    expect(calls[0]?.url).toBe('https://api.example.com/me');
+    expect(store.read()?.user.role).toBe('admin');
+  });
+
+  it('should call the admin routes', async () => {
+    const { backend, calls, queue } = setup(fresh);
+    queue(
+      reply(200, { items: [], total: 0, page: 2, pageSize: 20 }),
+      reply(200, { items: [], total: 0, page: 1, pageSize: 20 }),
+      reply(200, { ...USER, role: 'editor', createdAt: '2026-09-27T00:00:00.000Z' }),
+      reply(200, []),
+    );
+
+    await backend.listUsers(' ada ', 2);
+    await backend.listUsers('', 1);
+    await expect(backend.setUserRole('u 1', 'editor')).resolves.toMatchObject({ role: 'editor' });
+    await backend.listRoleChanges(3);
+
+    expect(calls.map((call) => `${call.method} ${call.url}`)).toStrictEqual([
+      'GET https://api.example.com/admin/users?page=2&search=ada',
+      'GET https://api.example.com/admin/users?page=1',
+      'PATCH https://api.example.com/admin/users/u%201/role',
+      'GET https://api.example.com/admin/role-changes?page=3',
+    ]);
+    expect(calls[2]?.body).toStrictEqual({ role: 'editor' });
   });
 
   it('should refresh ahead of expiry, once for concurrent calls', async () => {

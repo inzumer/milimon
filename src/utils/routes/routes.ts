@@ -14,6 +14,7 @@ export const ROUTES = {
   recipes: 'recipes',
   blog: 'blog',
   about: 'about',
+  admin: 'admin',
 } as const;
 
 export type RouteName = keyof typeof ROUTES;
