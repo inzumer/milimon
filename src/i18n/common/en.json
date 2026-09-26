@@ -23,8 +23,9 @@
     "blog-group": "Blog",
     "all-recipes": "All recipes",
     "all-articles": "All articles",
-    "featured": "Featured",
-    "about": "About me"
+    "about": "About me",
+    "new": "New",
+    "featured": "Featured"
   },
   "menu": {
     "open": "Open menu",

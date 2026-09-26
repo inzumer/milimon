@@ -27,6 +27,22 @@ y cada destino culinario (Roma, México, Tokio) con su foto. Para Milimon:
 - Si más adelante hay **talleres o clases** (ver [05](./05-monetizacion.md)), presentarlos como
   experiencias con foto, fecha y cupos, igual que Kubo.
 
+### Filtros (tomados de Kubo)
+
+Kubo filtra su calendario **por mes** con un selector simple, marca cada taller con una **etiqueta
+de estado por color** (disponible, agotándose, agotado) y sus tarjetas muestran foto, fecha, destino,
+título y duración; en los destinos suma el precio y **íconos de alérgenos**. Adaptado a Milimon:
+
+- **Recetas**: filtros en chips por tipo (dulce, salado, panadería), origen o estilo, dificultad,
+  tiempo, costo por porción y **aptitudes** (sin TACC, vegetariana, sin lactosa) con íconos, como
+  los alérgenos de Kubo.
+- **Blog**: por categoría (reseñas, técnicas, viajes, administración) y un archivo **por mes**.
+- **Etiquetas de estado** en las tarjetas con el mismo lenguaje que ya usa el sitio ("Nuevo",
+  "Destacado", "Próximamente") y, en reseñas, los milicitos.
+- **Tarjetas** con foto, título, tiempo o fecha y el dato clave (costo por porción o puntaje).
+- Filtros que se reflejan en la URL (`?tipo=dulce`) para poder compartirlos y que Google los indexe
+  cuando convenga.
+
 ## Calendario editorial (sugerido)
 
 - 1 receta por semana (alternando dulce y salado).
