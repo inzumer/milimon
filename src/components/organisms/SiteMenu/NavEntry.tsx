@@ -35,18 +35,21 @@ export const NavEntry = ({ item, pathname }: { item: SiteMenuItem; pathname: str
         id={linkId(item.href)}
         href={item.href}
         aria-current={current ? 'page' : undefined}
-        className={cn(navLinkStyles({ active: inSection }), item.badge && 'gap-2')}
+        className={navLinkStyles({ active: inSection })}
       >
-        {item.label}
-        {item.badge && (
-          <RichText
-            variant="s4"
-            bold
-            className="rounded-full bg-primary-500 px-2 py-0.5 tracking-wide text-neutral-950 uppercase"
-          >
-            {item.badge}
-          </RichText>
-        )}
+        {/* One inline run, so the pill follows the last word even when the label wraps. */}
+        <RichText as="span" variant="s1" className="font-semibold text-inherit">
+          {item.label}
+          {item.badge && (
+            <RichText
+              variant="s4"
+              bold
+              className="ml-1.5 inline-block rounded-full bg-primary-500 px-2 py-0.5 align-middle tracking-wide whitespace-nowrap text-neutral-950 uppercase"
+            >
+              {item.badge}
+            </RichText>
+          )}
+        </RichText>
       </a>
     );
   }
