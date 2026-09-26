@@ -1,7 +1,3 @@
-/*
- * Global stylesheet — Tailwind v4 + @inzumer/tokens + Milimon theme.
- * Order matters: tokens variables first, then theme.css overrides them (same specificity, later wins).
- */
 @import 'tailwindcss';
 @import '@inzumer/tokens/css/reset' layer(base);
 @import '@inzumer/tokens/css/variables';
@@ -12,5 +8,4 @@
 
 @config '../../tailwind.config.ts';
 
-/* ui-library ships Tailwind class names (no CSS), so its dist must be scanned. */
 @source '../../node_modules/@inzumer/ui-library/dist';

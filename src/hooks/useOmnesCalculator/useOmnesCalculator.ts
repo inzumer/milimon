@@ -5,7 +5,7 @@ import { parseDecimal, track, type Locale } from '@utils';
 import { formatInputValue } from '@utils/format-value';
 import { calculateOmnesRules } from '@utils/formulas/omnes-rules';
 
-/** 16 cakes between $ 40 and $ 115 with the balanced 4 / 8 / 4 split the manual describes. */
+/** 16 cakes between $ 40 and $ 115 with a balanced 4 / 8 / 4 split. */
 export const OMNES_EXAMPLE = {
   id: 'sixteen-cakes',
   prices: [40, 50, 55, 65, 70, 72, 75, 78, 80, 85, 88, 90, 95, 100, 110, 115],
@@ -63,7 +63,6 @@ export const useOmnesCalculator = ({ lang }: { lang: Locale }) => {
   }, [prices, averageTicket, dailySpecialPrice, lang]);
 
   return {
-    /** Raw values as saved (for the history). */
     draft,
     currency,
     prices,
@@ -75,7 +74,6 @@ export const useOmnesCalculator = ({ lang }: { lang: Locale }) => {
     list,
     result: result.ok && list.invalid.length === 0 ? result : null,
     errors: result.ok ? [] : result.errors,
-    /** Error code of an optional field, once the person left it: unreadable number or domain rule. */
     optionalError: (key: OptionalField): string | undefined => {
       if (!touchedOptional.has(key)) {
         return undefined;

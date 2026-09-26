@@ -3,8 +3,8 @@ import type { FormulaId } from '@utils/formulas';
 import type { Locale } from '@utils/locale';
 
 /**
- * "Learn" topics, in reading order: restaurant management content behind the calculators (the
- * manual's HR, marketing and communication units are out of scope). The id is the route slug and
+ * "Learn" topics, in reading order: restaurant management content behind the calculators. The id
+ * is the route slug and
  * the translation folder (`src/i18n/learn/<id>/`); `related` links each topic to its formulas.
  */
 export const LEARN_TOPICS = [

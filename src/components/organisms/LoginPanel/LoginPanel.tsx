@@ -226,7 +226,6 @@ export const LoginPanel = ({
               id={trackingId('login', 'button', 'facebook')}
               type="button"
               variant="secondary"
-              // Same pill as Google's button: logo pinned at the start, text centered.
               className="relative min-h-10 max-w-full justify-center rounded-full px-12 text-sm font-medium"
               style={{ width: PROVIDER_BUTTON_WIDTH }}
               disabled={signingIn || !facebookAppId}

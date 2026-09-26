@@ -22,7 +22,6 @@ interface Props {
   description?: string | undefined;
   noindex?: boolean;
   ogSection?: OgSection;
-  /** Links before the current page (Home first); the current one is `title`. */
   breadcrumbs?: BreadcrumbTrailItem[];
   structuredData?: StructuredData[];
   article?: { publishedTime: string; authorUrl: string };
@@ -39,13 +38,10 @@ const {
   article,
 } = Astro.props;
 const common = getTranslations(lang, 'common');
-// Analytics (and its consent banner) only exist when a GA4 measurement ID is configured.
 const analyticsEnabled = isContainerId(import.meta.env.PUBLIC_GTM_ID);
-// Public pages end with "Share this page" (its canonical URL and full title).
 const pathname = canonicalPath(Astro.url.pathname);
 const shareUrl = new URL(pathname, Astro.site ?? Astro.url).href;
 const shareTitle = title ? `${title} · ${common['app-name']}` : common['app-name'];
-// Breadcrumbs are declared once: drawn above the content and described for search engines.
 const breadcrumbLabel = getTranslations(lang, 'formula-page').breadcrumbs.label;
 const schemas = [
   ...(breadcrumbs && title && !noindex
@@ -113,7 +109,6 @@ const schemas = [
     }
   });
 
-  // Signed-in people get their profile synced on every page; guests never call the API.
   if (hasStoredSession()) {
     getAccountSession()
       ?.sync.start()

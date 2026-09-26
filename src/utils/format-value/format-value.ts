@@ -6,7 +6,7 @@ export interface FormatContext {
   currency: string;
 }
 
-/** Decimal places per kind, matching how the manual writes each value (1,429 · 51,429 kg · 1,42). */
+/** Decimal places per kind (factor 1,333 · weight 25,600 kg · rate 1,4171). */
 const MAX_DECIMALS: Partial<Record<ValueKind, number>> = {
   weight: 3,
   factor: 3,

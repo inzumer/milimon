@@ -23,21 +23,15 @@ export type SignInOutcome = 'restored' | 'created' | 'needs-migration';
 
 export interface AccountSyncOptions {
   backend: AccountBackend;
-  /** Remembers, per browser session, that the remote profile was already pulled. */
   session: KeyValueStorage | null;
   debounceMs?: number;
 }
 
 export interface AccountSync {
-  /** Pulls the profile (once per session) and starts pushing changes. `null` when signed out. */
   start: () => Promise<{ user: AccountUser; outcome: SignInOutcome } | null>;
-  /** First sign-in: keeps this device's data and saves it to the new profile. */
   importLocal: () => Promise<void>;
-  /** First sign-in: discards this device's data and starts an empty profile. */
   startFresh: () => Promise<void>;
-  /** Signs out and removes the person's data from this device. */
   signOut: () => Promise<void>;
-  /** Deletes the account and removes the person's data from this device. */
   deleteAccount: () => Promise<void>;
   stop: () => void;
 }
@@ -110,7 +104,6 @@ export const createAccountSync = ({
       const before = new Set(previous.entries.map((entry) => entry.id));
       const added = entries.filter((entry) => !before.has(entry.id));
       added.forEach((entry) => backend.saveHistoryEntry(entry).catch(report));
-      // An entry that falls off the end when adding is trimmed by the API as well.
       if (added.length === 0) {
         const after = new Set(entries.map((entry) => entry.id));
         previous.entries
@@ -139,7 +132,6 @@ export const createAccountSync = ({
         backend.saveDraft(formulaId, draft),
       ),
     );
-    // Oldest first, so the server keeps the same latest entries if it has to trim.
     for (const entry of [...useHistoryStore.getState().entries].reverse()) {
       await backend.saveHistoryEntry(entry);
     }

@@ -55,7 +55,6 @@ describe('SavedCalculation', () => {
   });
 
   it('should show a message instead of breaking on an unknown saved formula', () => {
-    // React reports the caught render error; the boundary is the behavior under test.
     const error = vi.spyOn(console, 'error').mockImplementation(() => undefined);
     renderEntry({ ...wasteFactorEntry(), formulaId: 'retired-formula' }, 'waste-factor');
     expect(screen.getByRole('alert')).toHaveTextContent('No se puede mostrar este cálculo');

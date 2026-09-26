@@ -12,7 +12,6 @@ interface Props {
 const { lang } = Astro.props;
 const common = getTranslations(lang, 'common');
 const year = new Date().getFullYear();
-// Without Tag Manager there are no optional cookies to choose.
 const analyticsEnabled = isContainerId(import.meta.env.PUBLIC_GTM_ID);
 const [beforeAuthor, afterAuthor] = common.footer.disclaimer.split('{author}');
 const linkClass =

@@ -35,7 +35,6 @@ describe('income-statement (the café example)', () => {
     }
     expect(result.value.totalSales).toBe(1_570_000);
     expect(result.value.costOfSales).toBe(440_000);
-    // 95.000 + 42.750 + 60.000 + 22.000 + 70.000 + 100.000 + 314.000 + 3.100.
     expect(result.value.operatingCosts).toBe(706_850);
     expect(result.value.fixedCosts).toBe(392_850);
     expect(result.value.resultBeforeIncomeTax).toBe(423_150);
@@ -69,7 +68,6 @@ describe('break-even (the café example)', () => {
     if (!result.ok) {
       return;
     }
-    // 1.570.000 − 462.102,50; 1.570.000 / net; 440.000 / net; 1 − variable rate.
     expect(result.value.netSales).toBeCloseTo(1_107_897.5, 2);
     expect(result.value.taxRate).toBeCloseTo(1.4171, 4);
     expect(result.value.variableCostRate).toBeCloseTo(0.3971, 4);
@@ -230,7 +228,6 @@ describe('floor-area (café with 32 covers)', () => {
 
 describe('rent-check (≤ 10 %, optimal 5 %)', () => {
   it('should evaluate the rent share of net sales', () => {
-    // 60.000 / 1.107.897,50 × 100 = 5,42 %.
     const result = calculateRentCheck({ rent: 60_000, netSales: 1_107_897.5 });
     expect(result.ok && result.value.rentShare).toBeCloseTo(5.42, 2);
     expect(result.ok && result.value.status).toBe('acceptable');

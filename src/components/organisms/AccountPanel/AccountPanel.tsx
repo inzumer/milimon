@@ -77,7 +77,6 @@ export const AccountPanel = ({
       return;
     }
     void refresh();
-    // Sign-in or sign-out in another tab.
     return session.backend.onUserChange(() => void refresh());
   }, [refresh]);
 

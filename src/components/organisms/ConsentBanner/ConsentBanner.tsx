@@ -21,7 +21,6 @@ export interface ConsentBannerProps {
  */
 export const ConsentBanner = ({ labels, privacyHref }: ConsentBannerProps) => {
   const consent = useSettingsStore((state) => state.analyticsConsent);
-  // Hidden on the server and until hydration, so people who already answered never see a flash.
   const hydrated = useHydrated();
   const [preferencesOpen, setPreferencesOpen] = useState(false);
   const [analyticsDraft, setAnalyticsDraft] = useState(false);

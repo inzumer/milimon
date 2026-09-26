@@ -86,7 +86,6 @@ export const createApiBackend = (
     refreshing ??= call<SessionResponse>(
       '/auth/refresh',
       { method: 'POST', body: { refreshToken: session.refreshToken } },
-      // A refresh token works once: never resend one the server may already have used.
       { retryAmbiguous: false },
     )
       .then(saveSession)
@@ -136,7 +135,6 @@ export const createApiBackend = (
       const session = store.read();
       store.clear();
       if (session) {
-        // Best effort: the session is already gone from this device.
         await call('/auth/sign-out', {
           method: 'POST',
           body: { refreshToken: session.refreshToken },

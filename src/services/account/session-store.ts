@@ -5,7 +5,6 @@ import type { AccountUser } from './account-backend';
 export interface StoredSession {
   accessToken: string;
   refreshToken: string;
-  /** Epoch milliseconds. */
   expiresAt: number;
   user: AccountUser;
 }

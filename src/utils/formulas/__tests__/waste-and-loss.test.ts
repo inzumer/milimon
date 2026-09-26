@@ -15,7 +15,6 @@ describe('waste-percentage (pumpkin: 2,800 kg bruto → 1,960 kg neto)', () => {
     if (!result.ok) {
       return;
     }
-    // 2,800 − 1,960 = 0,840 kg; 0,840 / 2,800 × 100 = 30 %.
     expect(result.value.wasteWeight).toBeCloseTo(0.84, 10);
     expect(result.value.wastePercentage).toBeCloseTo(30, 10);
     expect(result.steps.map((step) => step.id)).toStrictEqual(['waste-weight', 'waste-percentage']);
@@ -44,7 +43,6 @@ describe('waste-factor (whole salmon: 25 % → 1,333)', () => {
   it('should compute the factor with the first formula', () => {
     const result = calculateWasteFactor({ wastePercentage: 25 });
     expect(result.ok && result.value.usablePercentage).toBe(75);
-    // 25 / 75 + 1 = 1,3333…
     expect(result.ok && result.value.wasteFactor).toBeCloseTo(1.333333, 6);
   });
 
@@ -73,7 +71,6 @@ describe('gross-quantity (salmon for 120 covers, 0,160 kg, 25 %)', () => {
     if (!result.ok) {
       return;
     }
-    // 120 × 0,160 = 19,2 kg; 19,2 / 0,75 = 25,6 kg; rounded up to 26 kg.
     expect(result.value.netRequired).toBeCloseTo(19.2, 10);
     expect(result.value.grossQuantity).toBeCloseTo(25.6, 10);
     expect(result.value.purchaseQuantity).toBe(26);
@@ -82,7 +79,6 @@ describe('gross-quantity (salmon for 120 covers, 0,160 kg, 25 %)', () => {
 
   it('should show why adding the waste % is not enough', () => {
     const result = calculateGrossQuantity(input);
-    // 19,2 kg + 25 % = 24 kg, and cleaning that yields only 18 kg (< 19,2 kg).
     expect(result.ok && result.value.naiveQuantity).toBeCloseTo(24, 10);
     expect(24 * 0.75).toBeLessThan(19.2);
   });
