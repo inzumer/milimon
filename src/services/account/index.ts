@@ -6,11 +6,12 @@ export {
   type RemoteProfile,
 } from './account-backend';
 export {
-  AUTH_STORAGE_KEY,
   hasStoredSession,
   readAccountConfig,
   type AccountConfig,
+  type AccountEnv,
 } from './account-config';
+export { getAccountSession, resetAccountSession, type AccountSession } from './account-session';
 export {
   createAccountSync,
   toRemoteProfile,
@@ -18,4 +19,6 @@ export {
   type AccountSyncOptions,
   type SignInOutcome,
 } from './account-sync';
-export { getAccountSession, resetAccountSession, type AccountSession } from './account-session';
+export { createApiBackend, SessionExpiredError, type ApiBackendOptions } from './api-backend';
+export * from './providers';
+export { createSessionStore, type SessionStore, type StoredSession } from './session-store';

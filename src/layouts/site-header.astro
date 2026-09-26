@@ -3,7 +3,6 @@ import { Image } from 'astro:assets';
 import logo from '@assets/logo.png';
 import { SiteMenu } from '@components';
 import { getFormulaTranslation, getLearnTopic, getTranslations, LEARN_TOPIC_IDS } from '@i18n';
-import { readAccountConfig } from '@services';
 import { localizedPath, type Locale } from '@utils';
 import { FORMULA_IDS } from '@utils/formulas';
 
@@ -41,9 +40,7 @@ const items = [
     ],
   },
   { href: localizedPath(lang, 'history'), label: common.nav.history },
-  ...(readAccountConfig(import.meta.env)
-    ? [{ href: localizedPath(lang, 'account'), label: common.nav.account }]
-    : []),
+  { href: localizedPath(lang, 'account'), label: common.nav.account },
 ];
 
 const labels = {

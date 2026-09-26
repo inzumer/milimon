@@ -9,6 +9,7 @@ export const ROUTES = {
   privacy: 'privacy',
   terms: 'terms',
   account: 'account',
+  login: 'login',
   history: 'history',
 } as const;
 

@@ -49,6 +49,8 @@ entregable
 entrá
 esperás
 estudiá
+facebook
+fedcm
 firestore
 galette
 gitflow
@@ -100,17 +102,21 @@ recalculan
 rechazá
 rechazás
 redireccionamiento
+redirecciones
 redondeá
 redondeás
 reformularlo
+reintenta
 renderizan
 reprocesar
 republicarlos
+rerequest
 respondés
 restalo
 restá
 revisalos
 revisá
+reúso
 rodenticides
 sabés
 sachertorte
@@ -142,4 +148,6 @@ valorizalo
 vendés
 verificá
 volcá
+volvé
 wght
+xfbml

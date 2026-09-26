@@ -28,7 +28,7 @@
       "heading": "Accounts (optional)",
       "paragraphs": [
         "If you sign in with Google or Facebook, we store your name, email and profile picture as the provider shares them, to show who is signed in. We never see or store your password.",
-        "Your profile keeps your currency, language and theme, and the latest values of each calculator, so they follow you to any device. The data is hosted on Supabase and each row can only be read by its owner.",
+        "Your profile keeps your currency, language and theme, the latest values of each calculator and your calculation history, so they follow you to any device. The data lives on our server (API hosted on Render, database on Neon), travels encrypted and only you can access yours.",
         "We don't sell or share this data and we don't use it for advertising."
       ]
     },

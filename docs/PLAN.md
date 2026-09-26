@@ -452,11 +452,11 @@ el plan premium sobre las cuentas de F10.
 
 ## 10. Cuentas y perfiles (fase final) — hecho
 
-> Implementado según [ADR 0003](adr/0003-accounts-with-supabase.md): Supabase con PKCE, sincronización
-> offline-first, migración de datos locales en el primer inicio, página `/[lang]/account` (cerrar
-> sesión, borrar cuenta), términos, privacidad con instrucciones de borrado y guía de
-> configuración en [ACCOUNTS.md](ACCOUNTS.md). Las recetas guardadas viajan como borradores del
-> costeo de recetas; el historial de cálculos se suma como §10 bis.
+> Implementado con una API propia en otro repositorio ([ADR 0004](adr/0004-accounts-api.md)):
+> [api-milimon-cost-lab](https://github.com/inzumer/api-milimon-cost-lab) (NestJS + PostgreSQL), login
+> con Google Identity Services y Facebook Login, sincronización offline-first, páginas `/login` y
+> `/account`, términos, privacidad con instrucciones de borrado. Configuración en
+> [ACCOUNTS.md](ACCOUNTS.md). (La primera versión con Supabase, ADR 0003, quedó reemplazada.)
 
 Objetivo: que cualquier persona, en cualquier país, guarde su configuración (moneda, formato,
 idioma, tema), sus recetas y sus cálculos en un perfil propio.
@@ -464,9 +464,8 @@ idioma, tema), sus recetas y sus cálculos en un perfil propio.
 - **Login con Google y Facebook** (OAuth), con un botón "Iniciar sesión" en la home y en el header/menú.
 - **La app sigue funcionando sin cuenta** (modo invitado con `localStorage`). Al iniciar sesión por
   primera vez se ofrece migrar lo guardado localmente al perfil.
-- Propuesta técnica: **Supabase** (Auth con Google y Facebook + Postgres con Row Level Security:
-  cada usuario solo ve sus propios datos). El SDK funciona desde el navegador, así que el sitio
-  sigue siendo estático, sin SSR. Alternativa equivalente: Firebase Auth + Firestore.
+- Backend en su propio repo, con las convenciones de `api-zamuner`: NestJS + PostgreSQL + TypeORM,
+  en Render (gratis) con la base en Neon (gratis). El front sigue siendo estático.
 - Tablas iniciales: `profiles` (moneda, locale, idioma, tema), `recipes` (+ ingredientes),
   `saved_calculations` (herramienta, inputs, fecha).
 - Requisitos que hay que prever:
@@ -488,7 +487,7 @@ idioma, tema), sus recetas y sus cálculos en un perfil propio.
 - **Hasta 15 cálculos**; al guardar el 16.º se descarta el más viejo. El límite se aplica en el
   cliente (`HISTORY_LIMIT`) y en la base (trigger).
 - Funciona **sin cuenta** (`localStorage`) y se sincroniza con la cuenta igual que la
-  configuración (migración `supabase/migrations/*_calculation_history.sql`).
+  configuración (tabla `history_entry` en la API).
 - Página `/[lang]/history` (en el menú): fecha, fórmula y resultado principal; "Ver la cuenta
   completa" la muestra con los mismos componentes que la calculadora; "Abrir en la calculadora"
   recarga los valores; "Borrar".

@@ -28,7 +28,7 @@
       "heading": "Cuentas (opcional)",
       "paragraphs": [
         "Si iniciás sesión con Google o Facebook, guardamos tu nombre, tu correo y tu foto de perfil tal como los comparte el proveedor, para mostrarte quién tiene la sesión iniciada. Nunca vemos ni guardamos tu contraseña.",
-        "En tu perfil guardamos tu moneda, idioma y tema, y los últimos valores de cada calculadora, para que te sigan a cualquier dispositivo. Los datos se alojan en Supabase y cada fila solo puede leerla su dueño.",
+        "En tu perfil guardamos tu moneda, idioma y tema, los últimos valores de cada calculadora y tu historial de cálculos, para que te sigan a cualquier dispositivo. Los datos se guardan en nuestro servidor (API alojada en Render, base de datos en Neon), viajan cifrados y solo vos podés acceder a los tuyos.",
         "No vendemos ni compartimos estos datos, y no los usamos para publicidad."
       ]
     },

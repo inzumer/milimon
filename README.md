@@ -51,12 +51,13 @@ solo, sin configuración.
 
 Variables de entorno (ver `.env.example`):
 
-| Variable                          | Para qué                                                                               |
-| --------------------------------- | -------------------------------------------------------------------------------------- |
-| `SITE_URL`                        | URL pública: canónicas, `hreflang`, sitemap y Open Graph (obligatoria en producción)   |
-| `PUBLIC_GTM_ID`                   | Contenedor de Google Tag Manager (`GTM-…`). Vacío = sin analítica ni banner de cookies |
-| `PUBLIC_SUPABASE_URL`             | URL del proyecto de Supabase (cuentas). Vacío = sin login                              |
-| `PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Clave publicable de Supabase (pública por diseño; los datos se protegen con RLS)       |
+| Variable                                             | Para qué                                                                                                                           |
+| ---------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| `SITE_URL`                                           | URL pública: canónicas, `hreflang`, sitemap y Open Graph (obligatoria en producción)                                               |
+| `PUBLIC_GTM_ID`                                      | Contenedor de Google Tag Manager (`GTM-…`). Vacío = sin analítica ni banner de cookies                                             |
+| `PUBLIC_API_URL`                                     | URL de la API de cuentas ([api-milimon-cost-lab](https://github.com/inzumer/api-milimon-cost-lab)). Vacío = cuentas no disponibles |
+| `PUBLIC_API_KEY` / `PUBLIC_API_APP_ID`               | Identificación del cliente ante la API (públicas por diseño)                                                                       |
+| `PUBLIC_GOOGLE_CLIENT_ID` / `PUBLIC_FACEBOOK_APP_ID` | Botones de login; cada uno aparece solo si está configurado                                                                        |
 
 Para activar el login con Google y Facebook, seguí [docs/ACCOUNTS.md](docs/ACCOUNTS.md).
 
@@ -72,11 +73,9 @@ src/
   utils/        funciones puras: fórmulas + registry, cálculo, formato, tracking…
   constants/    valores ajustables
   repositories/ persistencia (configuración, borradores) detrás de interfaces
-  services/     integraciones externas (Google Analytics, cuentas con Supabase)
+  services/     integraciones externas (API de cuentas, Google Tag Manager, SDKs de login)
   i18n/         traducciones en carpetas kebab-case: <carpeta>/{es,en}.json
   styles/ assets/ test/
-supabase/
-  migrations/   tablas y políticas RLS de las cuentas
 docs/
   PLAN.md       plan maestro
   adr/          decisiones de arquitectura
