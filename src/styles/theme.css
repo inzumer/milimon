@@ -56,6 +56,7 @@
   --text-tertiary: rgb(var(--color-neutral-600));
   --text-disabled: rgb(var(--color-neutral-400));
   --text-inverse: rgb(var(--color-neutral-50));
+  --text-accent: rgb(var(--color-primary-800));
   --text-link: rgb(var(--color-primary-800));
   --text-link-hover: rgb(var(--color-primary-900));
 
@@ -103,6 +104,7 @@
   --text-tertiary: rgb(var(--color-neutral-400));
   --text-disabled: rgb(var(--color-neutral-600));
   --text-inverse: rgb(var(--color-neutral-950));
+  --text-accent: rgb(var(--color-primary-400));
   --text-link: rgb(var(--color-primary-400));
   --text-link-hover: rgb(var(--color-primary-300));
 

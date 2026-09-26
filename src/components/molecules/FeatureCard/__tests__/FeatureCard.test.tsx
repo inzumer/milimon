@@ -23,4 +23,9 @@ describe('FeatureCard', () => {
     render(<FeatureCard {...props} headingLevel="h2" highlighted />);
     expect(screen.getByRole('heading', { level: 2, name: 'Calculadora' })).toBeInTheDocument();
   });
+
+  it('should show a pill above the title when given a badge', () => {
+    render(<FeatureCard {...props} badge="Destacado" />);
+    expect(screen.getByText('Destacado')).toBeInTheDocument();
+  });
 });

@@ -5,7 +5,7 @@
     "title": "Recipes",
     "description": "Recipes for professional kitchens, with their cost per portion worked out and ready to adapt to your menu."
   },
-  "meanwhile": "Meanwhile, you can use the calculator or review the formulas.",
+  "meanwhile": "Meanwhile, read the blog or use the calculator.",
   "calculator-cta": "Go to the calculator",
-  "formulas-cta": "See formulas"
+  "blog-cta": "Read the blog"
 }
