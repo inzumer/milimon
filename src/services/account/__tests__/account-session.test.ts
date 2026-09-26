@@ -16,7 +16,9 @@ describe('account session', () => {
 
   it('should be null when accounts are not configured', () => {
     expect(getAccountSession(null)).toBeNull();
+    vi.stubEnv('PUBLIC_API_URL', '');
     expect(getAccountSession()).toBeNull();
+    vi.unstubAllEnvs();
   });
 
   it('should create the backend once and share the session', () => {

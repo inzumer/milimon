@@ -1,10 +1,10 @@
-# Milimon Cost Lab — Plan de implementación
+# Milimon — Plan de implementación
 
 App web para calcular costos, desechos y mermas en gastronomía, con explicación de cada fórmula.
 Bilingüe (`/es`, `/en`), modo claro y oscuro, mobile-first, construida con Astro + islas de React
 sobre `@inzumer/ui-library` + `@inzumer/tokens` personalizados con la identidad de Milimon.
 
-- **Título de la app:** `Milimon Cost Lab` (nombre de la carpeta del proyecto, `milimon-cost-lab`).
+- **Título de la app:** `Milimon` (nombre de la carpeta del proyecto, `milimon`).
 - **Fuente de verdad del contenido:** `AyG- Manual.pdf` (Administración y Gestión gastronómica).
   Cuando el manual y `FORMULAS 2026.xlsx` no coinciden, **gana el manual**. El Excel es solo una referencia.
 - **Tono:** es un **manual de estudio**. Cada fórmula se explica completa: de dónde sale, qué
@@ -148,7 +148,7 @@ slugs y claves de i18n. Los componentes React mantienen PascalCase, como en ui-l
 
 - Mobile-first: un único layout hasta **1024px**.
 - `≥ 1024px`: contenedor centrado con `max-width: 1024px` (mismo diseño, centrado).
-- Header fijo: logo + "Milimon Cost Lab" (Lobster Two) + botón hamburguesa, en todos los tamaños.
+- Header fijo: logo + "Milimon" (Lobster Two) + botón hamburguesa, en todos los tamaños.
 
 ---
 
@@ -253,7 +253,7 @@ Ejemplo de `formulas/cooking-loss/es.json`:
 
 ### Home
 
-- Hero: logo + "Milimon Cost Lab" + bajada.
+- Hero: logo + "Milimon" + bajada.
 - **Card destacada → Calculadora** (fondo primario, texto marrón).
 - Cards secundarias: Fórmulas y secciones de "Aprender" (`Card` de la lib, estático).
 
@@ -451,7 +451,7 @@ el plan premium sobre las cuentas de F10.
 ## 10. Cuentas y perfiles (fase final) — hecho
 
 > Implementado con una API propia en otro repositorio ([ADR 0004](adr/0004-accounts-api.md)):
-> [api-milimon-cost-lab](https://github.com/inzumer/api-milimon-cost-lab) (NestJS + PostgreSQL), login
+> [api-milimon](https://github.com/inzumer/api-milimon) (NestJS + PostgreSQL), login
 > con Google Identity Services y Facebook Login, sincronización offline-first, páginas `/login` y
 > `/account`, términos, privacidad con instrucciones de borrado. Configuración en
 > [ACCOUNTS.md](ACCOUNTS.md). (La primera versión con Supabase, ADR 0003, quedó reemplazada.)

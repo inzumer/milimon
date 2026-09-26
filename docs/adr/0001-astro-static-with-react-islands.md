@@ -5,7 +5,7 @@
 
 ## Context
 
-Milimon Cost Lab is mostly static study content (explanations, formulas, worked examples) plus a
+Milimon is mostly static study content (explanations, formulas, worked examples) plus a
 set of interactive calculators. It must be bilingual (`/es`, `/en`), fast on mobile, SEO-friendly,
 and reuse `@inzumer/ui-library` (React) with its Tailwind/tokens conventions.
 

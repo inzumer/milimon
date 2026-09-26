@@ -50,7 +50,7 @@ const html = ({ tagline, detail }) => `<!doctype html>
 </style></head><body>
   <img src="${logo}" alt="">
   <div>
-    <h1>Milimon Cost Lab</h1>
+    <h1>Milimon</h1>
     <p class="tagline">${tagline}</p>
     <p class="detail">${detail}</p>
   </div>

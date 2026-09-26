@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { Button } from '@inzumer/ui-library';
+import { Button, Image, RichText } from '@inzumer/ui-library';
+import facebookIcon from '@assets/facebook.png';
 import { ButtonLink } from '@components/atoms/ButtonLink';
 import { MigrationPrompt } from '@components/molecules/MigrationPrompt';
 import { API_SLOW_REQUEST_MS } from '@constants';
@@ -162,26 +163,30 @@ export const LoginPanel = ({
   };
 
   const status = notice && (
-    <p role="alert" className="rounded-lg bg-[var(--surface-secondary)] p-4">
+    <RichText role="alert" className="rounded-lg bg-[var(--surface-secondary)] p-4">
       {notice}
-    </p>
+    </RichText>
   );
 
   switch (view.kind) {
     case 'loading':
-      return <p aria-busy="true">{labels.loading}</p>;
+      return <RichText aria-busy="true">{labels.loading}</RichText>;
 
     case 'unavailable':
-      return <p className="rounded-lg bg-[var(--surface-secondary)] p-4">{labels.unavailable}</p>;
+      return (
+        <RichText className="rounded-lg bg-[var(--surface-secondary)] p-4">
+          {labels.unavailable}
+        </RichText>
+      );
 
     case 'signed-in':
       return (
         <div className="flex flex-col items-start gap-4">
-          <p>
+          <RichText>
             {interpolate(labels['already-signed-in'], {
               name: view.user.name ?? view.user.email ?? '',
             })}
-          </p>
+          </RichText>
           <ButtonLink id={trackingId('login', 'link', 'account')} href={accountHref}>
             {labels['go-to-account']}
           </ButtonLink>
@@ -208,7 +213,7 @@ export const LoginPanel = ({
       return (
         <div className="flex flex-col gap-5">
           {status}
-          <p>{labels.intro}</p>
+          <RichText>{labels.intro}</RichText>
           <div className="flex flex-col items-start gap-3" aria-busy={signingIn}>
             {googleClientId && (
               <div
@@ -233,14 +238,26 @@ export const LoginPanel = ({
                   )
                 }
               >
+                <Image
+                  src={facebookIcon.src}
+                  alt=""
+                  aria-hidden="true"
+                  fit="contain"
+                  lazy={false}
+                  width={20}
+                  height={20}
+                  className="size-[1.25em] shrink-0"
+                />
                 {labels['continue-with-facebook']}
               </Button>
             )}
           </div>
           {signingIn && (
-            <p role="status">{view.slow ? labels['waking-up'] : labels['signing-in']}</p>
+            <RichText role="status">
+              {view.slow ? labels['waking-up'] : labels['signing-in']}
+            </RichText>
           )}
-          <p className="text-sm text-[var(--text-secondary)]">
+          <RichText variant="p3" className="text-[var(--text-secondary)]">
             {labels.legal.split(/(\{terms\}|\{privacy\})/).map((part) =>
               part === '{terms}' ? (
                 <a
@@ -264,7 +281,7 @@ export const LoginPanel = ({
                 part
               ),
             )}
-          </p>
+          </RichText>
         </div>
       );
     }

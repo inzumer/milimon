@@ -8,7 +8,7 @@
 
 La primera versión de las cuentas usaba Supabase directo desde el navegador. Se decidió que el
 backend viva en **su propio repositorio**, con las convenciones de las otras APIs (`api-zamuner`,
-`api-store`): [`api-milimon-cost-lab`](https://github.com/inzumer/api-milimon-cost-lab), NestJS +
+`api-store`): [`api-milimon`](https://github.com/inzumer/api-milimon), NestJS +
 PostgreSQL. Este repo queda solo con el front (sitio estático en GitHub Pages).
 
 ## Decisión
