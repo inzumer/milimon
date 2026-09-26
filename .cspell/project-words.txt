@@ -152,3 +152,5 @@ volcá
 volvé
 wght
 xfbml
+partialize
+zustand

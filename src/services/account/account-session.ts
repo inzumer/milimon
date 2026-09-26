@@ -1,8 +1,3 @@
-import {
-  createLocalCalculationsRepository,
-  createLocalHistoryRepository,
-  createLocalSettingsRepository,
-} from '@repositories';
 import { getBrowserStorage } from '@utils';
 import type { AccountBackend } from './account-backend';
 import { readAccountConfig, type AccountConfig } from './account-config';
@@ -35,9 +30,6 @@ export const getAccountSession = (
       backend,
       sync: createAccountSync({
         backend,
-        settings: createLocalSettingsRepository(),
-        calculations: createLocalCalculationsRepository(),
-        history: createLocalHistoryRepository(),
         session: getBrowserStorage('session'),
       }),
     };

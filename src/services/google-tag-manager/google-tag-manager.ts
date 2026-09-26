@@ -1,5 +1,5 @@
 import { CONSENT_WAIT_FOR_UPDATE_MS, GTM_CONTAINER_ID_PATTERN, GTM_SCRIPT_URL } from '@constants';
-import { onSettingsChange, type AnalyticsConsent, type SettingsRepository } from '@repositories';
+import { useSettingsStore, type AnalyticsConsent } from '@stores';
 import { setAnalyticsSink } from '@utils';
 
 type Gtag = (...args: unknown[]) => void;
@@ -69,14 +69,15 @@ export const createTagManager = (containerId: string): TagManager => {
  * Starts GTM on a page: applies the stored consent and follows later changes (banner or privacy
  * page). Does nothing without a valid container id. Returns the unsubscribe function.
  */
-export const startTagManager = (
-  containerId: unknown,
-  settings: SettingsRepository,
-): (() => void) => {
+export const startTagManager = (containerId: unknown): (() => void) => {
   if (!isContainerId(containerId)) {
     return () => undefined;
   }
   const tagManager = createTagManager(containerId);
-  tagManager.applyConsent(settings.load().analyticsConsent);
-  return onSettingsChange((next) => tagManager.applyConsent(next.analyticsConsent));
+  tagManager.applyConsent(useSettingsStore.getState().analyticsConsent);
+  return useSettingsStore.subscribe((next, previous) => {
+    if (next.analyticsConsent !== previous.analyticsConsent) {
+      tagManager.applyConsent(next.analyticsConsent);
+    }
+  });
 };

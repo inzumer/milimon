@@ -4,7 +4,7 @@ import type { FieldErrorCode } from '@hooks/useFormulaCalculator';
 import type { CalculatorText } from '@i18n/formula-text';
 import { formulaText, toKebabCase } from '@i18n/formula-text';
 import type { Translations } from '@i18n/translations';
-import type { CalculatorDraft } from '@repositories';
+import type { CalculatorDraft } from '@stores';
 import { interpolate, trackingId } from '@utils';
 import type { InputDefinition } from '@utils/formulas';
 

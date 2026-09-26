@@ -1,32 +1,29 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { act } from 'react';
-import { createLocalSettingsRepository } from '@repositories';
-import { createMemoryStorage } from '@test/memory-storage';
+import { useSettingsStore } from '@stores';
 import { AnalyticsPreference } from '../AnalyticsPreference';
 
 describe('AnalyticsPreference', () => {
   it('should be off until the person accepts and save each change', async () => {
     const user = userEvent.setup();
-    const repository = createLocalSettingsRepository(createMemoryStorage());
-    render(<AnalyticsPreference label="Analytics cookies" repository={repository} />);
+    render(<AnalyticsPreference label="Analytics cookies" />);
     const toggle = screen.getByRole('switch', { name: 'Analytics cookies' });
     expect(toggle).not.toBeChecked();
 
     await user.click(toggle);
     expect(toggle).toBeChecked();
-    expect(repository.load().analyticsConsent).toBe('granted');
+    expect(useSettingsStore.getState().analyticsConsent).toBe('granted');
 
     await user.click(toggle);
     expect(toggle).not.toBeChecked();
-    expect(repository.load().analyticsConsent).toBe('denied');
+    expect(useSettingsStore.getState().analyticsConsent).toBe('denied');
   });
 
   it('should reflect answers given elsewhere, such as the banner', () => {
-    const repository = createLocalSettingsRepository(createMemoryStorage());
-    render(<AnalyticsPreference label="Analytics cookies" repository={repository} />);
+    render(<AnalyticsPreference label="Analytics cookies" />);
     act(() => {
-      repository.save({ analyticsConsent: 'granted' });
+      useSettingsStore.getState().update({ analyticsConsent: 'granted' });
     });
     expect(screen.getByRole('switch', { name: 'Analytics cookies' })).toBeChecked();
   });

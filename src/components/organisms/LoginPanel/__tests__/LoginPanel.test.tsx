@@ -2,16 +2,12 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { getTranslations } from '@i18n';
 import {
-  createLocalCalculationsRepository,
-  createLocalHistoryRepository,
-  createLocalSettingsRepository,
-} from '@repositories';
-import {
   createAccountSync,
   FacebookLoginCancelledError,
   type AccountSession,
   type GoogleButtonOptions,
 } from '@services/account';
+import { useSettingsStore } from '@stores';
 import { createFakeAccountBackend, TEST_USER } from '@test/fake-account-backend';
 import { createMemoryStorage } from '@test/memory-storage';
 import { setAnalyticsSink } from '@utils';
@@ -25,7 +21,6 @@ const setup = (
   providers: { google?: string | null; facebook?: string | null } = {},
 ) => {
   const backend = createFakeAccountBackend(remote);
-  const settings = createLocalSettingsRepository(createMemoryStorage());
   const session: AccountSession = {
     config: {
       apiUrl: 'https://api.example.com',
@@ -37,9 +32,6 @@ const setup = (
     backend,
     sync: createAccountSync({
       backend,
-      settings,
-      calculations: createLocalCalculationsRepository(createMemoryStorage()),
-      history: createLocalHistoryRepository(createMemoryStorage()),
       session: createMemoryStorage(),
       debounceMs: 0,
     }),
@@ -68,7 +60,6 @@ const setup = (
     );
   return {
     backend,
-    settings,
     renderGoogle,
     facebookLogin,
     navigate,
@@ -178,8 +169,8 @@ describe('LoginPanel', () => {
   });
 
   it('should ask about this device’s data on the first sign-in', async () => {
-    const { renderPanel, settings, navigate, backend, google, user } = setup();
-    settings.save({ currency: 'EUR' });
+    const { renderPanel, navigate, backend, google, user } = setup();
+    useSettingsStore.getState().update({ currency: 'EUR' });
     renderPanel();
     await screen.findByRole('button', { name: labels['continue-with-facebook'] });
 
@@ -191,8 +182,8 @@ describe('LoginPanel', () => {
   });
 
   it('should explain when the migration fails', async () => {
-    const { renderPanel, settings, backend, google, user } = setup();
-    settings.save({ currency: 'EUR' });
+    const { renderPanel, backend, google, user } = setup();
+    useSettingsStore.getState().update({ currency: 'EUR' });
     renderPanel();
     await screen.findByRole('button', { name: labels['continue-with-facebook'] });
     (await google()).onCredential('id-token');

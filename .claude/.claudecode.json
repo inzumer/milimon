@@ -86,7 +86,7 @@
       "forbidDeepRelativeImports": true,
       "allowedAliases": [
         "@components",
-        "@repositories",
+        "@stores",
         "@services",
         "@hooks",
         "@utils",

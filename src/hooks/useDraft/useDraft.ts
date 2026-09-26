@@ -1,42 +1,24 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
-import {
-  createLocalCalculationsRepository,
-  type CalculationsRepository,
-  type CalculatorDraft,
-} from '@repositories';
+import { useCallback, useMemo, useRef } from 'react';
+import { useDraftsStore, type CalculatorDraft } from '@stores';
 
 /**
- * Raw form values of a calculator, persisted per formula. The first render uses `initial` (same
- * markup on server and client); the saved draft is applied after hydration.
+ * Raw form values of a calculator, persisted per formula. The server markup (and hydration) use
+ * `initial`; the saved draft applies right after.
  */
-export const useDraft = (
-  formulaId: string,
-  initial: CalculatorDraft,
-  calculations: CalculationsRepository = createLocalCalculationsRepository(),
-) => {
-  const [draft, setDraftState] = useState<CalculatorDraft>(initial);
-  const repositoryRef = useRef(calculations);
+export const useDraft = (formulaId: string, initial: CalculatorDraft) => {
   const initialDraftRef = useRef(initial);
-
-  useEffect(() => {
-    const saved = repositoryRef.current.loadDraft(formulaId);
-    if (saved) {
-      setDraftState({ ...initialDraftRef.current, ...saved });
-    }
-  }, [formulaId]);
+  const saved = useDraftsStore((state) => state.drafts[formulaId]);
+  const draft = useMemo(() => ({ ...initialDraftRef.current, ...saved }), [saved]);
 
   const setDraft = useCallback(
-    (next: CalculatorDraft) => {
-      setDraftState(next);
-      repositoryRef.current.saveDraft(formulaId, next);
-    },
+    (next: CalculatorDraft) => useDraftsStore.getState().saveDraft(formulaId, next),
     [formulaId],
   );
 
-  const resetDraft = useCallback(() => {
-    setDraftState(initialDraftRef.current);
-    repositoryRef.current.clearDraft(formulaId);
-  }, [formulaId]);
+  const resetDraft = useCallback(
+    () => useDraftsStore.getState().clearDraft(formulaId),
+    [formulaId],
+  );
 
   return { draft, setDraft, resetDraft };
 };

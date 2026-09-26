@@ -49,10 +49,9 @@ const analyticsEnabled = isContainerId(import.meta.env.PUBLIC_GTM_ID);
 
 <script>
   import { OPEN_COOKIE_PREFERENCES_EVENT } from '@constants';
-  import { createLocalSettingsRepository } from '@repositories';
   import { getAccountSession, hasStoredSession, startTagManager } from '@services';
 
-  startTagManager(import.meta.env.PUBLIC_GTM_ID, createLocalSettingsRepository());
+  startTagManager(import.meta.env.PUBLIC_GTM_ID);
 
   document.addEventListener('click', (event) => {
     if (event.target instanceof Element && event.target.closest('[data-open-cookie-preferences]')) {

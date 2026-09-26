@@ -73,7 +73,7 @@ src/
   hooks/        estado de React (una por calculadora, borradores, moneda, tema)
   utils/        funciones puras: fórmulas + registry, cálculo, formato, tracking…
   constants/    valores ajustables
-  repositories/ persistencia (configuración, borradores) detrás de interfaces
+  stores/       estado persistido con zustand (configuración, borradores, historial)
   services/     integraciones externas (API de cuentas, Google Tag Manager, SDKs de login)
   i18n/         traducciones en carpetas kebab-case: <carpeta>/{es,en}.json
   styles/ assets/ test/

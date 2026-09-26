@@ -1,18 +1,12 @@
-import { useEffect, useId, useRef, useState } from 'react';
+import { useId, useRef, useState } from 'react';
 import { Button } from '@inzumer/ui-library';
 import { SavedCalculation } from '@components/organisms/SavedCalculation';
+import { HISTORY_LIMIT } from '@constants';
+import { useHydrated } from '@hooks';
 import type { CalculatorText } from '@i18n/formula-text';
 import { loadCalculatorText, type CalculatorTextLoader } from '@i18n/load-calculator-text';
 import type { Translations } from '@i18n/translations';
-import {
-  createLocalCalculationsRepository,
-  createLocalHistoryRepository,
-  HISTORY_LIMIT,
-  onHistoryChange,
-  type CalculationsRepository,
-  type HistoryEntry,
-  type HistoryRepository,
-} from '@repositories';
+import { useDraftsStore, useHistoryStore, type HistoryEntry } from '@stores';
 import { interpolate, track, trackingId, type Locale } from '@utils';
 import { formatValue } from '@utils/format-value';
 import { isFormulaId, type ValueKind } from '@utils/formulas';
@@ -24,8 +18,6 @@ export interface HistoryListProps {
   formulas: Record<string, { title: string; outputs: Record<string, string> }>;
   calculatorHref: string;
   accountHref?: string | undefined;
-  repository?: HistoryRepository;
-  calculations?: CalculationsRepository;
   loadText?: CalculatorTextLoader;
 }
 
@@ -41,24 +33,16 @@ export const HistoryList = ({
   formulas,
   calculatorHref,
   accountHref,
-  repository = createLocalHistoryRepository(),
-  calculations = createLocalCalculationsRepository(),
   loadText = loadCalculatorText,
 }: HistoryListProps) => {
   const id = useId();
-  const historyRef = useRef(repository);
-  const calculationsRef = useRef(calculations);
   const loadTextRef = useRef(loadText);
+  const stored = useHistoryStore((state) => state.entries);
   // `null` until hydrated: the server can't know what this browser saved.
-  const [entries, setEntries] = useState<HistoryEntry[] | null>(null);
+  const entries = useHydrated() ? stored : null;
   const [expanded, setExpanded] = useState<ReadonlySet<string>>(() => new Set());
   const [texts, setTexts] = useState<Texts>({});
   const [notice, setNotice] = useState('');
-
-  useEffect(() => {
-    setEntries(historyRef.current.list());
-    return onHistoryChange(() => setEntries(historyRef.current.list()));
-  }, []);
 
   const dateFormat = new Intl.DateTimeFormat(lang === 'es' ? 'es-AR' : 'en-US', {
     dateStyle: 'long',
@@ -84,13 +68,13 @@ export const HistoryList = ({
   };
 
   const open = (entry: HistoryEntry) => {
-    calculationsRef.current.saveDraft(entry.formulaId, entry.draft);
+    useDraftsStore.getState().saveDraft(entry.formulaId, entry.draft);
     track('history_opened', { formula: entry.formulaId });
     window.location.assign(`${calculatorHref}?tool=${encodeURIComponent(entry.formulaId)}`);
   };
 
   const remove = (entry: HistoryEntry) => {
-    historyRef.current.remove(entry.id);
+    useHistoryStore.getState().remove(entry.id);
     setNotice(labels.deleted);
     track('history_deleted', { formula: entry.formulaId });
   };

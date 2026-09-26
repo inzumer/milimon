@@ -1,32 +1,23 @@
 import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { getFormulaTranslation, getTranslations } from '@i18n';
-import { createLocalCalculationsRepository, createLocalSettingsRepository } from '@repositories';
-import { createMemoryStorage } from '@test/memory-storage';
+import { useDraftsStore, useSettingsStore } from '@stores';
 import { setAnalyticsSink, type Locale } from '@utils';
 import type { FormulaId } from '@utils/formulas';
 import { FormulaCalculator } from '../FormulaCalculator';
 
 const plain = (text: string | null) => (text ?? '').replace(/[  ]/g, ' ');
 
-const setup = (
-  formulaId: FormulaId = 'waste-percentage',
-  lang: Locale = 'es',
-  storage = createMemoryStorage(),
-) => {
-  const calculations = createLocalCalculationsRepository(storage);
-  const settings = createLocalSettingsRepository(storage);
+const setup = (formulaId: FormulaId = 'waste-percentage', lang: Locale = 'es') => {
   const utils = render(
     <FormulaCalculator
       formulaId={formulaId}
       lang={lang}
       text={getFormulaTranslation(lang, formulaId)}
       ui={getTranslations(lang, 'calculator')}
-      calculations={calculations}
-      settings={settings}
     />,
   );
-  return { ...utils, user: userEvent.setup(), calculations, settings, storage };
+  return { ...utils, user: userEvent.setup() };
 };
 
 const resultRegion = () => screen.getByRole('region', { name: /Resultado|Result/ });
@@ -92,14 +83,14 @@ describe('FormulaCalculator', () => {
   it('should load the manual example, remember it and clear it again', async () => {
     const sink = vi.fn();
     setAnalyticsSink(sink);
-    const { user, calculations } = setup('gross-quantity');
+    const { user } = setup('gross-quantity');
 
     await user.click(screen.getByRole('button', { name: /Cargar: Tournedó para 200 personas/ }));
 
     expect(screen.getByRole('textbox', { name: /Comensales/ })).toHaveValue('200');
     expect(screen.getByRole('textbox', { name: /Porción limpia/ })).toHaveValue('0,18');
     expect(within(resultRegion()).getByText('52 kg')).toBeInTheDocument();
-    expect(calculations.loadDraft('gross-quantity')).toMatchObject({ servings: '200' });
+    expect(useDraftsStore.getState().drafts['gross-quantity']).toMatchObject({ servings: '200' });
     expect(sink).toHaveBeenCalledWith('example_loaded', {
       formula: 'gross-quantity',
       example: 'manual-tournedos',
@@ -108,18 +99,17 @@ describe('FormulaCalculator', () => {
     await user.click(screen.getByRole('button', { name: 'Limpiar datos' }));
     expect(screen.getByRole('textbox', { name: /Comensales/ })).toHaveValue('');
     expect(screen.getByRole('textbox', { name: /Redondear/ })).toHaveValue('1');
-    expect(calculations.loadDraft('gross-quantity')).toBeNull();
+    expect(useDraftsStore.getState().drafts['gross-quantity']).toBeUndefined();
   });
 
   it('should restore the saved draft and use the configured currency', () => {
-    const storage = createMemoryStorage();
-    createLocalCalculationsRepository(storage).saveDraft('cost-of-goods', {
+    useDraftsStore.getState().saveDraft('cost-of-goods', {
       openingInventory: '125000',
       purchases: '245000',
       closingInventory: '100000',
     });
-    createLocalSettingsRepository(storage).save({ currency: 'USD' });
-    setup('cost-of-goods', 'en', storage);
+    useSettingsStore.getState().update({ currency: 'USD' });
+    setup('cost-of-goods', 'en');
 
     expect(screen.getByRole('textbox', { name: 'Opening inventory (USD)' })).toHaveValue('125000');
     expect(within(resultRegion()).getByText('$270,000.00')).toBeInTheDocument();

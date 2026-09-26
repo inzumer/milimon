@@ -7,7 +7,6 @@ import { RecipeCostingResult } from '@components/organisms/RecipeCostingResult';
 import { RECIPE_EXAMPLE, useRecipeCostingCalculator } from '@hooks/useRecipeCostingCalculator';
 import { formulaText, type CalculatorText } from '@i18n/formula-text';
 import type { Translations } from '@i18n/translations';
-import type { CalculationsRepository, HistoryRepository, SettingsRepository } from '@repositories';
 import { localizedPath, trackingId, type Locale } from '@utils';
 
 /** Tracking scope: the formula id. */
@@ -17,27 +16,15 @@ export interface RecipeCostingCalculatorProps {
   lang: Locale;
   text: CalculatorText;
   ui: Translations<'calculator'>;
-  calculations?: CalculationsRepository;
-  settings?: SettingsRepository;
-  history?: HistoryRepository;
 }
 
 /** Recipe costing sheet (manual, columns 1–8): ingredients → gross quantity → cost → portion cost. */
-export const RecipeCostingCalculator = ({
-  lang,
-  text,
-  ui,
-  calculations,
-  settings,
-  history,
-}: RecipeCostingCalculatorProps) => {
+export const RecipeCostingCalculator = ({ lang, text, ui }: RecipeCostingCalculatorProps) => {
   const id = useId();
   const t = formulaText(text);
   const calculator = useRecipeCostingCalculator({
     lang,
     exampleNames: text.labels ?? {},
-    ...(calculations ? { calculations } : {}),
-    ...(settings ? { settings } : {}),
   });
   const context = { lang, currency: calculator.currency };
   const servingsCode = calculator.errors['servings'];
@@ -144,7 +131,6 @@ export const RecipeCostingCalculator = ({
               result={calculator.result}
               labels={ui.history}
               historyHref={localizedPath(lang, 'history')}
-              {...(history ? { repository: history } : {})}
             />
           </>
         ) : (
