@@ -1,12 +1,10 @@
 ---
-import { Image } from 'astro:assets';
-import { Breadcrumbs, RichText } from '@inzumer/ui-library';
-import portrait from '@assets/logo.png';
+import { RichText } from '@inzumer/ui-library';
 import { ButtonLink } from '@components';
 import { INSTITUTE_URL } from '@constants';
 import { getTranslations } from '@i18n';
 import PageLayout from '@layouts/page-layout.astro';
-import { LOCALES, localizedPath, toLocale, trackingId } from '@utils';
+import { LOCALES, localizedPath, profilePageSchema, toLocale, trackingId } from '@utils';
 
 export function getStaticPaths() {
   return LOCALES.map((lang) => ({ params: { lang } }));
@@ -15,42 +13,36 @@ export function getStaticPaths() {
 const lang = toLocale(Astro.params.lang);
 const common = getTranslations(lang, 'common');
 const page = getTranslations(lang, 'about-page');
-const breadcrumbs = getTranslations(lang, 'formula-page').breadcrumbs;
+const profile = profilePageSchema({
+  site: Astro.site ?? Astro.url,
+  aboutHref: localizedPath(lang, 'about'),
+  description: page.description,
+  lang,
+});
 ---
 
-<PageLayout lang={lang} title={page.title} description={page.description}>
-  <Breadcrumbs
-    aria-label={breadcrumbs.label}
-    items={[{ label: common.nav.home, href: localizedPath(lang, 'home') }]}
-    current={page.title}
-    className="mb-6"
-  />
-  <article class="flex max-w-3xl flex-col gap-8">
-    <header class="flex flex-col items-center gap-6 text-center sm:flex-row sm:text-left">
-      <Image
-        src={portrait}
-        alt={page['portrait-alt']}
-        width={176}
-        height={176}
-        densities={[1, 2]}
-        loading="eager"
-        class="size-44 shrink-0"
-      />
-      <div class="flex flex-col gap-3">
-        <RichText variant="h1" bold className="font-display text-5xl">
-          {page.title}
-        </RichText>
-        {page.intro.map((paragraph) => (
-          <RichText variant="p1">{paragraph}</RichText>
-        ))}
-      </div>
+<PageLayout
+  lang={lang}
+  title={page.title}
+  description={page.description}
+  breadcrumbs={[{ label: common.nav.home, href: localizedPath(lang, 'home') }]}
+  structuredData={[profile]}
+>
+  <article class="flex flex-col gap-10">
+    <header class="flex flex-col gap-4">
+      <RichText variant="h1" bold className="font-display text-5xl">
+        {page.title}
+      </RichText>
+      {page.intro.map((paragraph) => (
+        <RichText variant="p1">{paragraph}</RichText>
+      ))}
     </header>
 
     <section aria-labelledby="studies" class="flex flex-col gap-4">
       <RichText variant="h2" bold id="studies" className="font-display text-3xl">
         {page['studies-title']}
       </RichText>
-      <ul class="grid gap-4 sm:grid-cols-2">
+      <ul class="flex flex-col gap-4">
         {page.studies.map((study) => (
           <li class="flex flex-col gap-2 rounded-xl border border-[var(--border-default)] p-5">
             <RichText variant="h3" className="text-xl font-bold">

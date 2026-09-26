@@ -58,6 +58,9 @@ Key commands (Node from `.nvmrc`, pnpm from `packageManager`):
   with `localizedPath`/`withBase` (never hard-coded `/es/...` or `/favicon.ico`).
 - **Security**: a strict Content-Security-Policy (hash-only scripts) is generated at build time
   (`security.csp` in `astro.config.mjs`); a new external script or API origin must be added there.
+- **SEO**: pages declare their breadcrumbs with PageLayout `breadcrumbs` (drawn and emitted as
+  BreadcrumbList JSON-LD) and extra schema.org data with `structuredData` (builders in `@utils/seo`).
+  Canonical, hreflang and share URLs go through `canonicalPath` (no `.html`), matching the sitemap.
 - **Static first**: no `client:*` directive unless the component is interactive.
 - **Persistence**: through the zustand stores in `src/stores` only (persisted to localStorage, synced to the account by `services/account`). **Analytics**: through `track()` only.
 - **Dependencies**: latest compatible versions, `pnpm audit` clean. Exceptions documented in

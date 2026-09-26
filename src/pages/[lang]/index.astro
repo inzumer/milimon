@@ -6,7 +6,7 @@ import star from '@assets/star.png';
 import { ButtonLink, FeatureCard } from '@components';
 import { BLOG_ARTICLE_IDS, getBlogArticle, getTranslations } from '@i18n';
 import PageLayout from '@layouts/page-layout.astro';
-import { LOCALES, localizedPath, toLocale, trackingId } from '@utils';
+import { LOCALES, localizedPath, toLocale, trackingId, websiteSchema } from '@utils';
 
 export function getStaticPaths() {
   return LOCALES.map((lang) => ({ params: { lang } }));
@@ -16,10 +16,18 @@ const lang = toLocale(Astro.params.lang);
 const common = getTranslations(lang, 'common');
 const home = getTranslations(lang, 'home');
 const comingSoon = getTranslations(lang, 'coming-soon');
+const website = websiteSchema({
+  site: Astro.site ?? Astro.url,
+  homeHref: localizedPath(lang, 'home'),
+  aboutHref: localizedPath(lang, 'about'),
+  name: common['app-name'],
+  description: common.meta.description,
+  lang,
+});
 const blog = getTranslations(lang, 'blog');
 ---
 
-<PageLayout lang={lang}>
+<PageLayout lang={lang} structuredData={[website]}>
   <section class="flex flex-col items-center gap-4 pb-10 text-center">
     <Image
       src={logo}

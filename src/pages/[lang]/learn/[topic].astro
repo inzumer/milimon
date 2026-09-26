@@ -1,5 +1,5 @@
 ---
-import { Breadcrumbs, RichText } from '@inzumer/ui-library';
+import { RichText } from '@inzumer/ui-library';
 import { FeatureCard } from '@components';
 import {
   adjacentTopics,
@@ -27,17 +27,16 @@ const related = LEARN_TOPICS.find((item) => item.id === id)?.related ?? [];
 const { previous, next } = adjacentTopics(id);
 ---
 
-<PageLayout ogSection="management" lang={lang} title={topic.title} description={topic.summary}>
-  <Breadcrumbs
-    aria-label={formulaPage.breadcrumbs.label}
-    items={[
-      { label: common.nav.home, href: localizedPath(lang, 'home') },
-      { label: common.nav.learn, href: localizedPath(lang, 'learn') },
-    ]}
-    current={topic.title}
-    className="mb-6"
-  />
-
+<PageLayout
+  ogSection="management"
+  lang={lang}
+  title={topic.title}
+  description={topic.summary}
+  breadcrumbs={[
+    { label: common.nav.home, href: localizedPath(lang, 'home') },
+    { label: common.nav.learn, href: localizedPath(lang, 'learn') },
+  ]}
+>
   <article class="flex flex-col gap-10">
     <header class="flex flex-col gap-3">
       <RichText variant="h1" bold className="font-display text-5xl">

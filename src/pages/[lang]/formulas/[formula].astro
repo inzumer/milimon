@@ -1,5 +1,5 @@
 ---
-import { Breadcrumbs, RichText } from '@inzumer/ui-library';
+import { RichText } from '@inzumer/ui-library';
 import {
   ButtonLink,
   FormulaCalculator,
@@ -28,17 +28,16 @@ const related = formulasByGroup()[formula.group].filter((item) => item.id !== fo
 const section = (key: string) => `section-${key}`;
 ---
 
-<PageLayout ogSection="management" lang={lang} title={text.title} description={text.summary}>
-  <Breadcrumbs
-    aria-label={page.breadcrumbs.label}
-    items={[
-      { label: common.nav.home, href: localizedPath(lang, 'home') },
-      { label: common.nav.formulas, href: localizedPath(lang, 'formulas') },
-    ]}
-    current={text.title}
-    className="mb-6"
-  />
-
+<PageLayout
+  ogSection="management"
+  lang={lang}
+  title={text.title}
+  description={text.summary}
+  breadcrumbs={[
+    { label: common.nav.home, href: localizedPath(lang, 'home') },
+    { label: common.nav.formulas, href: localizedPath(lang, 'formulas') },
+  ]}
+>
   <article class="flex flex-col gap-12">
     <header class="flex flex-col gap-3">
       <RichText variant="p3" className="font-bold tracking-wide text-[var(--text-link)] uppercase">
