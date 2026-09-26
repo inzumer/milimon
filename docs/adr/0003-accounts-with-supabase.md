@@ -1,6 +1,6 @@
 # ADR 0003 · Cuentas con Supabase, offline-first
 
-- **Estado:** aceptada
+- **Estado:** reemplazada por [ADR 0004](0004-accounts-api.md) (API propia en otro repositorio)
 - **Fecha:** 2026-09-26
 
 ## Contexto

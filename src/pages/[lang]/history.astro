@@ -23,7 +23,7 @@ const formulas = Object.fromEntries(
     return [id, { title: text.title, outputs: text.outputs }];
   }),
 );
-const accountHref = readAccountConfig(import.meta.env) ? localizedPath(lang, 'account') : undefined;
+const accountHref = readAccountConfig(import.meta.env) ? localizedPath(lang, 'login') : undefined;
 ---
 
 <PageLayout lang={lang} title={page.title} description={page.description} noindex>

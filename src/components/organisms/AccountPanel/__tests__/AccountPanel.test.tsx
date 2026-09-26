@@ -1,57 +1,71 @@
 import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import labelsEn from '@i18n/account-page/en.json';
+import { getTranslations } from '@i18n';
 import {
   createLocalCalculationsRepository,
   createLocalHistoryRepository,
   createLocalSettingsRepository,
 } from '@repositories';
-import { createAccountSync, type AccountSession } from '@services/account';
+import { createAccountSync, SessionExpiredError, type AccountSession } from '@services/account';
 import { createFakeAccountBackend, TEST_USER } from '@test/fake-account-backend';
 import { createMemoryStorage } from '@test/memory-storage';
 import { AccountPanel } from '../AccountPanel';
 
-const labels = labelsEn.panel;
+const page = getTranslations('en', 'account-page');
+const labels = page.panel;
+const migration = getTranslations('en', 'common').migration;
+
+const CONFIG = {
+  apiUrl: 'https://api.example.com',
+  apiKey: 'k',
+  appId: 'web',
+  googleClientId: 'g',
+  facebookAppId: 'f',
+};
 
 const setup = (remote: Parameters<typeof createFakeAccountBackend>[0] = {}) => {
   const backend = createFakeAccountBackend(remote);
   const settings = createLocalSettingsRepository(createMemoryStorage());
-  const calculations = createLocalCalculationsRepository(createMemoryStorage());
   const session: AccountSession = {
+    config: CONFIG,
     backend,
     sync: createAccountSync({
       backend,
       settings,
-      calculations,
+      calculations: createLocalCalculationsRepository(createMemoryStorage()),
       history: createLocalHistoryRepository(createMemoryStorage()),
       session: createMemoryStorage(),
       debounceMs: 0,
     }),
   };
-  const user = userEvent.setup();
-  const renderPanel = (loadSession: () => Promise<AccountSession | null> = async () => session) =>
-    render(<AccountPanel labels={labels} returnPath="/en/account" loadSession={loadSession} />);
-  return { backend, settings, calculations, session, user, renderPanel };
+  const renderPanel = (loadSession: () => AccountSession | null = () => session) =>
+    render(
+      <AccountPanel
+        labels={labels}
+        migrationLabels={migration}
+        unavailableLabel={page.disabled}
+        loginHref="/en/login"
+        loadSession={loadSession}
+      />,
+    );
+  return { backend, settings, session, user: userEvent.setup(), renderPanel };
 };
 
 describe('AccountPanel', () => {
-  it('should offer Google and Facebook while signed out', async () => {
-    const { backend, user, renderPanel } = setup();
-    renderPanel();
-    expect(screen.getByText(labels.loading)).toBeInTheDocument();
-
-    await user.click(await screen.findByRole('button', { name: 'Continue with Google' }));
-    expect(backend.signIn).toHaveBeenCalledWith('google', 'http://localhost:3000/en/account');
-    expect(screen.getByRole('button', { name: 'Continue with Facebook' })).toBeDisabled();
+  it('should explain that accounts are not available when the API is not configured', () => {
+    const { renderPanel } = setup();
+    renderPanel(() => null);
+    expect(screen.getByText(page.disabled)).toBeInTheDocument();
   });
 
-  it('should explain when the sign-in cannot start', async () => {
-    const { backend, user, renderPanel } = setup();
-    vi.mocked(backend.signIn).mockRejectedValueOnce(new Error('popup blocked'));
+  it('should send signed-out people to the sign-in page', async () => {
+    const { renderPanel } = setup();
     renderPanel();
-    await user.click(await screen.findByRole('button', { name: 'Continue with Facebook' }));
-    expect(await screen.findByRole('alert')).toHaveTextContent(labels['sign-in-error']);
-    expect(screen.getByRole('button', { name: 'Continue with Facebook' })).toBeEnabled();
+    expect(screen.getByText(labels.loading)).toBeInTheDocument();
+    expect(await screen.findByRole('link', { name: labels['sign-in'] })).toHaveAttribute(
+      'href',
+      '/en/login',
+    );
   });
 
   it('should show the signed-in person and sign out', async () => {
@@ -74,10 +88,10 @@ describe('AccountPanel', () => {
     expect(container.querySelector('img')).toHaveAttribute('src', 'https://example.com/a.png');
   });
 
-  it('should react when the provider finishes the sign-in', async () => {
+  it('should follow a sign-in made in another tab', async () => {
     const { backend, renderPanel } = setup();
     renderPanel();
-    await screen.findByRole('button', { name: 'Continue with Google' });
+    await screen.findByRole('link', { name: labels['sign-in'] });
     await act(async () => {
       backend.setUser(TEST_USER);
     });
@@ -85,15 +99,13 @@ describe('AccountPanel', () => {
   });
 
   it.each([
-    [labels['migration-import'], 'USD'],
-    [labels['migration-fresh'], 'ARS'],
+    [migration.import, 'USD'],
+    [migration.fresh, 'ARS'],
   ])('should resolve the first sign-in with "%s"', async (button, currency) => {
     const { backend, settings, user, renderPanel } = setup({ user: TEST_USER });
     settings.save({ currency: 'USD' });
     renderPanel();
-    expect(
-      await screen.findByRole('heading', { name: labels['migration-title'] }),
-    ).toBeInTheDocument();
+    expect(await screen.findByRole('heading', { name: migration.title })).toBeInTheDocument();
 
     await user.click(screen.getByRole('button', { name: button }));
     expect(await screen.findByText('Ada Cook')).toBeInTheDocument();
@@ -123,24 +135,18 @@ describe('AccountPanel', () => {
     expect(await screen.findByText('Ada Cook')).toBeInTheDocument();
   });
 
+  it('should ask to sign in again when the session expired', async () => {
+    const { backend, renderPanel } = setup({ user: TEST_USER });
+    vi.mocked(backend.fetchProfile).mockRejectedValueOnce(new SessionExpiredError());
+    renderPanel();
+    expect(await screen.findByRole('status')).toHaveTextContent(labels['session-expired']);
+  });
+
   it('should show an error when an action fails', async () => {
     const { backend, user, renderPanel } = setup({ user: TEST_USER });
     vi.mocked(backend.signOut).mockRejectedValueOnce(new Error('offline'));
     renderPanel();
     await user.click(await screen.findByRole('button', { name: labels['sign-out'] }));
     expect(await screen.findByRole('alert')).toHaveTextContent(labels.error);
-  });
-
-  it('should show an error when the account service cannot load', async () => {
-    const { renderPanel } = setup();
-    renderPanel(() => Promise.reject(new Error('blocked')));
-    expect(await screen.findByRole('alert')).toHaveTextContent(labels.error);
-  });
-
-  it('should stay loading when accounts are not configured', async () => {
-    const { renderPanel } = setup();
-    renderPanel(async () => null);
-    await act(async () => undefined);
-    expect(screen.getByText(labels.loading)).toBeInTheDocument();
   });
 });

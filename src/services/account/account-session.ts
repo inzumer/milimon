@@ -7,45 +7,44 @@ import { getBrowserStorage } from '@utils';
 import type { AccountBackend } from './account-backend';
 import { readAccountConfig, type AccountConfig } from './account-config';
 import { createAccountSync, type AccountSync } from './account-sync';
+import { createApiBackend } from './api-backend';
 
 export interface AccountSession {
+  config: AccountConfig;
   backend: AccountBackend;
   sync: AccountSync;
 }
 
-/** Downloads the Supabase SDK (its own chunk) only when an account feature is actually used. */
-const defaultLoadBackend = async (config: AccountConfig): Promise<AccountBackend> => {
-  const { createSupabaseBackend, createSupabaseClient } = await import('./supabase-backend');
-  return createSupabaseBackend(createSupabaseClient(config));
-};
-
-let current: Promise<AccountSession | null> | null = null;
+let current: AccountSession | null = null;
 
 /**
- * The single account session of the page, shared by the layout script and the account page
- * island (one auth client, one sync). `null` when accounts aren't configured.
+ * The single account session of the page, shared by the layout script and the account islands
+ * (one API client, one sync). `null` when accounts aren't configured.
  */
 export const getAccountSession = (
   config: AccountConfig | null = readAccountConfig(import.meta.env),
-  loadBackend: (config: AccountConfig) => Promise<AccountBackend> = defaultLoadBackend,
-): Promise<AccountSession | null> => {
+  createBackend: (config: AccountConfig) => AccountBackend = createApiBackend,
+): AccountSession | null => {
   if (!config) {
-    return Promise.resolve(null);
+    return null;
   }
-  current ??= loadBackend(config).then((backend) => ({
-    backend,
-    sync: createAccountSync({
+  if (!current) {
+    const backend = createBackend(config);
+    current = {
+      config,
       backend,
-      settings: createLocalSettingsRepository(),
-      calculations: createLocalCalculationsRepository(),
-      history: createLocalHistoryRepository(),
-      session: getBrowserStorage('session'),
-    }),
-  }));
+      sync: createAccountSync({
+        backend,
+        settings: createLocalSettingsRepository(),
+        calculations: createLocalCalculationsRepository(),
+        history: createLocalHistoryRepository(),
+        session: getBrowserStorage('session'),
+      }),
+    };
+  }
   return current;
 };
 
-/** Test helper: forgets the page session. */
 export const resetAccountSession = (): void => {
   current = null;
 };

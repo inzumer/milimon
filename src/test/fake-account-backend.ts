@@ -44,7 +44,14 @@ export const createFakeAccountBackend = (
         listeners.delete(listener);
       };
     }),
-    signIn: vi.fn(async () => undefined),
+    signInWithGoogle: vi.fn(async () => {
+      setUser(TEST_USER);
+      return TEST_USER;
+    }),
+    signInWithFacebook: vi.fn(async () => {
+      setUser(TEST_USER);
+      return TEST_USER;
+    }),
     signOut: vi.fn(async () => setUser(null)),
     deleteAccount: vi.fn(async () => {
       remote.profile = null;

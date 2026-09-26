@@ -4,7 +4,6 @@ import logo from '@assets/logo.png';
 import { ButtonLink, FeatureCard } from '@components';
 import { getTranslations } from '@i18n';
 import PageLayout from '@layouts/page-layout.astro';
-import { readAccountConfig } from '@services';
 import { LOCALES, localizedPath, toLocale, trackingId } from '@utils';
 
 export function getStaticPaths() {
@@ -14,7 +13,6 @@ export function getStaticPaths() {
 const lang = toLocale(Astro.params.lang);
 const common = getTranslations(lang, 'common');
 const home = getTranslations(lang, 'home');
-const accountsEnabled = readAccountConfig(import.meta.env) !== null;
 ---
 
 <PageLayout lang={lang}>
@@ -31,18 +29,16 @@ const accountsEnabled = readAccountConfig(import.meta.env) !== null;
     />
     <h1 class="text-5xl">{common['app-name']}</h1>
     <p class="max-w-xl text-lg text-[var(--text-secondary)]">{home.hero.subtitle}</p>
-    {accountsEnabled && (
-      <div class="flex flex-col items-center gap-2">
-        <ButtonLink
-          id={trackingId('home', 'link', 'sign-in')}
-          href={localizedPath(lang, 'account')}
-          variant="secondary"
-        >
-          {common.nav['sign-in']}
-        </ButtonLink>
-        <p class="text-sm text-[var(--text-secondary)]">{home.hero['sign-in-hint']}</p>
-      </div>
-    )}
+    <div class="flex flex-col items-center gap-2">
+      <ButtonLink
+        id={trackingId('home', 'link', 'sign-in')}
+        href={localizedPath(lang, 'login')}
+        variant="secondary"
+      >
+        {common.nav['sign-in']}
+      </ButtonLink>
+      <p class="text-sm text-[var(--text-secondary)]">{home.hero['sign-in-hint']}</p>
+    </div>
   </section>
 
   <section class="flex flex-col gap-6">

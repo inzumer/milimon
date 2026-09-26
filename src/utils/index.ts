@@ -1,5 +1,7 @@
 export * from './analytics';
+export * from './http';
 export * from './interpolate';
+export * from './load-script';
 export * from './locale';
 export * from './numbers';
 export * from './routes';

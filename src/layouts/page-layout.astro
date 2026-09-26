@@ -53,10 +53,10 @@ const analyticsEnabled = isContainerId(import.meta.env.PUBLIC_GTM_ID);
 
   startTagManager(import.meta.env.PUBLIC_GTM_ID, createLocalSettingsRepository());
 
-  // Signed-in people get their profile synced on every page. Guests never download the auth SDK.
+  // Signed-in people get their profile synced on every page; guests never call the API.
   if (hasStoredSession()) {
     getAccountSession()
-      .then((session) => session?.sync.start())
+      ?.sync.start()
       .catch((error: unknown) => console.warn('[account] could not start', error));
   }
 </script>

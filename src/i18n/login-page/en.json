@@ -1,0 +1,20 @@
+{
+  "title": "Sign in",
+  "description": "Sign in with Google or Facebook to keep your currency, preferences and calculations on any device.",
+  "panel": {
+    "intro": "You don't need an account to use the calculator: with one, your settings and calculations follow you to any device.",
+    "continue-with-facebook": "Continue with Facebook",
+    "signing-in": "Signing in…",
+    "waking-up": "The server is waking up (it can take up to a minute the first time)…",
+    "error": "We couldn't sign you in. Please try again in a few minutes.",
+    "cancelled": "Facebook sign-in was cancelled.",
+    "provider-error": "The sign-in button couldn't load. Check your connection or whether a blocker is stopping it.",
+    "unavailable": "Sign-in isn't available yet. Meanwhile, everything you enter is saved on this device.",
+    "loading": "Getting sign-in ready…",
+    "already-signed-in": "You're signed in as {name}.",
+    "go-to-account": "Go to my account",
+    "legal": "By continuing you accept the {terms} and the {privacy}.",
+    "terms": "terms of use",
+    "privacy": "privacy policy"
+  }
+}

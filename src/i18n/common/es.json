@@ -49,5 +49,11 @@
     "accept": "Aceptar",
     "reject": "Rechazar",
     "privacy-link": "Política de privacidad"
+  },
+  "migration": {
+    "title": "Encontramos datos en este dispositivo",
+    "description": "Tenés una configuración, cálculos o un historial guardados en este dispositivo. ¿Querés pasarlos a tu cuenta?",
+    "import": "Sí, guardarlos en mi cuenta",
+    "fresh": "No, empezar de cero"
   }
 }
