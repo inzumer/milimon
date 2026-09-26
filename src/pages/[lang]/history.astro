@@ -1,5 +1,5 @@
 ---
-import { Breadcrumbs, RichText } from '@inzumer/ui-library';
+import { RichText } from '@inzumer/ui-library';
 import { HistoryList } from '@components';
 import { getFormulaTranslation, getTranslations } from '@i18n';
 import PageLayout from '@layouts/page-layout.astro';
@@ -14,7 +14,6 @@ export function getStaticPaths() {
 const lang = toLocale(Astro.params.lang);
 const common = getTranslations(lang, 'common');
 const page = getTranslations(lang, 'history-page');
-const breadcrumbs = getTranslations(lang, 'formula-page').breadcrumbs;
 const ui = getTranslations(lang, 'calculator');
 // Titles and output labels for the summaries; the full texts load when a calculation is opened.
 const formulas = Object.fromEntries(
@@ -32,13 +31,8 @@ const accountHref = readAccountConfig(import.meta.env) ? localizedPath(lang, 'lo
   title={page.title}
   description={page.description}
   noindex
+  breadcrumbs={[{ label: common.nav.home, href: localizedPath(lang, 'home') }]}
 >
-  <Breadcrumbs
-    aria-label={breadcrumbs.label}
-    items={[{ label: common.nav.home, href: localizedPath(lang, 'home') }]}
-    current={page.title}
-    className="mb-6"
-  />
   <header class="mb-8 flex flex-col gap-3">
     <RichText variant="h1" bold className="font-display text-5xl">
       {page.title}

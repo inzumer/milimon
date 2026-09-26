@@ -122,7 +122,7 @@ export default defineConfig({
   integrations: [
     react(),
     sitemap({
-      i18n: { defaultLocale: 'es', locales: { es: 'es-AR', en: 'en-US' } },
+      i18n: { defaultLocale: 'es', locales: { es: 'es', en: 'en' } },
       // The root only redirects by language, 404 isn't a real page and the account, login and
       // history pages are personal.
       filter: (page) => {

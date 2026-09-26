@@ -1,5 +1,5 @@
 ---
-import { Breadcrumbs, RichText } from '@inzumer/ui-library';
+import { RichText } from '@inzumer/ui-library';
 import { getTranslations } from '@i18n';
 import PageLayout from '@layouts/page-layout.astro';
 import { LOCALES, localizedPath, toLocale } from '@utils';
@@ -11,16 +11,14 @@ export function getStaticPaths() {
 const lang = toLocale(Astro.params.lang);
 const common = getTranslations(lang, 'common');
 const page = getTranslations(lang, 'terms-page');
-const breadcrumbs = getTranslations(lang, 'formula-page').breadcrumbs;
 ---
 
-<PageLayout lang={lang} title={page.title} description={page.description}>
-  <Breadcrumbs
-    aria-label={breadcrumbs.label}
-    items={[{ label: common.nav.home, href: localizedPath(lang, 'home') }]}
-    current={page.title}
-    className="mb-6"
-  />
+<PageLayout
+  lang={lang}
+  title={page.title}
+  description={page.description}
+  breadcrumbs={[{ label: common.nav.home, href: localizedPath(lang, 'home') }]}
+>
   <article class="flex max-w-2xl flex-col gap-8">
     <header class="flex flex-col gap-3">
       <RichText variant="h1" bold className="font-display text-5xl">

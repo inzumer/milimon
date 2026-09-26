@@ -1,9 +1,17 @@
 ---
+import { Breadcrumbs } from '@inzumer/ui-library';
 import { ConsentBanner, SharePage } from '@components';
 import { type OgSection } from '@constants';
 import { getTranslations } from '@i18n';
 import { isContainerId } from '@services';
-import { localizedPath, type Locale } from '@utils';
+import {
+  breadcrumbSchema,
+  canonicalPath,
+  localizedPath,
+  type BreadcrumbTrailItem,
+  type Locale,
+  type StructuredData,
+} from '@utils';
 import BaseLayout from './base-layout.astro';
 import SiteFooter from './site-footer.astro';
 import SiteHeader from './site-header.astro';
@@ -14,15 +22,37 @@ interface Props {
   description?: string | undefined;
   noindex?: boolean;
   ogSection?: OgSection;
+  /** Links before the current page (Home first); the current one is `title`. */
+  breadcrumbs?: BreadcrumbTrailItem[];
+  structuredData?: StructuredData[];
+  article?: { publishedTime: string; authorUrl: string };
 }
 
-const { lang, title, description, noindex = false, ogSection = 'home' } = Astro.props;
+const {
+  lang,
+  title,
+  description,
+  noindex = false,
+  ogSection = 'home',
+  breadcrumbs,
+  structuredData = [],
+  article,
+} = Astro.props;
 const common = getTranslations(lang, 'common');
 // Analytics (and its consent banner) only exist when a GA4 measurement ID is configured.
 const analyticsEnabled = isContainerId(import.meta.env.PUBLIC_GTM_ID);
 // Public pages end with "Share this page" (its canonical URL and full title).
-const shareUrl = new URL(Astro.url.pathname, Astro.site ?? Astro.url).href;
+const pathname = canonicalPath(Astro.url.pathname);
+const shareUrl = new URL(pathname, Astro.site ?? Astro.url).href;
 const shareTitle = title ? `${title} · ${common['app-name']}` : common['app-name'];
+// Breadcrumbs are declared once: drawn above the content and described for search engines.
+const breadcrumbLabel = getTranslations(lang, 'formula-page').breadcrumbs.label;
+const schemas = [
+  ...(breadcrumbs && title && !noindex
+    ? [breadcrumbSchema(Astro.site ?? Astro.url, breadcrumbs, { label: title, url: shareUrl })]
+    : []),
+  ...structuredData,
+];
 ---
 
 <BaseLayout
@@ -31,6 +61,8 @@ const shareTitle = title ? `${title} · ${common['app-name']}` : common['app-nam
   description={description}
   noindex={noindex}
   ogSection={ogSection}
+  structuredData={schemas}
+  article={article}
 >
   <a
     href="#main"
@@ -39,12 +71,20 @@ const shareTitle = title ? `${title} · ${common['app-name']}` : common['app-nam
     {common['skip-to-content']}
   </a>
   <div class="flex min-h-dvh flex-col">
-    <SiteHeader lang={lang} pathname={Astro.url.pathname} />
+    <SiteHeader lang={lang} pathname={pathname} />
     <main
       id="main"
       tabindex="-1"
       class="mx-auto w-full max-w-layout flex-1 px-4 py-8 focus:outline-none"
     >
+      {breadcrumbs && title && (
+        <Breadcrumbs
+          aria-label={breadcrumbLabel}
+          items={breadcrumbs.map(({ label, href }) => ({ label, href }))}
+          current={title}
+          className="mb-6"
+        />
+      )}
       <slot />
       {!noindex && (
         <SharePage client:visible url={shareUrl} title={shareTitle} labels={common.share} />
