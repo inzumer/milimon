@@ -12,7 +12,7 @@ import { OmnesResult } from '@components/organisms/OmnesResult';
 import { RecipeCostingResult } from '@components/organisms/RecipeCostingResult';
 import { formulaText, toKebabCase, type CalculatorText } from '@i18n/formula-text';
 import type { Translations } from '@i18n/translations';
-import type { CalculatorDraft, HistoryEntry } from '@repositories';
+import type { CalculatorDraft, HistoryEntry } from '@stores';
 import { interpolate, type Locale } from '@utils';
 import type { FormatContext } from '@utils/format-value';
 import { getFormula, isFormulaId, type ValueKind } from '@utils/formulas';

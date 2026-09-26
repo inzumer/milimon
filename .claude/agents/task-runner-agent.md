@@ -28,7 +28,7 @@ Implement features with automated validation and production-ready standards.
 
 - Keep every dependency on its latest compatible version; run `pnpm outdated` and `pnpm audit`
   when touching dependencies.
-- Prefer native browser APIs (`Intl.NumberFormat`, `localStorage` behind repositories).
+- Prefer native browser APIs (`Intl.NumberFormat`, `localStorage` behind the zustand stores).
 - Document any version that can't be the latest in `docs/adr/0002-tooling-versions.md`.
 
 # Git

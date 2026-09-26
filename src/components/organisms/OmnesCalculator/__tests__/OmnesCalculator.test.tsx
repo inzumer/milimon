@@ -2,24 +2,19 @@ import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { parsePriceList } from '@hooks/useOmnesCalculator';
 import { getFormulaTranslation, getTranslations } from '@i18n';
-import { createLocalCalculationsRepository, createLocalSettingsRepository } from '@repositories';
-import { createMemoryStorage } from '@test/memory-storage';
+import { useDraftsStore } from '@stores';
 import type { Locale } from '@utils';
 import { OmnesCalculator } from '../OmnesCalculator';
 
 const setup = (lang: Locale = 'es') => {
-  const storage = createMemoryStorage();
-  const calculations = createLocalCalculationsRepository(storage);
   render(
     <OmnesCalculator
       lang={lang}
       text={getFormulaTranslation(lang, 'omnes-rules')}
       ui={getTranslations(lang, 'calculator')}
-      calculations={calculations}
-      settings={createLocalSettingsRepository(storage)}
     />,
   );
-  return { user: userEvent.setup(), calculations };
+  return { user: userEvent.setup() };
 };
 
 const result = () => screen.getByRole('region', { name: /Resultado|Result/ });
@@ -40,7 +35,7 @@ describe('parsePriceList', () => {
 
 describe('OmnesCalculator', () => {
   it('should analyze the example menu of 16 cakes', async () => {
-    const { user, calculations } = setup();
+    const { user } = setup();
     await user.click(screen.getByRole('button', { name: /Cargar: Pastelería con 16 tortas/ }));
 
     expect(screen.getByText(/16 precios cargados/)).toBeInTheDocument();
@@ -53,7 +48,7 @@ describe('OmnesCalculator', () => {
       within(region).getByText('En la zona de precios medios, como corresponde'),
     ).toBeInTheDocument();
     expect(within(region).getByText(/Ancho de cada zona/)).toHaveTextContent('= $ 25,00');
-    expect(calculations.loadDraft('omnes-rules')).toMatchObject({ averageTicket: '80' });
+    expect(useDraftsStore.getState().drafts['omnes-rules']).toMatchObject({ averageTicket: '80' });
   });
 
   it('should explain what is missing when the optional values are empty', async () => {
@@ -79,7 +74,7 @@ describe('OmnesCalculator', () => {
   });
 
   it('should ask for at least two prices and clear everything on reset', async () => {
-    const { user, calculations } = setup();
+    const { user } = setup();
     const list = screen.getByRole('textbox', { name: /Precios de la carta/ });
     await user.type(list, '40');
     await user.tab();
@@ -88,7 +83,7 @@ describe('OmnesCalculator', () => {
     await user.click(screen.getByRole('button', { name: 'Limpiar datos' }));
     expect(list).toHaveValue('');
     expect(screen.queryByRole('alert')).not.toBeInTheDocument();
-    expect(calculations.loadDraft('omnes-rules')).toBeNull();
+    expect(useDraftsStore.getState().drafts['omnes-rules']).toBeUndefined();
   });
 
   it('should flag the optional fields only after leaving them, then clear on reset', async () => {

@@ -1,7 +1,6 @@
 import { useMemo, useState } from 'react';
 import { useCurrency } from '@hooks/useCurrency';
 import { useDraft } from '@hooks/useDraft';
-import type { CalculationsRepository, SettingsRepository } from '@repositories';
 import { parseDecimal, track, type Locale } from '@utils';
 import { formatInputValue } from '@utils/format-value';
 import { calculateOmnesRules } from '@utils/formulas/omnes-rules';
@@ -37,17 +36,9 @@ const EMPTY = { prices: '', averageTicket: '', dailySpecialPrice: '' };
 
 export type OptionalField = 'averageTicket' | 'dailySpecialPrice';
 
-export const useOmnesCalculator = ({
-  lang,
-  calculations,
-  settings,
-}: {
-  lang: Locale;
-  calculations?: CalculationsRepository;
-  settings?: SettingsRepository;
-}) => {
-  const { draft, setDraft, resetDraft } = useDraft('omnes-rules', EMPTY, calculations);
-  const currency = useCurrency(settings);
+export const useOmnesCalculator = ({ lang }: { lang: Locale }) => {
+  const { draft, setDraft, resetDraft } = useDraft('omnes-rules', EMPTY);
+  const currency = useCurrency();
   const [touched, setTouched] = useState(false);
   const [touchedOptional, setTouchedOptional] = useState<ReadonlySet<OptionalField>>(
     () => new Set(),

@@ -6,7 +6,6 @@ import { OmnesResult } from '@components/organisms/OmnesResult';
 import { OMNES_EXAMPLE, useOmnesCalculator, type OptionalField } from '@hooks/useOmnesCalculator';
 import { formulaText, type CalculatorText } from '@i18n/formula-text';
 import type { Translations } from '@i18n/translations';
-import type { CalculationsRepository, HistoryRepository, SettingsRepository } from '@repositories';
 import {
   interpolate,
   keepNumberListCharacters,
@@ -22,25 +21,13 @@ export interface OmnesCalculatorProps {
   lang: Locale;
   text: CalculatorText;
   ui: Translations<'calculator'>;
-  calculations?: CalculationsRepository;
-  settings?: SettingsRepository;
-  history?: HistoryRepository;
 }
 
 /** Omnes' rules for a whole menu: one price per line, plus optional ticket and daily special. */
-export const OmnesCalculator = ({
-  lang,
-  text,
-  ui,
-  calculations,
-  settings,
-  history,
-}: OmnesCalculatorProps) => {
+export const OmnesCalculator = ({ lang, text, ui }: OmnesCalculatorProps) => {
   const id = useId();
   const calculator = useOmnesCalculator({
     lang,
-    ...(calculations ? { calculations } : {}),
-    ...(settings ? { settings } : {}),
   });
   const context = { lang, currency: calculator.currency };
   const t = formulaText(text);
@@ -160,7 +147,6 @@ export const OmnesCalculator = ({
               result={calculator.result}
               labels={ui.history}
               historyHref={localizedPath(lang, 'history')}
-              {...(history ? { repository: history } : {})}
             />
           </>
         ) : (

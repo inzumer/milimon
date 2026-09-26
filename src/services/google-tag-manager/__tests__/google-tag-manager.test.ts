@@ -1,6 +1,5 @@
 import { GTM_SCRIPT_URL } from '@constants';
-import { createLocalSettingsRepository } from '@repositories';
-import { createMemoryStorage } from '@test/memory-storage';
+import { useSettingsStore } from '@stores';
 import { setAnalyticsSink, track } from '@utils';
 import { createTagManager, isContainerId, startTagManager } from '../google-tag-manager';
 
@@ -85,24 +84,22 @@ describe('google tag manager', () => {
   });
 
   it('should do nothing without a valid container id', () => {
-    const settings = createLocalSettingsRepository(createMemoryStorage());
-    settings.save({ analyticsConsent: 'granted' });
-    const stop = startTagManager(undefined, settings);
+    useSettingsStore.getState().update({ analyticsConsent: 'granted' });
+    const stop = startTagManager(undefined);
     expect(window.dataLayer).toBeUndefined();
     expect(() => stop()).not.toThrow();
   });
 
   it('should apply the stored consent and follow later changes', () => {
-    const settings = createLocalSettingsRepository(createMemoryStorage());
-    settings.save({ analyticsConsent: 'granted' });
-    const stop = startTagManager(ID, settings);
+    useSettingsStore.getState().update({ analyticsConsent: 'granted' });
+    const stop = startTagManager(ID);
     expect(gtmScripts()).toHaveLength(1);
 
-    settings.save({ analyticsConsent: 'denied' });
+    useSettingsStore.getState().update({ analyticsConsent: 'denied' });
     expect(consentCalls()).toContainEqual(['consent', 'update', { analytics_storage: 'denied' }]);
 
     stop();
-    settings.save({ analyticsConsent: 'granted' });
+    useSettingsStore.getState().update({ analyticsConsent: 'granted' });
     expect(consentCalls().filter(([, action]) => action === 'update')).toHaveLength(2);
   });
 });

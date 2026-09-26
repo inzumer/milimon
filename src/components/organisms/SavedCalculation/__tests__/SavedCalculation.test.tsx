@@ -1,6 +1,6 @@
 import { render, screen, within } from '@testing-library/react';
 import { getFormulaTranslation, getTranslations } from '@i18n';
-import type { HistoryEntry } from '@repositories';
+import type { HistoryEntry } from '@stores';
 import { omnesEntry, pricingEntry, recipeEntry, wasteFactorEntry } from '@test/history-fixtures';
 import type { FormulaId } from '@utils/formulas';
 import { SavedCalculation } from '../SavedCalculation';

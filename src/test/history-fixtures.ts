@@ -1,4 +1,4 @@
-import type { CalculatorDraft, HistoryEntry } from '@repositories';
+import type { CalculatorDraft, HistoryEntry } from '@stores';
 import { getFormula, type FormulaId, type StandardFormulaDefinition } from '@utils/formulas';
 import { calculateOmnesRules } from '@utils/formulas/omnes-rules';
 import { calculateRecipeCosting } from '@utils/formulas/recipe-costing';

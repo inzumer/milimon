@@ -392,9 +392,9 @@ Texto propio basado en el manual, no copiado literal.
   la moneda (por ejemplo, inglés con pesos).
 - Se guarda en `localStorage` hasta que exista el login (§10).
 - **Capa de persistencia desacoplada desde el día uno:** ninguna calculadora usa `localStorage`
-  directo. Todo pasa por un repositorio (`SettingsRepository`, `RecipesRepository`,
-  `CalculationsRepository`) con implementación `local` ahora y `remote` después. Así, sumar cuentas
-  en la fase final no obliga a tocar las calculadoras.
+  directo. Todo pasa por los stores de zustand (`useSettingsStore`, `useDraftsStore`,
+  `useHistoryStore`), persistidos en `localStorage`; la sincronización de cuentas se suscribe a
+  ellos, así que las calculadoras no saben nada del backend.
 
 ---
 

@@ -27,8 +27,8 @@ src/utils  →  src/hooks  →  src/components  →  src/pages / src/layouts
   including result panels, step lists and cost tables used by the calculators.
 - `src/constants`: tunable values. `src/services`: external integrations (API, GTM, sign-in SDKs).
 - `src/pages` + `src/layouts`: `.astro` files. Static rendering, data from `getStaticPaths` and i18n collections.
-- Persistence goes through repositories (`SettingsRepository`, `RecipesRepository`, …), never
-  `localStorage` directly, so the remote (accounts) implementation can replace it later.
+- Persistence goes through the zustand stores in `src/stores` (`useSettingsStore`, …), never
+  `localStorage` directly; `services/account` subscribes to them to sync the account.
 - Analytics goes through `track()` in `@utils`; UI never talks to a provider directly.
 
 ## Single source of truth
@@ -68,7 +68,7 @@ Button/
 
 ## Imports
 
-- Aliases for anything outside the current folder (`@components`, `@repositories`,
+- Aliases for anything outside the current folder (`@components`, `@stores`,
   `@hooks`, `@utils`, `@i18n`, `@layouts/*`, `@assets/*`, `@styles/*`, `@test/*`).
 - Bare barrels preferred over deep paths.
 - Relative imports only for same-folder siblings and a unit's own test (`../unit`).
@@ -88,7 +88,7 @@ Forbidden:
 
 - `any`
 - Formulas duplicated in components
-- Direct `localStorage` access outside repositories
+- Direct `localStorage` access outside the stores
 - Hydrating static content
 - Hardcoded colors or magic numbers (rates live in the registry with manual-sourced defaults)
 - Prop drilling chains

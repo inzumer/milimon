@@ -1,5 +1,5 @@
-import type { CalculatorDrafts, HistoryEntry } from '@repositories';
 import type { AccountBackend, AccountUser, RemoteProfile } from '@services/account';
+import type { CalculatorDrafts, HistoryEntry } from '@stores';
 
 export interface FakeAccountBackend extends AccountBackend {
   remote: {

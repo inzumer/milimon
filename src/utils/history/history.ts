@@ -1,5 +1,5 @@
 import { toKebabCase } from '@i18n/formula-text';
-import type { HistoryHeadline } from '@repositories';
+import type { HistoryHeadline } from '@stores';
 import { getFormula, type FormulaId } from '@utils/formulas';
 
 /** Main result of the special calculators (the standard ones mark it with `primary`). */

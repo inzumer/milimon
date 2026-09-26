@@ -36,7 +36,7 @@ Key commands (Node from `.nvmrc`, pnpm from `packageManager`):
   by `vitest/valid-title`. `describe` names the unit under test.
 - **Formulas** are pure functions in `src/utils/formulas`, registered once in `registry.ts`, tested with
   the manual's worked examples.
-- **Imports**: path aliases (`@components`, `@constants`, `@repositories`, `@services`, `@hooks`, `@utils`, `@i18n`,
+- **Imports**: path aliases (`@components`, `@constants`, `@stores`, `@services`, `@hooks`, `@utils`, `@i18n`,
   `@layouts/*`, `@assets/*`, `@styles/*`, `@test/*`) for anything outside the current folder. Enforced by ESLint.
 - **Constants**: limits, retries, timeouts, patterns and other tunable values live in `src/constants`
   (`@constants`), never as magic numbers inside components or services.
@@ -54,7 +54,7 @@ Key commands (Node from `.nvmrc`, pnpm from `packageManager`):
 - **Security**: a strict Content-Security-Policy (hash-only scripts) is generated at build time
   (`security.csp` in `astro.config.mjs`); a new external script or API origin must be added there.
 - **Static first**: no `client:*` directive unless the component is interactive.
-- **Persistence**: through repositories only (localStorage now, accounts later). **Analytics**: through `track()` only.
+- **Persistence**: through the zustand stores in `src/stores` only (persisted to localStorage, synced to the account by `services/account`). **Analytics**: through `track()` only.
 - **Dependencies**: latest compatible versions, `pnpm audit` clean. Exceptions documented in
   [docs/adr/0002-tooling-versions.md](./docs/adr/0002-tooling-versions.md).
 

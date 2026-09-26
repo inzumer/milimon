@@ -1,27 +1,37 @@
 import {
-  createLocalCalculationsRepository,
-  createLocalHistoryRepository,
-  createLocalSettingsRepository,
+  useDraftsStore,
+  useHistoryStore,
+  useSettingsStore,
   type HistoryEntry,
-} from '@repositories';
+  type Settings,
+} from '@stores';
 import { createFakeAccountBackend, TEST_USER } from '@test/fake-account-backend';
 import { createMemoryStorage } from '@test/memory-storage';
-import { createAccountSync } from '../account-sync';
+import { createAccountSync, type AccountSync } from '../account-sync';
+
+const settings = {
+  load: () => useSettingsStore.getState(),
+  save: (patch: Partial<Settings>) => useSettingsStore.getState().update(patch),
+};
+const calculations = {
+  loadAll: () => useDraftsStore.getState().drafts,
+  saveDraft: useDraftsStore.getState().saveDraft,
+  clearDraft: useDraftsStore.getState().clearDraft,
+};
+const history = {
+  list: () => useHistoryStore.getState().entries,
+  add: useHistoryStore.getState().add,
+  remove: useHistoryStore.getState().remove,
+};
+
+// Syncs subscribe to the shared stores, so each test stops the ones it started.
+const started: AccountSync[] = [];
 
 const setup = (remote: Parameters<typeof createFakeAccountBackend>[0] = { user: TEST_USER }) => {
   const backend = createFakeAccountBackend(remote);
-  const settings = createLocalSettingsRepository(createMemoryStorage());
-  const calculations = createLocalCalculationsRepository(createMemoryStorage());
-  const history = createLocalHistoryRepository(createMemoryStorage());
   const session = createMemoryStorage();
-  const sync = createAccountSync({
-    backend,
-    settings,
-    calculations,
-    history,
-    session,
-    debounceMs: 10,
-  });
+  const sync = createAccountSync({ backend, session, debounceMs: 10 });
+  started.push(sync);
   return { backend, settings, calculations, history, session, sync };
 };
 
@@ -49,6 +59,7 @@ describe('account sync', () => {
   });
 
   afterEach(() => {
+    started.splice(0).forEach((sync) => sync.stop());
     vi.useRealTimers();
   });
 
@@ -138,6 +149,14 @@ describe('account sync', () => {
     calculations.clearDraft('pricing');
     await vi.runAllTimersAsync();
     expect(backend.remote.drafts).toStrictEqual({});
+  });
+
+  it('should not push the profile when only the analytics consent changes', async () => {
+    const { sync, backend } = setup();
+    await sync.start();
+    settings.save({ analyticsConsent: 'granted' });
+    await vi.runAllTimersAsync();
+    expect(backend.saveProfile).toHaveBeenCalledOnce();
   });
 
   it('should keep working when a push fails', async () => {

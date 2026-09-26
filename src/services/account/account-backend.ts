@@ -1,4 +1,4 @@
-import type { CalculatorDraft, CalculatorDrafts, ColorScheme, HistoryEntry } from '@repositories';
+import type { CalculatorDraft, CalculatorDrafts, ColorScheme, HistoryEntry } from '@stores';
 import type { Locale } from '@utils';
 
 export type AuthProvider = 'google' | 'facebook';

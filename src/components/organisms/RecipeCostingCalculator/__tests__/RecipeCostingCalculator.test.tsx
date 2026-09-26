@@ -1,26 +1,21 @@
 import { act, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { getFormulaTranslation, getTranslations } from '@i18n';
-import { createLocalCalculationsRepository, createLocalSettingsRepository } from '@repositories';
-import { createMemoryStorage } from '@test/memory-storage';
+import { useDraftsStore, useSettingsStore } from '@stores';
 import type { Locale } from '@utils';
 import { RecipeCostingCalculator } from '../RecipeCostingCalculator';
 
 const plain = (text: string | null) => (text ?? '').replace(/[  ]/g, ' ');
 
-const setup = (lang: Locale = 'es', storage = createMemoryStorage()) => {
-  const calculations = createLocalCalculationsRepository(storage);
-  const settings = createLocalSettingsRepository(storage);
+const setup = (lang: Locale = 'es') => {
   render(
     <RecipeCostingCalculator
       lang={lang}
       text={getFormulaTranslation(lang, 'recipe-costing')}
       ui={getTranslations(lang, 'calculator')}
-      calculations={calculations}
-      settings={settings}
     />,
   );
-  return { user: userEvent.setup(), calculations, settings };
+  return { user: userEvent.setup() };
 };
 
 const result = () => screen.getByRole('region', { name: /Resultado|Result/ });
@@ -34,7 +29,7 @@ describe('RecipeCostingCalculator', () => {
   });
 
   it('should cost the example recipe per ingredient, recipe and portion', async () => {
-    const { user, calculations } = setup();
+    const { user } = setup();
     await user.click(screen.getByRole('button', { name: /Cargar: Tournedó con galette/ }));
 
     expect(screen.getAllByRole('group')).toHaveLength(3);
@@ -44,7 +39,7 @@ describe('RecipeCostingCalculator', () => {
     expect(plain(lomo.textContent)).toContain('$ 25.714,29');
     expect(plain(within(result()).getByText(/^\$ 31\.064/).textContent)).toBe('$ 31.064,29');
     expect(plain(within(result()).getByText(/^\$ 3\.106/).textContent)).toBe('$ 3.106,43');
-    expect(calculations.loadDraft('recipe-costing')).toMatchObject({ servings: '10' });
+    expect(useDraftsStore.getState().drafts['recipe-costing']).toMatchObject({ servings: '10' });
   });
 
   it('should add, edit and remove ingredients', async () => {
@@ -66,7 +61,7 @@ describe('RecipeCostingCalculator', () => {
   });
 
   it('should show ingredient errors after leaving the field, and follow currency changes', async () => {
-    const { user, settings } = setup();
+    const { user } = setup();
     const card = screen.getByRole('group', { name: 'Ingrediente 1' });
     await user.clear(within(card).getByRole('textbox', { name: /% de desecho/ }));
     await user.type(within(card).getByRole('textbox', { name: /% de desecho/ }), '100');
@@ -79,7 +74,7 @@ describe('RecipeCostingCalculator', () => {
     expect(within(card).getAllByRole('alert')[1]).toHaveTextContent('Escribí un número válido');
 
     act(() => {
-      settings.save({ currency: 'USD' });
+      useSettingsStore.getState().update({ currency: 'USD' });
     });
     expect(
       within(card).getByRole('textbox', { name: 'Precio de compra (USD/kg)' }),
@@ -87,7 +82,7 @@ describe('RecipeCostingCalculator', () => {
   });
 
   it('should require the yield and clear everything on reset', async () => {
-    const { user, calculations } = setup();
+    const { user } = setup();
     const servings = screen.getByRole('textbox', { name: /Rendimiento/ });
     await user.click(servings);
     await user.tab();
@@ -97,6 +92,6 @@ describe('RecipeCostingCalculator', () => {
     await user.click(screen.getByRole('button', { name: 'Limpiar datos' }));
     expect(screen.getAllByRole('group')).toHaveLength(1);
     expect(servings).toHaveValue('');
-    expect(calculations.loadDraft('recipe-costing')).toBeNull();
+    expect(useDraftsStore.getState().drafts['recipe-costing']).toBeUndefined();
   });
 });

@@ -1,13 +1,8 @@
 import { act, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { getFormulaTranslation, getTranslations, toCalculatorText } from '@i18n';
-import {
-  createLocalCalculationsRepository,
-  createLocalHistoryRepository,
-  HISTORY_STORAGE_KEY,
-} from '@repositories';
+import { useDraftsStore, useHistoryStore } from '@stores';
 import { omnesEntry, wasteFactorEntry } from '@test/history-fixtures';
-import { createMemoryStorage } from '@test/memory-storage';
 import { setAnalyticsSink } from '@utils';
 import { FORMULA_IDS } from '@utils/formulas';
 import { HistoryList } from '../HistoryList';
@@ -22,10 +17,7 @@ const formulas = Object.fromEntries(
 );
 
 const setup = (entries = [wasteFactorEntry(), omnesEntry()], accountHref?: string) => {
-  const storage = createMemoryStorage();
-  storage.setItem(HISTORY_STORAGE_KEY, JSON.stringify(entries));
-  const history = createLocalHistoryRepository(storage);
-  const calculations = createLocalCalculationsRepository(storage);
+  useHistoryStore.getState().replaceAll(entries);
   const loadText = vi.fn(async (lang: 'es' | 'en', id: (typeof FORMULA_IDS)[number]) =>
     toCalculatorText(getFormulaTranslation(lang, id)),
   );
@@ -39,12 +31,10 @@ const setup = (entries = [wasteFactorEntry(), omnesEntry()], accountHref?: strin
       formulas={formulas}
       calculatorHref="/es/calculator"
       accountHref={accountHref}
-      repository={history}
-      calculations={calculations}
       loadText={loadText}
     />,
   );
-  return { user: userEvent.setup(), history, calculations, loadText, assign };
+  return { user: userEvent.setup(), loadText, assign };
 };
 
 const plain = (text: string | null) => (text ?? '').replace(/[  ]/g, ' ');
@@ -93,30 +83,32 @@ describe('HistoryList', () => {
   it('should reopen a calculation in the calculator with its values', async () => {
     const sink = vi.fn();
     setAnalyticsSink(sink);
-    const { user, calculations, assign } = setup();
+    const { user, assign } = setup();
     await user.click(screen.getAllByRole('button', { name: labels.open })[0] as HTMLElement);
-    expect(calculations.loadDraft('waste-factor')).toStrictEqual({ wastePercentage: '30' });
+    expect(useDraftsStore.getState().drafts['waste-factor']).toStrictEqual({
+      wastePercentage: '30',
+    });
     expect(assign).toHaveBeenCalledWith('/es/calculator?tool=waste-factor');
     expect(sink).toHaveBeenCalledWith('history_opened', { formula: 'waste-factor' });
   });
 
   it('should delete a calculation and announce it', async () => {
-    const { user, history } = setup();
+    const { user } = setup();
     await user.click(screen.getByRole('button', { name: /^Borrar Factor de desecho del/ }));
-    expect(history.list()).toHaveLength(1);
+    expect(useHistoryStore.getState().entries).toHaveLength(1);
     expect(screen.getAllByRole('article')).toHaveLength(1);
     expect(screen.getByRole('status')).toHaveTextContent(labels.deleted);
   });
 
   it('should follow changes made elsewhere, such as the account sync', () => {
-    const { history } = setup([]);
+    setup([]);
     expect(screen.getByText(labels.empty)).toBeInTheDocument();
     expect(screen.getByRole('link', { name: labels['go-to-calculator'] })).toHaveAttribute(
       'href',
       '/es/calculator',
     );
     act(() => {
-      history.replaceAll([wasteFactorEntry()]);
+      useHistoryStore.getState().replaceAll([wasteFactorEntry()]);
     });
     expect(screen.getAllByRole('article')).toHaveLength(1);
   });
