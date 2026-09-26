@@ -1,5 +1,5 @@
 import { useId } from 'react';
-import { Button } from '@inzumer/ui-library';
+import { Button, RichText } from '@inzumer/ui-library';
 import { FormulaFields } from '@components/molecules/FormulaFields';
 import { SaveToHistory } from '@components/molecules/SaveToHistory';
 import { FormulaResult } from '@components/organisms/FormulaResult';
@@ -29,9 +29,9 @@ export const FormulaCalculator = ({ formulaId, lang, text, ui }: FormulaCalculat
   return (
     <div className="flex flex-col gap-8">
       <section aria-labelledby={`${id}-examples`} className="flex flex-col gap-3">
-        <h3 id={`${id}-examples`} className="text-lg font-bold">
+        <RichText variant="h3" id={`${id}-examples`} className="text-lg font-bold">
           {ui['examples-title']}
-        </h3>
+        </RichText>
         <ul className="flex flex-col gap-2">
           {formula.examples.map((example) => (
             <li key={example.id} className="flex flex-wrap items-center gap-3">
@@ -43,9 +43,9 @@ export const FormulaCalculator = ({ formulaId, lang, text, ui }: FormulaCalculat
               >
                 {ui['load-example']}: {formulaText(text).example(example.id)}
               </Button>
-              <span className="text-sm text-[var(--text-secondary)]">
+              <RichText variant="s3" className="text-[var(--text-secondary)]">
                 {ui['example-source'][example.source]}
-              </span>
+              </RichText>
             </li>
           ))}
         </ul>
@@ -57,9 +57,9 @@ export const FormulaCalculator = ({ formulaId, lang, text, ui }: FormulaCalculat
         onSubmit={(event) => event.preventDefault()}
         className="flex flex-col gap-4"
       >
-        <h3 id={`${id}-form`} className="text-lg font-bold">
+        <RichText variant="h3" id={`${id}-form`} className="text-lg font-bold">
           {ui['form-title']}
-        </h3>
+        </RichText>
         <FormulaFields
           scope={formulaId}
           inputs={formula.inputs}
@@ -87,9 +87,9 @@ export const FormulaCalculator = ({ formulaId, lang, text, ui }: FormulaCalculat
         aria-live="polite"
         className="flex flex-col gap-4 rounded-xl bg-[var(--surface-secondary)] p-4"
       >
-        <h3 id={`${id}-result`} className="text-lg font-bold">
+        <RichText variant="h3" id={`${id}-result`} className="text-lg font-bold">
           {ui['result-title']}
-        </h3>
+        </RichText>
         {calculator.result ? (
           <>
             <FormulaResult
@@ -110,7 +110,7 @@ export const FormulaCalculator = ({ formulaId, lang, text, ui }: FormulaCalculat
             />
           </>
         ) : (
-          <p className="text-[var(--text-secondary)]">{ui['empty-result']}</p>
+          <RichText className="text-[var(--text-secondary)]">{ui['empty-result']}</RichText>
         )}
       </section>
     </div>

@@ -38,7 +38,9 @@
     "source": "Based on the Food & Beverage Administration and Management handbook.",
     "privacy": "Privacy",
     "terms": "Terms",
-    "cookie-preferences": "Cookie preferences"
+    "cookie-preferences": "Cookie preferences",
+    "disclaimer": "Developed by {author} — or Nahuel Zamuner, if you prefer.",
+    "legal-nav": "Legal"
   },
   "not-found": {
     "title": "Page not found",

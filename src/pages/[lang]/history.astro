@@ -1,5 +1,5 @@
 ---
-import { Breadcrumbs } from '@inzumer/ui-library';
+import { Breadcrumbs, RichText } from '@inzumer/ui-library';
 import { HistoryList } from '@components';
 import { getFormulaTranslation, getTranslations } from '@i18n';
 import PageLayout from '@layouts/page-layout.astro';
@@ -34,8 +34,12 @@ const accountHref = readAccountConfig(import.meta.env) ? localizedPath(lang, 'lo
     className="mb-6"
   />
   <header class="mb-8 flex flex-col gap-3">
-    <h1 class="text-5xl">{page.title}</h1>
-    <p class="max-w-2xl text-lg text-[var(--text-secondary)]">{page.description}</p>
+    <RichText variant="h1" bold className="font-display text-5xl">
+      {page.title}
+    </RichText>
+    <RichText variant="p1" className="max-w-2xl text-[var(--text-secondary)]">
+      {page.description}
+    </RichText>
   </header>
   <HistoryList
     client:load

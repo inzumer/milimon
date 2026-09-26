@@ -43,7 +43,9 @@ const title = getTranslations(DEFAULT_LOCALE, 'common')['not-found'].title;
       <RichText as="p" variant="h1" bold className="font-display text-7xl text-[var(--text-link)]">
         404
       </RichText>
-      <RichText variant="h1">{text.title}</RichText>
+      <RichText variant="h1" bold className="font-display">
+        {text.title}
+      </RichText>
       <RichText variant="p1" className="text-[var(--text-secondary)]">
         {text.description}
       </RichText>

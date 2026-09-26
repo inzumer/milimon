@@ -108,6 +108,18 @@ describe('LoginPanel', () => {
     expect(renderGoogle).not.toHaveBeenCalled();
   });
 
+  it('should keep the Facebook button disabled, saying it comes soon, without an app id', async () => {
+    const { renderPanel, facebookLogin, user } = setup({}, { facebook: null });
+    renderPanel();
+    const facebook = await screen.findByRole('button', {
+      name: labels['continue-with-facebook'],
+    });
+    expect(facebook).toBeDisabled();
+    expect(facebook).toHaveAccessibleDescription(labels['facebook-soon']);
+    await user.click(facebook);
+    expect(facebookLogin).not.toHaveBeenCalled();
+  });
+
   it('should sign in with Google and go to the account page', async () => {
     const sink = vi.fn();
     setAnalyticsSink(sink);

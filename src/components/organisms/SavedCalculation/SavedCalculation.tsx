@@ -1,5 +1,6 @@
 import { Component, type ReactNode } from 'react';
 import {
+  RichText,
   Table,
   TableBody,
   TableCell,
@@ -224,7 +225,11 @@ class Fallback extends Component<{ message: string; children: ReactNode }, { fai
   }
 
   override render() {
-    return this.state.failed ? <p role="alert">{this.props.message}</p> : this.props.children;
+    return this.state.failed ? (
+      <RichText role="alert">{this.props.message}</RichText>
+    ) : (
+      this.props.children
+    );
   }
 }
 
@@ -234,12 +239,16 @@ export const SavedCalculation = (props: SavedCalculationProps) => {
   return (
     <Fallback message={labels.unavailable}>
       <div className="flex flex-col gap-4">
-        <h3 className="text-lg font-bold">{labels['inputs-title']}</h3>
-        <p className="text-sm text-[var(--text-secondary)]">
+        <RichText variant="h3" className="text-lg font-bold">
+          {labels['inputs-title']}
+        </RichText>
+        <RichText variant="p3" className="text-[var(--text-secondary)]">
           {interpolate(labels.currency, { currency: entry.currency })}
-        </p>
+        </RichText>
         <SavedInputs {...props} />
-        <h3 className="text-lg font-bold">{labels['result-title']}</h3>
+        <RichText variant="h3" className="text-lg font-bold">
+          {labels['result-title']}
+        </RichText>
         <SavedResult {...props} />
       </div>
     </Fallback>

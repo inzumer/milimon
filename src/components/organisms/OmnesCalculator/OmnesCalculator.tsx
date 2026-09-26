@@ -1,5 +1,5 @@
 import { useId } from 'react';
-import { Button, Textarea } from '@inzumer/ui-library';
+import { Button, RichText, Textarea } from '@inzumer/ui-library';
 import { NumberField } from '@components/molecules/NumberField';
 import { SaveToHistory } from '@components/molecules/SaveToHistory';
 import { OmnesResult } from '@components/organisms/OmnesResult';
@@ -59,9 +59,9 @@ export const OmnesCalculator = ({ lang, text, ui }: OmnesCalculatorProps) => {
   return (
     <div className="flex flex-col gap-8">
       <section aria-labelledby={`${id}-examples`} className="flex flex-col gap-3">
-        <h3 id={`${id}-examples`} className="text-lg font-bold">
+        <RichText variant="h3" id={`${id}-examples`} className="text-lg font-bold">
           {ui['examples-title']}
-        </h3>
+        </RichText>
         <div className="flex flex-wrap items-center gap-3">
           <Button
             id={trackingId(SCOPE, 'button', 'load-example', OMNES_EXAMPLE.id)}
@@ -71,9 +71,9 @@ export const OmnesCalculator = ({ lang, text, ui }: OmnesCalculatorProps) => {
           >
             {ui['load-example']}: {t.example(OMNES_EXAMPLE.id)}
           </Button>
-          <span className="text-sm text-[var(--text-secondary)]">
+          <RichText variant="s3" className="text-[var(--text-secondary)]">
             {ui['example-source'].illustrative}
-          </span>
+          </RichText>
         </div>
       </section>
 
@@ -83,9 +83,9 @@ export const OmnesCalculator = ({ lang, text, ui }: OmnesCalculatorProps) => {
         onSubmit={(event) => event.preventDefault()}
         className="flex flex-col gap-5"
       >
-        <h3 id={`${id}-form`} className="text-lg font-bold">
+        <RichText variant="h3" id={`${id}-form`} className="text-lg font-bold">
           {ui['form-title']}
-        </h3>
+        </RichText>
         <Textarea
           id={trackingId(SCOPE, 'input', 'prices')}
           label={`${pricesText.label} (${calculator.currency})`}
@@ -128,9 +128,9 @@ export const OmnesCalculator = ({ lang, text, ui }: OmnesCalculatorProps) => {
         aria-live="polite"
         className="flex flex-col gap-4 rounded-xl bg-[var(--surface-secondary)] p-4"
       >
-        <h3 id={`${id}-result`} className="text-lg font-bold">
+        <RichText variant="h3" id={`${id}-result`} className="text-lg font-bold">
           {ui['result-title']}
-        </h3>
+        </RichText>
         {calculator.result ? (
           <>
             <OmnesResult
@@ -150,7 +150,7 @@ export const OmnesCalculator = ({ lang, text, ui }: OmnesCalculatorProps) => {
             />
           </>
         ) : (
-          <p className="text-[var(--text-secondary)]">{ui['empty-result']}</p>
+          <RichText className="text-[var(--text-secondary)]">{ui['empty-result']}</RichText>
         )}
       </section>
     </div>

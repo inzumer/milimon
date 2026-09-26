@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button } from '@inzumer/ui-library';
+import { Button, RichText } from '@inzumer/ui-library';
 import type { Translations } from '@i18n/translations';
 import { useHistoryStore, type CalculatorDraft } from '@stores';
 import { track, trackingId } from '@utils';
@@ -57,10 +57,10 @@ export const SaveToHistory = ({
         >
           {labels.save}
         </Button>
-        <p role="status" className="flex flex-wrap gap-x-2">
+        <RichText role="status" className="flex flex-wrap gap-x-2">
           {saved && (
             <>
-              <span>{labels.saved}</span>
+              <RichText variant="s2">{labels.saved}</RichText>
               <a
                 id={trackingId(formulaId, 'link', 'view-history')}
                 href={historyHref}
@@ -70,9 +70,11 @@ export const SaveToHistory = ({
               </a>
             </>
           )}
-        </p>
+        </RichText>
       </div>
-      <p className="text-sm text-[var(--text-secondary)]">{labels.note}</p>
+      <RichText variant="p3" className="text-[var(--text-secondary)]">
+        {labels.note}
+      </RichText>
     </div>
   );
 };

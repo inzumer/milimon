@@ -66,6 +66,9 @@ export const SiteMenu = ({ lang, pathname, items, labels, account }: SiteMenuPro
         onClose={close}
         title={labels.title}
         titleClassName="font-display text-3xl"
+        // Title row as tall as the site header and the same side padding, so the close button sits
+        // exactly where the menu button is.
+        className="px-4 pt-0 [&>div:first-child]:h-header [&>div:first-child]:shrink-0"
         closeLabel={labels.close}
         footer={
           <div className="flex flex-col gap-8">

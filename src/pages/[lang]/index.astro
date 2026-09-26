@@ -1,5 +1,6 @@
 ---
 import { Image } from 'astro:assets';
+import { RichText } from '@inzumer/ui-library';
 import logo from '@assets/logo.png';
 import { FeatureCard } from '@components';
 import { getTranslations } from '@i18n';
@@ -27,8 +28,12 @@ const home = getTranslations(lang, 'home');
       loading="eager"
       fetchpriority="high"
     />
-    <h1 class="text-5xl">{common['app-name']}</h1>
-    <p class="max-w-xl text-lg text-[var(--text-secondary)]">{home.hero.subtitle}</p>
+    <RichText variant="h1" bold className="font-display text-5xl">
+      {common['app-name']}
+    </RichText>
+    <RichText variant="p1" className="max-w-xl text-[var(--text-secondary)]">
+      {home.hero.subtitle}
+    </RichText>
   </section>
 
   <section class="flex flex-col gap-6">
@@ -42,7 +47,9 @@ const home = getTranslations(lang, 'home');
       ctaId={trackingId('home', 'link', 'calculator')}
     />
 
-    <h2 class="pt-4 text-3xl">{home['sections-title']}</h2>
+    <RichText variant="h2" bold className="font-display pt-4 text-3xl">
+      {home['sections-title']}
+    </RichText>
     <div class="grid gap-6 lg:grid-cols-2">
       <FeatureCard
         title={home['formulas-card'].title}
