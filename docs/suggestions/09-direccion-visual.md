@@ -13,7 +13,9 @@ estrellas sean el toque cálido y todo lo demás acompañe con calma.
   destacada y enlaces cruzados (ver [03](./03-contenido-y-redes.md)).
 
 - Pinterest, apps de recetas ([1](https://pin.it/1Vsh0PpDJ), [2](https://pin.it/1OXAWxsuV)): referencia
-  de UI y color para la sección de recetas (detalle abajo).
+  de UI y color para la sección de recetas y el modo oscuro (detalle abajo).
+- Pinterest, app de café ([3](https://pin.it/4Cht8v17L)): referencia del **modo claro** y del uso de
+  imágenes (detalle abajo).
 
 ## Recetas: referencia de Pinterest
 
@@ -22,6 +24,24 @@ estrellas sean el toque cálido y todo lo demás acompañe con calma.
 Nuestro marrón oscuro actual (`#2F201B`) ya es casi el mismo; la propuesta es **sumar una escala
 "terracota"** a los tokens como acento de la sección de recetas (o secundario del sitio) y dejar el
 amarillo para la marca y los milicitos. Se decide con un moodboard y pruebas de contraste AA.
+
+**Modo claro** (referencia 3): fondo crema/marfil `~#F6E8D7` con superficies apenas más claras
+`~#FBF3EA`, el mismo acento naranja `~#F29A3E` en botones tipo píldora y texto marrón oscuro
+`~#3B2A20`. Nuestro fondo claro actual (`#FDF7F1`) ya es crema: el cambio es sumar el naranja.
+
+| Modo   | Fondo                | Superficies       | Acento               | Texto                |
+| ------ | -------------------- | ----------------- | -------------------- | -------------------- |
+| Claro  | crema `~#F6E8D7`     | marfil `~#FBF3EA` | naranja `~#F29A3E`   | chocolate `~#3B2A20` |
+| Oscuro | chocolate `~#2B1B14` | `~#3A271E`        | terracota `~#F58A4B` | crema `~#F5EDE6`     |
+
+El amarillo actual queda para la marca y los milicitos (o se reemplaza por el naranja si el
+moodboard lo confirma); siempre validando contraste AA en los dos modos.
+
+**Uso de imágenes** (referencia 3): fotos del plato o el producto **vistas desde arriba**,
+recortadas sobre fondo liso del color de la página, **centradas** y con una **sombra suave**; mucho
+aire alrededor y una sola imagen protagonista por pantalla. En modo oscuro, las fotos a sangre con
+degradado (referencias 1 y 2). Conviene definir una guía de fotografía (ángulo, luz, fondo) para
+que las fotos de Milagros se vean todas de la misma familia.
 
 **Componentes que inspira**
 
