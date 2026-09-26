@@ -4,7 +4,7 @@
   "study": {
     "what": [
       "Recipes state clean quantities. To buy, you need the gross quantity: how much to order as purchased so that, after cleaning, there's enough for every portion.",
-      "The handbook solves it with the waste factor or with the rule of three, and rounds the purchase up."
+      "You solve it with the waste factor or with the rule of three, and round the purchase up."
     ],
     "formula": [
       "Clean quantity needed = portions × clean portion",
@@ -37,43 +37,43 @@
     ],
     "examples": [
       {
-        "title": "Tournedos with potato galette for 200 guests (handbook)",
+        "title": "Grilled salmon for 120 covers",
         "paragraphs": [
-          "Each portion takes 0.180 kg of clean tenderloin: 200 × 0.180 = 36.000 kg clean.",
-          "The tenderloin has 30% trim, so the factor is 1.429.",
-          "Gross quantity = 36.000 kg × 1.429 = 51.429 kg. With the rule of three: if 70% is 36.000 kg, 100% is 36.000 × 100 ÷ 70 = 51.429 kg.",
-          "Rounding up, you buy 52 kg."
+          "Each portion takes 0.160 kg of clean fillet: 120 × 0.160 = 19.200 kg clean.",
+          "Salmon has 25% trim waste, so the factor is 1.333.",
+          "Gross quantity = 19.200 kg × 1.333 = 25.600 kg. By the rule of three: if 75% is 19.200 kg, 100% is 19.200 × 100 ÷ 75 = 25.600 kg.",
+          "Rounding up, you buy 26 kg."
         ]
       }
     ],
     "notes": [
       {
         "type": "common-mistake",
-        "text": "Adding 30% to 36 kg gives 46.8 kg, but cleaning that leaves only 32.76 kg — more than 3 kg short. That's why the factor is used instead of a plain percentage."
+        "text": "Adding 25% to 19.2 kg gives 24 kg, but trimming that leaves only 18 kg: more than 1 kg short. That is why you use the factor, not a plain percentage."
       },
       {
         "type": "rounding",
-        "text": "For practical reasons the purchase is rounded up (51.429 → 52 kg). Having a little left over is always better than falling short."
+        "text": "For practicality, round up (25.6 → 26 kg). A little extra is always better than falling short."
       }
     ]
   },
   "inputs": {
     "servings": {
       "label": "Guests or portions",
-      "placeholder": "Number of portions to serve (e.g. 200)"
+      "placeholder": "Number of portions to serve (e.g. 120)"
     },
     "net-portion": {
       "label": "Clean portion per guest",
-      "placeholder": "Clean recipe quantity per portion, in kg (e.g. 0.180)"
+      "placeholder": "Clean recipe quantity per portion, in kg (e.g. 0.160)"
     },
     "waste-percentage": {
       "label": "Trim waste %",
-      "placeholder": "Percentage lost when cleaning (e.g. 30)"
+      "placeholder": "Percentage lost when cleaning (e.g. 25)"
     },
     "rounding-step": {
       "label": "Round the purchase up to multiples of",
       "placeholder": "Purchase unit you round up to, in kg (e.g. 1)",
-      "hint": "The handbook rounds up to whole kilos: 51.429 kg → 52 kg."
+      "hint": "Round up to the purchase unit: 25.600 kg → 26 kg."
     }
   },
   "outputs": {
@@ -91,8 +91,8 @@
     "purchase-quantity": "Rounding up to multiples of {roundingStep} kg: you buy {purchaseQuantity} kg"
   },
   "examples": {
-    "manual-tournedos": {
-      "title": "Tournedos for 200 guests (0.180 kg tenderloin, 30% trim)"
+    "salmon-portions": {
+      "title": "Salmon for 120 covers (0.160 kg per portion, 25% trim waste)"
     }
   }
 }

@@ -39,30 +39,29 @@
     ],
     "examples": [
       {
-        "title": "Handbook data",
+        "title": "The café's data",
         "paragraphs": [
-          "Gross sales $1,118,000 − taxes $332,248.05 = net sales $785,751.95. Tax rate: 1.42.",
-          "Variable cost rate: 270,000 ÷ 785,751.95 = 0.34. Contribution rate: 0.66.",
-          "Break-even point: 313,977 ÷ 0.66 = $475,722.73 of net sales ($478,346.31 with the unrounded rate)."
+          "Gross sales $1,570,000 − taxes $462,102.50 (sales and income tax) = net sales $1,107,897.50. Tax rate: 1.4171.",
+          "Variable cost rate: 440,000 ÷ 1,107,897.50 = 0.3971. Contribution rate: 0.6029.",
+          "Break-even point: 392,850 ÷ 0.6029 ≈ $651,653 of net sales, or $923,457 gross."
         ]
       },
       {
         "title": "Sales to earn what you want",
         "paragraphs": [
-          "The owner wants $130,000 net a month; before income tax that's 130,000 ÷ 0.65 = $200,000.",
-          "Net sales = (313,977 + 200,000) ÷ 0.66 ≈ $778,753. Gross sales ≈ 778,753 × 1.42 ≈ $1,105,829.",
-          "With unrounded rates: $783,047.80 net and $1,114,152.43 gross."
+          "The owner wants $200,000 net per month; before income tax that is 200,000 ÷ 0.65 = $307,692.31.",
+          "Net sales = (392,850 + 307,692.31) ÷ 0.6029 ≈ $1,162,048. Gross sales ≈ 1,162,048 × 1.4171 ≈ $1,646,737."
         ]
       }
     ],
     "notes": [
       {
-        "type": "manual-difference",
-        "text": "The handbook adds $130,000 (the net profit) as if it were before tax and gets $672,692 of net sales. That profit still has to pay 35% income tax, so $130,000 falls short: that's why the profit before tax ($200,000) is used here."
+        "type": "common-mistake",
+        "text": "Use the profit before income tax: if you enter the net profit you fall short, because that profit still has to pay the tax."
       },
       {
         "type": "rounding",
-        "text": "The handbook rounds the contribution rate to 0.66 and the tax rate to 1.42. The calculator uses exact values, so results differ slightly."
+        "text": "If you round the rates (for example, contribution 0.60 and tax rate 1.42), the results shift a little: the calculator uses the exact values."
       },
       {
         "type": "tip",
@@ -73,23 +72,23 @@
   "inputs": {
     "gross-sales": {
       "label": "Gross sales",
-      "placeholder": "Sales for the period including taxes (e.g. 1118000)"
+      "placeholder": "Sales for the period including taxes (e.g. 1570000)"
     },
     "taxes": {
       "label": "Taxes",
-      "placeholder": "Taxes on sales + income tax (e.g. 332248.05)"
+      "placeholder": "Taxes on sales + income tax (e.g. 462102.50)"
     },
     "variable-costs": {
       "label": "Variable costs",
-      "placeholder": "Cost of goods consumed in the period (e.g. 270000)"
+      "placeholder": "Cost of goods consumed in the period (e.g. 440000)"
     },
     "fixed-costs": {
       "label": "Fixed costs",
-      "placeholder": "Salaries, charges, rent, utilities, expenses, amortization and fees (e.g. 313977)"
+      "placeholder": "Salaries, charges, rent, utilities, expenses, amortization and fees (e.g. 392850)"
     },
     "desired-profit-before-tax": {
       "label": "Desired profit before tax",
-      "placeholder": "Monthly profit you want, before income tax (e.g. 200000)",
+      "placeholder": "Monthly profit you want, before income tax (e.g. 307692.31)",
       "hint": "If you think in take-home terms, divide it by (1 − 0.35)."
     }
   },
@@ -113,8 +112,8 @@
     "target-gross-sales": "Gross sales = net sales × tax rate = {targetNetSales} × {taxRate} = {targetGrossSales}"
   },
   "examples": {
-    "manual-break-even": {
-      "title": "Handbook data, with $200,000 profit before tax"
+    "cafe-break-even": {
+      "title": "The café's data, with $307,692 profit before tax"
     }
   },
   "errors": {

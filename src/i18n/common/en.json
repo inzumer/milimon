@@ -60,7 +60,7 @@
   },
   "consent": {
     "title": "Help us improve?",
-    "message": "We use Google tools (Tag Manager and Analytics) to learn which formulas are used most and improve the handbook. They only turn on if you accept; we never store the numbers you enter.",
+    "message": "We use Google tools (Tag Manager and Analytics) to learn which formulas are used most and improve the site. They only turn on if you accept; we never store the numbers you enter.",
     "accept": "Accept",
     "reject": "Reject",
     "privacy-link": "Privacy policy",

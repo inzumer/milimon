@@ -6,7 +6,8 @@ sobre `@inzumer/ui-library` + `@inzumer/tokens` personalizados con la identidad 
 
 - **Título de la app:** `Milimon` (nombre de la carpeta del proyecto, `milimon`).
 - **Fuente de verdad del contenido:** `AyG- Manual.pdf` (Administración y Gestión gastronómica).
-  Cuando el manual y `FORMULAS 2026.xlsx` no coinciden, **gana el manual**. El Excel es solo una referencia.
+  Cuando el manual y `FORMULAS 2026.xlsx` no coinciden, **gana el manual**. Los dos son solo referencia
+  de conceptos: los ejemplos, las cifras y los textos del sitio son propios (nada se copia del manual).
 - **Tono:** es un **manual de estudio**. Cada fórmula se explica completa: de dónde sale, qué
   significa cada variable, el paso a paso con números, los errores comunes y los redondeos. Nada
   se da por sabido.
@@ -85,13 +86,13 @@ src/
   i18n/             ver §3
   hooks/            useFormulaCalculator, useRecipeCostingCalculator, useOmnesCalculator, useDraft, useCurrency, useColorScheme
   utils/
-    formulas/       una función pura por fórmula + registry.ts (catálogo: inputs, cálculo, ejemplos del manual)
+    formulas/       una función pura por fórmula + registry.ts (catálogo: inputs, cálculo, ejemplos propios)
     calculation/    resultado con pasos, validación, redondeo
     …               parseDecimal, formatValue, trackingId, interpolate, rutas, storage, track()
   constants/        valores ajustables (reintentos, timeouts, patrones)
   services/         API de cuentas, Google Tag Manager, SDKs de login
   styles/           theme.css (overrides de tokens claro/oscuro), fonts.css
-  test/             setup.ts, fixtures con los ejemplos del manual
+  test/             setup.ts, fixtures con ejemplos propios
 ```
 
 Convención de nombres: **kebab-case** en carpetas de contenido y traducciones, archivos `.astro`,
@@ -224,7 +225,7 @@ Ejemplo de `formulas/cooking-loss/es.json`:
   reciben ya resueltos solo los textos que usan (como props), así que no se manda i18next al cliente.
 - Claves en kebab-case.
 - **Placeholders:** cada input tiene un placeholder descriptivo que indica qué va, en qué unidad y
-  con un valor de ejemplo tomado del manual. Además lleva `label` visible (el placeholder nunca lo
+  con un valor de nuestro propio ejemplo. Además lleva `label` visible (el placeholder nunca lo
   reemplaza, por accesibilidad) y un `hint` opcional.
 - Números con `Intl.NumberFormat` según idioma (`es-AR` → `1.234,56`; `en` → `1,234.56`). Los
   inputs aceptan coma o punto como separador decimal.
@@ -238,7 +239,7 @@ Ejemplo de `formulas/cooking-loss/es.json`:
 /{es|en}                           → Home
 /{es|en}/calculator                → Calculadora general con desplegable (?tool=cooking-loss)
 /{es|en}/formulas                  → Índice de fórmulas
-/{es|en}/formulas/{formula}        → Explicación + ejemplos del manual + calculadora interactiva embebida
+/{es|en}/formulas/{formula}        → Explicación + ejemplos resueltos + calculadora interactiva embebida
 /{es|en}/learn/{topic}             → Secciones "Aprender"
 404                                → localizado según el prefijo de la URL
 ```
@@ -262,7 +263,7 @@ Ejemplo de `formulas/cooking-loss/es.json`:
 1. Qué es y para qué sirve (explicación basada en el manual, redactada con texto propio).
 2. La fórmula (y sus variantes, p. ej. las dos fórmulas del factor de desecho).
 3. Paso a paso.
-4. **Ejemplos del manual resueltos** (p. ej. Tournedó para 200 personas, lomo 30% de desecho → 51,429 kg).
+4. **Ejemplos resueltos propios** (p. ej. salmón para 120 cubiertos, 25 % de desecho → 25,600 kg).
    Cada ejemplo tiene un botón "Probar este ejemplo" que carga los valores en la calculadora de abajo.
 5. **Notas de estudio**: tips, errores comunes (por ejemplo, sumar el 30% en lugar de usar el
    factor de desecho: "nunca alcanza"), redondeos y las diferencias con el texto original del

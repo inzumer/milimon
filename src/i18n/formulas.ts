@@ -10,7 +10,7 @@ const inputTextSchema = z.object({
   hint: text.optional(),
 });
 
-export const NOTE_TYPES = ['tip', 'common-mistake', 'rounding', 'manual-difference'] as const;
+export const NOTE_TYPES = ['tip', 'common-mistake', 'rounding'] as const;
 
 const studySchema = z.object({
   what: z.array(text).min(1),

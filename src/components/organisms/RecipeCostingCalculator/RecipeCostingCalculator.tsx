@@ -44,9 +44,6 @@ export const RecipeCostingCalculator = ({ lang, text, ui }: RecipeCostingCalcula
           >
             {ui['load-example']}: {t.example(RECIPE_EXAMPLE.id)}
           </Button>
-          <RichText variant="s3" className="text-[var(--text-secondary)]">
-            {ui['example-source'].illustrative}
-          </RichText>
         </div>
       </section>
 

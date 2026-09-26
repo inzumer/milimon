@@ -30,18 +30,18 @@
     ],
     "examples": [
       {
-        "title": "Handbook example",
+        "title": "Pumpkin for purée",
         "paragraphs": [
-          "2.400 kg of untrimmed product are weighed. After cleaning, 1.700 kg are left.",
-          "Trim = 2.400 kg − 1.700 kg = 0.700 kg.",
-          "Trim waste % = 0.700 ÷ 2.400 × 100 = 29.17%. The handbook rounds it to 30%."
+          "An unpeeled pumpkin weighs 2.800 kg. After peeling it and removing the seeds, 1.960 kg are left.",
+          "Trim = 2.800 kg − 1.960 kg = 0.840 kg.",
+          "Trim waste % = 0.840 ÷ 2.800 × 100 = 30%."
         ]
       }
     ],
     "notes": [
       {
         "type": "rounding",
-        "text": "The exact result is 29.17% and the handbook uses 30%. Rounding up is conservative (you buy a little extra), but it's worth knowing it's a rounded figure, not the exact value."
+        "text": "If the math gives decimals (say 27.4%), rounding up is the safe choice: you buy a little extra. Just keep in mind it is a rounding, not the exact value."
       },
       {
         "type": "tip",
@@ -60,12 +60,12 @@
   "inputs": {
     "gross-weight": {
       "label": "Gross weight (as purchased)",
-      "placeholder": "Weight as you bought it, in kg (e.g. 2.400)",
+      "placeholder": "Weight as you bought it, in kg (e.g. 2.800)",
       "hint": "Weigh the product before cleaning it."
     },
     "net-weight": {
       "label": "Net weight (clean)",
-      "placeholder": "Weight after cleaning, in kg (e.g. 1.700)",
+      "placeholder": "Weight after cleaning, in kg (e.g. 1.960)",
       "hint": "Weigh what is ready for the recipe, without trim."
     }
   },
@@ -78,8 +78,8 @@
     "waste-percentage": "Trim waste % = trim ÷ gross weight × 100 = {wasteWeight} kg ÷ {grossWeight} kg × 100 = {wastePercentage}"
   },
   "examples": {
-    "manual-cleaning": {
-      "title": "Cleaning 2.400 kg that leaves 1.700 kg clean"
+    "pumpkin-cleaning": {
+      "title": "Pumpkin: 2.800 kg unpeeled that leave 1.960 kg clean"
     }
   },
   "errors": {

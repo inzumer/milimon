@@ -36,7 +36,7 @@
     ],
     "examples": [
       {
-        "title": "Pastelería con 16 tortas (manual)",
+        "title": "Pastelería con 16 tortas",
         "paragraphs": [
           "Los precios van de $ 40 a $ 115: una diferencia de $ 75, es decir, zonas de $ 25.",
           "Baratos: de $ 40 a $ 65; medios: más de $ 65 hasta $ 90; caros: más de $ 90 hasta $ 115.",
@@ -53,10 +53,6 @@
       {
         "type": "tip",
         "text": "Si competís por precio, poné los precios encolumnados a la derecha de la carta; si competís por producto, ubicá el precio cerca de la descripción del plato."
-      },
-      {
-        "type": "manual-difference",
-        "text": "El manual da el rango de precios y la cantidad de tortas por zona, pero no la lista de precios: la del ejemplo es ilustrativa y respeta esa distribución."
       }
     ]
   },

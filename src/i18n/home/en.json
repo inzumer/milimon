@@ -10,7 +10,7 @@
   },
   "formulas-card": {
     "title": "Formulas",
-    "description": "Every formula explained: what each value means, the step-by-step method and worked examples from the handbook.",
+    "description": "Every formula explained: what each value means, the step-by-step method and worked examples.",
     "cta": "See formulas"
   },
   "learn-card": {
@@ -25,7 +25,7 @@
   },
   "management-section": {
     "title": "Restaurant management",
-    "intro": "Work out food cost, trim waste and cooking loss, and understand every formula step by step with the handbook’s examples."
+    "intro": "Work out food cost, trim waste and cooking loss, and understand every formula step by step with worked examples."
   },
   "recipes-card": {
     "description": "We are preparing the first recipes, each with its cost per portion and its milicitos.",

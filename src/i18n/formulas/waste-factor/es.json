@@ -4,7 +4,7 @@
   "study": {
     "what": [
       "El factor de desecho es el número por el que multiplicás una cantidad limpia para saber cuánto tenés que comprar sucio. También sirve para convertir un precio sucio en su precio limpio equivalente.",
-      "El manual prefiere calcularlo a partir del % de desecho, porque ese porcentaje lo vas a necesitar en muchas otras cuentas."
+      "Conviene calcularlo a partir del % de desecho, porque ese porcentaje lo vas a necesitar en muchas otras cuentas."
     ],
     "formula": [
       "Factor = % de desecho ÷ (100 − % de desecho) + 1",
@@ -33,18 +33,18 @@
     ],
     "examples": [
       {
-        "title": "Lomo para tournedó (manual)",
+        "title": "Salmón entero",
         "paragraphs": [
-          "El lomo tiene 30 % de desecho, así que se aprovecha el 70 %.",
-          "Factor = 30 ÷ 70 + 1 = 0,4286 + 1 = 1,429.",
-          "Por cada kilo limpio que necesites, tenés que comprar 1,429 kg de lomo entero."
+          "El salmón entero tiene 25 % de desecho (cabeza, espinas y piel), así que se aprovecha el 75 %.",
+          "Factor = 25 ÷ 75 + 1 = 0,3333 + 1 = 1,333.",
+          "Por cada kilo de filete limpio que necesites, tenés que comprar 1,333 kg de salmón entero."
         ]
       }
     ],
     "notes": [
       {
         "type": "common-mistake",
-        "text": "Con 30 % de desecho el factor no es 1,30. Si sumás solo el 30 %, lo que compraste de más también pierde un 30 % al limpiarlo: es \"el desecho del desecho\", y así nunca alcanza."
+        "text": "Con 25 % de desecho el factor no es 1,25. Si sumás solo el 25 %, lo que compraste de más también pierde un 25 % al limpiarlo: es \"el desecho del desecho\", y así nunca alcanza."
       },
       {
         "type": "rounding",
@@ -59,7 +59,7 @@
   "inputs": {
     "waste-percentage": {
       "label": "% de desecho",
-      "placeholder": "Porcentaje que se pierde al limpiar (ej.: 30)",
+      "placeholder": "Porcentaje que se pierde al limpiar (ej.: 25)",
       "hint": "Si no lo sabés, calculalo con la fórmula de % de desecho."
     }
   },
@@ -72,8 +72,8 @@
     "waste-factor": "Factor = % de desecho ÷ (100 − % de desecho) + 1 = {wastePercentage} ÷ {usablePercentage} + 1 = {wasteFactor}"
   },
   "examples": {
-    "manual-tenderloin": {
-      "title": "Lomo para tournedó con 30 % de desecho"
+    "whole-salmon": {
+      "title": "Salmón entero con 25 % de desecho"
     }
   }
 }

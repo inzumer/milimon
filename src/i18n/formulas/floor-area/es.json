@@ -29,10 +29,10 @@
     ],
     "examples": [
       {
-        "title": "Casa de té de 20 cubiertos (manual)",
+        "title": "Café de 32 cubiertos",
         "paragraphs": [
-          "1,10 m² por persona + 20 % de circulación = 1,32 m² por persona.",
-          "20 cubiertos × 1,32 m² = 26,4 m², que el manual redondea a 27 m²."
+          "1,25 m² por persona + 20 % de circulación = 1,50 m² por persona.",
+          "32 cubiertos × 1,50 m² = 48 m² de salón."
         ]
       }
     ],
@@ -43,18 +43,18 @@
       },
       {
         "type": "rounding",
-        "text": "El manual dice que con 1,10 m² se necesitan \"entre 1,20 y 1,30 m²\" por persona; la cuenta exacta da 1,21 m² (con 10 %) y 1,32 m² (con 20 %)."
+        "text": "Con 1,25 m² y 20 % de circulación la cuenta da justo 1,50 m² por persona. Si te da decimales, redondeá los metros hacia arriba: es mejor que sobre espacio a que falte."
       },
       {
         "type": "tip",
-        "text": "Si un local no tiene los metros para tus cubiertos con la comodidad prevista, el manual recomienda descartarlo antes que resignar rentabilidad o el concepto del negocio."
+        "text": "Si un local no tiene los metros para tus cubiertos con la comodidad prevista, conviene descartarlo antes que resignar rentabilidad o el concepto del negocio."
       }
     ]
   },
   "inputs": {
     "area-per-customer": {
       "label": "Superficie por cliente",
-      "placeholder": "Metros cuadrados por persona, entre 1,10 y 1,50 (ej.: 1,10)",
+      "placeholder": "Metros cuadrados por persona, entre 1,10 y 1,50 (ej.: 1,25)",
       "hint": "Más separación entre mesas = más categoría y más metros."
     },
     "circulation-percentage": {
@@ -63,7 +63,7 @@
     },
     "customers": {
       "label": "Cubiertos",
-      "placeholder": "Cantidad de clientes sentados al mismo tiempo (ej.: 20)"
+      "placeholder": "Cantidad de clientes sentados al mismo tiempo (ej.: 32)"
     }
   },
   "outputs": {
@@ -76,8 +76,8 @@
     "required-area": "Superficie = por cliente × cubiertos = {areaPerCustomerWithCirculation} m² × {customers} = {requiredArea} m² (se redondea hacia arriba)"
   },
   "examples": {
-    "manual-tea-house": {
-      "title": "Casa de té de 20 cubiertos (1,10 m² + 20 %)"
+    "cafe-32-covers": {
+      "title": "Café de 32 cubiertos (1,25 m² + 20 %)"
     }
   }
 }

@@ -36,7 +36,7 @@
       {
         "title": "Carne adobada (ilustrativo)",
         "paragraphs": [
-          "El manual presenta la planilla sin números. Ejemplo: 1,200 kg de carne limpia con 0,300 kg de adobo que no se puede separar dan 1,500 kg antes de cocción.",
+          "Ejemplo: 1,200 kg de carne limpia con 0,300 kg de adobo que no se puede separar dan 1,500 kg antes de cocción.",
           "Después de cocinarla pesa 1,050 kg: merma = 1,500 − 1,050 = 0,450 kg.",
           "% de merma = 0,450 ÷ 1,500 × 100 = 30 %."
         ]
@@ -53,7 +53,7 @@
       },
       {
         "type": "tip",
-        "text": "Para evitar la merma por descongelado, el manual recomienda usar abatidor de temperatura o comprar frescos con más frecuencia y mantenerlos refrigerados a 4 °C."
+        "text": "Para evitar la merma por descongelado, conviene usar abatidor de temperatura o comprar frescos con más frecuencia y mantenerlos refrigerados a 4 °C."
       }
     ]
   },

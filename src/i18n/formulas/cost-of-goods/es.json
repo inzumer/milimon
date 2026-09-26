@@ -29,11 +29,11 @@
     ],
     "examples": [
       {
-        "title": "Mes del manual",
+        "title": "Un mes del café",
         "paragraphs": [
-          "Existencia inicial $ 125.000 + compras $ 245.000 = $ 370.000 disponibles.",
-          "Existencia final: $ 100.000.",
-          "Costo de mercaderías consumidas = 370.000 − 100.000 = $ 270.000. Este valor se usa después para calcular el coeficiente de precios."
+          "Existencia inicial $ 180.000 + compras $ 410.000 = $ 590.000 disponibles.",
+          "Existencia final: $ 150.000.",
+          "Costo de mercaderías consumidas = 590.000 − 150.000 = $ 440.000. Este valor se usa después para calcular el coeficiente de precios."
         ]
       }
     ],
@@ -51,15 +51,15 @@
   "inputs": {
     "opening-inventory": {
       "label": "Existencia inicial",
-      "placeholder": "Valor del inventario al empezar el período (ej.: 125000)"
+      "placeholder": "Valor del inventario al empezar el período (ej.: 180000)"
     },
     "purchases": {
       "label": "Compras del período",
-      "placeholder": "Suma de las compras de mercadería del período (ej.: 245000)"
+      "placeholder": "Suma de las compras de mercadería del período (ej.: 410000)"
     },
     "closing-inventory": {
       "label": "Existencia final",
-      "placeholder": "Valor del inventario al cerrar el período (ej.: 100000)",
+      "placeholder": "Valor del inventario al cerrar el período (ej.: 150000)",
       "hint": "Valorizalo con el mismo método que la existencia inicial."
     }
   },
@@ -72,8 +72,8 @@
     "cost-of-goods-consumed": "Consumido = disponible − existencia final = {availableForUse} − {closingInventory} = {costOfGoodsConsumed}"
   },
   "examples": {
-    "manual-month": {
-      "title": "Mes del manual: $ 125.000 inicial, $ 245.000 de compras, $ 100.000 final"
+    "cafe-month": {
+      "title": "Un mes del café: $ 180.000 inicial, $ 410.000 de compras, $ 150.000 final"
     }
   },
   "errors": {

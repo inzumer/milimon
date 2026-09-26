@@ -6,10 +6,6 @@
   "examples-title": "Probá con un ejemplo",
   "load-example": "Cargar",
   "reset": "Limpiar datos",
-  "example-source": {
-    "manual": "Del manual",
-    "illustrative": "Ilustrativo"
-  },
   "units": {
     "weight": "kg",
     "area": "m²",

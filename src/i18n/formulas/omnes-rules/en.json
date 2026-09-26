@@ -36,7 +36,7 @@
     ],
     "examples": [
       {
-        "title": "Bakery with 16 cakes (handbook)",
+        "title": "Bakery with 16 cakes",
         "paragraphs": [
           "Prices go from $40 to $115: a $75 difference, so zones are $25 wide.",
           "Cheap: $40 to $65; medium: over $65 up to $90; expensive: over $90 up to $115.",
@@ -53,10 +53,6 @@
       {
         "type": "tip",
         "text": "If you compete on price, list prices in a column on the right of the menu; if you compete on product, place the price close to the dish description."
-      },
-      {
-        "type": "manual-difference",
-        "text": "The handbook gives the price range and how many cakes fall into each zone, but not the price list: the one in the example is illustrative and follows that split."
       }
     ]
   },

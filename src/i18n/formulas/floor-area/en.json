@@ -29,10 +29,10 @@
     ],
     "examples": [
       {
-        "title": "Tea house with 20 covers (handbook)",
+        "title": "Café with 32 covers",
         "paragraphs": [
-          "1.10 m² per person + 20% circulation = 1.32 m² per person.",
-          "20 covers × 1.32 m² = 26.4 m², which the handbook rounds to 27 m²."
+          "1.25 m² per person + 20% for circulation = 1.50 m² per person.",
+          "32 covers × 1.50 m² = 48 m² of dining room."
         ]
       }
     ],
@@ -43,18 +43,18 @@
       },
       {
         "type": "rounding",
-        "text": "The handbook says that with 1.10 m² you need \"between 1.20 and 1.30 m²\" per person; the exact figures are 1.21 m² (10%) and 1.32 m² (20%)."
+        "text": "With 1.25 m² and 20% circulation the math gives exactly 1.50 m² per person. If you get decimals, round the area up: extra space is better than too little."
       },
       {
         "type": "tip",
-        "text": "If a space doesn't have the meters for your covers at the planned comfort level, the handbook recommends passing on it rather than giving up profitability or the concept."
+        "text": "If a place doesn't have the area for your covers with the planned comfort, it is better to rule it out than to give up profitability or the business concept."
       }
     ]
   },
   "inputs": {
     "area-per-customer": {
       "label": "Area per customer",
-      "placeholder": "Square meters per person, between 1.10 and 1.50 (e.g. 1.10)",
+      "placeholder": "Square meters per person, between 1.10 and 1.50 (e.g. 1.25)",
       "hint": "More space between tables = a more upscale place and more meters."
     },
     "circulation-percentage": {
@@ -63,7 +63,7 @@
     },
     "customers": {
       "label": "Covers",
-      "placeholder": "Number of customers seated at the same time (e.g. 20)"
+      "placeholder": "Number of customers seated at the same time (e.g. 32)"
     }
   },
   "outputs": {
@@ -76,8 +76,8 @@
     "required-area": "Area = per customer × covers = {areaPerCustomerWithCirculation} m² × {customers} = {requiredArea} m² (then rounded up)"
   },
   "examples": {
-    "manual-tea-house": {
-      "title": "Tea house with 20 covers (1.10 m² + 20%)"
+    "cafe-32-covers": {
+      "title": "Café with 32 covers (1.25 m² + 20%)"
     }
   }
 }

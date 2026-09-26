@@ -13,7 +13,7 @@
     "analytics": {
       "heading": "Analytics (only with your permission)",
       "paragraphs": [
-        "If you accept, we load Google Tag Manager and, through it, Google Analytics, to measure in aggregate which pages are visited and which tools are used: for example, that the waste factor was calculated, a handbook example was loaded or a button was tapped.",
+        "If you accept, we load Google Tag Manager and, through it, Google Analytics, to measure in aggregate which pages are visited and which tools are used: for example, that the waste factor was calculated, an example was loaded or a button was tapped.",
         "We never send the numbers you enter in the calculators. Google does receive technical data about the visit (truncated IP address, browser, device, approximate country) and sets its own cookies (_ga) to tell visits apart.",
         "If you don't answer or you reject, Google's scripts are not loaded and no analytics cookie is set."
       ]

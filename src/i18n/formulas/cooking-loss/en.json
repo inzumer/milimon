@@ -36,7 +36,7 @@
       {
         "title": "Marinated meat (illustrative)",
         "paragraphs": [
-          "The handbook shows the worksheet without numbers. Example: 1.200 kg of clean meat with 0.300 kg of marinade that can't be separated make 1.500 kg before cooking.",
+          "Example: 1.200 kg of clean meat with 0.300 kg of marinade that can't be separated make 1.500 kg before cooking.",
           "After cooking it weighs 1.050 kg: loss = 1.500 − 1.050 = 0.450 kg.",
           "Cooking loss % = 0.450 ÷ 1.500 × 100 = 30%."
         ]
@@ -53,7 +53,7 @@
       },
       {
         "type": "tip",
-        "text": "To avoid thawing loss, the handbook recommends a blast chiller, or buying fresh products more often and keeping them refrigerated at 4 °C."
+        "text": "To avoid thawing loss, use a blast chiller, or buying fresh products more often and keeping them refrigerated at 4 °C."
       }
     ]
   },

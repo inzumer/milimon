@@ -71,9 +71,6 @@ export const OmnesCalculator = ({ lang, text, ui }: OmnesCalculatorProps) => {
           >
             {ui['load-example']}: {t.example(OMNES_EXAMPLE.id)}
           </Button>
-          <RichText variant="s3" className="text-[var(--text-secondary)]">
-            {ui['example-source'].illustrative}
-          </RichText>
         </div>
       </section>
 
