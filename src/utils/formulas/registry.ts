@@ -72,11 +72,8 @@ export interface OutputDefinition {
   primary?: boolean;
 }
 
-export type ExampleSource = 'manual' | 'illustrative';
-
 export interface FormulaExample {
   id: string;
-  source: ExampleSource;
   values: Record<string, number | boolean>;
 }
 
@@ -134,9 +131,7 @@ export const FORMULAS: Record<FormulaId, FormulaDefinition> = {
         grossWeight: num(v, 'grossWeight'),
         netWeight: num(v, 'netWeight'),
       }),
-    examples: [
-      { id: 'manual-cleaning', source: 'manual', values: { grossWeight: 2.4, netWeight: 1.7 } },
-    ],
+    examples: [{ id: 'pumpkin-cleaning', values: { grossWeight: 2.8, netWeight: 1.96 } }],
   },
   'waste-factor': {
     id: 'waste-factor',
@@ -148,7 +143,7 @@ export const FORMULAS: Record<FormulaId, FormulaDefinition> = {
       { key: 'wasteFactor', kind: 'factor', primary: true },
     ],
     calculate: (v) => calculateWasteFactor({ wastePercentage: num(v, 'wastePercentage') }),
-    examples: [{ id: 'manual-tenderloin', source: 'manual', values: { wastePercentage: 30 } }],
+    examples: [{ id: 'whole-salmon', values: { wastePercentage: 25 } }],
   },
   'gross-quantity': {
     id: 'gross-quantity',
@@ -176,9 +171,8 @@ export const FORMULAS: Record<FormulaId, FormulaDefinition> = {
       }),
     examples: [
       {
-        id: 'manual-tournedos',
-        source: 'manual',
-        values: { servings: 200, netPortion: 0.18, wastePercentage: 30, roundingStep: 1 },
+        id: 'salmon-portions',
+        values: { servings: 120, netPortion: 0.16, wastePercentage: 25, roundingStep: 1 },
       },
     ],
   },
@@ -206,7 +200,6 @@ export const FORMULAS: Record<FormulaId, FormulaDefinition> = {
     examples: [
       {
         id: 'tenderloin-offer',
-        source: 'illustrative',
         values: { grossPrice: 10_000, wastePercentage: 30, supplierCleanPrice: 15_000 },
       },
     ],
@@ -234,7 +227,6 @@ export const FORMULAS: Record<FormulaId, FormulaDefinition> = {
     examples: [
       {
         id: 'roast-with-marinade',
-        source: 'illustrative',
         values: { netWeight: 1.2, additionsWeight: 0.3, cookedWeight: 1.05 },
       },
     ],
@@ -243,7 +235,7 @@ export const FORMULAS: Record<FormulaId, FormulaDefinition> = {
     id: 'recipe-costing',
     group: 'recipes',
     layout: 'custom',
-    examples: [{ id: 'tournedos-recipe', source: 'illustrative', values: { servings: 10 } }],
+    examples: [{ id: 'tournedos-recipe', values: { servings: 10 } }],
   },
   'cost-of-goods': {
     id: 'cost-of-goods',
@@ -262,9 +254,8 @@ export const FORMULAS: Record<FormulaId, FormulaDefinition> = {
       calculateCostOfGoods(pick(v, ['openingInventory', 'purchases', 'closingInventory'])),
     examples: [
       {
-        id: 'manual-month',
-        source: 'manual',
-        values: { openingInventory: 125_000, purchases: 245_000, closingInventory: 100_000 },
+        id: 'cafe-month',
+        values: { openingInventory: 180_000, purchases: 410_000, closingInventory: 150_000 },
       },
     ],
   },
@@ -337,26 +328,25 @@ export const FORMULAS: Record<FormulaId, FormulaDefinition> = {
       }),
     examples: [
       {
-        id: 'manual-croissants',
-        source: 'manual',
+        id: 'cafe-toastie',
         values: {
-          unitCost: 12,
-          costOfGoodsConsumed: 270_000,
-          salaries: 57_000,
-          socialChargesRate: 48,
-          rent: 41_000,
-          services: 13_000,
-          generalExpenses: 90_000,
-          investment: 3_000_000,
-          amortizationMonths: 36,
-          annualReturnRate: 32,
-          monthlyWithdrawal: 50_000,
+          unitCost: 20,
+          costOfGoodsConsumed: 440_000,
+          salaries: 95_000,
+          socialChargesRate: 45,
+          rent: 60_000,
+          services: 22_000,
+          generalExpenses: 70_000,
+          investment: 4_800_000,
+          amortizationMonths: 48,
+          annualReturnRate: 30,
+          monthlyWithdrawal: 80_000,
           incomeTaxRate: 35,
           vatRate: 21,
-          grossIncomeTaxRate: 3,
-          safetyHygieneRate: 0.5,
+          grossIncomeTaxRate: 3.5,
+          safetyHygieneRate: 1,
           includeCardFee: false,
-          cardFeeRate: 5,
+          cardFeeRate: 4,
         },
       },
     ],
@@ -409,21 +399,20 @@ export const FORMULAS: Record<FormulaId, FormulaDefinition> = {
       ),
     examples: [
       {
-        id: 'manual-statement',
-        source: 'manual',
+        id: 'cafe-statement',
         values: {
-          foodSales: 820_000,
-          beverageSales: 298_000,
-          foodCost: 200_000,
-          beverageCost: 70_000,
-          salaries: 57_000,
-          socialCharges: 27_360,
-          rent: 41_000,
-          services: 13_000,
-          generalExpenses: 90_000,
-          amortization: 83_333,
-          salesTaxes: 223_600,
-          municipalFees: 2_284,
+          foodSales: 1_150_000,
+          beverageSales: 420_000,
+          foodCost: 330_000,
+          beverageCost: 110_000,
+          salaries: 95_000,
+          socialCharges: 42_750,
+          rent: 60_000,
+          services: 22_000,
+          generalExpenses: 70_000,
+          amortization: 100_000,
+          salesTaxes: 314_000,
+          municipalFees: 3_100,
           incomeTaxRate: 35,
         },
       },
@@ -456,14 +445,13 @@ export const FORMULAS: Record<FormulaId, FormulaDefinition> = {
       ),
     examples: [
       {
-        id: 'manual-break-even',
-        source: 'manual',
+        id: 'cafe-break-even',
         values: {
-          grossSales: 1_118_000,
-          taxes: 332_248.05,
-          variableCosts: 270_000,
-          fixedCosts: 313_977,
-          desiredProfitBeforeTax: 200_000,
+          grossSales: 1_570_000,
+          taxes: 462_102.5,
+          variableCosts: 440_000,
+          fixedCosts: 392_850,
+          desiredProfitBeforeTax: 307_692.31,
         },
       },
     ],
@@ -475,7 +463,6 @@ export const FORMULAS: Record<FormulaId, FormulaDefinition> = {
     examples: [
       {
         id: 'sixteen-cakes',
-        source: 'illustrative',
         values: { averageTicket: 80, dailySpecialPrice: 75 },
       },
     ],
@@ -498,9 +485,8 @@ export const FORMULAS: Record<FormulaId, FormulaDefinition> = {
       calculateFloorArea(pick(v, ['areaPerCustomer', 'circulationPercentage', 'customers'])),
     examples: [
       {
-        id: 'manual-tea-house',
-        source: 'manual',
-        values: { areaPerCustomer: 1.1, circulationPercentage: 20, customers: 20 },
+        id: 'cafe-32-covers',
+        values: { areaPerCustomer: 1.2, circulationPercentage: 25, customers: 32 },
       },
     ],
   },
@@ -524,12 +510,11 @@ export const FORMULAS: Record<FormulaId, FormulaDefinition> = {
       ),
     examples: [
       {
-        id: 'manual-80-m2',
-        source: 'manual',
+        id: 'premises-120-m2',
         values: {
-          premisesArea: 80,
-          diningSharePercentage: 55,
-          areaPerCustomerWithCirculation: 1.3,
+          premisesArea: 120,
+          diningSharePercentage: 60,
+          areaPerCustomerWithCirculation: 1.5,
         },
       },
     ],
@@ -552,9 +537,8 @@ export const FORMULAS: Record<FormulaId, FormulaDefinition> = {
     calculate: (v) => calculateRentCheck({ rent: num(v, 'rent'), netSales: num(v, 'netSales') }),
     examples: [
       {
-        id: 'manual-statement-rent',
-        source: 'manual',
-        values: { rent: 41_000, netSales: 785_751.95 },
+        id: 'cafe-rent',
+        values: { rent: 60_000, netSales: 1_107_897.5 },
       },
     ],
   },
@@ -573,7 +557,7 @@ export const formulasByGroup = (): Record<FormulaGroup, FormulaDefinition[]> =>
     ]),
   ) as Record<FormulaGroup, FormulaDefinition[]>;
 
-/** Initial form values: the manual defaults for parameters, `null` (empty) for data. */
+/** Initial form values: the defaults for parameters, `null` (empty) for data. */
 export const initialValues = (formula: StandardFormulaDefinition): FormulaValues =>
   Object.fromEntries(formula.inputs.map((input) => [input.key, input.defaultValue ?? null]));
 

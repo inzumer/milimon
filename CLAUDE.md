@@ -8,7 +8,9 @@ Guidance for Claude Code (and any other AI coding agent) working in this reposit
 calculators for food cost, waste (desechos) and cooking loss (mermas) in gastronomy.
 
 - Master plan and decisions: [docs/PLAN.md](./docs/PLAN.md). Architecture decisions: [docs/adr](./docs/adr).
-- Content source of truth: the original manual `AyG- Manual.pdf`; it wins over `FORMULAS 2026.xlsx`.
+- Content: the course material (`AyG- Manual.pdf`, `FORMULAS 2026.xlsx`) is only a reference for
+  concepts and methods. **Never copy its examples, figures or wording**: every worked example, number
+  and text on the site is our own (the running example is a neighborhood café).
 - Stack: Astro (static output) + React 19 islands, TypeScript strict, Tailwind v4 + `@inzumer/tokens`
   preset, `@inzumer/ui-library` components, Vitest + Testing Library.
 - Agent roles live in [.claude/agents](./.claude/agents); start with `workflow-orchestrator-agent.md`.
@@ -31,11 +33,11 @@ Key commands (Node from `.nvmrc`, pnpm from `packageManager`):
 - **Routes** always in English and identical in both languages: `/es/formulas/cooking-loss` ↔ `/en/formulas/cooking-loss`.
 - **Translations** in kebab-case folders, one file per language: `src/i18n/<folder>/{es,en}.json`.
   Folder name = formula id = route slug. `es` and `en` must have exactly the same keys.
-- **Every input** has a visible label and a descriptive placeholder (what, unit, example from the manual).
+- **Every input** has a visible label and a descriptive placeholder (what, unit, a value from our own example).
 - **Tests**: every test title starts with `should …` (e.g. `it('should render the menu')`), enforced
   by `vitest/valid-title`. `describe` names the unit under test.
 - **Formulas** are pure functions in `src/utils/formulas`, registered once in `registry.ts`, tested with
-  the manual's worked examples.
+  our own worked examples (expected values computed by hand in the test comments).
 - **Imports**: path aliases (`@components`, `@constants`, `@stores`, `@services`, `@hooks`, `@utils`, `@i18n`,
   `@layouts/*`, `@assets/*`, `@styles/*`, `@test/*`) for anything outside the current folder. Enforced by ESLint.
 - **Constants**: limits, retries, timeouts, patterns and other tunable values live in `src/constants`

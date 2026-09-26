@@ -17,7 +17,7 @@
       },
       {
         "name": "Dining room share",
-        "description": "Between 45% and 65%; the handbook uses 55% as a reference."
+        "description": "Between 45% and 65% of the place; 60% is a common reference."
       },
       {
         "name": "Area per customer with circulation",
@@ -31,19 +31,15 @@
     ],
     "examples": [
       {
-        "title": "80 m² premises (handbook)",
+        "title": "A 120 m² place",
         "paragraphs": [
-          "The dining room takes about 55%: 80 m² × 55% = 44 m².",
-          "At 1.30 m² per person: 44 ÷ 1.30 = 33.8, that is, 33 covers.",
-          "If the project needs 40 covers, this space isn't big enough."
+          "The dining room takes 60%: 120 m² × 60% = 72 m².",
+          "At 1.50 m² per person: 72 ÷ 1.50 = 48 covers.",
+          "If the project needs 60 covers, this place falls short."
         ]
       }
     ],
     "notes": [
-      {
-        "type": "manual-difference",
-        "text": "The handbook writes \"the resulting 45 m² (55% of 80 m²)\" and gets 34 covers, but 55% of 80 m² is 44 m², which gives 33 covers."
-      },
       {
         "type": "rounding",
         "text": "Covers are rounded down: a fraction of a seat isn't enough for one more person without making everyone else less comfortable."
@@ -53,16 +49,16 @@
   "inputs": {
     "premises-area": {
       "label": "Total area of the premises",
-      "placeholder": "Square meters of the premises (e.g. 80)"
+      "placeholder": "Square meters of the premises (e.g. 120)"
     },
     "dining-share-percentage": {
       "label": "Share for the dining room",
-      "placeholder": "Percentage of the premises for dining, between 45 and 65 (e.g. 55)",
+      "placeholder": "Percentage of the premises for dining, between 45 and 65 (e.g. 60)",
       "hint": "The rest is kitchen (15–25%) and storage and services (20–35%)."
     },
     "area-per-customer-with-circulation": {
       "label": "Area per customer with circulation",
-      "placeholder": "Square meters per person including walkways (e.g. 1.30)"
+      "placeholder": "Square meters per person including walkways (e.g. 1.50)"
     }
   },
   "outputs": {
@@ -75,8 +71,8 @@
     "capacity": "Covers = dining room ÷ area per customer = {diningArea} m² ÷ {areaPerCustomerWithCirculation} m² = {capacity} (rounded down)"
   },
   "examples": {
-    "manual-80-m2": {
-      "title": "80 m² premises with 55% dining room and 1.30 m² per customer"
+    "premises-120-m2": {
+      "title": "A 120 m² place with a 60% dining room and 1.50 m² per customer"
     }
   }
 }

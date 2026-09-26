@@ -8,16 +8,16 @@ import {
 } from '../waste-factor';
 import { calculateWastePercentage, wastePercentage } from '../waste-percentage';
 
-describe('waste-percentage (manual: 2,400 kg bruto → 1,700 kg neto)', () => {
+describe('waste-percentage (pumpkin: 2,800 kg bruto → 1,960 kg neto)', () => {
   it('should compute the waste weight and percentage', () => {
-    const result = calculateWastePercentage({ grossWeight: 2.4, netWeight: 1.7 });
+    const result = calculateWastePercentage({ grossWeight: 2.8, netWeight: 1.96 });
     expect(result.ok).toBe(true);
     if (!result.ok) {
       return;
     }
-    expect(result.value.wasteWeight).toBeCloseTo(0.7, 10);
-    // The manual shows "30 %"; the exact value is 29.17 % (0.700 / 2.400 × 100).
-    expect(result.value.wastePercentage).toBeCloseTo(29.1667, 4);
+    // 2,800 − 1,960 = 0,840 kg; 0,840 / 2,800 × 100 = 30 %.
+    expect(result.value.wasteWeight).toBeCloseTo(0.84, 10);
+    expect(result.value.wastePercentage).toBeCloseTo(30, 10);
     expect(result.steps.map((step) => step.id)).toStrictEqual(['waste-weight', 'waste-percentage']);
   });
 
@@ -40,16 +40,17 @@ describe('waste-percentage (manual: 2,400 kg bruto → 1,700 kg neto)', () => {
   });
 });
 
-describe('waste-factor (manual: 30 % → 1,429)', () => {
+describe('waste-factor (whole salmon: 25 % → 1,333)', () => {
   it('should compute the factor with the first formula', () => {
-    const result = calculateWasteFactor({ wastePercentage: 30 });
-    expect(result.ok && result.value.usablePercentage).toBe(70);
-    expect(result.ok && result.value.wasteFactor).toBeCloseTo(1.428571, 6);
+    const result = calculateWasteFactor({ wastePercentage: 25 });
+    expect(result.ok && result.value.usablePercentage).toBe(75);
+    // 25 / 75 + 1 = 1,3333…
+    expect(result.ok && result.value.wasteFactor).toBeCloseTo(1.333333, 6);
   });
 
   it('should match the second formula (bruto / neto)', () => {
-    expect(wasteFactorFromWeights(2.4, 1.7)).toBeCloseTo(
-      wasteFactorFromPercentage(wastePercentage(2.4, 1.7)),
+    expect(wasteFactorFromWeights(2.9, 2.1)).toBeCloseTo(
+      wasteFactorFromPercentage(wastePercentage(2.9, 2.1)),
       10,
     );
   });
@@ -63,8 +64,8 @@ describe('waste-factor (manual: 30 % → 1,429)', () => {
   });
 });
 
-describe('gross-quantity (manual: tournedó para 200 personas, 0,180 kg, 30 %)', () => {
-  const input = { servings: 200, netPortion: 0.18, wastePercentage: 30, roundingStep: 1 };
+describe('gross-quantity (salmon for 120 covers, 0,160 kg, 25 %)', () => {
+  const input = { servings: 120, netPortion: 0.16, wastePercentage: 25, roundingStep: 1 };
 
   it('should compute net, gross and the rounded-up purchase', () => {
     const result = calculateGrossQuantity(input);
@@ -72,22 +73,23 @@ describe('gross-quantity (manual: tournedó para 200 personas, 0,180 kg, 30 %)',
     if (!result.ok) {
       return;
     }
-    expect(result.value.netRequired).toBeCloseTo(36, 10);
-    expect(result.value.grossQuantity).toBeCloseTo(51.428571, 6);
-    expect(result.value.purchaseQuantity).toBe(52);
+    // 120 × 0,160 = 19,2 kg; 19,2 / 0,75 = 25,6 kg; rounded up to 26 kg.
+    expect(result.value.netRequired).toBeCloseTo(19.2, 10);
+    expect(result.value.grossQuantity).toBeCloseTo(25.6, 10);
+    expect(result.value.purchaseQuantity).toBe(26);
     expect(result.steps).toHaveLength(5);
   });
 
   it('should show why adding the waste % is not enough', () => {
     const result = calculateGrossQuantity(input);
-    // 36 kg + 30 % = 46,8 kg, and cleaning that yields only 32,76 kg (< 36 kg).
-    expect(result.ok && result.value.naiveQuantity).toBeCloseTo(46.8, 10);
-    expect(46.8 * 0.7).toBeLessThan(36);
+    // 19,2 kg + 25 % = 24 kg, and cleaning that yields only 18 kg (< 19,2 kg).
+    expect(result.ok && result.value.naiveQuantity).toBeCloseTo(24, 10);
+    expect(24 * 0.75).toBeLessThan(19.2);
   });
 
   it('should give the same result with the factor and the rule of three', () => {
-    expect(grossFromNet(36, wasteFactorFromPercentage(30))).toBeCloseTo(
-      grossByRuleOfThree(36, 30),
+    expect(grossFromNet(19.2, wasteFactorFromPercentage(25))).toBeCloseTo(
+      grossByRuleOfThree(19.2, 25),
       10,
     );
   });

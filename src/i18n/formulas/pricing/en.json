@@ -3,7 +3,7 @@
   "summary": "The theoretical price of each product: cost × coefficient, plus taxes and fees.",
   "study": {
     "what": [
-      "The selling price has to cover the raw materials, every other cost of the business and the profit you want. The handbook treats the desired profit as one more cost, and sets it before deciding to open.",
+      "The selling price has to cover the raw materials, every other cost of the business and the profit you want. That is why it pays to treat the desired profit as one more cost and set it before deciding to open.",
       "The method uses a coefficient: it multiplies each product's standard cost (from its recipe card) and then adds taxes and fees on sales. The result is a theoretical price you must compare with the competition and adjust with commercial judgment."
     ],
     "formula": [
@@ -43,35 +43,23 @@
     ],
     "examples": [
       {
-        "title": "Handbook coefficient",
+        "title": "The café's coefficient",
         "paragraphs": [
-          "Non-raw-material costs: salaries $57,000 + payroll charges (48%) $27,360 + rent $41,000 + utilities $13,000 + general expenses $90,000 + amortization ($3,000,000 ÷ 36) $83,333.33 = $311,693.33.",
-          "Profit: $3,000,000 × 32% ÷ 12 = $80,000 return + $50,000 draw = $130,000 net → $130,000 ÷ 0.65 = $200,000 before tax.",
-          "Coefficient = 1 + ($311,693.33 + $200,000) ÷ $270,000 = 2.895."
+          "Non-raw-material costs: salaries $95,000 + payroll charges (45%) $42,750 + rent $60,000 + utilities $22,000 + general expenses $70,000 + amortization ($4,800,000 ÷ 48) $100,000 = $389,750.",
+          "Profit: $4,800,000 × 30% ÷ 12 = $120,000 return + $80,000 draw = $200,000 net → $200,000 ÷ 0.65 = $307,692.31 before tax.",
+          "Coefficient = 1 + ($389,750 + $307,692.31) ÷ $440,000 = 2.585."
         ]
       },
       {
-        "title": "Bakery prices",
+        "title": "Menu prices",
         "paragraphs": [
-          "Croissants: $12 × 2.895 = $34.74 net. Sachertorte: $42 × 2.895 = $121.59 net.",
-          "With 21% VAT, 3% gross income tax and 0.5% health & safety levy (24.5%): croissants $34.74 × 1.245 = $43.25.",
-          "Adding the 5% card fee (29.5% in total): $34.74 × 1.295 = $44.99."
+          "Ham and cheese toastie: $20 × 2.585 = $51.70 net. Lemon loaf: $35 × 2.585 = $90.48 net.",
+          "With 21% VAT, 3.5% gross income tax and a 1% safety and hygiene fee (25.5%): toastie $51.70 × 1.255 = $64.89.",
+          "Adding the 4% card fee (29.5% in total): $51.70 × 1.295 = $66.95."
         ]
       }
     ],
     "notes": [
-      {
-        "type": "manual-difference",
-        "text": "The handbook says \"24.5% (21% VAT, 3% gross income tax, 5% cards and 0.5% health & safety)\" and uses 1.245, but those four components add up to 29.5%: 24.5% is the total without cards. That's why you see the breakdown here and choose whether you accept cards."
-      },
-      {
-        "type": "manual-difference",
-        "text": "The handbook shows $43.27 for the croissants; multiplying without rounding intermediate values gives $43.25."
-      },
-      {
-        "type": "manual-difference",
-        "text": "The course spreadsheet uses 50% payroll charges; we follow the handbook, which uses 48%."
-      },
       {
         "type": "tip",
         "text": "Don't price with the \"rule of 3\" or just by looking at the competition: combine the cost study, competitors' prices and your commercial judgment."
@@ -82,56 +70,56 @@
       },
       {
         "type": "tip",
-        "text": "As a reasonable minimum return, the handbook suggests twice the yield of a three-year government bond."
+        "text": "As a benchmark for the minimum return, ask your investment for well above what the same money would earn in a risk-free alternative, such as a fixed-term deposit or a government bond."
       }
     ]
   },
   "inputs": {
     "unit-cost": {
       "label": "Standard unit cost",
-      "placeholder": "Raw material cost of the product from its recipe card (e.g. 12)"
+      "placeholder": "Raw material cost of the product from its recipe card (e.g. 20)"
     },
     "cost-of-goods-consumed": {
       "label": "Cost of goods consumed (month)",
-      "placeholder": "Opening inventory + purchases − closing inventory (e.g. 270000)"
+      "placeholder": "Opening inventory + purchases − closing inventory (e.g. 440000)"
     },
     "salaries": {
       "label": "Salaries (month)",
-      "placeholder": "Total staff salaries, including the owner's if they work there (e.g. 57000)"
+      "placeholder": "Total staff salaries, including the owner's if they work there (e.g. 95000)"
     },
     "social-charges-rate": {
       "label": "Payroll charges",
-      "placeholder": "Percentage on top of salaries (e.g. 48)"
+      "placeholder": "Percentage on top of salaries (e.g. 45)"
     },
     "rent": {
       "label": "Rent (month)",
-      "placeholder": "Monthly rent of the premises (e.g. 41000)"
+      "placeholder": "Monthly rent of the premises (e.g. 60000)"
     },
     "services": {
       "label": "Utilities (month)",
-      "placeholder": "Electricity, gas, water, internet and other utilities (e.g. 13000)"
+      "placeholder": "Electricity, gas, water, internet and other utilities (e.g. 22000)"
     },
     "general-expenses": {
       "label": "General expenses (month)",
-      "placeholder": "Cleaning, laundry, stationery, professional fees, etc. (e.g. 90000)"
+      "placeholder": "Cleaning, laundry, stationery, professional fees, etc. (e.g. 70000)"
     },
     "investment": {
       "label": "Investment",
-      "placeholder": "Total invested to open the business (e.g. 3000000)"
+      "placeholder": "Total invested to open the business (e.g. 4800000)"
     },
     "amortization-months": {
       "label": "Amortization period",
-      "placeholder": "Months over which the investment is written off (e.g. 36)",
-      "hint": "The handbook assumes equipment is worth nothing after 3 years."
+      "placeholder": "Months over which the investment is written off (e.g. 48)",
+      "hint": "The period after which you consider the equipment worth nothing (for example, 4 years = 48 months)."
     },
     "annual-return-rate": {
       "label": "Expected annual return on investment",
-      "placeholder": "Annual percentage you want to earn as an investor (e.g. 32)",
+      "placeholder": "Annual percentage you want to earn as an investor (e.g. 30)",
       "hint": "At least twice what a government bond yields."
     },
     "monthly-withdrawal": {
       "label": "Owner's monthly draw",
-      "placeholder": "What you want to take home monthly for your work, net (e.g. 50000)"
+      "placeholder": "What you want to take home monthly for your work, net (e.g. 80000)"
     },
     "income-tax-rate": {
       "label": "Income tax",
@@ -143,11 +131,11 @@
     },
     "gross-income-tax-rate": {
       "label": "Gross income tax",
-      "placeholder": "Provincial gross income tax rate (e.g. 3)"
+      "placeholder": "Provincial gross income tax rate (e.g. 3.5)"
     },
     "safety-hygiene-rate": {
       "label": "Health & safety levy",
-      "placeholder": "Municipal levy rate (e.g. 0.5)"
+      "placeholder": "Municipal levy rate (e.g. 1)"
     },
     "include-card-fee": {
       "label": "Do you accept cards?",
@@ -155,7 +143,7 @@
     },
     "card-fee-rate": {
       "label": "Card processing fee",
-      "placeholder": "Percentage charged by the card issuer (e.g. 5)"
+      "placeholder": "Percentage charged by the card issuer (e.g. 4)"
     }
   },
   "outputs": {
@@ -179,8 +167,8 @@
     "gross-price": "Menu price = net price × (1 + {salesTaxRate}) = {netPrice} × (1 + {salesTaxRate}) = {grossPrice}"
   },
   "examples": {
-    "manual-croissants": {
-      "title": "Handbook croissants: $12 cost (no card fee, as in the example)"
+    "cafe-toastie": {
+      "title": "The café's toastie: $20 cost (no card fee)"
     }
   }
 }

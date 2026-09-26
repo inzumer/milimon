@@ -4,7 +4,7 @@
   "study": {
     "what": [
       "Las recetas indican cantidades limpias. Para comprar necesitás saber la cantidad bruta: cuánto pedir sucio para que, después de limpiar, alcance para todas las porciones.",
-      "El manual lo resuelve con el factor de desecho o con una regla de tres, y redondea hacia arriba la cantidad a comprar."
+      "Se resuelve con el factor de desecho o con una regla de tres, y la cantidad a comprar se redondea hacia arriba."
     ],
     "formula": [
       "Cantidad limpia necesaria = porciones × porción limpia",
@@ -37,43 +37,43 @@
     ],
     "examples": [
       {
-        "title": "Tournedó con galette de papas para 200 personas (manual)",
+        "title": "Salmón grillado para 120 cubiertos",
         "paragraphs": [
-          "Cada porción lleva 0,180 kg de lomo limpio: 200 × 0,180 = 36,000 kg limpios.",
-          "El lomo tiene 30 % de desecho, así que el factor es 1,429.",
-          "Cantidad bruta = 36,000 kg × 1,429 = 51,429 kg. Con regla de tres: si el 70 % son 36,000 kg, el 100 % es 36,000 × 100 ÷ 70 = 51,429 kg.",
-          "Redondeando hacia arriba, se compran 52 kg."
+          "Cada porción lleva 0,160 kg de filete limpio: 120 × 0,160 = 19,200 kg limpios.",
+          "El salmón tiene 25 % de desecho, así que el factor es 1,333.",
+          "Cantidad bruta = 19,200 kg × 1,333 = 25,600 kg. Con regla de tres: si el 75 % son 19,200 kg, el 100 % es 19,200 × 100 ÷ 75 = 25,600 kg.",
+          "Redondeando hacia arriba, se compran 26 kg."
         ]
       }
     ],
     "notes": [
       {
         "type": "common-mistake",
-        "text": "Sumar el 30 % a los 36 kg da 46,8 kg, pero al limpiar esa cantidad quedan solo 32,76 kg: faltan más de 3 kg. Por eso se usa el factor y no un simple porcentaje."
+        "text": "Sumar el 25 % a los 19,2 kg da 24 kg, pero al limpiar esa cantidad quedan solo 18 kg: falta más de 1 kg. Por eso se usa el factor y no un simple porcentaje."
       },
       {
         "type": "rounding",
-        "text": "Por practicidad se redondea hacia arriba (51,429 → 52 kg). Siempre es preferible que sobre un poco a que falte."
+        "text": "Por practicidad se redondea hacia arriba (25,6 → 26 kg). Siempre es preferible que sobre un poco a que falte."
       }
     ]
   },
   "inputs": {
     "servings": {
       "label": "Comensales o porciones",
-      "placeholder": "Cantidad de porciones a servir (ej.: 200)"
+      "placeholder": "Cantidad de porciones a servir (ej.: 120)"
     },
     "net-portion": {
       "label": "Porción limpia por comensal",
-      "placeholder": "Cantidad limpia de la receta por porción, en kg (ej.: 0,180)"
+      "placeholder": "Cantidad limpia de la receta por porción, en kg (ej.: 0,160)"
     },
     "waste-percentage": {
       "label": "% de desecho",
-      "placeholder": "Porcentaje que se pierde al limpiar (ej.: 30)"
+      "placeholder": "Porcentaje que se pierde al limpiar (ej.: 25)"
     },
     "rounding-step": {
       "label": "Redondear la compra a múltiplos de",
       "placeholder": "Unidad de compra hacia la que redondeás, en kg (ej.: 1)",
-      "hint": "El manual redondea hacia arriba a kilos enteros: 51,429 kg → 52 kg."
+      "hint": "Se redondea hacia arriba a la unidad de compra: 25,600 kg → 26 kg."
     }
   },
   "outputs": {
@@ -91,8 +91,8 @@
     "purchase-quantity": "Redondeando hacia arriba a múltiplos de {roundingStep} kg: comprás {purchaseQuantity} kg"
   },
   "examples": {
-    "manual-tournedos": {
-      "title": "Tournedó para 200 personas (0,180 kg de lomo, 30 % de desecho)"
+    "salmon-portions": {
+      "title": "Salmón para 120 cubiertos (0,160 kg por porción, 25 % de desecho)"
     }
   }
 }

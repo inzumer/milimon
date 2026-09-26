@@ -43,9 +43,6 @@ export const FormulaCalculator = ({ formulaId, lang, text, ui }: FormulaCalculat
               >
                 {ui['load-example']}: {formulaText(text).example(example.id)}
               </Button>
-              <RichText variant="s3" className="text-[var(--text-secondary)]">
-                {ui['example-source'][example.source]}
-              </RichText>
             </li>
           ))}
         </ul>

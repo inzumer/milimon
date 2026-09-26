@@ -40,74 +40,74 @@
     ],
     "examples": [
       {
-        "title": "Cuadro del manual",
+        "title": "Cuadro del café",
         "paragraphs": [
-          "Ventas: $ 820.000 de alimentos + $ 298.000 de bebidas = $ 1.118.000.",
-          "Costo de venta: $ 200.000 + $ 70.000 = $ 270.000.",
-          "Costo operativo: $ 537.577, que incluye $ 223.600 de impuestos sobre las ventas (el 20 % de las ventas brutas).",
-          "Resultado antes de ganancias: $ 310.423. Impuesto (35 %): $ 108.648,05. Resultado del ejercicio: $ 201.774,95."
+          "Ventas: $ 1.150.000 de alimentos + $ 420.000 de bebidas = $ 1.570.000.",
+          "Costo de venta: $ 330.000 + $ 110.000 = $ 440.000.",
+          "Costo operativo: $ 706.850, que incluye $ 314.000 de impuestos sobre las ventas (el 20 % de las ventas brutas).",
+          "Resultado antes de ganancias: $ 423.150. Impuesto (35 %): $ 148.102,50. Resultado del ejercicio: $ 275.047,50."
         ]
       }
     ],
     "notes": [
       {
         "type": "tip",
-        "text": "Si sobre las ventas netas se aplica un 24,5 % de impuestos, a las ventas brutas hay que descontarles aproximadamente un 20 % para volver a las netas (1 − 1 ÷ 1,245 ≈ 19,7 %)."
+        "text": "Si sobre las ventas netas se aplica un 25,5 % de impuestos, a las ventas brutas hay que descontarles aproximadamente un 20 % para volver a las netas (1 − 1 ÷ 1,255 ≈ 20,3 %)."
       },
       {
         "type": "tip",
-        "text": "Los costos fijos del cuadro (el costo operativo sin los impuestos sobre las ventas) son los que usa el punto de equilibrio: $ 313.977 en el ejemplo."
+        "text": "Los costos fijos del cuadro (el costo operativo sin los impuestos sobre las ventas) son los que usa el punto de equilibrio: $ 392.850 en el ejemplo."
       }
     ]
   },
   "inputs": {
     "food-sales": {
       "label": "Ventas de alimentos",
-      "placeholder": "Ingresos por alimentos del período (ej.: 820000)"
+      "placeholder": "Ingresos por alimentos del período (ej.: 1150000)"
     },
     "beverage-sales": {
       "label": "Ventas de bebidas",
-      "placeholder": "Ingresos por bebidas del período (ej.: 298000)"
+      "placeholder": "Ingresos por bebidas del período (ej.: 420000)"
     },
     "food-cost": {
       "label": "Costo de alimentos",
-      "placeholder": "Costo de mercaderías consumidas de alimentos (ej.: 200000)"
+      "placeholder": "Costo de mercaderías consumidas de alimentos (ej.: 330000)"
     },
     "beverage-cost": {
       "label": "Costo de bebidas",
-      "placeholder": "Costo de mercaderías consumidas de bebidas (ej.: 70000)"
+      "placeholder": "Costo de mercaderías consumidas de bebidas (ej.: 110000)"
     },
     "salaries": {
       "label": "Sueldos",
-      "placeholder": "Total de sueldos del período (ej.: 57000)"
+      "placeholder": "Total de sueldos del período (ej.: 95000)"
     },
     "social-charges": {
       "label": "Cargas sociales",
-      "placeholder": "Aportes y contribuciones sobre los sueldos (ej.: 27360)"
+      "placeholder": "Aportes y contribuciones sobre los sueldos (ej.: 42750)"
     },
     "rent": {
       "label": "Alquiler",
-      "placeholder": "Alquiler del período (ej.: 41000)"
+      "placeholder": "Alquiler del período (ej.: 60000)"
     },
     "services": {
       "label": "Servicios",
-      "placeholder": "Luz, gas, agua, internet, etc. (ej.: 13000)"
+      "placeholder": "Luz, gas, agua, internet, etc. (ej.: 22000)"
     },
     "general-expenses": {
       "label": "Gastos generales",
-      "placeholder": "Limpieza, lavadero, honorarios, etc. (ej.: 90000)"
+      "placeholder": "Limpieza, lavadero, honorarios, etc. (ej.: 70000)"
     },
     "amortization": {
       "label": "Amortizaciones",
-      "placeholder": "Inversión ÷ meses de amortización (ej.: 83333)"
+      "placeholder": "Inversión ÷ meses de amortización (ej.: 100000)"
     },
     "sales-taxes": {
       "label": "Impuestos sobre las ventas",
-      "placeholder": "IVA, Ingresos Brutos y demás impuestos del período (ej.: 223600)"
+      "placeholder": "IVA, Ingresos Brutos y demás impuestos del período (ej.: 314000)"
     },
     "municipal-fees": {
       "label": "Tasas y contribuciones",
-      "placeholder": "Tasas municipales del período (ej.: 2284)"
+      "placeholder": "Tasas municipales del período (ej.: 3100)"
     },
     "income-tax-rate": {
       "label": "Impuesto a las ganancias",
@@ -131,8 +131,8 @@
     "net-result": "Resultado del ejercicio = resultado − impuesto = {resultBeforeIncomeTax} − {incomeTax} = {netResult}"
   },
   "examples": {
-    "manual-statement": {
-      "title": "Cuadro del manual: $ 1.118.000 de ventas"
+    "cafe-statement": {
+      "title": "Cuadro del café: $ 1.570.000 de ventas"
     }
   }
 }

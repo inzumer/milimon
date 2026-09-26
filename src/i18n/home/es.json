@@ -10,7 +10,7 @@
   },
   "formulas-card": {
     "title": "Fórmulas",
-    "description": "Cada fórmula explicada: qué significa cada dato, el paso a paso y ejemplos resueltos del manual.",
+    "description": "Cada fórmula explicada: qué significa cada dato, el paso a paso y ejemplos resueltos.",
     "cta": "Ver fórmulas"
   },
   "learn-card": {
@@ -25,7 +25,7 @@
   },
   "management-section": {
     "title": "Administración gastronómica",
-    "intro": "Calculá costos, desechos y mermas, y entendé cada fórmula paso a paso con los ejemplos del manual."
+    "intro": "Calculá costos, desechos y mermas, y entendé cada fórmula paso a paso con ejemplos resueltos."
   },
   "recipes-card": {
     "description": "Estamos preparando las primeras recetas, cada una con su costo por porción y sus milicitos.",
