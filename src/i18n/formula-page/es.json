@@ -1,7 +1,7 @@
 {
   "index": {
     "title": "Fórmulas",
-    "intro": "Todas las cuentas del manual, explicadas paso a paso y con su calculadora para practicar con tus propios números.",
+    "intro": "Las cuentas clave de la administración gastronómica, explicadas paso a paso y con su calculadora para practicar con tus propios números.",
     "open": "Ver fórmula y calculadora"
   },
   "groups": {
@@ -24,8 +24,7 @@
   "notes": {
     "tip": "Consejo",
     "common-mistake": "Error común",
-    "rounding": "Redondeo",
-    "manual-difference": "Diferencia con el manual"
+    "rounding": "Redondeo"
   },
   "breadcrumbs": {
     "label": "Estás en"

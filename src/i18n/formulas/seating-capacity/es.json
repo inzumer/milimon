@@ -17,7 +17,7 @@
       },
       {
         "name": "% para el salón",
-        "description": "Entre 45 % y 65 %; el manual usa 55 % como referencia."
+        "description": "Entre 45 % y 65 % del local; 60 % es una referencia habitual."
       },
       {
         "name": "m² por cliente con circulación",
@@ -31,19 +31,15 @@
     ],
     "examples": [
       {
-        "title": "Local de 80 m² (manual)",
+        "title": "Local de 120 m²",
         "paragraphs": [
-          "El salón ocupa aproximadamente el 55 %: 80 m² × 55 % = 44 m².",
-          "Con 1,30 m² por persona: 44 ÷ 1,30 = 33,8, es decir, 33 cubiertos.",
-          "Si el proyecto necesita 40 cubiertos, este local no alcanza."
+          "El salón ocupa el 60 %: 120 m² × 60 % = 72 m².",
+          "Con 1,50 m² por persona: 72 ÷ 1,50 = 48 cubiertos.",
+          "Si el proyecto necesita 60 cubiertos, este local no alcanza."
         ]
       }
     ],
     "notes": [
-      {
-        "type": "manual-difference",
-        "text": "El manual escribe \"los 45 m² que resultan (55 % de 80 m²)\" y llega a 34 cubiertos, pero el 55 % de 80 m² son 44 m², que dan 33 cubiertos."
-      },
       {
         "type": "rounding",
         "text": "Los cubiertos se redondean hacia abajo: una fracción de lugar no alcanza para sentar a una persona más sin quitarle comodidad a las demás."
@@ -53,16 +49,16 @@
   "inputs": {
     "premises-area": {
       "label": "Superficie total del local",
-      "placeholder": "Metros cuadrados del local (ej.: 80)"
+      "placeholder": "Metros cuadrados del local (ej.: 120)"
     },
     "dining-share-percentage": {
       "label": "Parte destinada al salón",
-      "placeholder": "Porcentaje del local para el salón, entre 45 y 65 (ej.: 55)",
+      "placeholder": "Porcentaje del local para el salón, entre 45 y 65 (ej.: 60)",
       "hint": "El resto es cocina (15–25 %) y depósitos y servicios (20–35 %)."
     },
     "area-per-customer-with-circulation": {
       "label": "Superficie por cliente con circulación",
-      "placeholder": "Metros cuadrados por persona con circulación (ej.: 1,30)"
+      "placeholder": "Metros cuadrados por persona con circulación (ej.: 1,50)"
     }
   },
   "outputs": {
@@ -75,8 +71,8 @@
     "capacity": "Cubiertos = salón ÷ superficie por cliente = {diningArea} m² ÷ {areaPerCustomerWithCirculation} m² = {capacity} (se redondea hacia abajo)"
   },
   "examples": {
-    "manual-80-m2": {
-      "title": "Local de 80 m² con 55 % de salón y 1,30 m² por cliente"
+    "premises-120-m2": {
+      "title": "Local de 120 m² con 60 % de salón y 1,50 m² por cliente"
     }
   }
 }

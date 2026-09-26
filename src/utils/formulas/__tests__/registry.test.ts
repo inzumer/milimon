@@ -85,7 +85,7 @@ describe('formula registry', () => {
     },
   );
 
-  it('should pre-fill only the parameters the manual gives', () => {
+  it('should pre-fill only the parameters, not the data', () => {
     const pricing = getFormula('pricing') as StandardFormulaDefinition;
     const values = initialValues(pricing);
     expect(values['vatRate']).toBe(21);
@@ -107,7 +107,7 @@ describe('formula registry', () => {
       ...example?.values,
       includeCardFee: true,
     });
-    expect(withoutCards.ok && withoutCards.value).toMatchObject({ salesTaxRate: 24.5 });
+    expect(withoutCards.ok && withoutCards.value).toMatchObject({ salesTaxRate: 25.5 });
     expect(withCards.ok && withCards.value).toMatchObject({ salesTaxRate: 29.5 });
   });
 });

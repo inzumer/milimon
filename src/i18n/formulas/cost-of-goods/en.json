@@ -29,11 +29,11 @@
     ],
     "examples": [
       {
-        "title": "Handbook month",
+        "title": "The café's month",
         "paragraphs": [
-          "Opening inventory $125,000 + purchases $245,000 = $370,000 available.",
-          "Closing inventory: $100,000.",
-          "Cost of goods consumed = 370,000 − 100,000 = $270,000. This figure is then used to work out the pricing coefficient."
+          "Opening inventory $180,000 + purchases $410,000 = $590,000 available.",
+          "Closing inventory: $150,000.",
+          "Cost of goods consumed = 590,000 − 150,000 = $440,000. This value is then used to work out the pricing coefficient."
         ]
       }
     ],
@@ -51,15 +51,15 @@
   "inputs": {
     "opening-inventory": {
       "label": "Opening inventory",
-      "placeholder": "Value of the stock at the start of the period (e.g. 125000)"
+      "placeholder": "Value of the stock at the start of the period (e.g. 180000)"
     },
     "purchases": {
       "label": "Purchases in the period",
-      "placeholder": "Total stock purchases in the period (e.g. 245000)"
+      "placeholder": "Total stock purchases in the period (e.g. 410000)"
     },
     "closing-inventory": {
       "label": "Closing inventory",
-      "placeholder": "Value of the stock at the end of the period (e.g. 100000)",
+      "placeholder": "Value of the stock at the end of the period (e.g. 150000)",
       "hint": "Value it with the same method as the opening inventory."
     }
   },
@@ -72,8 +72,8 @@
     "cost-of-goods-consumed": "Consumed = available − closing inventory = {availableForUse} − {closingInventory} = {costOfGoodsConsumed}"
   },
   "examples": {
-    "manual-month": {
-      "title": "Handbook month: $125,000 opening, $245,000 purchases, $100,000 closing"
+    "cafe-month": {
+      "title": "The café's month: $180,000 opening, $410,000 purchases, $150,000 closing"
     }
   },
   "errors": {

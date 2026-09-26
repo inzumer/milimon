@@ -17,7 +17,7 @@ import type { CalculationResult } from '@utils/calculation';
  * Nota: el manual redondea (27 m² para 26,4 m²; "45 m²" para el 55 % de 80 m², que son 44 m²).
  * La calculadora muestra el valor exacto y redondea hacia arriba la superficie y hacia abajo los cubiertos.
  */
-export const DEFAULT_DINING_SHARE = 55;
+export const DEFAULT_DINING_SHARE = 60;
 
 export interface FloorAreaInput {
   areaPerCustomer: number | null;

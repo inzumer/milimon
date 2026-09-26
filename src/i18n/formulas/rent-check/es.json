@@ -3,7 +3,7 @@
   "summary": "Revisá si el alquiler del local es razonable para lo que vendés.",
   "study": {
     "what": [
-      "El alquiler es uno de los costos fijos más pesados. El manual propone que no supere el 10 % de la facturación neta, y considera óptimo un 5 %.",
+      "El alquiler es uno de los costos fijos más pesados. Como regla práctica, no debería superar el 10 % de la facturación neta, y lo óptimo es rondar el 5 %.",
       "Conviene proyectar las ventas antes de firmar, para saber si el alquiler del local que te interesa está dentro de esos parámetros."
     ],
     "formula": [
@@ -27,10 +27,10 @@
     ],
     "examples": [
       {
-        "title": "Alquiler del manual",
+        "title": "Alquiler del café",
         "paragraphs": [
-          "Con un alquiler de $ 41.000 y ventas netas de $ 785.751,95, el alquiler es el 5,22 % de la facturación: aceptable, apenas por encima del óptimo.",
-          "Para que fuera el 5 %, habría que facturar $ 820.000 netos por mes."
+          "Con un alquiler de $ 60.000 y ventas netas de $ 1.107.897,50, el alquiler es el 5,42 % de la facturación: aceptable, apenas por encima del óptimo.",
+          "Para que fuera el 5 %, habría que facturar $ 1.200.000 netos por mes."
         ]
       }
     ],
@@ -44,11 +44,11 @@
   "inputs": {
     "rent": {
       "label": "Alquiler mensual",
-      "placeholder": "Lo que pagás de alquiler por mes (ej.: 41000)"
+      "placeholder": "Lo que pagás de alquiler por mes (ej.: 60000)"
     },
     "net-sales": {
       "label": "Facturación neta mensual",
-      "placeholder": "Ventas del mes sin impuestos (ej.: 785751,95)"
+      "placeholder": "Ventas del mes sin impuestos (ej.: 1107897,50)"
     }
   },
   "outputs": {
@@ -63,8 +63,8 @@
     "sales-for-optimal-share": "Para llegar al óptimo de {optimalShare}: {rent} × 100 ÷ 5 = {salesForOptimalShare}"
   },
   "examples": {
-    "manual-statement-rent": {
-      "title": "Alquiler del manual ($ 41.000) con sus ventas netas"
+    "cafe-rent": {
+      "title": "Alquiler del café ($ 60.000) con sus ventas netas"
     }
   },
   "choices": {

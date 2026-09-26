@@ -75,16 +75,16 @@ describe('recipe-costing', () => {
   });
 });
 
-describe('cost-of-goods (manual: 125.000 + 245.000 − 100.000)', () => {
+describe('cost-of-goods (café month: 180.000 + 410.000 − 150.000)', () => {
   it('should compute the cost of goods consumed', () => {
     const result = calculateCostOfGoods({
-      openingInventory: 125_000,
-      purchases: 245_000,
-      closingInventory: 100_000,
+      openingInventory: 180_000,
+      purchases: 410_000,
+      closingInventory: 150_000,
     });
     expect(result.ok && result.value).toStrictEqual({
-      availableForUse: 370_000,
-      costOfGoodsConsumed: 270_000,
+      availableForUse: 590_000,
+      costOfGoodsConsumed: 440_000,
     });
     expect(costOfGoodsConsumed(10, 5, 3)).toBe(12);
   });
@@ -99,80 +99,80 @@ describe('cost-of-goods (manual: 125.000 + 245.000 − 100.000)', () => {
   });
 });
 
-describe('pricing (manual, Unidad 3)', () => {
-  const manual: PricingInput = {
-    salaries: 57_000,
-    socialChargesRate: 48,
-    rent: 41_000,
-    services: 13_000,
-    generalExpenses: 90_000,
-    investment: 3_000_000,
-    amortizationMonths: 36,
-    annualReturnRate: 32,
-    monthlyWithdrawal: 50_000,
+describe('pricing (the café example)', () => {
+  const cafe: PricingInput = {
+    salaries: 95_000,
+    socialChargesRate: 45,
+    rent: 60_000,
+    services: 22_000,
+    generalExpenses: 70_000,
+    investment: 4_800_000,
+    amortizationMonths: 48,
+    annualReturnRate: 30,
+    monthlyWithdrawal: 80_000,
     incomeTaxRate: 35,
-    costOfGoodsConsumed: 270_000,
-    unitCost: 12,
+    costOfGoodsConsumed: 440_000,
+    unitCost: 20,
     vatRate: 21,
-    grossIncomeTaxRate: 3,
-    cardFeeRate: 5,
-    safetyHygieneRate: 0.5,
+    grossIncomeTaxRate: 3.5,
+    cardFeeRate: 4,
+    safetyHygieneRate: 1,
     includeCardFee: true,
   };
 
-  it('should reproduce the costs, desired profit and coefficient of the manual', () => {
-    const result = calculatePricing(manual);
+  it('should compute the costs, desired profit and coefficient', () => {
+    const result = calculatePricing(cafe);
     expect(result.ok).toBe(true);
     if (!result.ok) {
       return;
     }
-    expect(result.value.socialCharges).toBe(27_360);
-    expect(result.value.amortization).toBeCloseTo(83_333.33, 2);
-    expect(result.value.nonRawMaterialCosts).toBeCloseTo(311_693.33, 2);
-    expect(result.value.monthlyReturn).toBeCloseTo(80_000, 6);
-    expect(result.value.netProfit).toBeCloseTo(130_000, 6);
-    expect(result.value.grossProfit).toBeCloseTo(200_000, 6);
-    expect(result.value.coefficient).toBeCloseTo(2.895, 3);
-    expect(result.value.netPrice).toBeCloseTo(34.74, 2); // Medialunas: $ 12 × 2,895
+    // 95.000 × 45 % = 42.750; 4.800.000 / 48 = 100.000.
+    expect(result.value.socialCharges).toBe(42_750);
+    expect(result.value.amortization).toBe(100_000);
+    // 95.000 + 42.750 + 60.000 + 22.000 + 70.000 + 100.000.
+    expect(result.value.nonRawMaterialCosts).toBe(389_750);
+    // 4.800.000 × 30 % / 12 = 120.000, + 80.000 withdrawal = 200.000 net; / 0,65 before tax.
+    expect(result.value.monthlyReturn).toBeCloseTo(120_000, 6);
+    expect(result.value.netProfit).toBeCloseTo(200_000, 6);
+    expect(result.value.grossProfit).toBeCloseTo(307_692.31, 2);
+    // 1 + (389.750 + 307.692,31) / 440.000.
+    expect(result.value.coefficient).toBeCloseTo(2.5851, 4);
+    expect(result.value.netPrice).toBeCloseTo(51.7, 2); // Toastie: $ 20 × 2,5851
     expect(result.steps).toHaveLength(10);
   });
 
   it.each([
-    ['Medialunas', 12, 34.74],
-    ['Cookies', 10, 28.95],
-    ['Pan de queso', 9, 26.06],
-    ['Sachertorte', 42, 121.59],
-    ['Mousse de chocolate', 41, 118.7],
-    ['Lemon pie', 25, 72.38],
-    ['Cheesecake Oreo', 39, 112.91],
-  ])(
-    'should match the manual table for the net price of %s ($ %d → %d)',
-    (_name, unitCost, expected) => {
-      const result = calculatePricing({ ...manual, unitCost });
-      expect(result.ok && result.value.netPrice).toBeCloseTo(expected, 1);
-    },
-  );
+    ['Café con leche', 8, 20.68],
+    ['Scon de queso', 12, 31.02],
+    ['Licuado', 15, 38.78],
+    ['Tostado', 20, 51.7],
+    ['Budín de limón', 35, 90.48],
+    ['Tarta de frutillas', 45, 116.33],
+  ])('should price %s ($ %d → %d net)', (_name, unitCost, expected) => {
+    const result = calculatePricing({ ...cafe, unitCost });
+    expect(result.ok && result.value.netPrice).toBeCloseTo(expected, 1);
+  });
 
-  it('should show the tax breakdown: 29,5 % with card fees, 24,5 % (the manual factor 1,245) without', () => {
+  it('should show the tax breakdown: 29,5 % with card fees, 25,5 % without', () => {
     expect(salesTaxTotal(DEFAULT_SALES_TAX_RATES, true)).toBe(29.5);
-    expect(salesTaxTotal(DEFAULT_SALES_TAX_RATES, false)).toBe(24.5);
-    const withCards = calculatePricing(manual);
-    const withoutCards = calculatePricing({ ...manual, includeCardFee: false });
-    expect(withCards.ok && withCards.value.grossPrice).toBeCloseTo(44.99, 2);
-    // Manual: $ 43,27 (it multiplies rounded intermediate values).
-    expect(withoutCards.ok && withoutCards.value.grossPrice).toBeCloseTo(43.25, 2);
+    expect(salesTaxTotal(DEFAULT_SALES_TAX_RATES, false)).toBe(25.5);
+    const withCards = calculatePricing(cafe);
+    const withoutCards = calculatePricing({ ...cafe, includeCardFee: false });
+    // 51,70 × 1,295 and 51,70 × 1,255.
+    expect(withCards.ok && withCards.value.grossPrice).toBeCloseTo(66.95, 2);
+    expect(withoutCards.ok && withoutCards.value.grossPrice).toBeCloseTo(64.89, 2);
   });
 
   it('should expose the building blocks', () => {
-    expect(amortization(3_600)).toBe(100);
-    expect(grossUpForIncomeTax(130_000, 35)).toBeCloseTo(200_000, 6);
+    expect(amortization(4_800)).toBe(100);
+    expect(grossUpForIncomeTax(200_000, 35)).toBeCloseTo(307_692.31, 2);
     expect(pricingCoefficient(100, 50, 150)).toBe(2);
     expect(grossPrice(100, 29.5)).toBeCloseTo(129.5, 10);
   });
 
   it('should validate the inputs', () => {
     const result = calculatePricing({
-      ...manual,
+      ...cafe,
       costOfGoodsConsumed: 0,
       incomeTaxRate: 100,
       salaries: null,

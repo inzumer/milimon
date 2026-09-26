@@ -39,30 +39,29 @@
     ],
     "examples": [
       {
-        "title": "Datos del manual",
+        "title": "Datos del café",
         "paragraphs": [
-          "Ventas brutas $ 1.118.000 − impuestos $ 332.248,05 = ventas netas $ 785.751,95. Tasa de impuestos: 1,42.",
-          "Tasa de costos variables: 270.000 ÷ 785.751,95 = 0,34. Tasa de contribución: 0,66.",
-          "Punto de equilibrio: 313.977 ÷ 0,66 = $ 475.722,73 de ventas netas (con la tasa sin redondear, $ 478.346,31)."
+          "Ventas brutas $ 1.570.000 − impuestos $ 462.102,50 (sobre las ventas y a las ganancias) = ventas netas $ 1.107.897,50. Tasa de impuestos: 1,4171.",
+          "Tasa de costos variables: 440.000 ÷ 1.107.897,50 = 0,3971. Tasa de contribución: 0,6029.",
+          "Punto de equilibrio: 392.850 ÷ 0,6029 ≈ $ 651.653 de ventas netas, o $ 923.457 brutas."
         ]
       },
       {
         "title": "Ventas para ganar lo que querés",
         "paragraphs": [
-          "El dueño quiere $ 130.000 netos por mes; antes del impuesto a las ganancias son 130.000 ÷ 0,65 = $ 200.000.",
-          "Ventas netas = (313.977 + 200.000) ÷ 0,66 ≈ $ 778.753. Ventas brutas ≈ 778.753 × 1,42 ≈ $ 1.105.829.",
-          "Con las tasas sin redondear: $ 783.047,80 netos y $ 1.114.152,43 brutos."
+          "El dueño quiere $ 200.000 netos por mes; antes del impuesto a las ganancias son 200.000 ÷ 0,65 = $ 307.692,31.",
+          "Ventas netas = (392.850 + 307.692,31) ÷ 0,6029 ≈ $ 1.162.048. Ventas brutas ≈ 1.162.048 × 1,4171 ≈ $ 1.646.737."
         ]
       }
     ],
     "notes": [
       {
-        "type": "manual-difference",
-        "text": "El manual suma $ 130.000 (la ganancia neta) como si fuera antes de impuestos y llega a $ 672.692 de ventas netas. Esa ganancia todavía tiene que pagar el 35 % de impuesto a las ganancias, así que con $ 130.000 te quedás corto: por eso acá se usa la ganancia antes de impuestos ($ 200.000)."
+        "type": "common-mistake",
+        "text": "Usá la ganancia antes del impuesto a las ganancias: si ponés la ganancia neta te quedás corto, porque de esa ganancia todavía se paga el impuesto."
       },
       {
         "type": "rounding",
-        "text": "El manual redondea la tasa de contribución a 0,66 y la de impuestos a 1,42. La calculadora usa los valores exactos, por eso los resultados difieren un poco."
+        "text": "Si redondeás las tasas (por ejemplo, contribución 0,60 y tasa de impuestos 1,42), los resultados cambian un poco: la calculadora usa los valores exactos."
       },
       {
         "type": "tip",
@@ -73,23 +72,23 @@
   "inputs": {
     "gross-sales": {
       "label": "Ventas brutas",
-      "placeholder": "Ventas del período con impuestos incluidos (ej.: 1118000)"
+      "placeholder": "Ventas del período con impuestos incluidos (ej.: 1570000)"
     },
     "taxes": {
       "label": "Impuestos",
-      "placeholder": "Impuestos sobre las ventas + impuesto a las ganancias (ej.: 332248,05)"
+      "placeholder": "Impuestos sobre las ventas + impuesto a las ganancias (ej.: 462102,50)"
     },
     "variable-costs": {
       "label": "Costos variables",
-      "placeholder": "Costo de mercaderías consumidas del período (ej.: 270000)"
+      "placeholder": "Costo de mercaderías consumidas del período (ej.: 440000)"
     },
     "fixed-costs": {
       "label": "Costos fijos",
-      "placeholder": "Sueldos, cargas, alquiler, servicios, gastos, amortizaciones y tasas (ej.: 313977)"
+      "placeholder": "Sueldos, cargas, alquiler, servicios, gastos, amortizaciones y tasas (ej.: 392850)"
     },
     "desired-profit-before-tax": {
       "label": "Ganancia deseada antes de impuestos",
-      "placeholder": "Ganancia mensual que querés, antes del impuesto a las ganancias (ej.: 200000)",
+      "placeholder": "Ganancia mensual que querés, antes del impuesto a las ganancias (ej.: 307692,31)",
       "hint": "Si pensás en lo que querés cobrar en limpio, dividilo por (1 − 0,35)."
     }
   },
@@ -113,8 +112,8 @@
     "target-gross-sales": "Ventas brutas = ventas netas × tasa de impuestos = {targetNetSales} × {taxRate} = {targetGrossSales}"
   },
   "examples": {
-    "manual-break-even": {
-      "title": "Datos del manual, con $ 200.000 de ganancia antes de impuestos"
+    "cafe-break-even": {
+      "title": "Datos del café, con $ 307.692 de ganancia antes de impuestos"
     }
   },
   "errors": {

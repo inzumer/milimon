@@ -3,7 +3,7 @@
   "summary": "El precio teórico de cada producto: costo × coeficiente, más impuestos y cargos.",
   "study": {
     "what": [
-      "El precio de venta tiene que cubrir la materia prima, todos los demás costos del negocio y la ganancia que querés obtener. El manual trata la ganancia deseada como un costo más, y la define antes de decidir la apertura.",
+      "El precio de venta tiene que cubrir la materia prima, todos los demás costos del negocio y la ganancia que querés obtener. Por eso conviene tratar la ganancia deseada como un costo más y definirla antes de decidir la apertura.",
       "El método usa un coeficiente: se multiplica el costo estándar de cada producto (el de su ficha técnica) y después se suman los impuestos y cargos sobre la venta. El resultado es un precio teórico que tenés que comparar con la competencia y ajustar con criterio comercial."
     ],
     "formula": [
@@ -43,35 +43,23 @@
     ],
     "examples": [
       {
-        "title": "Coeficiente del manual",
+        "title": "Coeficiente del café",
         "paragraphs": [
-          "Costos no MP: sueldos $ 57.000 + cargas (48 %) $ 27.360 + alquiler $ 41.000 + servicios $ 13.000 + gastos generales $ 90.000 + amortización ($ 3.000.000 ÷ 36) $ 83.333,33 = $ 311.693,33.",
-          "Ganancia: $ 3.000.000 × 32 % ÷ 12 = $ 80.000 de retorno + $ 50.000 de retiro = $ 130.000 netos → $ 130.000 ÷ 0,65 = $ 200.000 antes de impuestos.",
-          "Coeficiente = 1 + ($ 311.693,33 + $ 200.000) ÷ $ 270.000 = 2,895."
+          "Costos no MP: sueldos $ 95.000 + cargas (45 %) $ 42.750 + alquiler $ 60.000 + servicios $ 22.000 + gastos generales $ 70.000 + amortización ($ 4.800.000 ÷ 48) $ 100.000 = $ 389.750.",
+          "Ganancia: $ 4.800.000 × 30 % ÷ 12 = $ 120.000 de retorno + $ 80.000 de retiro = $ 200.000 netos → $ 200.000 ÷ 0,65 = $ 307.692,31 antes de impuestos.",
+          "Coeficiente = 1 + ($ 389.750 + $ 307.692,31) ÷ $ 440.000 = 2,585."
         ]
       },
       {
-        "title": "Precios de la pastelería",
+        "title": "Precios de la carta",
         "paragraphs": [
-          "Medialunas: $ 12 × 2,895 = $ 34,74 netos. Sachertorte: $ 42 × 2,895 = $ 121,59 netos.",
-          "Con IVA 21 %, Ingresos Brutos 3 % y Seguridad e Higiene 0,5 % (24,5 %): medialunas $ 34,74 × 1,245 = $ 43,25.",
-          "Sumando la comisión de tarjetas del 5 % (29,5 % en total): $ 34,74 × 1,295 = $ 44,99."
+          "Tostado de jamón y queso: $ 20 × 2,585 = $ 51,70 netos. Budín de limón: $ 35 × 2,585 = $ 90,48 netos.",
+          "Con IVA 21 %, Ingresos Brutos 3,5 % y Seguridad e Higiene 1 % (25,5 %): tostado $ 51,70 × 1,255 = $ 64,89.",
+          "Sumando la comisión de tarjetas del 4 % (29,5 % en total): $ 51,70 × 1,295 = $ 66,95."
         ]
       }
     ],
     "notes": [
-      {
-        "type": "manual-difference",
-        "text": "El manual dice \"24,5 % (21 % de IVA, 3 % de Ingresos Brutos, 5 % de tarjetas y 0,5 % de Seguridad e Higiene)\" y usa 1,245, pero esos cuatro componentes suman 29,5 %: el 24,5 % es la suma sin tarjetas. Por eso acá ves el desglose y elegís si cobrás con tarjeta."
-      },
-      {
-        "type": "manual-difference",
-        "text": "El manual muestra $ 43,27 para las medialunas; multiplicando sin redondeos intermedios da $ 43,25."
-      },
-      {
-        "type": "manual-difference",
-        "text": "La planilla de Excel del curso usa 50 % de cargas sociales; seguimos el manual, que usa 48 %."
-      },
       {
         "type": "tip",
         "text": "No fijes precios con la \"tablita del 3\" ni solo mirando a la competencia: combiná el estudio de costos, los precios de la competencia y tu criterio comercial."
@@ -82,56 +70,56 @@
       },
       {
         "type": "tip",
-        "text": "Como retorno mínimo razonable, el manual propone el doble de lo que rinde un título público a tres años."
+        "text": "Como referencia para el retorno mínimo, pedile a tu inversión bastante más de lo que rendiría esa misma plata en una alternativa sin riesgo, como un plazo fijo o un bono del Estado."
       }
     ]
   },
   "inputs": {
     "unit-cost": {
       "label": "Costo estándar unitario",
-      "placeholder": "Costo de materia prima del producto según su ficha técnica (ej.: 12)"
+      "placeholder": "Costo de materia prima del producto según su ficha técnica (ej.: 20)"
     },
     "cost-of-goods-consumed": {
       "label": "Costo de mercaderías consumidas (mes)",
-      "placeholder": "Existencia inicial + compras − existencia final (ej.: 270000)"
+      "placeholder": "Existencia inicial + compras − existencia final (ej.: 440000)"
     },
     "salaries": {
       "label": "Sueldos (mes)",
-      "placeholder": "Total de sueldos del personal, incluido el del dueño si trabaja (ej.: 57000)"
+      "placeholder": "Total de sueldos del personal, incluido el del dueño si trabaja (ej.: 95000)"
     },
     "social-charges-rate": {
       "label": "Cargas sociales",
-      "placeholder": "Porcentaje sobre los sueldos (ej.: 48)"
+      "placeholder": "Porcentaje sobre los sueldos (ej.: 45)"
     },
     "rent": {
       "label": "Alquiler (mes)",
-      "placeholder": "Alquiler mensual del local (ej.: 41000)"
+      "placeholder": "Alquiler mensual del local (ej.: 60000)"
     },
     "services": {
       "label": "Servicios (mes)",
-      "placeholder": "Luz, gas, agua, internet y demás servicios (ej.: 13000)"
+      "placeholder": "Luz, gas, agua, internet y demás servicios (ej.: 22000)"
     },
     "general-expenses": {
       "label": "Gastos generales (mes)",
-      "placeholder": "Limpieza, lavadero, papelería, honorarios, etc. (ej.: 90000)"
+      "placeholder": "Limpieza, lavadero, papelería, honorarios, etc. (ej.: 70000)"
     },
     "investment": {
       "label": "Inversión",
-      "placeholder": "Total invertido para abrir el negocio (ej.: 3000000)"
+      "placeholder": "Total invertido para abrir el negocio (ej.: 4800000)"
     },
     "amortization-months": {
       "label": "Meses de amortización",
-      "placeholder": "En cuántos meses se amortiza la inversión (ej.: 36)",
-      "hint": "El manual supone que a los 3 años los equipos valen cero."
+      "placeholder": "En cuántos meses se amortiza la inversión (ej.: 48)",
+      "hint": "El plazo en que considerás que los equipos pierden su valor (por ejemplo, 4 años = 48 meses)."
     },
     "annual-return-rate": {
       "label": "Retorno anual esperado sobre la inversión",
-      "placeholder": "Porcentaje anual que querés ganar como inversor (ej.: 32)",
+      "placeholder": "Porcentaje anual que querés ganar como inversor (ej.: 30)",
       "hint": "Como mínimo, el doble de lo que rinde un título público."
     },
     "monthly-withdrawal": {
       "label": "Retiro mensual del dueño",
-      "placeholder": "Lo que querés retirar por mes por tu trabajo, neto (ej.: 50000)"
+      "placeholder": "Lo que querés retirar por mes por tu trabajo, neto (ej.: 80000)"
     },
     "income-tax-rate": {
       "label": "Impuesto a las ganancias",
@@ -143,11 +131,11 @@
     },
     "gross-income-tax-rate": {
       "label": "Ingresos Brutos",
-      "placeholder": "Alícuota de IIBB (ej.: 3)"
+      "placeholder": "Alícuota de IIBB (ej.: 3,5)"
     },
     "safety-hygiene-rate": {
       "label": "Seguridad e Higiene",
-      "placeholder": "Tasa municipal (ej.: 0,5)"
+      "placeholder": "Tasa municipal (ej.: 1)"
     },
     "include-card-fee": {
       "label": "¿Cobrás con tarjeta?",
@@ -155,7 +143,7 @@
     },
     "card-fee-rate": {
       "label": "Comisión de tarjetas",
-      "placeholder": "Porcentaje que cobra la tarjeta (ej.: 5)"
+      "placeholder": "Porcentaje que cobra la tarjeta (ej.: 4)"
     }
   },
   "outputs": {
@@ -179,8 +167,8 @@
     "gross-price": "Precio de carta = precio neto × (1 + {salesTaxRate}) = {netPrice} × (1 + {salesTaxRate}) = {grossPrice}"
   },
   "examples": {
-    "manual-croissants": {
-      "title": "Medialunas del manual: costo $ 12 (sin comisión de tarjetas, como el ejemplo)"
+    "cafe-toastie": {
+      "title": "Tostado del café: costo $ 20 (sin comisión de tarjetas)"
     }
   }
 }

@@ -4,7 +4,7 @@
   "study": {
     "what": [
       "The waste factor is the number you multiply a clean quantity by to know how much to buy as purchased. It also turns an as-purchased price into its equivalent clean price.",
-      "The handbook prefers to work it out from the trim waste %, because you'll need that percentage for many other calculations."
+      "It's best to work it out from the trim waste %, because you'll need that percentage for many other calculations."
     ],
     "formula": [
       "Factor = trim waste % ÷ (100 − trim waste %) + 1",
@@ -33,18 +33,18 @@
     ],
     "examples": [
       {
-        "title": "Beef tenderloin for tournedos (handbook)",
+        "title": "Whole salmon",
         "paragraphs": [
-          "The tenderloin has 30% trim, so 70% is usable.",
-          "Factor = 30 ÷ 70 + 1 = 0.4286 + 1 = 1.429.",
-          "For every clean kilo you need, you must buy 1.429 kg of whole tenderloin."
+          "Whole salmon has 25% trim waste (head, bones and skin), so 75% is usable.",
+          "Factor = 25 ÷ 75 + 1 = 0.3333 + 1 = 1.333.",
+          "For every kilo of clean fillet you need, you have to buy 1.333 kg of whole salmon."
         ]
       }
     ],
     "notes": [
       {
         "type": "common-mistake",
-        "text": "With 30% trim the factor isn't 1.30. If you just add 30%, the extra you bought also loses 30% when cleaned — the \"trim of the trim\" — so it's never enough."
+        "text": "With 25% trim waste the factor is not 1.25. If you only add 25%, the extra you bought also loses 25% when trimmed: it is \"the waste of the waste\", and it never adds up."
       },
       {
         "type": "rounding",
@@ -59,7 +59,7 @@
   "inputs": {
     "waste-percentage": {
       "label": "Trim waste %",
-      "placeholder": "Percentage lost when cleaning (e.g. 30)",
+      "placeholder": "Percentage lost when cleaning (e.g. 25)",
       "hint": "If you don't know it, work it out with the trim waste % formula."
     }
   },
@@ -72,8 +72,8 @@
     "waste-factor": "Factor = trim waste % ÷ (100 − trim waste %) + 1 = {wastePercentage} ÷ {usablePercentage} + 1 = {wasteFactor}"
   },
   "examples": {
-    "manual-tenderloin": {
-      "title": "Beef tenderloin for tournedos with 30% trim"
+    "whole-salmon": {
+      "title": "Whole salmon with 25% trim waste"
     }
   }
 }

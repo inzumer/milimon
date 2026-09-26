@@ -3,7 +3,7 @@
   "summary": "Check whether the rent is reasonable for what you sell.",
   "study": {
     "what": [
-      "Rent is one of the heaviest fixed costs. The handbook suggests it shouldn't exceed 10% of net revenue, and considers 5% optimal.",
+      "Rent is one of the heaviest fixed costs. As a rule of thumb, it shouldn't exceed 10% of net revenue, and around 5% is optimal.",
       "It's worth projecting sales before signing, to know whether the rent of the space you like is within those limits."
     ],
     "formula": [
@@ -27,10 +27,10 @@
     ],
     "examples": [
       {
-        "title": "Handbook rent",
+        "title": "The café's rent",
         "paragraphs": [
-          "With $41,000 of rent and net sales of $785,751.95, rent is 5.22% of revenue: acceptable, just above optimal.",
-          "For it to be 5%, net revenue would have to reach $820,000 a month."
+          "With $60,000 of rent and $1,107,897.50 of net sales, rent is 5.42% of revenue: acceptable, just above the optimum.",
+          "For it to be 5%, net monthly sales would have to reach $1,200,000."
         ]
       }
     ],
@@ -44,11 +44,11 @@
   "inputs": {
     "rent": {
       "label": "Monthly rent",
-      "placeholder": "What you pay in rent each month (e.g. 41000)"
+      "placeholder": "What you pay in rent each month (e.g. 60000)"
     },
     "net-sales": {
       "label": "Monthly net revenue",
-      "placeholder": "Sales for the month excluding taxes (e.g. 785751.95)"
+      "placeholder": "Sales for the month excluding taxes (e.g. 1107897.50)"
     }
   },
   "outputs": {
@@ -63,8 +63,8 @@
     "sales-for-optimal-share": "To reach the optimal {optimalShare}: {rent} × 100 ÷ 5 = {salesForOptimalShare}"
   },
   "examples": {
-    "manual-statement-rent": {
-      "title": "Handbook rent ($41,000) with its net sales"
+    "cafe-rent": {
+      "title": "The café's rent ($60,000) with its net sales"
     }
   },
   "choices": {

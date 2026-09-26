@@ -10,88 +10,90 @@ import { calculateIncomeStatement } from '../income-statement';
 import { calculateOmnesRules, priceZone, ticketStatus } from '../omnes-rules';
 import { calculateRentCheck, rentStatus } from '../rent-check';
 
-describe('income-statement (manual, Unidad 4)', () => {
-  const manual = {
-    foodSales: 820_000,
-    beverageSales: 298_000,
-    foodCost: 200_000,
-    beverageCost: 70_000,
-    salaries: 57_000,
-    socialCharges: 27_360,
-    rent: 41_000,
-    services: 13_000,
-    generalExpenses: 90_000,
-    amortization: 83_333,
-    salesTaxes: 223_600,
-    municipalFees: 2_284,
+describe('income-statement (the café example)', () => {
+  const cafe = {
+    foodSales: 1_150_000,
+    beverageSales: 420_000,
+    foodCost: 330_000,
+    beverageCost: 110_000,
+    salaries: 95_000,
+    socialCharges: 42_750,
+    rent: 60_000,
+    services: 22_000,
+    generalExpenses: 70_000,
+    amortization: 100_000,
+    salesTaxes: 314_000,
+    municipalFees: 3_100,
     incomeTaxRate: 35,
   };
 
-  it('should reproduce the manual statement', () => {
-    const result = calculateIncomeStatement(manual);
+  it('should build the statement', () => {
+    const result = calculateIncomeStatement(cafe);
     expect(result.ok).toBe(true);
     if (!result.ok) {
       return;
     }
-    expect(result.value.totalSales).toBe(1_118_000);
-    expect(result.value.costOfSales).toBe(270_000);
-    expect(result.value.operatingCosts).toBe(537_577);
-    expect(result.value.fixedCosts).toBe(313_977);
-    expect(result.value.resultBeforeIncomeTax).toBe(310_423);
-    expect(result.value.incomeTax).toBeCloseTo(108_648.05, 2);
-    expect(result.value.netResult).toBeCloseTo(201_774.95, 2);
+    expect(result.value.totalSales).toBe(1_570_000);
+    expect(result.value.costOfSales).toBe(440_000);
+    // 95.000 + 42.750 + 60.000 + 22.000 + 70.000 + 100.000 + 314.000 + 3.100.
+    expect(result.value.operatingCosts).toBe(706_850);
+    expect(result.value.fixedCosts).toBe(392_850);
+    expect(result.value.resultBeforeIncomeTax).toBe(423_150);
+    expect(result.value.incomeTax).toBeCloseTo(148_102.5, 2);
+    expect(result.value.netResult).toBeCloseTo(275_047.5, 2);
   });
 
   it('should charge no income tax on a loss', () => {
-    const result = calculateIncomeStatement({ ...manual, foodSales: 100_000 });
+    const result = calculateIncomeStatement({ ...cafe, foodSales: 100_000 });
     expect(result.ok && result.value.incomeTax).toBe(0);
     expect(result.ok && result.value.netResult).toBeLessThan(0);
   });
 
   it('should validate the inputs', () => {
-    expect(calculateIncomeStatement({ ...manual, rent: -1 }).ok).toBe(false);
+    expect(calculateIncomeStatement({ ...cafe, rent: -1 }).ok).toBe(false);
   });
 });
 
-describe('break-even (manual, Unidad 4)', () => {
-  const manual = {
-    grossSales: 1_118_000,
-    taxes: 332_248.05,
-    variableCosts: 270_000,
-    fixedCosts: 313_977,
-    desiredProfitBeforeTax: 200_000,
+describe('break-even (the café example)', () => {
+  const cafe = {
+    grossSales: 1_570_000,
+    taxes: 462_102.5,
+    variableCosts: 440_000,
+    fixedCosts: 392_850,
+    desiredProfitBeforeTax: 307_692.31,
   };
 
-  it('should compute the rates of the manual', () => {
-    const result = calculateBreakEven(manual);
+  it('should compute the rates', () => {
+    const result = calculateBreakEven(cafe);
     expect(result.ok).toBe(true);
     if (!result.ok) {
       return;
     }
-    expect(result.value.netSales).toBeCloseTo(785_751.95, 2);
-    expect(result.value.taxRate).toBeCloseTo(1.42, 2);
-    expect(result.value.variableCostRate).toBeCloseTo(0.34, 2);
-    expect(result.value.contributionRate).toBeCloseTo(0.66, 2);
+    // 1.570.000 − 462.102,50; 1.570.000 / net; 440.000 / net; 1 − variable rate.
+    expect(result.value.netSales).toBeCloseTo(1_107_897.5, 2);
+    expect(result.value.taxRate).toBeCloseTo(1.4171, 4);
+    expect(result.value.variableCostRate).toBeCloseTo(0.3971, 4);
+    expect(result.value.contributionRate).toBeCloseTo(0.6029, 4);
   });
 
   it('should use full precision and the profit BEFORE income tax', () => {
-    const result = calculateBreakEven(manual);
+    const result = calculateBreakEven(cafe);
     if (!result.ok) {
       throw new Error('expected success');
     }
-    expect(result.value.breakEvenNetSales).toBeCloseTo(478_346.31, 2);
-    expect(result.value.targetNetSales).toBeCloseTo(783_047.8, 1);
-    expect(result.value.targetGrossSales).toBeCloseTo(1_114_152.43, 2);
+    expect(result.value.breakEvenNetSales).toBeCloseTo(651_653.18, 1);
+    expect(result.value.targetNetSales).toBeCloseTo(1_162_048.18, 1);
+    expect(result.value.targetGrossSales).toBeCloseTo(1_646_736.85, 1);
     expect(result.value.breakEvenGrossSales).toBeCloseTo(
       result.value.breakEvenNetSales * result.value.taxRate,
       6,
     );
   });
 
-  it('should reproduce the manual numbers when fed its rounded values (TC 0,66 and $ 130.000 net)', () => {
-    expect(requiredNetSales(313_977, 0.66)).toBeCloseTo(475_722.73, 2);
-    expect(requiredNetSales(313_977, 0.66, 130_000)).toBeCloseTo(672_692.42, 2);
-    expect(requiredNetSales(313_977, 0.66, 130_000) * 1.42).toBeCloseTo(955_223.24, 2);
+  it('should show how rounded rates change the result (contribution 0,60, tax rate 1,42)', () => {
+    expect(requiredNetSales(392_850, 0.6)).toBeCloseTo(654_750, 2);
+    expect(requiredNetSales(392_850, 0.6, 307_692.31)).toBeCloseTo(1_167_570.52, 2);
+    expect(requiredNetSales(392_850, 0.6, 307_692.31) * 1.42).toBeCloseTo(1_657_950.13, 1);
   });
 
   it('should expose the building blocks', () => {
@@ -101,19 +103,19 @@ describe('break-even (manual, Unidad 4)', () => {
   });
 
   it('should reject impossible inputs', () => {
-    expect(calculateBreakEven({ ...manual, taxes: 1_118_000 })).toStrictEqual({
+    expect(calculateBreakEven({ ...cafe, taxes: 1_570_000 })).toStrictEqual({
       ok: false,
       errors: [{ field: 'taxes', code: 'must-not-exceed-gross' }],
     });
-    expect(calculateBreakEven({ ...manual, variableCosts: 800_000 })).toStrictEqual({
+    expect(calculateBreakEven({ ...cafe, variableCosts: 1_200_000 })).toStrictEqual({
       ok: false,
       errors: [{ field: 'variableCosts', code: 'must-not-exceed-gross' }],
     });
-    expect(calculateBreakEven({ ...manual, grossSales: null }).ok).toBe(false);
+    expect(calculateBreakEven({ ...cafe, grossSales: null }).ok).toBe(false);
   });
 });
 
-describe('omnes-rules (manual: 16 tortas entre $ 40 y $ 115)', () => {
+describe('omnes-rules (16 cakes between $ 40 and $ 115)', () => {
   const prices = [40, 50, 55, 65, 70, 72, 75, 78, 80, 85, 88, 90, 95, 100, 110, 115];
 
   it('should compute zones of $ 25 with bounds 65 and 90, and a balanced 4 / 8 / 4 menu', () => {
@@ -133,7 +135,7 @@ describe('omnes-rules (manual: 16 tortas entre $ 40 y $ 115)', () => {
     expect(result.value.dailySpecialZone).toBe('medium');
   });
 
-  it('should use the manual ±10 % ticket thresholds (average $ 77,50 → 69,75 / 85,25)', () => {
+  it('should use ±10 % ticket thresholds (average $ 77,50 → 69,75 / 85,25)', () => {
     expect(ticketStatus(69, 77.5)).toBe('too-expensive');
     expect(ticketStatus(86, 77.5)).toBe('too-cheap');
     expect(ticketStatus(77.5, 77.5)).toBe('balanced');
@@ -170,50 +172,70 @@ describe('omnes-rules (manual: 16 tortas entre $ 40 y $ 115)', () => {
   });
 });
 
-describe('floor-area (manual, Unidad 7)', () => {
-  it('should compute 1,32 m² per customer and 26,4 m² (27 m²) for 20 covers', () => {
+describe('floor-area (café with 32 covers)', () => {
+  it('should compute 1,50 m² per customer and 48 m² for 32 covers', () => {
     const result = calculateFloorArea({
-      areaPerCustomer: 1.1,
+      areaPerCustomer: 1.25,
       circulationPercentage: 20,
-      customers: 20,
+      customers: 32,
     });
-    expect(result.ok && result.value.areaPerCustomerWithCirculation).toBeCloseTo(1.32, 10);
-    expect(result.ok && result.value.requiredArea).toBeCloseTo(26.4, 10);
-    expect(result.ok && result.value.requiredAreaRounded).toBe(27);
+    expect(result.ok && result.value.areaPerCustomerWithCirculation).toBeCloseTo(1.5, 10);
+    expect(result.ok && result.value.requiredArea).toBeCloseTo(48, 10);
+    expect(result.ok && result.value.requiredAreaRounded).toBe(48);
   });
 
-  it('should compute seating capacity: 80 m² × 55 % = 44 m² → 33 covers at 1,30 m²', () => {
-    const result = calculateSeatingCapacity({
-      premisesArea: 80,
-      diningSharePercentage: 55,
-      areaPerCustomerWithCirculation: 1.3,
+  it('should round the area up: 1,30 m² + 15 % for 25 covers = 37,375 m² → 38 m²', () => {
+    const result = calculateFloorArea({
+      areaPerCustomer: 1.3,
+      circulationPercentage: 15,
+      customers: 25,
     });
-    expect(result.ok && result.value.diningArea).toBeCloseTo(44, 10);
-    expect(result.ok && result.value.capacity).toBeCloseTo(33.85, 2);
-    expect(result.ok && result.value.capacityRounded).toBe(33);
+    expect(result.ok && result.value.requiredArea).toBeCloseTo(37.375, 10);
+    expect(result.ok && result.value.requiredAreaRounded).toBe(38);
+  });
+
+  it('should compute seating capacity: 120 m² × 60 % = 72 m² → 48 covers at 1,50 m²', () => {
+    const result = calculateSeatingCapacity({
+      premisesArea: 120,
+      diningSharePercentage: 60,
+      areaPerCustomerWithCirculation: 1.5,
+    });
+    expect(result.ok && result.value.diningArea).toBeCloseTo(72, 10);
+    expect(result.ok && result.value.capacityRounded).toBe(48);
+  });
+
+  it('should round the covers down: 100 m² × 50 % / 1,40 m² = 35,71 → 35', () => {
+    const result = calculateSeatingCapacity({
+      premisesArea: 100,
+      diningSharePercentage: 50,
+      areaPerCustomerWithCirculation: 1.4,
+    });
+    expect(result.ok && result.value.capacity).toBeCloseTo(35.71, 2);
+    expect(result.ok && result.value.capacityRounded).toBe(35);
   });
 
   it('should validate the inputs', () => {
     expect(
-      calculateFloorArea({ areaPerCustomer: 1.1, circulationPercentage: 120, customers: 0 }).ok,
+      calculateFloorArea({ areaPerCustomer: 1.25, circulationPercentage: 120, customers: 0 }).ok,
     ).toBe(false);
     expect(
       calculateSeatingCapacity({
-        premisesArea: 80,
+        premisesArea: 120,
         diningSharePercentage: 0,
-        areaPerCustomerWithCirculation: 1.3,
+        areaPerCustomerWithCirculation: 1.5,
       }).ok,
     ).toBe(false);
   });
 });
 
-describe('rent-check (manual: ≤ 10 %, óptimo 5 %)', () => {
+describe('rent-check (≤ 10 %, optimal 5 %)', () => {
   it('should evaluate the rent share of net sales', () => {
-    const result = calculateRentCheck({ rent: 41_000, netSales: 785_751.95 });
-    expect(result.ok && result.value.rentShare).toBeCloseTo(5.22, 2);
+    // 60.000 / 1.107.897,50 × 100 = 5,42 %.
+    const result = calculateRentCheck({ rent: 60_000, netSales: 1_107_897.5 });
+    expect(result.ok && result.value.rentShare).toBeCloseTo(5.42, 2);
     expect(result.ok && result.value.status).toBe('acceptable');
-    expect(result.ok && result.value.salesForMaxShare).toBe(410_000);
-    expect(result.ok && result.value.salesForOptimalShare).toBe(820_000);
+    expect(result.ok && result.value.salesForMaxShare).toBe(600_000);
+    expect(result.ok && result.value.salesForOptimalShare).toBe(1_200_000);
   });
 
   it('should classify the share', () => {

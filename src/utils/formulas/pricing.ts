@@ -14,17 +14,16 @@ import type { CalculationResult } from '@utils/calculation';
  * Fijación de precios (manual, Unidad 3).
  *
  * Costos no relacionados con la materia prima = sueldos + cargas sociales + alquiler + servicios
- *   + gastos generales + amortizaciones (inversión / 36 meses).
+ *   + gastos generales + amortizaciones (inversión / meses de amortización).
  * Ganancia deseada neta = inversión × % retorno anual / 12 + retiro mensual.
  * Ganancia deseada bruta = ganancia neta / (1 − impuesto a las ganancias).
  * Coeficiente = 1 + (costos no MP + ganancia bruta) / costo de mercaderías consumidas.
  * Precio neto = costo estándar unitario × coeficiente.
  * Precio bruto (carta) = precio neto × (1 + IVA + IIBB + tarjetas + Seguridad e Higiene).
  *
- * Nota: el manual escribe "24,5 % (21 + 3 + 5 + 0,5)" y usa 1,245, que es la suma SIN tarjetas.
- * Aquí el total sale siempre del desglose, y la comisión de tarjetas se puede activar o no.
+ * El total de impuestos sale siempre del desglose, y la comisión de tarjetas se puede activar o no.
  */
-export const DEFAULT_AMORTIZATION_MONTHS = 36;
+export const DEFAULT_AMORTIZATION_MONTHS = 48;
 
 export interface SalesTaxRates {
   vat: number;
@@ -33,17 +32,17 @@ export interface SalesTaxRates {
   safetyHygiene: number;
 }
 
-/** Defaults from the manual (Argentina, C.A.B.A.). */
+/** Starting values for Argentina; everyone replaces them with their own. */
 export const DEFAULT_SALES_TAX_RATES: Readonly<SalesTaxRates> = {
   vat: 21,
-  grossIncomeTax: 3,
-  cardFee: 5,
-  safetyHygiene: 0.5,
+  grossIncomeTax: 3.5,
+  cardFee: 4,
+  safetyHygiene: 1,
 };
 
 export const DEFAULT_INCOME_TAX_RATE = 35;
-export const DEFAULT_SOCIAL_CHARGES_RATE = 48;
-export const DEFAULT_ANNUAL_RETURN_RATE = 32;
+export const DEFAULT_SOCIAL_CHARGES_RATE = 45;
+export const DEFAULT_ANNUAL_RETURN_RATE = 30;
 
 export const socialCharges = (salaries: number, rate: number): number => percentOf(salaries, rate);
 

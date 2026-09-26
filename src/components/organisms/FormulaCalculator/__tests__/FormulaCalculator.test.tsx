@@ -30,7 +30,7 @@ describe('FormulaCalculator', () => {
   it('should render a labelled field with unit and placeholder for every input', () => {
     setup();
     const gross = screen.getByRole('textbox', { name: 'Peso bruto (sucio) (kg)' });
-    expect(gross).toHaveAttribute('placeholder', 'Peso tal como lo compraste, en kg (ej.: 2,400)');
+    expect(gross).toHaveAttribute('placeholder', 'Peso tal como lo compraste, en kg (ej.: 2,800)');
     expect(screen.getByRole('textbox', { name: 'Peso neto (limpio) (kg)' })).toBeInTheDocument();
     expect(within(resultRegion()).getByText(/Completá los datos/)).toBeInTheDocument();
   });
@@ -80,20 +80,20 @@ describe('FormulaCalculator', () => {
     );
   });
 
-  it('should load the manual example, remember it and clear it again', async () => {
+  it('should load the example, remember it and clear it again', async () => {
     const sink = vi.fn();
     setAnalyticsSink(sink);
     const { user } = setup('gross-quantity');
 
-    await user.click(screen.getByRole('button', { name: /Cargar: Tournedó para 200 personas/ }));
+    await user.click(screen.getByRole('button', { name: /Cargar: Salmón para 120 cubiertos/ }));
 
-    expect(screen.getByRole('textbox', { name: /Comensales/ })).toHaveValue('200');
-    expect(screen.getByRole('textbox', { name: /Porción limpia/ })).toHaveValue('0,18');
-    expect(within(resultRegion()).getByText('52 kg')).toBeInTheDocument();
-    expect(useDraftsStore.getState().drafts['gross-quantity']).toMatchObject({ servings: '200' });
+    expect(screen.getByRole('textbox', { name: /Comensales/ })).toHaveValue('120');
+    expect(screen.getByRole('textbox', { name: /Porción limpia/ })).toHaveValue('0,16');
+    expect(within(resultRegion()).getByText('26 kg')).toBeInTheDocument();
+    expect(useDraftsStore.getState().drafts['gross-quantity']).toMatchObject({ servings: '120' });
     expect(sink).toHaveBeenCalledWith('example_loaded', {
       formula: 'gross-quantity',
-      example: 'manual-tournedos',
+      example: 'salmon-portions',
     });
 
     await user.click(screen.getByRole('button', { name: 'Limpiar datos' }));
@@ -104,31 +104,31 @@ describe('FormulaCalculator', () => {
 
   it('should restore the saved draft and use the configured currency', () => {
     useDraftsStore.getState().saveDraft('cost-of-goods', {
-      openingInventory: '125000',
-      purchases: '245000',
-      closingInventory: '100000',
+      openingInventory: '180000',
+      purchases: '410000',
+      closingInventory: '150000',
     });
     useSettingsStore.getState().update({ currency: 'USD' });
     setup('cost-of-goods', 'en');
 
-    expect(screen.getByRole('textbox', { name: 'Opening inventory (USD)' })).toHaveValue('125000');
-    expect(within(resultRegion()).getByText('$270,000.00')).toBeInTheDocument();
+    expect(screen.getByRole('textbox', { name: 'Opening inventory (USD)' })).toHaveValue('180000');
+    expect(within(resultRegion()).getByText('$440,000.00')).toBeInTheDocument();
   });
 
   it('should render toggles as switches and use them in the calculation', async () => {
     const { user } = setup('pricing');
-    await user.click(screen.getByRole('button', { name: /Cargar: Medialunas/ }));
+    await user.click(screen.getByRole('button', { name: /Cargar: Tostado del café/ }));
     const cards = screen.getByRole('switch', { name: '¿Cobrás con tarjeta?' });
     expect(cards).not.toBeChecked();
-    expect(plain(within(resultRegion()).getByText(/^\$ 43,/).textContent)).toBe('$ 43,25');
+    expect(plain(within(resultRegion()).getByText(/^\$ 64,/).textContent)).toBe('$ 64,89');
 
     await user.click(cards);
-    expect(plain(within(resultRegion()).getByText(/^\$ 44,/).textContent)).toBe('$ 44,99');
+    expect(plain(within(resultRegion()).getByText(/^\$ 66,/).textContent)).toBe('$ 66,95');
   });
 
   it('should show text results with their translated label', async () => {
     const { user } = setup('rent-check', 'en');
-    await user.click(screen.getByRole('button', { name: /Load: Handbook rent/ }));
+    await user.click(screen.getByRole('button', { name: /Load: The café's rent/ }));
     expect(within(resultRegion()).getByText('Acceptable: between 5% and 10%')).toBeInTheDocument();
   });
 

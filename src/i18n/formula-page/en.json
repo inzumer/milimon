@@ -1,7 +1,7 @@
 {
   "index": {
     "title": "Formulas",
-    "intro": "Every calculation in the handbook, explained step by step, with a calculator to practice with your own numbers.",
+    "intro": "The key calculations of restaurant management, explained step by step, with a calculator to practice with your own numbers.",
     "open": "See formula and calculator"
   },
   "groups": {
@@ -24,8 +24,7 @@
   "notes": {
     "tip": "Tip",
     "common-mistake": "Common mistake",
-    "rounding": "Rounding",
-    "manual-difference": "Difference with the handbook"
+    "rounding": "Rounding"
   },
   "breadcrumbs": {
     "label": "You are here"

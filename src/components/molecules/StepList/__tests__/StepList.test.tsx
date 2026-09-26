@@ -6,7 +6,7 @@ describe('StepList', () => {
     render(
       <StepList
         steps={[
-          { id: 'rent-share', values: { rent: 41_000, rentShare: 5.2 } },
+          { id: 'rent-share', values: { rent: 60_000, rentShare: 5.42 } },
           { id: 'unknown-step', values: {} },
         ]}
         templates={{ 'rent-share': '{rent} → {rentShare}' }}
@@ -15,7 +15,7 @@ describe('StepList', () => {
       />,
     );
     const items = screen.getAllByRole('listitem');
-    expect(items[0]).toHaveTextContent('$41,000.00 → 5.2%');
+    expect(items[0]).toHaveTextContent('$60,000.00 → 5.42%');
     expect(items[1]).toHaveTextContent('unknown-step');
   });
 });
