@@ -1,8 +1,8 @@
 {
-  "name": "milimon-cost-lab",
+  "name": "milimon",
   "version": "1.3.0",
   "private": true,
-  "description": "Milimon Cost Lab — calculadora y manual de estudio de costos, desechos y mermas en gastronomía",
+  "description": "Milimon — calculadora y manual de estudio de costos, desechos y mermas en gastronomía",
   "license": "UNLICENSED",
   "author": "Nahuel Zamuner <inzumer@gmail.com>",
   "type": "module",

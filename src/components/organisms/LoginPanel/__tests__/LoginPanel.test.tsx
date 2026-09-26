@@ -86,9 +86,9 @@ describe('LoginPanel', () => {
   it('should render Google’s button and the Facebook button with the legal links', async () => {
     const { renderPanel, renderGoogle } = setup();
     renderPanel();
-    expect(
-      await screen.findByRole('button', { name: labels['continue-with-facebook'] }),
-    ).toBeInTheDocument();
+    const facebook = await screen.findByRole('button', { name: labels['continue-with-facebook'] });
+    // Decorative Facebook logo before the text; the accessible name stays the text.
+    expect(facebook.querySelector('img')).toHaveAttribute('alt', '');
     await vi.waitFor(() => expect(renderGoogle).toHaveBeenCalled());
     expect(renderGoogle).toHaveBeenCalledWith(
       expect.any(HTMLElement),

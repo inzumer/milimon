@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       SITE_URL: https://inzumer.github.io
-      BASE_PATH: /milimon-cost-lab
+      BASE_PATH: /milimon
       # Public by design (they end up in the static bundle); set them as repository variables.
       PUBLIC_GTM_ID: ${{ vars.PUBLIC_GTM_ID }}
       PUBLIC_API_URL: ${{ vars.PUBLIC_API_URL }}

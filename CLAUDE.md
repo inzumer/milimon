@@ -4,7 +4,7 @@ Guidance for Claude Code (and any other AI coding agent) working in this reposit
 
 ## Project
 
-**Milimon Cost Lab** (`milimon-cost-lab`): a bilingual (`/es`, `/en`) study manual and set of
+**Milimon** (`milimon`): a bilingual (`/es`, `/en`) study manual and set of
 calculators for food cost, waste (desechos) and cooking loss (mermas) in gastronomy.
 
 - Master plan and decisions: [docs/PLAN.md](./docs/PLAN.md). Architecture decisions: [docs/adr](./docs/adr).
@@ -45,11 +45,14 @@ Key commands (Node from `.nvmrc`, pnpm from `packageManager`):
 - **Placement**: every UI piece lives in `src/components` (atoms / molecules / organisms),
   calculator islands included (organisms); hooks in `src/hooks`, pure helpers and formulas in `src/utils`,
   tunable values in `src/constants`, external integrations (API, GTM, sign-in SDKs) in `src/services`.
+- **Text**: headings, paragraphs and inline text use the ui-library `RichText` (`variant` h1–h6,
+  s1–s4, p1–p4; `as` for another element), in `.tsx` and `.astro` alike, never bare `<p>`/`<h*>`.
+  Images use `astro:assets` in `.astro` and the ui-library `Image` in React.
 - **Naming**: React components in PascalCase folders; `.astro` files, content folders, slugs and
   i18n keys in kebab-case.
 - **Theming**: colors only via CSS variables (`src/styles/theme.css`); light and dark mode must both work.
 - **Layout**: mobile-first; one layout up to 1024px, centered container above.
-- **Base path**: the site is served under `/milimon-cost-lab` on GitHub Pages. Build internal URLs
+- **Base path**: the site is served under `/milimon` on GitHub Pages. Build internal URLs
   with `localizedPath`/`withBase` (never hard-coded `/es/...` or `/favicon.ico`).
 - **Security**: a strict Content-Security-Policy (hash-only scripts) is generated at build time
   (`security.csp` in `astro.config.mjs`); a new external script or API origin must be added there.

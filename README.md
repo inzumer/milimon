@@ -1,4 +1,4 @@
-# Milimon Cost Lab
+# Milimon
 
 Manual de estudio y calculadoras de costos, desechos y mermas en gastronomía. Bilingüe
 (`/es`, `/en`), mobile-first, con modo claro y oscuro.
@@ -46,20 +46,20 @@ pnpm dev          # http://localhost:4321 → redirige a /es
 
 ## Deploy
 
-El sitio es estático y se publica en **GitHub Pages**: <https://inzumer.github.io/milimon-cost-lab/>.
+El sitio es estático y se publica en **GitHub Pages**: <https://inzumer.github.io/milimon/>.
 El workflow `.github/workflows/pages.yml` compila y despliega cada push a `main` (es decir, cada
 release). Las variables `PUBLIC_*` se cargan como variables del repositorio (Settings → Secrets and
 variables → Actions → Variables). La API de cuentas se despliega aparte, en Render (ver su repo).
 
 Variables de entorno (ver `.env.example`):
 
-| Variable                                             | Para qué                                                                                                                           |
-| ---------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| `SITE_URL` / `BASE_PATH`                             | Origen y ruta base del sitio (`https://inzumer.github.io` + `/milimon-cost-lab`): canónicas, `hreflang`, sitemap y Open Graph      |
-| `PUBLIC_GTM_ID`                                      | Contenedor de Google Tag Manager (`GTM-…`). Vacío = sin analítica ni banner de cookies                                             |
-| `PUBLIC_API_URL`                                     | URL de la API de cuentas ([api-milimon-cost-lab](https://github.com/inzumer/api-milimon-cost-lab)). Vacío = cuentas no disponibles |
-| `PUBLIC_API_KEY` / `PUBLIC_API_APP_ID`               | Identificación del cliente ante la API (públicas por diseño)                                                                       |
-| `PUBLIC_GOOGLE_CLIENT_ID` / `PUBLIC_FACEBOOK_APP_ID` | Botones de login; cada uno aparece solo si está configurado                                                                        |
+| Variable                                             | Para qué                                                                                                             |
+| ---------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
+| `SITE_URL` / `BASE_PATH`                             | Origen y ruta base del sitio (`https://inzumer.github.io` + `/milimon`): canónicas, `hreflang`, sitemap y Open Graph |
+| `PUBLIC_GTM_ID`                                      | Contenedor de Google Tag Manager (`GTM-…`). Vacío = sin analítica ni banner de cookies                               |
+| `PUBLIC_API_URL`                                     | URL de la API de cuentas ([api-milimon](https://github.com/inzumer/api-milimon)). Vacío = cuentas no disponibles     |
+| `PUBLIC_API_KEY` / `PUBLIC_API_APP_ID`               | Identificación del cliente ante la API (públicas por diseño)                                                         |
+| `PUBLIC_GOOGLE_CLIENT_ID` / `PUBLIC_FACEBOOK_APP_ID` | Botones de login; cada uno aparece solo si está configurado                                                          |
 
 Para activar el login con Google y Facebook, seguí [docs/ACCOUNTS.md](docs/ACCOUNTS.md).
 

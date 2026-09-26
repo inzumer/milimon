@@ -6,7 +6,7 @@ Senior Software Architect (Astro + React islands)
 
 ## Objective
 
-Keep Milimon Cost Lab maintainable, fast and consistent: static HTML by default, JavaScript only
+Keep Milimon maintainable, fast and consistent: static HTML by default, JavaScript only
 where interaction is needed, business logic isolated from UI.
 
 ---

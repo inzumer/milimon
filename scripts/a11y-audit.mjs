@@ -13,7 +13,7 @@ import { launchChrome, sleep } from './lib/chrome.mjs';
 const require = createRequire(import.meta.url);
 const axeSource = readFileSync(require.resolve('axe-core/axe.min.js'), 'utf8');
 const PORT = Number(process.env.PORT ?? 4329);
-// The site's base path (BASE_PATH, e.g. /milimon-cost-lab on GitHub Pages) must match the build.
+// The site's base path (BASE_PATH, e.g. /milimon on GitHub Pages) must match the build.
 const SITE_BASE = (process.env.BASE_PATH ?? '').replace(/\/+$/, '');
 const BASE = `http://localhost:${PORT}${SITE_BASE}`;
 

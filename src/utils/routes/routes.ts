@@ -16,7 +16,7 @@ export const ROUTES = {
 export type RouteName = keyof typeof ROUTES;
 
 /**
- * Where the site is served from: `/` locally, `/milimon-cost-lab` on GitHub Pages (Astro's
+ * Where the site is served from: `/` locally, `/milimon` on GitHub Pages (Astro's
  * `base`). Every internal URL goes through `withBase`.
  */
 export const SITE_BASE = (import.meta.env.BASE_URL ?? '/').replace(/\/+$/, '');
@@ -24,11 +24,11 @@ export const SITE_BASE = (import.meta.env.BASE_URL ?? '/').replace(/\/+$/, '');
 const join = (...parts: string[]): string =>
   `/${parts.filter((part) => part.length > 0).join('/')}`;
 
-/** Prefixes a root-relative path with the site base: `/og/og-es.png` → `/milimon-cost-lab/og/og-es.png`. */
+/** Prefixes a root-relative path with the site base: `/og/og-es.png` → `/milimon/og/og-es.png`. */
 export const withBase = (path: string, base: string = SITE_BASE): string =>
   `${base}${path.startsWith('/') ? path : `/${path}`}`;
 
-/** Removes the site base from a pathname: `/milimon-cost-lab/es/learn` → `/es/learn`. */
+/** Removes the site base from a pathname: `/milimon/es/learn` → `/es/learn`. */
 export const stripBase = (pathname: string, base: string = SITE_BASE): string =>
   base && (pathname === base || pathname.startsWith(`${base}/`))
     ? pathname.slice(base.length) || '/'

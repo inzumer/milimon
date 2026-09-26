@@ -1,6 +1,6 @@
 {
   "title": "Privacy",
-  "description": "What data Milimon Cost Lab keeps, where it stays, how to change your analytics choice and how to delete it.",
+  "description": "What data Milimon keeps, where it stays, how to change your analytics choice and how to delete it.",
   "updated": "Last updated: September 2026",
   "sections": {
     "on-device": {
@@ -36,7 +36,7 @@
       "heading": "How to delete your data",
       "paragraphs": [
         "Open “My account” (from the menu), choose “Delete my account” and confirm. Your profile, saved calculations and user are deleted right away.",
-        "If you signed in with Facebook, you can also remove Milimon Cost Lab's access from your Facebook settings (Settings & privacy → Settings → Apps and websites). Removing it there doesn't delete your Milimon Cost Lab account: use the previous step for that.",
+        "If you signed in with Facebook, you can also remove Milimon's access from your Facebook settings (Settings & privacy → Settings → Apps and websites). Removing it there doesn't delete your Milimon account: use the previous step for that.",
         "Data saved on this device (without an account) is deleted from your browser settings (site data)."
       ]
     }
