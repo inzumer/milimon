@@ -228,3 +228,7 @@ Kubo
 kubocuisine
 suscriptos
 TACC
+isotipo
+logotipo
+carrusel
+autoplay
