@@ -104,6 +104,7 @@ export default defineConfig({
   output: 'static',
   trailingSlash: 'never',
   build: { format: 'file' },
+  prefetch: { prefetchAll: true, defaultStrategy: 'hover' },
   security: { csp },
   integrations: [
     react(),
