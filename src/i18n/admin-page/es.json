@@ -1,0 +1,57 @@
+{
+  "title": "Administración",
+  "description": "Gestión del contenido del sitio y de los roles de las cuentas.",
+  "loading": "Cargando…",
+  "unavailable": "Las cuentas todavía no están disponibles.",
+  "signed-out": "Iniciá sesión con una cuenta de administración para entrar.",
+  "sign-in": "Iniciar sesión",
+  "forbidden": "Tu cuenta no tiene acceso a esta sección.",
+  "error": "No se pudo cargar. Probá de nuevo.",
+  "retry": "Reintentar",
+  "content": {
+    "title": "Contenido",
+    "description": "Recetas, blog, \"Sobre mí\" y las secciones del sitio.",
+    "soon": "El editor de contenido llega junto con el deploy oficial en el dominio propio."
+  },
+  "users": {
+    "title": "Usuarios y roles",
+    "search-label": "Buscar cuentas",
+    "search-placeholder": "Nombre o email (ej.: milagros)",
+    "search": "Buscar",
+    "name": "Nombre",
+    "email": "Email",
+    "role": "Rol",
+    "since": "Alta",
+    "you": "(vos)",
+    "empty": "No hay cuentas que coincidan.",
+    "page": "Página {page} de {pages}",
+    "previous": "Anterior",
+    "next": "Siguiente",
+    "role-label": "Rol de {name}"
+  },
+  "roles": {
+    "user": "Usuario",
+    "editor": "Editor",
+    "admin": "Admin"
+  },
+  "confirm": {
+    "title": "Cambiar rol",
+    "message": "¿Cambiar el rol de {name} de {from} a {to}?",
+    "confirm": "Cambiar rol",
+    "cancel": "Cancelar"
+  },
+  "results": {
+    "changed": "Listo: {name} ahora es {role}.",
+    "last-admin": "Tiene que quedar al menos una cuenta admin.",
+    "self": "No podés cambiar tu propio rol.",
+    "forbidden": "Tu cuenta ya no tiene permiso para cambiar roles.",
+    "error": "No se pudo cambiar el rol. Probá de nuevo."
+  },
+  "log": {
+    "title": "Registro de cambios",
+    "empty": "Todavía no hay cambios de rol.",
+    "entry": "{user}: de {from} a {to}",
+    "by": "por {author}",
+    "bootstrap": "asignación inicial"
+  }
+}

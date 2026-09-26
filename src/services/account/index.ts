@@ -1,9 +1,16 @@
 export {
+  ACCOUNT_ROLES,
+  ADMIN_SECTION_ROLES,
   AUTH_PROVIDERS,
+  isAccountRole,
   type AccountBackend,
+  type AccountRole,
   type AccountUser,
+  type AdminUser,
+  type AdminUserPage,
   type AuthProvider,
   type RemoteProfile,
+  type RoleChange,
 } from './account-backend';
 export {
   hasStoredSession,
@@ -19,6 +26,11 @@ export {
   type AccountSyncOptions,
   type SignInOutcome,
 } from './account-sync';
-export { createApiBackend, SessionExpiredError, type ApiBackendOptions } from './api-backend';
+export {
+  createApiBackend,
+  SessionExpiredError,
+  toAccountUser,
+  type ApiBackendOptions,
+} from './api-backend';
 export * from './providers';
 export { createSessionStore, type SessionStore, type StoredSession } from './session-store';

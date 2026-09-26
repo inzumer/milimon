@@ -35,7 +35,8 @@
     "account": "Tu cuenta",
     "signed-in-as": "Sesión iniciada como",
     "sign-out": "Cerrar sesión",
-    "signed-out-hint": "Guardá tu configuración y tus cálculos en tu cuenta."
+    "signed-out-hint": "Guardá tu configuración y tus cálculos en tu cuenta.",
+    "admin": "Administración"
   },
   "language": {
     "label": "Idioma",

@@ -13,6 +13,7 @@ const labels = {
   signIn: 'Sign in',
   signOut: 'Sign out',
   account: 'My account',
+  admin: 'Administration',
   signedOutHint: 'Keep your settings in your account.',
 };
 
@@ -33,6 +34,7 @@ const setup = (signedIn: boolean, loadSession: () => AccountSession | null = () 
       labels={labels}
       loginHref="/en/login"
       accountHref="/en/account"
+      adminHref="/en/admin"
       store={store}
       loadSession={loadSession}
     />,
@@ -86,10 +88,34 @@ describe('AccountMenuSection', () => {
         labels={labels}
         loginHref="/l"
         accountHref="/a"
+        adminHref="/adm"
         store={store}
         loadSession={() => null}
       />,
     );
     expect(screen.getByText('ada@example.com')).toBeInTheDocument();
+  });
+
+  it('should show the administration link only to editors and admins', () => {
+    for (const [role, visible] of [
+      ['user', false],
+      ['editor', true],
+      ['admin', true],
+    ] as const) {
+      const store = createSessionStore(createMemoryStorage());
+      store.write({ ...SESSION, user: { ...TEST_USER, role } });
+      const { unmount } = render(
+        <AccountMenuSection
+          labels={labels}
+          loginHref="/en/login"
+          accountHref="/en/account"
+          adminHref="/en/admin"
+          store={store}
+          loadSession={() => null}
+        />,
+      );
+      expect(screen.queryByRole('link', { name: labels.admin }) !== null).toBe(visible);
+      unmount();
+    }
   });
 });

@@ -18,6 +18,7 @@ export * from './molecules/SharePage';
 export * from './molecules/StepList';
 export * from './molecules/ThemeToggle';
 export * from './organisms/AccountPanel';
+export * from './organisms/AdminPanel';
 export * from './organisms/CalculatorPicker';
 export * from './organisms/ConsentBanner';
 export * from './organisms/FormulaCalculator';

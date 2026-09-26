@@ -116,7 +116,7 @@ export default defineConfig({
         return (
           route !== '/' &&
           !route.includes('404') &&
-          !/\/(account|history|login|recipes)$/.test(route)
+          !/\/(account|history|login|recipes|admin)$/.test(route)
         );
       },
     }),
