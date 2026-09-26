@@ -21,6 +21,18 @@ const props: SiteMenuProps = {
     darkMode: 'Modo oscuro',
     currency: 'Moneda',
   },
+  account: {
+    loginHref: '/es/login',
+    accountHref: '/es/account',
+    labels: {
+      title: 'Tu cuenta',
+      signedInAs: 'Sesión iniciada como',
+      signIn: 'Iniciar sesión',
+      signOut: 'Cerrar sesión',
+      account: 'Mi cuenta',
+      signedOutHint: 'Guardá tu configuración.',
+    },
+  },
 };
 
 const openMenu = async () => {

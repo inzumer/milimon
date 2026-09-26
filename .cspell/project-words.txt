@@ -61,6 +61,7 @@ iniciás
 intentá
 latin
 limpiala
+llevá
 maracuyá
 maître
 mergea

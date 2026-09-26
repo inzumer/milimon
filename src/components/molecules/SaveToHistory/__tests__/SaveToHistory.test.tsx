@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { FormulaCalculator } from '@calculators/FormulaCalculator';
-import { OmnesCalculator } from '@calculators/OmnesCalculator';
-import { RecipeCostingCalculator } from '@calculators/RecipeCostingCalculator';
+import { FormulaCalculator } from '@components/organisms/FormulaCalculator';
+import { OmnesCalculator } from '@components/organisms/OmnesCalculator';
+import { RecipeCostingCalculator } from '@components/organisms/RecipeCostingCalculator';
 import { getFormulaTranslation, getTranslations } from '@i18n';
 import {
   createLocalCalculationsRepository,

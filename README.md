@@ -69,8 +69,7 @@ Para activar el login con Google y Facebook, seguí [docs/ACCOUNTS.md](docs/ACCO
 src/
   pages/        rutas (.astro): /[lang]/…
   layouts/      layouts .astro
-  components/   UI reutilizable (atoms / molecules / organisms)
-  calculators/  solo las islas de calculadora
+  components/   toda la UI (atoms / molecules / organisms), calculadoras incluidas
   hooks/        estado de React (una por calculadora, borradores, moneda, tema)
   utils/        funciones puras: fórmulas + registry, cálculo, formato, tracking…
   constants/    valores ajustables

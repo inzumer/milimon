@@ -1,7 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import logo from '@assets/logo.png';
-import { ButtonLink, FeatureCard } from '@components';
+import { FeatureCard } from '@components';
 import { getTranslations } from '@i18n';
 import PageLayout from '@layouts/page-layout.astro';
 import { LOCALES, localizedPath, toLocale, trackingId } from '@utils';
@@ -29,16 +29,6 @@ const home = getTranslations(lang, 'home');
     />
     <h1 class="text-5xl">{common['app-name']}</h1>
     <p class="max-w-xl text-lg text-[var(--text-secondary)]">{home.hero.subtitle}</p>
-    <div class="flex flex-col items-center gap-2">
-      <ButtonLink
-        id={trackingId('home', 'link', 'sign-in')}
-        href={localizedPath(lang, 'login')}
-        variant="secondary"
-      >
-        {common.nav['sign-in']}
-      </ButtonLink>
-      <p class="text-sm text-[var(--text-secondary)]">{home.hero['sign-in-hint']}</p>
-    </div>
   </section>
 
   <section class="flex flex-col gap-6">
@@ -67,6 +57,13 @@ const home = getTranslations(lang, 'home');
         cta={home['learn-card'].cta}
         href={localizedPath(lang, 'learn')}
         ctaId={trackingId('home', 'link', 'learn')}
+      />
+      <FeatureCard
+        title={home['account-card'].title}
+        description={home['account-card'].description}
+        cta={home['account-card'].cta}
+        href={localizedPath(lang, 'login')}
+        ctaId={trackingId('home', 'link', 'sign-in')}
       />
     </div>
   </section>
