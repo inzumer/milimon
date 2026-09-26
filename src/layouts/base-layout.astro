@@ -98,6 +98,12 @@ const og = common.og[ogSection];
     <link rel="icon" type="image/png" sizes="16x16" href={withBase('/favicon-16x16.png')} />
     <link rel="apple-touch-icon" sizes="180x180" href={withBase('/apple-touch-icon.png')} />
     <link rel="manifest" href={withBase('/site.webmanifest')} />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title={`Blog · ${common['app-name']}`}
+      href={new URL(withBase(`/${lang}/blog/rss.xml`), site).href}
+    />
     <link rel="preload" href={nunitoLatin} as="font" type="font/woff2" crossorigin />
     <link rel="preload" href={lobsterLatin} as="font" type="font/woff2" crossorigin />
     <script is:inline set:html={themeScript(SETTINGS_STORAGE_KEY)}></script>

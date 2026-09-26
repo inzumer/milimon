@@ -12,6 +12,57 @@ estrellas sean el toque cálido y todo lo demás acompañe con calma.
 - [La Tiendita di](https://latienditadi.com/guias-de-viaje/): contenido por secciones con imagen
   destacada y enlaces cruzados (ver [03](./03-contenido-y-redes.md)).
 
+- Pinterest, apps de recetas ([1](https://pin.it/1Vsh0PpDJ), [2](https://pin.it/1OXAWxsuV)): referencia
+  de UI y color para la sección de recetas y el modo oscuro (detalle abajo).
+- Pinterest, app de café ([3](https://pin.it/4Cht8v17L)): referencia del **modo claro** y del uso de
+  imágenes (detalle abajo).
+
+## Recetas: referencia de Pinterest
+
+**Paleta** (aproximada, tomada de las capturas): marrón chocolate de fondo `#2B1B14`, superficies
+`#3A271E`, acento naranja terracota `#F58A4B`, durazno claro `#EFA27A` y texto crema `#F5EDE6`.
+Nuestro marrón oscuro actual (`#2F201B`) ya es casi el mismo; la propuesta es **sumar una escala
+"terracota"** a los tokens como acento de la sección de recetas (o secundario del sitio) y dejar el
+amarillo para la marca y los milicitos. Se decide con un moodboard y pruebas de contraste AA.
+
+**Modo claro** (referencia 3): fondo crema/marfil `~#F6E8D7` con superficies apenas más claras
+`~#FBF3EA`, el mismo acento naranja `~#F29A3E` en botones tipo píldora y texto marrón oscuro
+`~#3B2A20`. Nuestro fondo claro actual (`#FDF7F1`) ya es crema: el cambio es sumar el naranja.
+
+| Modo   | Fondo                | Superficies       | Acento               | Texto                |
+| ------ | -------------------- | ----------------- | -------------------- | -------------------- |
+| Claro  | crema `~#F6E8D7`     | marfil `~#FBF3EA` | naranja `~#F29A3E`   | chocolate `~#3B2A20` |
+| Oscuro | chocolate `~#2B1B14` | `~#3A271E`        | terracota `~#F58A4B` | crema `~#F5EDE6`     |
+
+El amarillo actual queda para la marca y los milicitos (o se reemplaza por el naranja si el
+moodboard lo confirma); siempre validando contraste AA en los dos modos.
+
+**Uso de imágenes** (referencia 3): fotos del plato o el producto **vistas desde arriba**,
+recortadas sobre fondo liso del color de la página, **centradas** y con una **sombra suave**; mucho
+aire alrededor y una sola imagen protagonista por pantalla. En modo oscuro, las fotos a sangre con
+degradado (referencias 1 y 2). La guía completa (luz, ángulos, distancia, foco, fondos, formatos
+y edición) está en [11 · Guía de fotografía](./11-guia-de-fotografia.md).
+
+**Componentes que inspira**
+
+- **Card vertical con imagen** a sangre, **degradado oscuro** de abajo hacia arriba para el título y
+  la bajada, y **botones flotantes** (guardar, compartir) sobre la foto.
+- **Carrusel** de cards (recetas destacadas, categorías, últimas del blog): nuevo componente
+  `Carousel` en `@inzumer/ui-library` con scroll-snap, botones anterior/siguiente, arrastre táctil,
+  teclado, `aria-roledescription="carrusel"`, sin autoplay por defecto y respetando
+  `prefers-reduced-motion`.
+- **Chips de filtro** (ver [03](./03-contenido-y-redes.md)).
+- **Ficha de receta**: foto grande con el título encima, datos clave en chips (tiempo, porciones,
+  costo por porción, milicitos), **ingredientes en grilla con íconos**, **pasos para ir tildando**,
+  galería y un botón **"Empezar a cocinar"** que abre un modo paso a paso con la pantalla siempre
+  encendida (Wake Lock API).
+- **Carga de recetas en pasos** (título → información → ingredientes → pasos → opcionales): útil
+  como guía para diseñar los formularios del CMS (ver [02](./02-cms-y-emails.md)).
+
+**Logos**: con la paleta nueva conviene revisar el logo. Idea: mantener la ilustración de Milagros
+para "Sobre mí" y las redes, y sumar un **isotipo simple** (la estrella de los milicitos o una "M"
+con gorro) y un **logotipo tipográfico** que funcionen chicos, en favicon y sobre fotos.
+
 ## Principios
 
 - **Aire**: más espacio en blanco entre secciones y dentro de las cards; menos elementos por

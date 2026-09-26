@@ -534,11 +534,20 @@ Ideas y análisis de cada tema en [docs/suggestions](./suggestions/README.md).
 - **Dirección visual** más fina y editorial, conservando la ilustración y los milicitos. Ver
   [09](./suggestions/09-direccion-visual.md) y animaciones en [06](./suggestions/06-animaciones.md).
 
+- **Recetas con UI de referencia** (Pinterest): cards verticales con imagen y degradado, botones
+  flotantes, carrusel, chips de filtro, ficha de receta con modo "Empezar a cocinar"; evaluar una
+  escala de color terracota y un isotipo nuevo. Ver [09](./suggestions/09-direccion-visual.md).
+
+- **Fotografía**: aplicar la [guía de fotografía](./suggestions/11-guia-de-fotografia.md) (luz,
+  ángulos, distancia y foco, fondos, formatos, edición) y armar un preset de edición común.
+
 **Técnico**
 
 - Renombrar las carpetas locales (`milimon`, `api-milimon`) con VS Code, Codex, Docker y
   `pnpm dev` cerrados.
 - `.gitattributes` en `ui-library` (finales de línea).
+- **Librería de componentes**: `Carousel` accesible y `MediaCard` (card con imagen, degradado y
+  acciones flotantes) en `@inzumer/ui-library`.
 - Tests e2e con Playwright y auditoría a11y en CI. Ver [08](./suggestions/08-calidad-y-tests.md).
 
 ## 11. Fases
