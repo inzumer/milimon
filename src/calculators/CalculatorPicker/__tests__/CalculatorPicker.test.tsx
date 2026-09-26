@@ -1,6 +1,5 @@
 import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { FORMULA_GROUPS, formulasByGroup } from '@domain/registry';
 import {
   getFormulaTranslation,
   getTranslations,
@@ -8,6 +7,7 @@ import {
   toCalculatorText,
 } from '@i18n';
 import { setAnalyticsSink, type Locale } from '@utils';
+import { FORMULA_GROUPS, formulasByGroup } from '@utils/formulas';
 import { CalculatorPicker } from '../CalculatorPicker';
 
 const groupsFor = (lang: Locale) =>

@@ -1,11 +1,11 @@
 import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { parsePriceList } from '@hooks/useOmnesCalculator';
 import { getFormulaTranslation, getTranslations } from '@i18n';
 import { createLocalCalculationsRepository, createLocalSettingsRepository } from '@repositories';
 import { createMemoryStorage } from '@test/memory-storage';
 import type { Locale } from '@utils';
 import { OmnesCalculator } from '../OmnesCalculator';
-import { parsePriceList } from '../useOmnesCalculator';
 
 const setup = (lang: Locale = 'es') => {
   const storage = createMemoryStorage();

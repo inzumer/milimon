@@ -17,7 +17,7 @@
     "<BUILTIN_MODULES>",
     "<THIRD_PARTY_MODULES>",
     "^@inzumer/(.*)$",
-    "^(@components|@constants|@calculators|@domain|@repositories|@services|@hooks|@utils|@i18n|@layouts|@assets|@styles|@test)(/.*)?$",
+    "^(@components|@constants|@calculators|@repositories|@services|@hooks|@utils|@i18n|@layouts|@assets|@styles|@test)(/.*)?$",
     "^[./]"
   ],
   "plugins": [

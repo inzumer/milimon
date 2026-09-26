@@ -13,7 +13,8 @@ export default getViteConfig({
       provider: 'v8',
       reporter: ['text', 'lcov'],
       include: ['src/**/*.{ts,tsx}'],
-      exclude: ['src/test/**', 'src/**/index.ts', 'src/**/*.d.ts', 'src/env.d.ts'],
+      // i18n is content plumbing (loaders and schemas), checked by the build rather than by tests.
+      exclude: ['src/test/**', 'src/i18n/**', 'src/**/index.ts', 'src/**/*.d.ts', 'src/env.d.ts'],
       thresholds: {
         lines: 90,
         branches: 90,

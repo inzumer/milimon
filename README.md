@@ -66,13 +66,15 @@ Para activar el login con Google y Facebook, seguí [docs/ACCOUNTS.md](docs/ACCO
 src/
   pages/        rutas (.astro): /[lang]/…
   layouts/      layouts .astro
-  components/   UI reutilizable (atoms / molecules / organisms / templates)
-  calculators/  islas de React, una por calculadora
-  domain/       fórmulas puras + registry
+  components/   UI reutilizable (atoms / molecules / organisms)
+  calculators/  solo las islas de calculadora
+  hooks/        estado de React (una por calculadora, borradores, moneda, tema)
+  utils/        funciones puras: fórmulas + registry, cálculo, formato, tracking…
+  constants/    valores ajustables
   repositories/ persistencia (configuración, borradores) detrás de interfaces
   services/     integraciones externas (Google Analytics, cuentas con Supabase)
   i18n/         traducciones en carpetas kebab-case: <carpeta>/{es,en}.json
-  hooks/ utils/ styles/ assets/ test/
+  styles/ assets/ test/
 supabase/
   migrations/   tablas y políticas RLS de las cuentas
 docs/

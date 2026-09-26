@@ -1,10 +1,10 @@
 import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import type { FormulaId } from '@domain/registry';
 import { getFormulaTranslation, getTranslations } from '@i18n';
 import { createLocalCalculationsRepository, createLocalSettingsRepository } from '@repositories';
 import { createMemoryStorage } from '@test/memory-storage';
 import { setAnalyticsSink, type Locale } from '@utils';
+import type { FormulaId } from '@utils/formulas';
 import { FormulaCalculator } from '../FormulaCalculator';
 
 const plain = (text: string | null) => (text ?? '').replace(/[  ]/g, ' ');

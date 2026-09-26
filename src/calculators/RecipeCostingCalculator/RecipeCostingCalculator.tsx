@@ -1,14 +1,14 @@
 import { useId } from 'react';
 import { Button } from '@inzumer/ui-library';
-import { SaveToHistory } from '@calculators/shared/SaveToHistory';
+import { IngredientCard } from '@components/molecules/IngredientCard';
 import { NumberField } from '@components/molecules/NumberField';
+import { SaveToHistory } from '@components/molecules/SaveToHistory';
+import { RecipeCostingResult } from '@components/organisms/RecipeCostingResult';
+import { RECIPE_EXAMPLE, useRecipeCostingCalculator } from '@hooks/useRecipeCostingCalculator';
 import { formulaText, type CalculatorText } from '@i18n/formula-text';
 import type { Translations } from '@i18n/translations';
 import type { CalculationsRepository, HistoryRepository, SettingsRepository } from '@repositories';
 import { localizedPath, trackingId, type Locale } from '@utils';
-import { IngredientCard } from './IngredientCard';
-import { RecipeCostingResult } from './RecipeCostingResult';
-import { RECIPE_EXAMPLE, useRecipeCostingCalculator } from './useRecipeCostingCalculator';
 
 /** Tracking scope: the formula id. */
 const SCOPE = 'recipe-costing';

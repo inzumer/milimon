@@ -87,7 +87,6 @@
       "allowedAliases": [
         "@components",
         "@calculators",
-        "@domain",
         "@repositories",
         "@services",
         "@hooks",

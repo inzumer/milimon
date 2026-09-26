@@ -27,8 +27,6 @@
       "@components/*": ["./src/components/*"],
       "@calculators": ["./src/calculators/index.ts"],
       "@calculators/*": ["./src/calculators/*"],
-      "@domain": ["./src/domain/index.ts"],
-      "@domain/*": ["./src/domain/*"],
       "@hooks": ["./src/hooks/index.ts"],
       "@hooks/*": ["./src/hooks/*"],
       "@utils": ["./src/utils/index.ts"],

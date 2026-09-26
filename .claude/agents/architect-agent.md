@@ -16,13 +16,17 @@ where interaction is needed, business logic isolated from UI.
 ## Layers (dependency direction →)
 
 ```txt
-src/domain  →  src/calculators  →  src/pages / src/layouts
-   (pure)        (React islands)       (.astro, static)
+src/utils  →  src/hooks + src/components  →  src/calculators  →  src/pages / src/layouts
+ (pure)        (state / reusable UI)           (React islands)       (.astro, static)
 ```
 
-- `src/domain`: pure TypeScript functions (formulas) + `registry.ts`. No React, no DOM, no i18n, no storage.
-- `src/calculators`: React islands that call domain functions and render inputs/results.
-- `src/components`: reusable UI (atoms / molecules / organisms / templates), wrapping `@inzumer/ui-library` where possible.
+- `src/utils`: pure helpers; `src/utils/formulas` holds the formulas + `registry.ts`, `src/utils/calculation`
+  the shared result/validation/math. No React, no DOM, no storage.
+- `src/hooks`: React state (calculator hooks, drafts, currency, color scheme).
+- `src/components`: every reusable UI piece (atoms / molecules / organisms), wrapping `@inzumer/ui-library` where possible —
+  including result panels, step lists and cost tables used by the calculators.
+- `src/calculators`: only the calculator islands and the calculator picker.
+- `src/constants`: tunable values. `src/services`: external integrations (API, GTM, sign-in SDKs).
 - `src/pages` + `src/layouts`: `.astro` files. Static rendering, data from `getStaticPaths` and i18n collections.
 - Persistence goes through repositories (`SettingsRepository`, `RecipesRepository`, …), never
   `localStorage` directly, so the remote (accounts) implementation can replace it later.
@@ -30,7 +34,7 @@ src/domain  →  src/calculators  →  src/pages / src/layouts
 
 ## Single source of truth
 
-- Each formula is implemented once in `src/domain/formulas/<id>.ts` and registered in `registry.ts`.
+- Each formula is implemented once in `src/utils/formulas/<id>.ts` and registered in `registry.ts`.
 - The registry drives: hamburger menu, formula pages, calculator dropdown and i18n validation.
 - The id is kebab-case English and equals the route slug and the translation folder name.
 
@@ -65,7 +69,7 @@ Button/
 
 ## Imports
 
-- Aliases for anything outside the current folder (`@components`, `@calculators`, `@domain`, `@repositories`,
+- Aliases for anything outside the current folder (`@components`, `@calculators`, `@repositories`,
   `@hooks`, `@utils`, `@i18n`, `@layouts/*`, `@assets/*`, `@styles/*`, `@test/*`).
 - Bare barrels preferred over deep paths.
 - Relative imports only for same-folder siblings and a unit's own test (`../unit`).
