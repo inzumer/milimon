@@ -1,5 +1,6 @@
 import { Select } from '@inzumer/ui-library';
-import { CURRENCIES, useSettingsStore } from '@stores';
+import { CURRENCIES } from '@constants';
+import { useSettingsStore } from '@stores';
 import { track, type Locale } from '@utils';
 
 export interface CurrencySelectProps {
