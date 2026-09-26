@@ -4,6 +4,7 @@
   "panel": {
     "intro": "You don't need an account to use the calculator: with one, your settings and calculations follow you to any device.",
     "continue-with-facebook": "Continue with Facebook",
+    "facebook-soon": "Signing in with Facebook will be available soon.",
     "signing-in": "Signing in…",
     "waking-up": "The server is waking up (it can take up to a minute the first time)…",
     "error": "We couldn't sign you in. Please try again in a few minutes.",

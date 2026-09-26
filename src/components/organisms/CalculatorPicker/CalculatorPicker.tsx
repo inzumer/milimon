@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { Select } from '@inzumer/ui-library';
+import { RichText, Select } from '@inzumer/ui-library';
 import { ButtonLink } from '@components/atoms/ButtonLink';
 import { FormulaCalculator } from '@components/organisms/FormulaCalculator';
 import { OmnesCalculator } from '@components/organisms/OmnesCalculator';
@@ -120,22 +120,26 @@ export const CalculatorPicker = ({
       </Select>
 
       <div aria-live="polite">
-        {state.status === 'idle' && <p className="text-[var(--text-secondary)]">{page.empty}</p>}
+        {state.status === 'idle' && (
+          <RichText className="text-[var(--text-secondary)]">{page.empty}</RichText>
+        )}
         {state.status === 'loading' && (
-          <p className="text-[var(--text-secondary)]">{page.loading}</p>
+          <RichText className="text-[var(--text-secondary)]">{page.loading}</RichText>
         )}
         {state.status === 'error' && (
-          <p role="alert" className="text-[var(--border-error)]">
+          <RichText role="alert" className="text-[var(--border-error)]">
             {page['load-error']}
-          </p>
+          </RichText>
         )}
       </div>
 
       {state.status === 'ready' && (
         <section key={state.id} aria-label={state.text.title} className="flex flex-col gap-6">
           <div className="flex flex-col gap-2">
-            <h2 className="text-3xl">{state.text.title}</h2>
-            <p className="text-[var(--text-secondary)]">{state.text.summary}</p>
+            <RichText variant="h2" bold className="font-display text-3xl">
+              {state.text.title}
+            </RichText>
+            <RichText className="text-[var(--text-secondary)]">{state.text.summary}</RichText>
             <ButtonLink
               id={trackingId('calculator', 'link', 'how-it-works', state.id)}
               href={localizedPath(lang, 'formulas', state.id)}

@@ -1,5 +1,5 @@
 ---
-import { Breadcrumbs } from '@inzumer/ui-library';
+import { Breadcrumbs, RichText } from '@inzumer/ui-library';
 import {
   ButtonLink,
   FormulaCalculator,
@@ -41,11 +41,15 @@ const section = (key: string) => `section-${key}`;
 
   <article class="flex flex-col gap-12">
     <header class="flex flex-col gap-3">
-      <p class="text-sm font-bold tracking-wide text-[var(--text-link)] uppercase">
+      <RichText variant="p3" className="font-bold tracking-wide text-[var(--text-link)] uppercase">
         {page.groups[formula.group]}
-      </p>
-      <h1 class="text-5xl">{text.title}</h1>
-      <p class="max-w-2xl text-lg text-[var(--text-secondary)]">{text.summary}</p>
+      </RichText>
+      <RichText variant="h1" bold className="font-display text-5xl">
+        {text.title}
+      </RichText>
+      <RichText variant="p1" className="max-w-2xl text-[var(--text-secondary)]">
+        {text.summary}
+      </RichText>
       <ButtonLink
         id={trackingId(formula.id, 'link', 'try-calculator')}
         href={`#${section('calculator')}`}
@@ -56,18 +60,18 @@ const section = (key: string) => `section-${key}`;
     </header>
 
     <section aria-labelledby={section('what')} class="flex flex-col gap-4">
-      <h2 id={section('what')} class="text-3xl">
+      <RichText variant="h2" bold id={section('what')} className="font-display text-3xl">
         {page.sections.what}
-      </h2>
+      </RichText>
       {study.what.map((paragraph) => (
-        <p class="max-w-3xl leading-relaxed">{paragraph}</p>
+        <RichText className="max-w-3xl leading-relaxed">{paragraph}</RichText>
       ))}
     </section>
 
     <section aria-labelledby={section('formula')} class="flex flex-col gap-4">
-      <h2 id={section('formula')} class="text-3xl">
+      <RichText variant="h2" bold id={section('formula')} className="font-display text-3xl">
         {page.sections.formula}
-      </h2>
+      </RichText>
       <ul class="flex flex-col gap-2 rounded-xl border-2 border-[rgb(var(--color-primary-500))] bg-[var(--surface-secondary)] p-5 text-lg font-semibold">
         {study.formula.map((line) => (
           <li>{line}</li>
@@ -76,9 +80,9 @@ const section = (key: string) => `section-${key}`;
     </section>
 
     <section aria-labelledby={section('variables')} class="flex flex-col gap-4">
-      <h2 id={section('variables')} class="text-3xl">
+      <RichText variant="h2" bold id={section('variables')} className="font-display text-3xl">
         {page.sections.variables}
-      </h2>
+      </RichText>
       <dl class="grid gap-4 lg:grid-cols-2">
         {study.variables.map((variable) => (
           <div class="rounded-lg border border-[var(--border-default)] p-4">
@@ -90,9 +94,9 @@ const section = (key: string) => `section-${key}`;
     </section>
 
     <section aria-labelledby={section('steps')} class="flex flex-col gap-4">
-      <h2 id={section('steps')} class="text-3xl">
+      <RichText variant="h2" bold id={section('steps')} className="font-display text-3xl">
         {page.sections.steps}
-      </h2>
+      </RichText>
       <ol class="flex max-w-3xl list-decimal flex-col gap-2 pl-6 marker:font-bold">
         {study.steps.map((step) => (
           <li class="pl-1 leading-relaxed">{step}</li>
@@ -101,23 +105,25 @@ const section = (key: string) => `section-${key}`;
     </section>
 
     <section aria-labelledby={section('examples')} class="flex flex-col gap-4">
-      <h2 id={section('examples')} class="text-3xl">
+      <RichText variant="h2" bold id={section('examples')} className="font-display text-3xl">
         {page.sections.examples}
-      </h2>
+      </RichText>
       {study.examples.map((example) => (
         <div class="flex flex-col gap-2 rounded-xl bg-[var(--surface-secondary)] p-5">
-          <h3 class="text-xl font-bold">{example.title}</h3>
+          <RichText variant="h3" className="text-xl font-bold">
+            {example.title}
+          </RichText>
           {example.paragraphs.map((paragraph) => (
-            <p class="leading-relaxed tabular-nums">{paragraph}</p>
+            <RichText className="leading-relaxed tabular-nums">{paragraph}</RichText>
           ))}
         </div>
       ))}
     </section>
 
     <section aria-labelledby={section('notes')} class="flex flex-col gap-4">
-      <h2 id={section('notes')} class="text-3xl">
+      <RichText variant="h2" bold id={section('notes')} className="font-display text-3xl">
         {page.sections.notes}
-      </h2>
+      </RichText>
       <StudyNotes notes={study.notes} labels={page.notes} />
     </section>
 
@@ -126,9 +132,14 @@ const section = (key: string) => `section-${key}`;
       aria-labelledby={`${section('calculator')}-title`}
       class="flex scroll-mt-24 flex-col gap-4"
     >
-      <h2 id={`${section('calculator')}-title`} class="text-3xl">
+      <RichText
+        variant="h2"
+        bold
+        id={`${section('calculator')}-title`}
+        className="font-display text-3xl"
+      >
         {page.sections.calculator}
-      </h2>
+      </RichText>
       {formula.layout === 'standard' && (
         <FormulaCalculator
           client:visible
@@ -148,9 +159,9 @@ const section = (key: string) => `section-${key}`;
 
     {related.length > 0 && (
       <nav aria-labelledby={section('related')} class="flex flex-col gap-4">
-        <h2 id={section('related')} class="text-3xl">
+        <RichText variant="h2" bold id={section('related')} className="font-display text-3xl">
           {page.sections.related}
-        </h2>
+        </RichText>
         <ul class="flex flex-col gap-2">
           {related.map((item) => (
             <li>

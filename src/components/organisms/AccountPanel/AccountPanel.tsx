@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useId, useRef, useState } from 'react';
-import { Button } from '@inzumer/ui-library';
+import { Button, RichText } from '@inzumer/ui-library';
 import { ButtonLink } from '@components/atoms/ButtonLink';
 import { MigrationPrompt } from '@components/molecules/MigrationPrompt';
 import type { Translations } from '@i18n/translations';
@@ -103,22 +103,26 @@ export const AccountPanel = ({
   };
 
   const status = (text: string) => (
-    <p role="status" className="rounded-lg bg-[var(--surface-secondary)] p-4">
+    <RichText role="status" className="rounded-lg bg-[var(--surface-secondary)] p-4">
       {text}
-    </p>
+    </RichText>
   );
 
   switch (view.kind) {
     case 'loading':
-      return <p aria-busy="true">{labels.loading}</p>;
+      return <RichText aria-busy="true">{labels.loading}</RichText>;
 
     case 'unavailable':
-      return <p className="rounded-lg bg-[var(--surface-secondary)] p-4">{unavailableLabel}</p>;
+      return (
+        <RichText className="rounded-lg bg-[var(--surface-secondary)] p-4">
+          {unavailableLabel}
+        </RichText>
+      );
 
     case 'error':
       return (
         <div className="flex flex-col items-start gap-3">
-          <p role="alert">{labels.error}</p>
+          <RichText role="alert">{labels.error}</RichText>
           <Button
             id={trackingId('account', 'button', 'retry')}
             type="button"
@@ -135,7 +139,7 @@ export const AccountPanel = ({
       return (
         <div className="flex flex-col items-start gap-4">
           {view.notice && status(view.notice)}
-          <p>{labels['signed-out-intro']}</p>
+          <RichText>{labels['signed-out-intro']}</RichText>
           <ButtonLink id={trackingId('account', 'link', 'sign-in')} href={loginHref}>
             {labels['sign-in']}
           </ButtonLink>
@@ -167,15 +171,21 @@ export const AccountPanel = ({
                 className="size-14 rounded-full"
               />
             )}
-            <p className="flex flex-col">
-              <span className="text-sm text-[var(--text-secondary)]">{labels['signed-in-as']}</span>
-              <span className="text-lg font-bold">{view.user.name ?? view.user.email}</span>
+            <RichText className="flex flex-col">
+              <RichText variant="s3" className="text-[var(--text-secondary)]">
+                {labels['signed-in-as']}
+              </RichText>
+              <RichText variant="s1" className="font-bold">
+                {view.user.name ?? view.user.email}
+              </RichText>
               {view.user.name && view.user.email && (
-                <span className="text-sm text-[var(--text-secondary)]">{view.user.email}</span>
+                <RichText variant="s3" className="text-[var(--text-secondary)]">
+                  {view.user.email}
+                </RichText>
               )}
-            </p>
+            </RichText>
           </div>
-          <p>{labels['sync-note']}</p>
+          <RichText>{labels['sync-note']}</RichText>
           <Button
             id={trackingId('account', 'button', 'sign-out')}
             type="button"
@@ -200,15 +210,15 @@ export const AccountPanel = ({
             aria-labelledby={deleteTitleId}
             className="flex flex-col gap-3 border-t border-[var(--border-default)] pt-6"
           >
-            <h2 id={deleteTitleId} className="text-3xl">
+            <RichText variant="h2" bold id={deleteTitleId} className="font-display text-3xl">
               {labels['delete-title']}
-            </h2>
-            <p>{labels['delete-description']}</p>
+            </RichText>
+            <RichText>{labels['delete-description']}</RichText>
             {confirmingDelete ? (
               <div className="flex flex-col gap-3">
-                <p role="alert" className="font-semibold">
+                <RichText role="alert" className="font-semibold">
                   {labels['delete-question']}
-                </p>
+                </RichText>
                 <div className="flex flex-col gap-3 sm:flex-row">
                   <Button
                     id={trackingId('account', 'button', 'delete-confirm')}

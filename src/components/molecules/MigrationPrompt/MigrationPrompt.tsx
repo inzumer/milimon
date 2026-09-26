@@ -1,5 +1,5 @@
 import { useId } from 'react';
-import { Button } from '@inzumer/ui-library';
+import { Button, RichText } from '@inzumer/ui-library';
 import type { Translations } from '@i18n/translations';
 import { trackingId } from '@utils';
 
@@ -23,10 +23,10 @@ export const MigrationPrompt = ({
   const titleId = useId();
   return (
     <section aria-labelledby={titleId} className="flex flex-col gap-3">
-      <h2 id={titleId} className="text-3xl">
+      <RichText variant="h2" bold id={titleId} className="font-display text-3xl">
         {labels.title}
-      </h2>
-      <p>{labels.description}</p>
+      </RichText>
+      <RichText>{labels.description}</RichText>
       <div className="flex flex-col gap-3 sm:flex-row">
         <Button
           id={trackingId(scope, 'button', 'migration-import')}
