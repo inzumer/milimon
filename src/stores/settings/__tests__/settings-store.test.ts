@@ -1,10 +1,5 @@
-import { SETTINGS_STORAGE_KEY } from '@constants';
-import {
-  CURRENCIES,
-  DEFAULT_SETTINGS,
-  sanitizeSettings,
-  useSettingsStore,
-} from '../settings-store';
+import { CURRENCIES, SETTINGS_STORAGE_KEY } from '@constants';
+import { DEFAULT_SETTINGS, sanitizeSettings, useSettingsStore } from '../settings-store';
 
 const stored = () => JSON.parse(window.localStorage.getItem(SETTINGS_STORAGE_KEY) ?? 'null');
 
@@ -65,10 +60,10 @@ describe('useSettingsStore', () => {
     expect(sanitizeSettings(null)).toStrictEqual(DEFAULT_SETTINGS);
   });
 
-  it('should accept any ISO 4217 currency code and reject anything else', () => {
-    useSettingsStore.getState().update({ currency: 'JPY' });
-    expect(useSettingsStore.getState().currency).toBe('JPY');
-    useSettingsStore.getState().update({ currency: 'yen' });
+  it('should accept only the offered currencies and fall back to pesos otherwise', () => {
+    useSettingsStore.getState().update({ currency: 'EUR' });
+    expect(useSettingsStore.getState().currency).toBe('EUR');
+    useSettingsStore.getState().update({ currency: 'MXN' });
     expect(useSettingsStore.getState().currency).toBe('ARS');
   });
 

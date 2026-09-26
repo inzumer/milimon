@@ -35,7 +35,7 @@ describe('CurrencySelect', () => {
   it('should use localStorage by default', async () => {
     const user = userEvent.setup();
     render(<CurrencySelect lang="en" label="Currency" />);
-    await user.selectOptions(screen.getByRole('combobox'), 'MXN');
-    expect(window.localStorage.getItem('milimon:settings')).toContain('"currency":"MXN"');
+    await user.selectOptions(screen.getByRole('combobox'), 'EUR');
+    expect(window.localStorage.getItem('milimon:settings')).toContain('"currency":"EUR"');
   });
 });

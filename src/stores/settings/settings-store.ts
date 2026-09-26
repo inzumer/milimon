@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { SETTINGS_STORAGE_KEY } from '@constants';
+import { CURRENCIES, DEFAULT_CURRENCY, SETTINGS_STORAGE_KEY } from '@constants';
 import { plainJsonStorage } from '@stores/persist';
 import { isLocale, type Locale } from '@utils';
 
@@ -22,12 +22,9 @@ export interface SettingsState extends Settings {
 export const DEFAULT_SETTINGS: Readonly<Settings> = {
   colorScheme: null,
   locale: null,
-  currency: 'ARS',
+  currency: DEFAULT_CURRENCY,
   analyticsConsent: null,
 };
-
-/** Currencies offered in the settings (display only; any ISO 4217 code is accepted). */
-export const CURRENCIES = ['ARS', 'USD', 'EUR', 'MXN', 'CLP', 'UYU', 'COP', 'PEN', 'BRL'] as const;
 
 const isColorScheme = (value: unknown): value is ColorScheme =>
   value === 'light' || value === 'dark';
@@ -35,8 +32,8 @@ const isColorScheme = (value: unknown): value is ColorScheme =>
 const isConsent = (value: unknown): value is AnalyticsConsent =>
   value === 'granted' || value === 'denied';
 
-const isCurrencyCode = (value: unknown): value is string =>
-  typeof value === 'string' && /^[A-Z]{3}$/.test(value);
+const isCurrency = (value: unknown): value is string =>
+  CURRENCIES.some((currency) => currency === value);
 
 /** Keeps only valid, known fields. */
 export const sanitizeSettings = (raw: unknown): Settings => {
@@ -44,7 +41,7 @@ export const sanitizeSettings = (raw: unknown): Settings => {
   return {
     colorScheme: isColorScheme(data['colorScheme']) ? data['colorScheme'] : null,
     locale: isLocale(data['locale']) ? data['locale'] : null,
-    currency: isCurrencyCode(data['currency']) ? data['currency'] : DEFAULT_SETTINGS.currency,
+    currency: isCurrency(data['currency']) ? data['currency'] : DEFAULT_SETTINGS.currency,
     analyticsConsent: isConsent(data['analyticsConsent']) ? data['analyticsConsent'] : null,
   };
 };
