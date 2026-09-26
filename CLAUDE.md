@@ -49,6 +49,10 @@ Key commands (Node from `.nvmrc`, pnpm from `packageManager`):
   i18n keys in kebab-case.
 - **Theming**: colors only via CSS variables (`src/styles/theme.css`); light and dark mode must both work.
 - **Layout**: mobile-first; one layout up to 1024px, centered container above.
+- **Base path**: the site is served under `/milimon-cost-lab` on GitHub Pages. Build internal URLs
+  with `localizedPath`/`withBase` (never hard-coded `/es/...` or `/favicon.ico`).
+- **Security**: a strict Content-Security-Policy (hash-only scripts) is generated at build time
+  (`security.csp` in `astro.config.mjs`); a new external script or API origin must be added there.
 - **Static first**: no `client:*` directive unless the component is interactive.
 - **Persistence**: through repositories only (localStorage now, accounts later). **Analytics**: through `track()` only.
 - **Dependencies**: latest compatible versions, `pnpm audit` clean. Exceptions documented in

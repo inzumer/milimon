@@ -1,3 +1,4 @@
+import { SETTINGS_STORAGE_KEY } from '@constants';
 import {
   getBrowserStorage,
   isLocale,
@@ -18,8 +19,7 @@ export interface Settings {
 
 export type AnalyticsConsent = 'granted' | 'denied';
 
-/** Shared with the inline theme/redirect scripts in `.astro` files, which can't import modules. */
-export const SETTINGS_STORAGE_KEY = 'milimon:settings';
+export { SETTINGS_STORAGE_KEY } from '@constants';
 
 export const DEFAULT_SETTINGS: Readonly<Settings> = {
   colorScheme: null,

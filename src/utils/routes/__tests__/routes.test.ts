@@ -1,4 +1,4 @@
-import { isActivePath, localizedPath, switchLocalePath } from '../routes';
+import { isActivePath, localizedPath, stripBase, switchLocalePath, withBase } from '../routes';
 
 describe('routes', () => {
   it('should build localized paths with English slugs', () => {
@@ -28,5 +28,36 @@ describe('routes', () => {
     expect(isActivePath('/es/formulas/cooking-loss', '/es/formulas')).toBe(true);
     expect(isActivePath('/es/formulas-old', '/es/formulas')).toBe(false);
     expect(isActivePath('/', '/es/formulas')).toBe(false);
+  });
+
+  describe('under a base path (GitHub Pages)', () => {
+    const BASE = '/milimon-cost-lab';
+
+    it('should add and remove the base', () => {
+      expect(withBase('/og/og-es.png', BASE)).toBe('/milimon-cost-lab/og/og-es.png');
+      expect(withBase('favicon.ico', BASE)).toBe('/milimon-cost-lab/favicon.ico');
+      expect(withBase('/es', '')).toBe('/es');
+      expect(stripBase('/milimon-cost-lab/es/learn', BASE)).toBe('/es/learn');
+      expect(stripBase('/milimon-cost-lab', BASE)).toBe('/');
+      expect(stripBase('/milimon-cost-labs/es', BASE)).toBe('/milimon-cost-labs/es');
+      expect(stripBase('/es', '')).toBe('/es');
+    });
+
+    it('should switch languages keeping the base', () => {
+      expect(switchLocalePath('/milimon-cost-lab/es/formulas/cooking-loss', 'en', BASE)).toBe(
+        '/milimon-cost-lab/en/formulas/cooking-loss',
+      );
+      expect(switchLocalePath('/milimon-cost-lab/', 'es', BASE)).toBe('/milimon-cost-lab/es');
+    });
+
+    it('should detect the active section with the base', () => {
+      expect(isActivePath('/milimon-cost-lab/es', '/milimon-cost-lab/es', BASE)).toBe(true);
+      expect(isActivePath('/milimon-cost-lab/es/formulas/x', '/milimon-cost-lab/es', BASE)).toBe(
+        false,
+      );
+      expect(
+        isActivePath('/milimon-cost-lab/es/formulas/x', '/milimon-cost-lab/es/formulas', BASE),
+      ).toBe(true);
+    });
   });
 });
