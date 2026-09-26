@@ -7,9 +7,9 @@ export interface FeatureCardProps {
   description: string;
   href: string;
   cta: string;
-  /** Highlighted cards use the brand primary background (e.g. the calculator on the home page). */
   highlighted?: boolean;
   headingLevel?: 'h2' | 'h3';
+  ctaId: string;
 }
 
 /** Card that introduces a section and links to it. Static: rendered without hydration. */
@@ -20,6 +20,7 @@ export const FeatureCard = ({
   cta,
   highlighted = false,
   headingLevel = 'h3',
+  ctaId,
 }: FeatureCardProps) => (
   <Card
     noPadding
@@ -40,7 +41,7 @@ export const FeatureCard = ({
       </CardDescription>
     </CardHeader>
     <CardFooter className="mt-auto">
-      <ButtonLink href={href} variant={highlighted ? 'secondary' : 'primary'}>
+      <ButtonLink id={ctaId} href={href} variant={highlighted ? 'secondary' : 'primary'}>
         {cta}
         <ArrowRightIcon aria-hidden="true" className="size-5" />
       </ButtonLink>

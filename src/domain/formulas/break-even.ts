@@ -1,19 +1,6 @@
 import { failure, nonNegative, positive, success, validate } from '@domain/shared';
 import type { CalculationResult } from '@domain/shared';
 
-/**
- * Punto de equilibrio (manual, Unidad 4 — "Cálculo del punto de equilibrio").
- * Ventas netas = ventas brutas − impuestos.
- * Tasa de impuestos = ventas brutas / ventas netas.
- * Tasa de costos variables = costos variables / ventas netas.
- * Tasa de contribución = 1 − tasa de costos variables.
- * Punto de equilibrio (ventas netas) = costos fijos / tasa de contribución.
- * Ventas netas objetivo = (costos fijos + ganancia deseada ANTES de impuestos) / tasa de contribución.
- * Ventas brutas = ventas netas × tasa de impuestos.
- *
- * Decisión del proyecto: la ganancia que se suma a los costos fijos es la ganancia ANTES del
- * impuesto a las ganancias (el manual suma la neta, $130.000, y así queda corto). Ver docs/PLAN.md §7.
- */
 export interface BreakEvenInput {
   grossSales: number | null;
   taxes: number | null;

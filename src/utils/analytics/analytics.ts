@@ -1,7 +1,3 @@
-/**
- * Analytics facade. Every interaction worth measuring calls `track()`. Events go to a no-op sink
- * until a provider registers one: Google Analytics (`@services`) does it only after consent.
- */
 export interface AnalyticsEvents {
   language_changed: { from: string; to: string };
   theme_changed: { scheme: 'light' | 'dark' };

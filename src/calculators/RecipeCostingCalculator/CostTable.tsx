@@ -12,7 +12,6 @@ import { formulaText, type CalculatorText } from '@i18n/formula-text';
 
 export interface CostTableProps {
   value: RecipeCostingOutput;
-  /** Ids of the input rows, in the same order as `value.ingredients` (stable React keys). */
   ids: string[];
   text: CalculatorText;
   context: FormatContext;

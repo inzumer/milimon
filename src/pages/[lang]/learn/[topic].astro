@@ -11,7 +11,7 @@ import {
   type LearnTopicId,
 } from '@i18n';
 import PageLayout from '@layouts/page-layout.astro';
-import { LOCALES, localizedPath, toLocale } from '@utils';
+import { LOCALES, localizedPath, toLocale, trackingId } from '@utils';
 
 export function getStaticPaths() {
   return LOCALES.flatMap((lang) => LEARN_TOPIC_IDS.map((topic) => ({ params: { lang, topic } })));
@@ -76,6 +76,7 @@ const { previous, next } = adjacentTopics(id);
                 description={formula.summary}
                 cta={formulaPage.index.open}
                 href={localizedPath(lang, 'formulas', formulaId)}
+                ctaId={trackingId(id, 'link', formulaId)}
               />
             </li>
           );

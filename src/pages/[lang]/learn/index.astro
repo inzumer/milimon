@@ -3,7 +3,7 @@ import { Breadcrumbs } from '@inzumer/ui-library';
 import { FeatureCard } from '@components';
 import { getLearnTopic, getTranslations, LEARN_TOPIC_IDS } from '@i18n';
 import PageLayout from '@layouts/page-layout.astro';
-import { LOCALES, localizedPath, toLocale } from '@utils';
+import { LOCALES, localizedPath, toLocale, trackingId } from '@utils';
 
 export function getStaticPaths() {
   return LOCALES.map((lang) => ({ params: { lang } }));
@@ -37,6 +37,7 @@ const breadcrumbs = getTranslations(lang, 'formula-page').breadcrumbs;
             description={topic.summary}
             cta={page.index.open}
             href={localizedPath(lang, 'learn', id)}
+            ctaId={trackingId('learn', 'link', id)}
           />
         </li>
       );

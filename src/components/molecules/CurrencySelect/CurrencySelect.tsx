@@ -11,7 +11,6 @@ import { track, type Locale } from '@utils';
 export interface CurrencySelectProps {
   lang: Locale;
   label: string;
-  /** Injected in tests; defaults to the localStorage repository. */
   repository?: SettingsRepository;
 }
 

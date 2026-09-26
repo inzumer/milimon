@@ -4,7 +4,7 @@ import { MenuIcon } from '@components/atoms/Icons';
 import { CurrencySelect } from '@components/molecules/CurrencySelect';
 import { LanguageSwitcher } from '@components/molecules/LanguageSwitcher';
 import { ThemeToggle } from '@components/molecules/ThemeToggle';
-import { track, type Locale } from '@utils';
+import { track, trackingId, type Locale } from '@utils';
 import { NavEntry, type SiteMenuItem } from './NavEntry';
 
 export interface SiteMenuLabels {
@@ -43,6 +43,7 @@ export const SiteMenu = ({ lang, pathname, items, labels }: SiteMenuProps) => {
   return (
     <>
       <Button
+        id={trackingId('menu', 'button', 'open')}
         variant="ghost"
         size="icon"
         aria-label={labels.open}

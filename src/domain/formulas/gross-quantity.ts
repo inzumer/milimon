@@ -10,18 +10,10 @@ import {
 import type { CalculationResult } from '@domain/shared';
 import { wasteFactorFromPercentage } from './waste-factor';
 
-/**
- * Cantidad bruta a comprar (manual, Unidad 2 — "¿Cómo calcular una cantidad bruta (sucia) a comprar?").
- * Neto necesario = comensales × porción neta. Bruto = neto × factor de desechos.
- * Equivale a la regla de tres: bruto = neto × 100 / (100 − % desecho).
- * El manual redondea hacia arriba lo que se compra (51,429 kg → 52 kg).
- * Sumar el % de desecho al neto "nunca alcanza": aparece el desecho del desecho.
- */
 export interface GrossQuantityInput {
   servings: number | null;
   netPortion: number | null;
   wastePercentage: number | null;
-  /** Unit to round the purchase up to (1 = whole kilograms, 0.5 = half kilos…). */
   roundingStep: number | null;
 }
 
@@ -30,7 +22,6 @@ export interface GrossQuantityOutput {
   wasteFactor: number;
   grossQuantity: number;
   purchaseQuantity: number;
-  /** What you'd buy by (wrongly) adding the waste % to the net quantity. */
   naiveQuantity: number;
 }
 

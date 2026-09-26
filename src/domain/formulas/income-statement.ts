@@ -9,12 +9,6 @@ import {
 } from '@domain/shared';
 import type { CalculationResult } from '@domain/shared';
 
-/**
- * Cuadro de ganancias y pérdidas (manual, Unidad 4 — "Cómo armar el cuadro de ganancias y pérdidas").
- * Resultado antes de IG = ventas − costo de venta − costo operativo.
- * Impuesto a las ganancias = resultado antes de IG × tasa (solo si hay ganancia).
- * Resultado del ejercicio = resultado antes de IG − impuesto a las ganancias.
- */
 export interface IncomeStatementInput {
   foodSales: number | null;
   beverageSales: number | null;
@@ -35,7 +29,6 @@ export interface IncomeStatementOutput {
   totalSales: number;
   costOfSales: number;
   operatingCosts: number;
-  /** Operating costs without sales taxes: the fixed costs used for break-even. */
   fixedCosts: number;
   resultBeforeIncomeTax: number;
   incomeTax: number;

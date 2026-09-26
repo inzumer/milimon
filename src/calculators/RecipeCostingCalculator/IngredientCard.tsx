@@ -2,13 +2,12 @@ import { Button, Input } from '@inzumer/ui-library';
 import { NumberField } from '@components/molecules/NumberField';
 import { formulaText, type CalculatorText } from '@i18n/formula-text';
 import type { Translations } from '@i18n/translations';
-import { interpolate } from '@utils';
+import { interpolate, trackingId } from '@utils';
 import type { IngredientField, IngredientRow } from './useRecipeCostingCalculator';
 
 export interface IngredientCardProps {
   row: IngredientRow;
   index: number;
-  idPrefix: string;
   currency: string;
   canRemove: boolean;
   errors: Record<string, string>;
@@ -18,6 +17,9 @@ export interface IngredientCardProps {
   onBlur: (field: IngredientField) => void;
   onRemove: () => void;
 }
+
+/** Tracking scope: the formula id. */
+const SCOPE = 'recipe-costing';
 
 const NUMBER_FIELDS = [
   { field: 'netQuantity', copy: 'net-quantity' },
@@ -29,7 +31,6 @@ const NUMBER_FIELDS = [
 export const IngredientCard = ({
   row,
   index,
-  idPrefix,
   currency,
   canRemove,
   errors,
@@ -53,7 +54,7 @@ export const IngredientCard = ({
       <div className="grid grid-cols-3 gap-3">
         <div className="col-span-2">
           <Input
-            id={`${idPrefix}-${row.id}-name`}
+            id={trackingId(SCOPE, 'input', 'ingredient', index + 1, 'name')}
             label={input('name')?.label ?? ''}
             placeholder={input('name')?.placeholder ?? ''}
             value={row.name}
@@ -63,7 +64,7 @@ export const IngredientCard = ({
           />
         </div>
         <Input
-          id={`${idPrefix}-${row.id}-unit`}
+          id={trackingId(SCOPE, 'input', 'ingredient', index + 1, 'unit')}
           label={input('unit')?.label ?? ''}
           placeholder={input('unit')?.placeholder ?? ''}
           value={row.unit}
@@ -75,7 +76,7 @@ export const IngredientCard = ({
       {NUMBER_FIELDS.map(({ field, copy, ...rest }) => (
         <NumberField
           key={field}
-          id={`${idPrefix}-${row.id}-${copy}`}
+          id={trackingId(SCOPE, 'input', 'ingredient', index + 1, field)}
           label={input(copy)?.label ?? copy}
           unit={
             'unit' in rest
@@ -93,7 +94,13 @@ export const IngredientCard = ({
         />
       ))}
       {canRemove && (
-        <Button type="button" variant="ghost" className="min-h-11 self-start" onClick={onRemove}>
+        <Button
+          id={trackingId(SCOPE, 'button', 'remove-ingredient', index + 1)}
+          type="button"
+          variant="ghost"
+          className="min-h-11 self-start"
+          onClick={onRemove}
+        >
           {interpolate(t.label('remove-ingredient'), { name: row.name || title })}
         </Button>
       )}

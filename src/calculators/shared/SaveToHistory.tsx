@@ -8,19 +8,16 @@ import {
   type CalculatorDraft,
   type HistoryRepository,
 } from '@repositories';
-import { track } from '@utils';
+import { track, trackingId } from '@utils';
 import { headlineFor } from './history';
 
 export interface SaveToHistoryProps {
   formulaId: FormulaId;
-  /** What the person entered. */
   draft: CalculatorDraft;
   currency: string;
-  /** The complete result on screen (values and steps). */
   result: { value: object; steps: Step[] };
   labels: Translations<'calculator'>['history'];
   historyHref: string;
-  /** Injected in tests; defaults to the localStorage repository. */
   repository?: HistoryRepository;
 }
 
@@ -58,14 +55,24 @@ export const SaveToHistory = ({
   return (
     <div className="flex flex-col gap-2 border-t border-[var(--border-default)] pt-4">
       <div className="flex flex-wrap items-center gap-3">
-        <Button type="button" className="min-h-11" disabled={saved} onClick={save}>
+        <Button
+          id={trackingId(formulaId, 'button', 'save-history')}
+          type="button"
+          className="min-h-11"
+          disabled={saved}
+          onClick={save}
+        >
           {labels.save}
         </Button>
         <p role="status" className="flex flex-wrap gap-x-2">
           {saved && (
             <>
               <span>{labels.saved}</span>
-              <a href={historyHref} className="font-semibold text-[var(--text-link)] underline">
+              <a
+                id={trackingId(formulaId, 'link', 'view-history')}
+                href={historyHref}
+                className="font-semibold text-[var(--text-link)] underline"
+              >
                 {labels.view}
               </a>
             </>

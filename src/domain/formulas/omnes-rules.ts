@@ -30,11 +30,9 @@ export interface OmnesOutput {
   priceRatio: number;
   proportionality: ProportionalityStatus;
   zoneWidth: number;
-  /** Upper bounds of the low and medium zones. */
   lowZoneMax: number;
   mediumZoneMax: number;
   counts: Record<PriceZone, number>;
-  /** Balanced when medium = low + high and low = high. */
   balancedDistribution: boolean;
   averagePrice: number;
   ticket: { lowerBound: number; upperBound: number; status: TicketStatus | null };

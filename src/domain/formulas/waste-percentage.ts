@@ -1,10 +1,6 @@
 import { failure, nonNegative, percentage, positive, success, validate } from '@domain/shared';
 import type { CalculationResult } from '@domain/shared';
 
-/**
- * % de desecho (manual, Unidad 2 — "Cálculo de un % de desechos").
- * Desecho = peso bruto − peso neto; % desecho = desecho / peso bruto × 100.
- */
 export interface WastePercentageInput {
   grossWeight: number | null;
   netWeight: number | null;

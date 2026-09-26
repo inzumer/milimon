@@ -56,23 +56,19 @@ export const FORMULA_GROUPS = [
 
 export type FormulaGroup = (typeof FORMULA_GROUPS)[number];
 
-/** Drives the unit shown next to an input/result and how it is formatted. */
 export type ValueKind =
   'weight' | 'percentage' | 'currency' | 'count' | 'area' | 'factor' | 'rate' | 'months' | 'toggle';
 
 export interface InputDefinition {
   key: string;
   kind: ValueKind;
-  /** Pre-filled value. Only for parameters the manual gives (tax rates, 36 months…), never for data. */
   defaultValue?: number | boolean;
-  /** Optional inputs can be left empty. */
   optional?: boolean;
 }
 
 export interface OutputDefinition {
   key: string;
   kind: ValueKind | 'text';
-  /** Main result, highlighted in the UI. */
   primary?: boolean;
 }
 
@@ -80,7 +76,6 @@ export type ExampleSource = 'manual' | 'illustrative';
 
 export interface FormulaExample {
   id: string;
-  /** `manual`: numbers taken from the manual; `illustrative`: our own numbers where it has none. */
   source: ExampleSource;
   values: Record<string, number | boolean>;
 }
@@ -93,17 +88,14 @@ interface BaseDefinition {
   examples: FormulaExample[];
 }
 
-/** Rendered by the generic calculator form: flat numeric (or toggle) inputs. */
 export interface StandardFormulaDefinition extends BaseDefinition {
   layout: 'standard';
   inputs: InputDefinition[];
   outputs: OutputDefinition[];
-  /** Kinds of intermediate values that appear in the worked steps but aren't inputs or outputs. */
   stepValueKinds?: Record<string, ValueKind>;
   calculate: (values: FormulaValues) => CalculationResult<object>;
 }
 
-/** Needs a dedicated calculator (lists of ingredients or prices). */
 export interface CustomFormulaDefinition extends BaseDefinition {
   layout: 'custom';
 }

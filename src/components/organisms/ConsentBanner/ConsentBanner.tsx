@@ -6,6 +6,7 @@ import {
   type AnalyticsConsent,
   type SettingsRepository,
 } from '@repositories';
+import { trackingId } from '@utils';
 
 export interface ConsentBannerLabels {
   title: string;
@@ -18,7 +19,6 @@ export interface ConsentBannerLabels {
 export interface ConsentBannerProps {
   labels: ConsentBannerLabels;
   privacyHref: string;
-  /** Injected in tests; defaults to the localStorage repository. */
   repository?: SettingsRepository;
 }
 
@@ -61,15 +61,25 @@ export const ConsentBanner = ({
         </h2>
         <p className="text-sm text-[var(--text-secondary)]">
           {labels.message}{' '}
-          <a href={privacyHref} className="font-semibold text-[var(--text-link)] underline">
+          <a
+            id={trackingId('consent', 'link', 'privacy')}
+            href={privacyHref}
+            className="font-semibold text-[var(--text-link)] underline"
+          >
             {labels['privacy-link']}
           </a>
         </p>
         <div className="flex flex-wrap gap-2">
-          <Button type="button" className="min-h-11 flex-1" onClick={() => answer('granted')}>
+          <Button
+            id={trackingId('consent', 'button', 'accept')}
+            type="button"
+            className="min-h-11 flex-1"
+            onClick={() => answer('granted')}
+          >
             {labels.accept}
           </Button>
           <Button
+            id={trackingId('consent', 'button', 'reject')}
             type="button"
             variant="secondary"
             className="min-h-11 flex-1"

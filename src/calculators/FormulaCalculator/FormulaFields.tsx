@@ -5,11 +5,11 @@ import type { CalculatorText } from '@i18n/formula-text';
 import { formulaText, toKebabCase } from '@i18n/formula-text';
 import type { Translations } from '@i18n/translations';
 import type { CalculatorDraft } from '@repositories';
-import { interpolate } from '@utils';
+import { interpolate, trackingId } from '@utils';
 import type { FieldErrorCode } from './useFormulaCalculator';
 
 export interface FormulaFieldsProps {
-  idPrefix: string;
+  scope: string;
   inputs: InputDefinition[];
   draft: CalculatorDraft;
   errors: Record<string, FieldErrorCode>;
@@ -24,7 +24,7 @@ const UNIT_KINDS = ['weight', 'area', 'months', 'percentage', 'currency'] as con
 
 /** One field per registry input: a switch for toggles, a decimal field for everything else. */
 export const FormulaFields = ({
-  idPrefix,
+  scope,
   inputs,
   draft,
   errors,
@@ -43,6 +43,7 @@ export const FormulaFields = ({
         return (
           <Switch
             key={input.key}
+            id={trackingId(scope, 'switch', input.key)}
             label={copy.label}
             checked={value === true}
             onCheckedChange={(checked) => onChange(input.key, checked)}
@@ -54,7 +55,7 @@ export const FormulaFields = ({
       return (
         <NumberField
           key={input.key}
-          id={`${idPrefix}-${key}`}
+          id={trackingId(scope, 'input', input.key)}
           label={copy.label}
           unit={unitKind ? interpolate(ui.units[unitKind], { currency }) : undefined}
           placeholder={copy.placeholder}

@@ -1,3 +1,4 @@
+import { NUMERIC_INPUT_DISALLOWED, PRICE_LIST_INPUT_DISALLOWED } from '@constants';
 import type { Locale } from '@utils/locale';
 
 /** Number formatting locale per app language (Argentine Spanish uses `.` for thousands, `,` for decimals). */
@@ -93,3 +94,11 @@ export const formatPercentage = (value: number, lang: Locale, maximumFractionDig
     minimumFractionDigits: 0,
     maximumFractionDigits,
   }).format(value / 100);
+
+/** Keeps only what a number can contain (digits, `,` and `.`) while the person types. */
+export const keepNumericCharacters = (raw: string): string =>
+  raw.replace(NUMERIC_INPUT_DISALLOWED, '');
+
+/** Same for a list of numbers, keeping the separators between them (spaces, new lines, `;`). */
+export const keepNumberListCharacters = (raw: string): string =>
+  raw.replace(PRICE_LIST_INPUT_DISALLOWED, '');

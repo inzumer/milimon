@@ -5,9 +5,18 @@ import { NumberField } from '@components/molecules/NumberField';
 import { formulaText, type CalculatorText } from '@i18n/formula-text';
 import type { Translations } from '@i18n/translations';
 import type { CalculationsRepository, HistoryRepository, SettingsRepository } from '@repositories';
-import { interpolate, localizedPath, type Locale } from '@utils';
+import {
+  interpolate,
+  keepNumberListCharacters,
+  localizedPath,
+  trackingId,
+  type Locale,
+} from '@utils';
 import { OmnesResult } from './OmnesResult';
-import { OMNES_EXAMPLE, useOmnesCalculator } from './useOmnesCalculator';
+import { OMNES_EXAMPLE, useOmnesCalculator, type OptionalField } from './useOmnesCalculator';
+
+/** Tracking scope: the formula id. */
+const SCOPE = 'omnes-rules';
 
 export interface OmnesCalculatorProps {
   lang: Locale;
@@ -42,17 +51,20 @@ export const OmnesCalculator = ({
       ? interpolate(t.label('invalid-prices'), { values: invalid.join(', ') })
       : calculator.errors.find((error) => error.field === 'prices')?.code;
   const showListError = calculator.touched && listError;
-  const optional = (key: 'averageTicket' | 'dailySpecialPrice', copyKey: string) => {
+  const optional = (key: OptionalField, copyKey: string) => {
     const copy = t.input(copyKey);
+    const code = calculator.optionalError(key);
     return (
       <NumberField
-        id={`${id}-${copyKey}`}
+        id={trackingId(SCOPE, 'input', key)}
         label={copy.label}
         unit={calculator.currency}
         placeholder={copy.placeholder}
         hint={copy.hint}
+        error={code ? ui.errors[code as keyof typeof ui.errors] : undefined}
         value={calculator[key]}
         onValueChange={(value) => calculator.setField(key, value)}
+        onBlur={() => calculator.touchOptional(key)}
       />
     );
   };
@@ -64,7 +76,12 @@ export const OmnesCalculator = ({
           {ui['examples-title']}
         </h3>
         <div className="flex flex-wrap items-center gap-3">
-          <Button variant="secondary" className="min-h-11" onClick={calculator.loadExample}>
+          <Button
+            id={trackingId(SCOPE, 'button', 'load-example', OMNES_EXAMPLE.id)}
+            variant="secondary"
+            className="min-h-11"
+            onClick={calculator.loadExample}
+          >
             {ui['load-example']}: {t.example(OMNES_EXAMPLE.id)}
           </Button>
           <span className="text-sm text-[var(--text-secondary)]">
@@ -83,7 +100,7 @@ export const OmnesCalculator = ({
           {ui['form-title']}
         </h3>
         <Textarea
-          id={`${id}-prices`}
+          id={trackingId(SCOPE, 'input', 'prices')}
           label={`${pricesText.label} (${calculator.currency})`}
           rows={8}
           inputSize="lg"
@@ -101,12 +118,15 @@ export const OmnesCalculator = ({
                     : ui.errors[listError as keyof typeof ui.errors],
               }
             : {})}
-          onChange={(event) => calculator.setField('prices', event.target.value)}
+          onChange={(event) =>
+            calculator.setField('prices', keepNumberListCharacters(event.target.value))
+          }
           onBlur={calculator.touch}
         />
         {optional('averageTicket', 'average-ticket')}
         {optional('dailySpecialPrice', 'daily-special-price')}
         <Button
+          id={trackingId(SCOPE, 'button', 'reset')}
           type="button"
           variant="ghost"
           className="min-h-11 self-start"

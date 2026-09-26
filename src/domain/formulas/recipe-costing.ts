@@ -11,13 +11,6 @@ import {
 import type { CalculationResult, FieldError } from '@domain/shared';
 import { wasteFactorFromPercentage } from './waste-factor';
 
-/**
- * Costeo de recetas (manual, Unidad 2 — "La planilla de cálculo", columnas 1 a 8).
- * Por ingrediente: cantidad receta (neta) × factor de desechos = cantidad bruta;
- * cantidad bruta × precio de compra (de la mercadería bruta, en la misma unidad) = costo.
- * Costo receta = Σ costos; costo porción = costo receta / rendimiento (porciones).
- * La incidencia % de cada ingrediente orienta el ajuste de contenido.
- */
 export interface RecipeIngredientInput {
   name: string;
   unit: string;
@@ -40,7 +33,6 @@ export interface RecipeIngredientCost {
   grossQuantity: number;
   unitPrice: number;
   cost: number;
-  /** Share of the total recipe cost (0–100). */
   share: number;
 }
 
@@ -50,7 +42,6 @@ export interface RecipeCostingOutput {
   portionCost: number;
 }
 
-/** `servings`, `ingredients`, or `ingredients.<index>.<field>`. */
 export type RecipeCostingField = string;
 
 export const ingredientCost = (

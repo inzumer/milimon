@@ -2,11 +2,6 @@ import { belowHundred, failure, nonNegative, positive, success, validate } from 
 import type { CalculationResult } from '@domain/shared';
 import { wasteFactorFromPercentage } from './waste-factor';
 
-/**
- * Precio limpio equivalente (manual, Unidad 2 — "Comparativa de precios").
- * PLE = precio sucio (bruto) × factor de desechos. Se compara con el precio limpio del proveedor.
- * El manual recuerda sumar otras variables antes de decidir (mano de obra, urgencia, almacenamiento).
- */
 export interface CleanPriceInput {
   grossPrice: number | null;
   wastePercentage: number | null;
@@ -18,7 +13,6 @@ export type CleanPriceChoice = 'buy-gross' | 'buy-clean' | 'same';
 export interface CleanPriceOutput {
   wasteFactor: number;
   equivalentCleanPrice: number;
-  /** Supplier clean price − our equivalent: positive means buying gross is cheaper. */
   difference: number;
   choice: CleanPriceChoice;
 }

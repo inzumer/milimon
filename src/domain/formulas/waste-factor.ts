@@ -1,11 +1,6 @@
 import { belowHundred, failure, nonNegative, success, validate } from '@domain/shared';
 import type { CalculationResult } from '@domain/shared';
 
-/**
- * Factor de desechos (manual, Unidad 2 — "Factor de desechos: dos fórmulas para su cálculo").
- * 1ª fórmula (preferida): FD = % desecho / (100 − % desecho) + 1  (equivale a 100 / (100 − %)).
- * 2ª fórmula: FD = peso bruto / peso neto.
- */
 export interface WasteFactorInput {
   wastePercentage: number | null;
 }

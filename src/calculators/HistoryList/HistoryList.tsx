@@ -15,18 +15,15 @@ import {
   type HistoryEntry,
   type HistoryRepository,
 } from '@repositories';
-import { interpolate, track, type Locale } from '@utils';
+import { interpolate, track, trackingId, type Locale } from '@utils';
 
 export interface HistoryListProps {
   lang: Locale;
   labels: Translations<'history-page'>['list'];
   ui: Translations<'calculator'>;
-  /** Formula titles and output labels, resolved on the server (the list shows them all at once). */
   formulas: Record<string, { title: string; outputs: Record<string, string> }>;
   calculatorHref: string;
-  /** Account page, when accounts are enabled (shown as a hint to guests). */
   accountHref?: string | undefined;
-  /** Injected in tests; default to the localStorage repositories. */
   repository?: HistoryRepository;
   calculations?: CalculationsRepository;
   loadText?: CalculatorTextLoader;
@@ -129,7 +126,11 @@ export const HistoryList = ({
       {entries.length === 0 ? (
         <div className="flex flex-col items-start gap-3">
           <p>{labels.empty}</p>
-          <a href={calculatorHref} className="font-semibold text-[var(--text-link)] underline">
+          <a
+            id={trackingId('history', 'link', 'go-to-calculator')}
+            href={calculatorHref}
+            className="font-semibold text-[var(--text-link)] underline"
+          >
             {labels['go-to-calculator']}
           </a>
         </div>
@@ -139,7 +140,8 @@ export const HistoryList = ({
             {interpolate(labels.count, { count: entries.length, limit: HISTORY_LIMIT })}
           </p>
           <ol className="flex flex-col gap-4">
-            {entries.map((entry) => {
+            {entries.map((entry, index) => {
+              const position = index + 1;
               const title = formulas[entry.formulaId]?.title ?? entry.formulaId;
               const date = dateFormat.format(new Date(entry.savedAt));
               const detailId = `${id}-${entry.id}`;
@@ -160,6 +162,7 @@ export const HistoryList = ({
                     {headline(entry)}
                     <div className="flex flex-wrap gap-2">
                       <Button
+                        id={trackingId('history', 'button', 'show', position)}
                         type="button"
                         variant="secondary"
                         className="min-h-11"
@@ -170,6 +173,7 @@ export const HistoryList = ({
                         {isOpen ? labels.hide : labels.show}
                       </Button>
                       <Button
+                        id={trackingId('history', 'button', 'open', position)}
                         type="button"
                         variant="ghost"
                         className="min-h-11"
@@ -178,6 +182,7 @@ export const HistoryList = ({
                         {labels.open}
                       </Button>
                       <Button
+                        id={trackingId('history', 'button', 'delete', position)}
                         type="button"
                         variant="ghost"
                         className="min-h-11"
@@ -215,7 +220,11 @@ export const HistoryList = ({
       {accountHref && (
         <p className="text-sm text-[var(--text-secondary)]">
           {labels['account-hint']}{' '}
-          <a href={accountHref} className="font-semibold text-[var(--text-link)] underline">
+          <a
+            id={trackingId('history', 'link', 'sign-in')}
+            href={accountHref}
+            className="font-semibold text-[var(--text-link)] underline"
+          >
             {labels['sign-in']}
           </a>
         </p>

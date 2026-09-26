@@ -1,8 +1,3 @@
-/**
- * Minimal key/value storage contract. `localStorage` implements it; tests and future remote
- * repositories can provide their own. All access is defensive: private mode, disabled storage or
- * quota errors must never break the page.
- */
 export interface KeyValueStorage {
   getItem: (key: string) => string | null;
   setItem: (key: string, value: string) => void;

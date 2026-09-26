@@ -18,7 +18,6 @@ export interface RentCheckInput {
 export interface RentCheckOutput {
   rentShare: number;
   status: RentStatus;
-  /** Net sales needed for the rent to be 10 % and 5 % of sales. */
   salesForMaxShare: number;
   salesForOptimalShare: number;
 }
