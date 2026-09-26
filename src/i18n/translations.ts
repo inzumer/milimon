@@ -1,4 +1,6 @@
 import type { Locale } from '@utils/locale';
+import aboutPageEn from './about-page/en.json';
+import aboutPageEs from './about-page/es.json';
 import accountPageEn from './account-page/en.json';
 import accountPageEs from './account-page/es.json';
 import blogEn from './blog/en.json';
@@ -33,6 +35,7 @@ import termsPageEs from './terms-page/es.json';
  * Formula folders (`src/i18n/formulas/<id>/`) are loaded and validated by `formulas.ts`.
  */
 const dictionaries = {
+  'about-page': { es: aboutPageEs, en: aboutPageEn satisfies typeof aboutPageEs },
   blog: { es: blogEs, en: blogEn satisfies typeof blogEs },
   common: { es: commonEs, en: commonEn satisfies typeof commonEs },
   'coming-soon': { es: comingSoonEs, en: comingSoonEn satisfies typeof comingSoonEs },

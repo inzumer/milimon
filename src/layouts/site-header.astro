@@ -23,7 +23,12 @@ const { lang, pathname } = Astro.props;
 const common = getTranslations(lang, 'common');
 
 const groups = [
-  { items: [{ href: localizedPath(lang, 'home'), label: common.nav.home }] },
+  {
+    items: [
+      { href: localizedPath(lang, 'home'), label: common.nav.home },
+      { href: localizedPath(lang, 'about'), label: common.nav.about },
+    ],
+  },
   {
     title: common.nav['management-group'],
     items: [
