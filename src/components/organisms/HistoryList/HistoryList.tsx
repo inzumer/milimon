@@ -1,5 +1,5 @@
 import { useId, useRef, useState } from 'react';
-import { Button } from '@inzumer/ui-library';
+import { Button, RichText } from '@inzumer/ui-library';
 import { SavedCalculation } from '@components/organisms/SavedCalculation';
 import { HISTORY_LIMIT } from '@constants';
 import { useHydrated } from '@hooks';
@@ -89,27 +89,34 @@ export const HistoryList = ({
     const formatted = formatValue(main.value, kind, { lang, currency: entry.currency });
     const label = formulas[entry.formulaId]?.outputs[main.output];
     return (
-      <p className="flex flex-wrap items-baseline gap-x-2">
-        {label && <span className="text-[var(--text-secondary)]">{label}:</span>}
+      <RichText className="flex flex-wrap items-baseline gap-x-2">
+        {label && (
+          <RichText variant="s2" className="text-[var(--text-secondary)]">
+            {label}:
+          </RichText>
+        )}
         <strong className="text-xl tabular-nums">
           {unit ? `${formatted} ${ui.units[unit]}` : formatted}
         </strong>
-      </p>
+      </RichText>
     );
   };
 
   if (entries === null) {
-    return <p aria-busy="true">{labels.loading}</p>;
+    return <RichText aria-busy="true">{labels.loading}</RichText>;
   }
 
   return (
     <div className="flex flex-col gap-6">
-      <p role="status" className={notice ? 'rounded-lg bg-[var(--surface-secondary)] p-3' : ''}>
+      <RichText
+        role="status"
+        className={notice ? 'rounded-lg bg-[var(--surface-secondary)] p-3' : ''}
+      >
         {notice}
-      </p>
+      </RichText>
       {entries.length === 0 ? (
         <div className="flex flex-col items-start gap-3">
-          <p>{labels.empty}</p>
+          <RichText>{labels.empty}</RichText>
           <a
             id={trackingId('history', 'link', 'go-to-calculator')}
             href={calculatorHref}
@@ -120,9 +127,9 @@ export const HistoryList = ({
         </div>
       ) : (
         <>
-          <p className="text-sm text-[var(--text-secondary)]">
+          <RichText variant="p3" className="text-[var(--text-secondary)]">
             {interpolate(labels.count, { count: entries.length, limit: HISTORY_LIMIT })}
-          </p>
+          </RichText>
           <ol className="flex flex-col gap-4">
             {entries.map((entry, index) => {
               const position = index + 1;
@@ -137,12 +144,17 @@ export const HistoryList = ({
                     aria-labelledby={`${detailId}-title`}
                     className="flex flex-col gap-3 rounded-xl border border-[var(--border-default)] bg-[var(--surface-primary)] p-4"
                   >
-                    <h2 id={`${detailId}-title`} className="text-2xl">
+                    <RichText
+                      variant="h2"
+                      bold
+                      id={`${detailId}-title`}
+                      className="font-display text-2xl"
+                    >
                       {title}
-                    </h2>
-                    <p className="text-sm text-[var(--text-secondary)]">
+                    </RichText>
+                    <RichText variant="p3" className="text-[var(--text-secondary)]">
                       {interpolate(labels['saved-on'], { date })}
-                    </p>
+                    </RichText>
                     {headline(entry)}
                     <div className="flex flex-wrap gap-2">
                       <Button
@@ -179,7 +191,7 @@ export const HistoryList = ({
                     <div id={detailId} hidden={!isOpen}>
                       {isOpen &&
                         (text === 'error' ? (
-                          <p role="alert">{labels.unavailable}</p>
+                          <RichText role="alert">{labels.unavailable}</RichText>
                         ) : text && text !== 'loading' ? (
                           <div className="rounded-xl bg-[var(--surface-secondary)] p-4">
                             <SavedCalculation
@@ -191,7 +203,7 @@ export const HistoryList = ({
                             />
                           </div>
                         ) : (
-                          <p aria-busy="true">{labels.loading}</p>
+                          <RichText aria-busy="true">{labels.loading}</RichText>
                         ))}
                     </div>
                   </article>
@@ -202,7 +214,7 @@ export const HistoryList = ({
         </>
       )}
       {accountHref && (
-        <p className="text-sm text-[var(--text-secondary)]">
+        <RichText variant="p3" className="text-[var(--text-secondary)]">
           {labels['account-hint']}{' '}
           <a
             id={trackingId('history', 'link', 'sign-in')}
@@ -211,7 +223,7 @@ export const HistoryList = ({
           >
             {labels['sign-in']}
           </a>
-        </p>
+        </RichText>
       )}
     </div>
   );

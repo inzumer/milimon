@@ -1,3 +1,4 @@
+import { RichText } from '@inzumer/ui-library';
 import { ResultPanel } from '@components/molecules/ResultPanel';
 import { StepList } from '@components/molecules/StepList';
 import type { CalculatorText } from '@i18n/formula-text';
@@ -25,7 +26,9 @@ export const FormulaResult = ({ formula, value, steps, text, ui, context }: Form
       context={context}
       units={ui.units}
     />
-    <h4 className="font-bold">{ui['steps-title']}</h4>
+    <RichText variant="h4" className="font-bold">
+      {ui['steps-title']}
+    </RichText>
     <StepList steps={steps} templates={text.steps} kinds={valueKinds(formula)} context={context} />
   </>
 );

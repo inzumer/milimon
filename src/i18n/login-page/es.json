@@ -4,6 +4,7 @@
   "panel": {
     "intro": "No hace falta una cuenta para usar la calculadora: con una cuenta, tu configuración y tus cálculos te siguen a cualquier dispositivo.",
     "continue-with-facebook": "Continuar con Facebook",
+    "facebook-soon": "El inicio de sesión con Facebook va a estar disponible pronto.",
     "signing-in": "Iniciando sesión…",
     "waking-up": "El servidor se está despertando (puede tardar hasta un minuto la primera vez)…",
     "error": "No pudimos iniciar la sesión. Probá de nuevo en unos minutos.",

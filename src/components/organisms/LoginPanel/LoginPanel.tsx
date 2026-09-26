@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useId, useRef, useState } from 'react';
 import { Button, Image, RichText } from '@inzumer/ui-library';
 import facebookIcon from '@assets/facebook.png';
 import { ButtonLink } from '@components/atoms/ButtonLink';
@@ -66,6 +66,7 @@ export const LoginPanel = ({
   const [notice, setNotice] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [config, setConfig] = useState<AccountConfig | null>(null);
+  const id = useId();
   const googleRef = useRef<HTMLDivElement>(null);
   const sessionRef = useRef<AccountSession | null>(null);
   const depsRef = useRef({ loadSession, renderGoogle, facebookLogin, navigate });
@@ -223,33 +224,43 @@ export const LoginPanel = ({
                 inert={signingIn}
               />
             )}
-            {facebookAppId && (
-              <Button
-                id={trackingId('login', 'button', 'facebook')}
-                type="button"
-                variant="secondary"
-                className="min-h-11 w-full max-w-80 rounded-full"
-                disabled={signingIn}
-                onClick={() =>
+            <Button
+              id={trackingId('login', 'button', 'facebook')}
+              type="button"
+              variant="secondary"
+              className="min-h-11 w-full max-w-80 rounded-full"
+              disabled={signingIn || !facebookAppId}
+              aria-describedby={facebookAppId ? undefined : `${id}-facebook-soon`}
+              onClick={() => {
+                if (facebookAppId) {
                   void signIn('facebook', async (session) =>
                     session.backend.signInWithFacebook(
                       await depsRef.current.facebookLogin(facebookAppId, lang),
                     ),
-                  )
+                  );
                 }
+              }}
+            >
+              <Image
+                src={facebookIcon.src}
+                alt=""
+                aria-hidden="true"
+                fit="contain"
+                lazy={false}
+                width={20}
+                height={20}
+                className="size-[1.25em] shrink-0"
+              />
+              {labels['continue-with-facebook']}
+            </Button>
+            {!facebookAppId && (
+              <RichText
+                id={`${id}-facebook-soon`}
+                variant="p4"
+                className="text-[var(--text-secondary)]"
               >
-                <Image
-                  src={facebookIcon.src}
-                  alt=""
-                  aria-hidden="true"
-                  fit="contain"
-                  lazy={false}
-                  width={20}
-                  height={20}
-                  className="size-[1.25em] shrink-0"
-                />
-                {labels['continue-with-facebook']}
-              </Button>
+                {labels['facebook-soon']}
+              </RichText>
             )}
           </div>
           {signingIn && (

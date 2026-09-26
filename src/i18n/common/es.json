@@ -38,7 +38,9 @@
     "source": "Basado en el manual de Administración y Gestión gastronómica.",
     "privacy": "Privacidad",
     "terms": "Términos",
-    "cookie-preferences": "Preferencias de cookies"
+    "cookie-preferences": "Preferencias de cookies",
+    "disclaimer": "Desarrollado por {author} — o Nahuel Zamuner, como prefieras.",
+    "legal-nav": "Legales"
   },
   "not-found": {
     "title": "Página no encontrada",

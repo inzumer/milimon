@@ -1,3 +1,4 @@
+import { RichText } from '@inzumer/ui-library';
 import { CostTable } from '@components/molecules/CostTable';
 import { ResultPanel } from '@components/molecules/ResultPanel';
 import { StepList } from '@components/molecules/StepList';
@@ -38,7 +39,9 @@ export const RecipeCostingResult = ({
       context={context}
     />
     <CostTable value={value} ids={ids} text={text} context={context} />
-    <h4 className="font-bold">{ui['steps-title']}</h4>
+    <RichText variant="h4" className="font-bold">
+      {ui['steps-title']}
+    </RichText>
     <StepList
       steps={steps}
       templates={text.steps}

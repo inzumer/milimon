@@ -1,5 +1,5 @@
 import { useId } from 'react';
-import { Button } from '@inzumer/ui-library';
+import { Button, RichText } from '@inzumer/ui-library';
 import { IngredientCard } from '@components/molecules/IngredientCard';
 import { NumberField } from '@components/molecules/NumberField';
 import { SaveToHistory } from '@components/molecules/SaveToHistory';
@@ -32,9 +32,9 @@ export const RecipeCostingCalculator = ({ lang, text, ui }: RecipeCostingCalcula
   return (
     <div className="flex flex-col gap-8">
       <section aria-labelledby={`${id}-examples`} className="flex flex-col gap-3">
-        <h3 id={`${id}-examples`} className="text-lg font-bold">
+        <RichText variant="h3" id={`${id}-examples`} className="text-lg font-bold">
           {ui['examples-title']}
-        </h3>
+        </RichText>
         <div className="flex flex-wrap items-center gap-3">
           <Button
             id={trackingId(SCOPE, 'button', 'load-example', RECIPE_EXAMPLE.id)}
@@ -44,9 +44,9 @@ export const RecipeCostingCalculator = ({ lang, text, ui }: RecipeCostingCalcula
           >
             {ui['load-example']}: {t.example(RECIPE_EXAMPLE.id)}
           </Button>
-          <span className="text-sm text-[var(--text-secondary)]">
+          <RichText variant="s3" className="text-[var(--text-secondary)]">
             {ui['example-source'].illustrative}
-          </span>
+          </RichText>
         </div>
       </section>
 
@@ -56,9 +56,9 @@ export const RecipeCostingCalculator = ({ lang, text, ui }: RecipeCostingCalcula
         onSubmit={(event) => event.preventDefault()}
         className="flex flex-col gap-5"
       >
-        <h3 id={`${id}-form`} className="text-lg font-bold">
+        <RichText variant="h3" id={`${id}-form`} className="text-lg font-bold">
           {ui['form-title']}
-        </h3>
+        </RichText>
         <NumberField
           id={trackingId(SCOPE, 'input', 'servings')}
           label={t.input('servings').label}
@@ -68,7 +68,9 @@ export const RecipeCostingCalculator = ({ lang, text, ui }: RecipeCostingCalcula
           onValueChange={calculator.setServings}
           onBlur={() => calculator.touch('servings')}
         />
-        <h4 className="font-bold">{t.label('ingredients-title')}</h4>
+        <RichText variant="h4" className="font-bold">
+          {t.label('ingredients-title')}
+        </RichText>
         {calculator.rows.map((row, index) => (
           <IngredientCard
             key={row.id}
@@ -111,9 +113,9 @@ export const RecipeCostingCalculator = ({ lang, text, ui }: RecipeCostingCalcula
         aria-live="polite"
         className="flex flex-col gap-4 rounded-xl bg-[var(--surface-secondary)] p-4"
       >
-        <h3 id={`${id}-result`} className="text-lg font-bold">
+        <RichText variant="h3" id={`${id}-result`} className="text-lg font-bold">
           {ui['result-title']}
-        </h3>
+        </RichText>
         {calculator.result ? (
           <>
             <RecipeCostingResult
@@ -134,7 +136,7 @@ export const RecipeCostingCalculator = ({ lang, text, ui }: RecipeCostingCalcula
             />
           </>
         ) : (
-          <p className="text-[var(--text-secondary)]">{ui['empty-result']}</p>
+          <RichText className="text-[var(--text-secondary)]">{ui['empty-result']}</RichText>
         )}
       </section>
     </div>

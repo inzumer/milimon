@@ -1,5 +1,5 @@
 ---
-import { Breadcrumbs } from '@inzumer/ui-library';
+import { Breadcrumbs, RichText } from '@inzumer/ui-library';
 import { LoginPanel } from '@components';
 import { getTranslations } from '@i18n';
 import PageLayout from '@layouts/page-layout.astro';
@@ -24,8 +24,12 @@ const breadcrumbs = getTranslations(lang, 'formula-page').breadcrumbs;
   />
   <div class="flex max-w-2xl flex-col gap-8">
     <header class="flex flex-col gap-3">
-      <h1 class="text-5xl">{page.title}</h1>
-      <p class="text-lg text-[var(--text-secondary)]">{page.description}</p>
+      <RichText variant="h1" bold className="font-display text-5xl">
+        {page.title}
+      </RichText>
+      <RichText variant="p1" className="text-[var(--text-secondary)]">
+        {page.description}
+      </RichText>
     </header>
     <LoginPanel
       client:load

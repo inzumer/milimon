@@ -1,5 +1,5 @@
 ---
-import { Breadcrumbs } from '@inzumer/ui-library';
+import { Breadcrumbs, RichText } from '@inzumer/ui-library';
 import { FeatureCard } from '@components';
 import {
   adjacentTopics,
@@ -40,17 +40,21 @@ const { previous, next } = adjacentTopics(id);
 
   <article class="flex flex-col gap-10">
     <header class="flex flex-col gap-3">
-      <h1 class="text-5xl">{topic.title}</h1>
-      <p class="max-w-2xl text-lg text-[var(--text-secondary)]">{topic.summary}</p>
+      <RichText variant="h1" bold className="font-display text-5xl">
+        {topic.title}
+      </RichText>
+      <RichText variant="p1" className="max-w-2xl text-[var(--text-secondary)]">
+        {topic.summary}
+      </RichText>
     </header>
 
     {topic.sections.map((section, index) => (
       <section aria-labelledby={`section-${index}`} class="flex max-w-3xl flex-col gap-3">
-        <h2 id={`section-${index}`} class="text-3xl">
+        <RichText variant="h2" bold id={`section-${index}`} className="font-display text-3xl">
           {section.heading}
-        </h2>
+        </RichText>
         {section.paragraphs?.map((paragraph) => (
-          <p class="leading-relaxed">{paragraph}</p>
+          <RichText className="leading-relaxed">{paragraph}</RichText>
         ))}
         {section.items && (
           <ul class="flex list-disc flex-col gap-2 pl-6 marker:text-[var(--text-link)]">
@@ -63,9 +67,9 @@ const { previous, next } = adjacentTopics(id);
     ))}
 
     <section aria-labelledby="related-formulas" class="flex flex-col gap-5">
-      <h2 id="related-formulas" class="text-3xl">
+      <RichText variant="h2" bold id="related-formulas" className="font-display text-3xl">
         {page['related-formulas']}
-      </h2>
+      </RichText>
       <ul class="grid gap-5 lg:grid-cols-2">
         {related.map((formulaId) => {
           const formula = getFormulaTranslation(lang, formulaId);
@@ -87,7 +91,9 @@ const { previous, next } = adjacentTopics(id);
     <nav aria-label={page['topic-navigation']} class="flex flex-wrap justify-between gap-4">
       {previous && (
         <a href={localizedPath(lang, 'learn', previous)} class="flex flex-col gap-1 font-semibold">
-          <span class="text-sm text-[var(--text-secondary)]">← {page.previous}</span>
+          <RichText variant="s3" className="text-[var(--text-secondary)]">
+            ← {page.previous}
+          </RichText>
           {getLearnTopic(lang, previous).title}
         </a>
       )}
@@ -96,7 +102,9 @@ const { previous, next } = adjacentTopics(id);
           href={localizedPath(lang, 'learn', next)}
           class="ml-auto flex flex-col gap-1 text-right font-semibold"
         >
-          <span class="text-sm text-[var(--text-secondary)]">{page.next} →</span>
+          <RichText variant="s3" className="text-[var(--text-secondary)]">
+            {page.next} →
+          </RichText>
           {getLearnTopic(lang, next).title}
         </a>
       )}

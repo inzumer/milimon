@@ -1,5 +1,5 @@
 import { useId, useMemo, useRef, useState, useSyncExternalStore } from 'react';
-import { Button } from '@inzumer/ui-library';
+import { Button, RichText } from '@inzumer/ui-library';
 import { ButtonLink } from '@components/atoms/ButtonLink';
 import {
   createSessionStore,
@@ -69,18 +69,23 @@ export const AccountMenuSection = ({
 
   return (
     <section aria-labelledby={titleId} className="flex flex-col gap-3">
-      <h3
+      <RichText
+        variant="h3"
         id={titleId}
         className="text-sm font-bold tracking-wide text-[var(--text-secondary)] uppercase"
       >
         {labels.title}
-      </h3>
+      </RichText>
       {user ? (
         <>
-          <p className="flex flex-col">
-            <span className="text-sm text-[var(--text-secondary)]">{labels.signedInAs}</span>
-            <span className="font-bold">{user.name ?? user.email}</span>
-          </p>
+          <RichText className="flex flex-col">
+            <RichText variant="s3" className="text-[var(--text-secondary)]">
+              {labels.signedInAs}
+            </RichText>
+            <RichText variant="s2" className="font-bold">
+              {user.name ?? user.email}
+            </RichText>
+          </RichText>
           <div className="flex flex-wrap gap-2">
             <ButtonLink
               id={trackingId('menu', 'link', 'account')}
@@ -103,7 +108,9 @@ export const AccountMenuSection = ({
         </>
       ) : (
         <>
-          <p className="text-sm text-[var(--text-secondary)]">{labels.signedOutHint}</p>
+          <RichText variant="p3" className="text-[var(--text-secondary)]">
+            {labels.signedOutHint}
+          </RichText>
           <ButtonLink
             id={trackingId('menu', 'link', 'sign-in')}
             href={loginHref}

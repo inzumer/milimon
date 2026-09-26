@@ -1,4 +1,6 @@
 ---
+import { RichText } from '@inzumer/ui-library';
+import { AUTHOR_HANDLE, AUTHOR_URL } from '@constants';
 import { getTranslations } from '@i18n';
 import { isContainerId } from '@services';
 import { localizedPath, trackingId, type Locale } from '@utils';
@@ -12,39 +14,76 @@ const common = getTranslations(lang, 'common');
 const year = new Date().getFullYear();
 // Without Tag Manager there are no optional cookies to choose.
 const analyticsEnabled = isContainerId(import.meta.env.PUBLIC_GTM_ID);
+const [beforeAuthor, afterAuthor] = common.footer.disclaimer.split('{author}');
+const linkClass =
+  'inline-flex min-h-6 items-center font-semibold text-[var(--text-link)] underline';
 ---
 
 <footer class="mt-16 border-t border-[var(--border-default)] bg-[var(--surface-secondary)]">
-  <div class="mx-auto flex w-full max-w-layout flex-col gap-1 px-4 py-8 text-sm text-[var(--text-secondary)]">
-    <p class="font-display text-xl font-bold text-[var(--text-primary)]">{common['app-name']}</p>
-    <p>{common.footer.tagline}</p>
-    <p>{common.footer.source}</p>
-    <p class="flex flex-wrap items-center gap-x-4 gap-y-2">
-      <span>© {year}</span>
+  <div class="mx-auto flex w-full max-w-layout flex-col items-center gap-6 px-4 py-8 text-center">
+    <div class="flex flex-col items-center gap-1">
+      <RichText as="p" variant="h4" bold className="font-display">
+        {common['app-name']}
+      </RichText>
+      <RichText variant="p3" className="text-[var(--text-secondary)]">
+        {common.footer.tagline}
+      </RichText>
+      <RichText variant="p3" className="text-[var(--text-secondary)]">
+        {common.footer.source}
+      </RichText>
+    </div>
+
+    <nav aria-label={common.footer['legal-nav']}>
+      <ul class="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm">
+        <li>
+          <a
+            id={trackingId('footer', 'link', 'privacy')}
+            href={localizedPath(lang, 'privacy')}
+            class={linkClass}
+          >
+            {common.footer.privacy}
+          </a>
+        </li>
+        <li>
+          <a
+            id={trackingId('footer', 'link', 'terms')}
+            href={localizedPath(lang, 'terms')}
+            class={linkClass}
+          >
+            {common.footer.terms}
+          </a>
+        </li>
+        {analyticsEnabled && (
+          <li>
+            <button
+              id={trackingId('footer', 'button', 'cookie-preferences')}
+              type="button"
+              data-open-cookie-preferences
+              class:list={[linkClass, 'cursor-pointer']}
+            >
+              {common.footer['cookie-preferences']}
+            </button>
+          </li>
+        )}
+      </ul>
+    </nav>
+
+    <RichText
+      as="p"
+      variant="s4"
+      className="w-full border-t border-[var(--border-default)] pt-6 text-[var(--text-secondary)]"
+    >
+      {`© ${year} ${beforeAuthor}`}
       <a
-        id={trackingId('footer', 'link', 'privacy')}
-        href={localizedPath(lang, 'privacy')}
-        class="inline-flex min-h-6 items-center font-semibold text-[var(--text-link)] underline"
+        id={trackingId('footer', 'link', 'author')}
+        href={AUTHOR_URL}
+        target="_blank"
+        rel="noopener"
+        class="font-semibold text-[var(--text-link)] underline"
       >
-        {common.footer.privacy}
+        {AUTHOR_HANDLE}
       </a>
-      <a
-        id={trackingId('footer', 'link', 'terms')}
-        href={localizedPath(lang, 'terms')}
-        class="inline-flex min-h-6 items-center font-semibold text-[var(--text-link)] underline"
-      >
-        {common.footer.terms}
-      </a>
-      {analyticsEnabled && (
-        <button
-          id={trackingId('footer', 'button', 'cookie-preferences')}
-          type="button"
-          data-open-cookie-preferences
-          class="inline-flex min-h-6 cursor-pointer items-center font-semibold text-[var(--text-link)] underline"
-        >
-          {common.footer['cookie-preferences']}
-        </button>
-      )}
-    </p>
+      {afterAuthor}
+    </RichText>
   </div>
 </footer>

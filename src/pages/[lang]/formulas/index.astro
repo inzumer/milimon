@@ -1,5 +1,5 @@
 ---
-import { Breadcrumbs } from '@inzumer/ui-library';
+import { Breadcrumbs, RichText } from '@inzumer/ui-library';
 import { FeatureCard } from '@components';
 import { getFormulaTranslation, getTranslations } from '@i18n';
 import PageLayout from '@layouts/page-layout.astro';
@@ -24,16 +24,20 @@ const groups = formulasByGroup();
     className="mb-6"
   />
   <header class="mb-10 flex flex-col gap-3">
-    <h1 class="text-5xl">{page.index.title}</h1>
-    <p class="max-w-2xl text-lg text-[var(--text-secondary)]">{page.index.intro}</p>
+    <RichText variant="h1" bold className="font-display text-5xl">
+      {page.index.title}
+    </RichText>
+    <RichText variant="p1" className="max-w-2xl text-[var(--text-secondary)]">
+      {page.index.intro}
+    </RichText>
   </header>
 
   <div class="flex flex-col gap-12">
     {FORMULA_GROUPS.map((group) => (
       <section aria-labelledby={`group-${group}`} class="flex flex-col gap-5">
-        <h2 id={`group-${group}`} class="text-3xl">
+        <RichText variant="h2" bold id={`group-${group}`} className="font-display text-3xl">
           {page.groups[group]}
-        </h2>
+        </RichText>
         <ul class="grid gap-5 lg:grid-cols-2">
           {groups[group].map((formula) => {
             const text = getFormulaTranslation(lang, formula.id);

@@ -1,3 +1,4 @@
+import { RichText } from '@inzumer/ui-library';
 import { StepList } from '@components/molecules/StepList';
 import { formulaText, type CalculatorText } from '@i18n/formula-text';
 import type { Translations } from '@i18n/translations';
@@ -82,7 +83,9 @@ export interface OmnesResultProps {
 export const OmnesResult = ({ value, steps, text, ui, context }: OmnesResultProps) => (
   <>
     <Summary value={value} text={text} context={context} />
-    <h4 className="font-bold">{ui['steps-title']}</h4>
+    <RichText variant="h4" className="font-bold">
+      {ui['steps-title']}
+    </RichText>
     <StepList steps={steps} templates={text.steps} kinds={STEP_KINDS} context={context} />
   </>
 );
