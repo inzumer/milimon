@@ -45,9 +45,15 @@
   },
   "consent": {
     "title": "¿Nos ayudás a mejorar?",
-    "message": "Usamos Google Analytics para saber qué fórmulas se usan más y mejorar el manual. Solo se activa si aceptás; nunca guardamos los números que cargás.",
+    "message": "Usamos herramientas de Google (Tag Manager y Analytics) para saber qué fórmulas se usan más y mejorar el manual. Solo se activan si aceptás; nunca guardamos los números que cargás.",
     "accept": "Aceptar",
     "reject": "Rechazar",
     "privacy-link": "Política de privacidad"
+  },
+  "migration": {
+    "title": "Encontramos datos en este dispositivo",
+    "description": "Tenés una configuración, cálculos o un historial guardados en este dispositivo. ¿Querés pasarlos a tu cuenta?",
+    "import": "Sí, guardarlos en mi cuenta",
+    "fresh": "No, empezar de cero"
   }
 }

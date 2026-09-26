@@ -1,9 +1,7 @@
 import { getBrowserStorage, readJson, writeJson, type KeyValueStorage } from '@utils';
 
-/** What the person typed in a calculator, as raw text (numbers) or booleans (toggles). */
 export type CalculatorDraft = Record<string, string | boolean>;
 
-/** Every saved draft, keyed by formula id. */
 export type CalculatorDrafts = Record<string, CalculatorDraft>;
 
 export const CALCULATIONS_STORAGE_KEY = 'milimon:calculations';
@@ -15,9 +13,7 @@ export interface CalculationsRepository {
   loadDraft: (formulaId: string) => CalculatorDraft | null;
   saveDraft: (formulaId: string, draft: CalculatorDraft) => void;
   clearDraft: (formulaId: string) => void;
-  /** Every draft at once (account sync). */
   loadAll: () => CalculatorDrafts;
-  /** Replaces every draft at once, without change events (account sync applying remote data). */
   replaceAll: (drafts: CalculatorDrafts) => void;
 }
 

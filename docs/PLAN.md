@@ -58,10 +58,11 @@ sobre `@inzumer/ui-library` + `@inzumer/tokens` personalizados con la identidad 
 ```
 @components  → src/components/index.ts   (atoms / molecules / organisms / templates, React)
 @layouts/*   → src/layouts/*             (layouts .astro)
-@calculators → src/calculators/index.ts  (islas de calculadora)
-@domain      → src/domain/index.ts       (fórmulas puras + registry)
-@hooks       → src/hooks/index.ts
-@utils       → src/utils/index.ts
+@calculators → src/calculators/index.ts  (solo las islas de calculadora)
+@constants   → src/constants/index.ts    (valores ajustables)
+@hooks       → src/hooks/index.ts        (estado de React, incluidos los hooks de cada calculadora)
+@utils       → src/utils/index.ts        (@utils/formulas: fórmulas + registry; @utils/calculation: resultado, validación, redondeo)
+@services    → src/services/index.ts     (API de cuentas, GTM, SDKs de login)
 @i18n        → src/i18n/index.ts
 @assets/*    → src/assets/*
 @styles/*    → src/styles/*
@@ -82,15 +83,15 @@ src/
     404.astro
   layouts/          base-layout.astro (head, meta, hreflang, script de tema), page-layout.astro
   components/       atoms | molecules | organisms | templates  (<Name>/Name.tsx, .styles.ts, __tests__/, index.ts)
-  calculators/      <Name>Calculator/ (una isla por fórmula) + CalculatorPicker/
-  domain/
-    formulas/       waste-percentage.ts, waste-factor.ts, gross-quantity.ts, clean-price.ts,
-                    cooking-loss.ts, recipe-costing.ts, cost-of-goods.ts, pricing.ts,
-                    income-statement.ts, break-even.ts, omnes-rules.ts, floor-area.ts, rent-check.ts
-    registry.ts     catálogo de fórmulas (id, inputs, compute, ejemplos del manual)
+  calculators/      solo las islas: FormulaCalculator, RecipeCostingCalculator, OmnesCalculator, CalculatorPicker
   i18n/             ver §3
-  hooks/            usePersistentState, useColorScheme, useNumberFormat…
-  utils/            parseDecimal, round, formatNumber, formatCurrency, analytics (track no-op)
+  hooks/            useFormulaCalculator, useRecipeCostingCalculator, useOmnesCalculator, useDraft, useCurrency, useColorScheme
+  utils/
+    formulas/       una función pura por fórmula + registry.ts (catálogo: inputs, cálculo, ejemplos del manual)
+    calculation/    resultado con pasos, validación, redondeo
+    …               parseDecimal, formatValue, trackingId, interpolate, rutas, storage, track()
+  constants/        valores ajustables (reintentos, timeouts, patrones)
+  services/         API de cuentas, Google Tag Manager, SDKs de login
   styles/           theme.css (overrides de tokens claro/oscuro), fonts.css
   test/             setup.ts, fixtures con los ejemplos del manual
 ```
@@ -310,7 +311,7 @@ sus convenciones (cva + `cn` + tokens + tests) y, una vez estables, se suben a l
 
 ## 7. Fórmulas a cubrir (según el manual)
 
-Cada fórmula se escribe **una sola vez** en `src/domain` como función pura y se registra en
+Cada fórmula se escribe **una sola vez** en `src/utils/formulas` como función pura y se registra en
 `registry.ts`. El registry alimenta el menú, las páginas, el desplegable y las validaciones de i18n.
 
 | id                 | Herramienta                      | Fórmulas (manual)                                                                                                                                                                                                                                                                                                                                                    |
@@ -451,11 +452,11 @@ el plan premium sobre las cuentas de F10.
 
 ## 10. Cuentas y perfiles (fase final) — hecho
 
-> Implementado según [ADR 0003](adr/0003-accounts-with-supabase.md): Supabase con PKCE, sincronización
-> offline-first, migración de datos locales en el primer inicio, página `/[lang]/account` (cerrar
-> sesión, borrar cuenta), términos, privacidad con instrucciones de borrado y guía de
-> configuración en [ACCOUNTS.md](ACCOUNTS.md). Las recetas guardadas viajan como borradores del
-> costeo de recetas; el historial de cálculos se suma como §10 bis.
+> Implementado con una API propia en otro repositorio ([ADR 0004](adr/0004-accounts-api.md)):
+> [api-milimon-cost-lab](https://github.com/inzumer/api-milimon-cost-lab) (NestJS + PostgreSQL), login
+> con Google Identity Services y Facebook Login, sincronización offline-first, páginas `/login` y
+> `/account`, términos, privacidad con instrucciones de borrado. Configuración en
+> [ACCOUNTS.md](ACCOUNTS.md). (La primera versión con Supabase, ADR 0003, quedó reemplazada.)
 
 Objetivo: que cualquier persona, en cualquier país, guarde su configuración (moneda, formato,
 idioma, tema), sus recetas y sus cálculos en un perfil propio.
@@ -463,9 +464,8 @@ idioma, tema), sus recetas y sus cálculos en un perfil propio.
 - **Login con Google y Facebook** (OAuth), con un botón "Iniciar sesión" en la home y en el header/menú.
 - **La app sigue funcionando sin cuenta** (modo invitado con `localStorage`). Al iniciar sesión por
   primera vez se ofrece migrar lo guardado localmente al perfil.
-- Propuesta técnica: **Supabase** (Auth con Google y Facebook + Postgres con Row Level Security:
-  cada usuario solo ve sus propios datos). El SDK funciona desde el navegador, así que el sitio
-  sigue siendo estático, sin SSR. Alternativa equivalente: Firebase Auth + Firestore.
+- Backend en su propio repo, con las convenciones de `api-zamuner`: NestJS + PostgreSQL + TypeORM,
+  en Render (gratis) con la base en Neon (gratis). El front sigue siendo estático.
 - Tablas iniciales: `profiles` (moneda, locale, idioma, tema), `recipes` (+ ingredientes),
   `saved_calculations` (herramienta, inputs, fecha).
 - Requisitos que hay que prever:
@@ -487,7 +487,7 @@ idioma, tema), sus recetas y sus cálculos en un perfil propio.
 - **Hasta 15 cálculos**; al guardar el 16.º se descarta el más viejo. El límite se aplica en el
   cliente (`HISTORY_LIMIT`) y en la base (trigger).
 - Funciona **sin cuenta** (`localStorage`) y se sincroniza con la cuenta igual que la
-  configuración (migración `supabase/migrations/*_calculation_history.sql`).
+  configuración (tabla `history_entry` en la API).
 - Página `/[lang]/history` (en el menú): fecha, fórmula y resultado principal; "Ver la cuenta
   completa" la muestra con los mismos componentes que la calculadora; "Abrir en la calculadora"
   recarga los valores; "Borrar".
@@ -505,7 +505,7 @@ Flujo de ramas (gitflow, ver CLAUDE.md): cada fase se trabaja en `feature/*` des
 | ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | **F0 · Setup**                 | `git init`, Astro + React + TS estricto, Tailwind + preset, aliases, ESLint/Prettier (+ plugins astro), cspell con diccionario español, Vitest 90%, CLAUDE.md, `.claude/`, PR template, CI, `.nvmrc`, README                                                                                                                                                 |
 | **F1 · Tema + shell**          | tokens Milimon claro/oscuro, script anti-parpadeo, fuentes self-hosted, layout mobile-first/centrado ≥1024, Header + Drawer hamburguesa, toggles de idioma y tema, Footer, rutas `[lang]`, redirect raíz, 404, traductor tipado + tests de paridad de i18n                                                                                                   |
-| **F2 · Dominio**               | fórmulas puras con tests usando los ejemplos del manual (100% de cobertura en `domain/`), parseo/formato de números y moneda, registry, repositorios de persistencia (`local`)                                                                                                                                                                               |
+| **F2 · Dominio**               | fórmulas puras con tests usando los ejemplos del manual (100% de cobertura en `utils/formulas`), parseo/formato de números y moneda, registry, repositorios de persistencia (`local`)                                                                                                                                                                        |
 | **F3 · Calculadoras**          | `NumberField`, `CalculatorForm`, `ResultPanel` con desarrollo de la cuenta, `Select`, una isla por herramienta, `RecipeCostingTable`, panel de configuración (moneda)                                                                                                                                                                                        |
 | **F4 · Páginas de fórmulas**   | índice + detalle con explicación, ejemplos del manual, notas de estudio, "Probar este ejemplo" y calculadora embebida; traducciones es/en de cada carpeta                                                                                                                                                                                                    |
 | **F5 · Calculadora general**   | página con desplegable, `?tool=`, links a la explicación                                                                                                                                                                                                                                                                                                     |

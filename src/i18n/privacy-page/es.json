@@ -13,9 +13,9 @@
     "analytics": {
       "heading": "Analítica (solo con tu permiso)",
       "paragraphs": [
-        "Si aceptás, usamos Google Analytics 4 para medir de forma agregada qué páginas se visitan y qué herramientas se usan: por ejemplo, que se calculó el factor de desecho o se cargó un ejemplo del manual.",
-        "Nunca enviamos los números que cargás en las calculadoras. Google Analytics sí recibe datos técnicos de la visita (dirección IP abreviada, navegador, dispositivo, país aproximado) y guarda cookies propias (_ga) para distinguir visitas.",
-        "Si no respondés o rechazás, el script de Google no se carga y no se guarda ninguna cookie de analítica."
+        "Si aceptás, cargamos Google Tag Manager y, a través de él, Google Analytics, para medir de forma agregada qué páginas se visitan y qué herramientas se usan: por ejemplo, que se calculó el factor de desecho, se cargó un ejemplo del manual o se tocó un botón.",
+        "Nunca enviamos los números que cargás en las calculadoras. Google sí recibe datos técnicos de la visita (dirección IP abreviada, navegador, dispositivo, país aproximado) y guarda cookies propias (_ga) para distinguir visitas.",
+        "Si no respondés o rechazás, los scripts de Google no se cargan y no se guarda ninguna cookie de analítica."
       ]
     },
     "your-choice": {
@@ -28,7 +28,7 @@
       "heading": "Cuentas (opcional)",
       "paragraphs": [
         "Si iniciás sesión con Google o Facebook, guardamos tu nombre, tu correo y tu foto de perfil tal como los comparte el proveedor, para mostrarte quién tiene la sesión iniciada. Nunca vemos ni guardamos tu contraseña.",
-        "En tu perfil guardamos tu moneda, idioma y tema, y los últimos valores de cada calculadora, para que te sigan a cualquier dispositivo. Los datos se alojan en Supabase y cada fila solo puede leerla su dueño.",
+        "En tu perfil guardamos tu moneda, idioma y tema, los últimos valores de cada calculadora y tu historial de cálculos, para que te sigan a cualquier dispositivo. Los datos se guardan en nuestro servidor (API alojada en Render, base de datos en Neon), viajan cifrados y solo vos podés acceder a los tuyos.",
         "No vendemos ni compartimos estos datos, y no los usamos para publicidad."
       ]
     },
@@ -41,6 +41,6 @@
       ]
     }
   },
-  "preference-label": "Permitir la analítica (Google Analytics)",
+  "preference-label": "Permitir la analítica (Google Tag Manager y Google Analytics)",
   "analytics-disabled": "La analítica está desactivada en este sitio: no se carga ningún script de terceros."
 }

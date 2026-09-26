@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import type { FormulaId } from '@domain/registry';
+import type { FormulaId } from '@utils/formulas';
 import type { Locale } from '@utils/locale';
 
 const text = z.string().trim().min(1);
@@ -12,7 +12,6 @@ const inputTextSchema = z.object({
 
 export const NOTE_TYPES = ['tip', 'common-mistake', 'rounding', 'manual-difference'] as const;
 
-/** Study-manual content of a formula page (our own wording, based on the manual). */
 const studySchema = z.object({
   what: z.array(text).min(1),
   formula: z.array(text).min(1),
@@ -22,11 +21,6 @@ const studySchema = z.object({
   notes: z.array(z.object({ type: z.enum(NOTE_TYPES), text })).min(1),
 });
 
-/**
- * Shape of `src/i18n/formulas/<formula-id>/{es,en}.json`. Keys are kebab-case versions of the
- * registry keys (`grossWeight` → `gross-weight`). Validated when loaded, so broken content fails
- * the build instead of rendering holes.
- */
 export const formulaTranslationSchema = z.object({
   title: text,
   summary: text,
@@ -35,11 +29,8 @@ export const formulaTranslationSchema = z.object({
   outputs: z.record(z.string(), text),
   steps: z.record(z.string(), text),
   examples: z.record(z.string(), z.object({ title: text })),
-  /** Labels for text results (e.g. `buy-gross`, `too-high`). */
   choices: z.record(z.string(), text).optional(),
-  /** Field-specific error messages: `<input-key>.<error-code>`. */
   errors: z.record(z.string(), text).optional(),
-  /** Extra UI strings used by custom calculators (buttons, table headers, example item names…). */
   labels: z.record(z.string(), text).optional(),
 });
 

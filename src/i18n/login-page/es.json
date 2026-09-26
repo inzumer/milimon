@@ -1,0 +1,20 @@
+{
+  "title": "Iniciar sesión",
+  "description": "Entrá con tu cuenta de Google o Facebook para guardar tu moneda, tus preferencias y tus cálculos en cualquier dispositivo.",
+  "panel": {
+    "intro": "No hace falta una cuenta para usar la calculadora: con una cuenta, tu configuración y tus cálculos te siguen a cualquier dispositivo.",
+    "continue-with-facebook": "Continuar con Facebook",
+    "signing-in": "Iniciando sesión…",
+    "waking-up": "El servidor se está despertando (puede tardar hasta un minuto la primera vez)…",
+    "error": "No pudimos iniciar la sesión. Probá de nuevo en unos minutos.",
+    "cancelled": "Se canceló el inicio de sesión con Facebook.",
+    "provider-error": "No se pudo cargar el botón para iniciar sesión. Revisá tu conexión o si un bloqueador lo está frenando.",
+    "unavailable": "El inicio de sesión todavía no está disponible. Mientras tanto, todo lo que cargás se guarda en este dispositivo.",
+    "loading": "Preparando el inicio de sesión…",
+    "already-signed-in": "Ya iniciaste sesión como {name}.",
+    "go-to-account": "Ir a mi cuenta",
+    "legal": "Al continuar aceptás los {terms} y la {privacy}.",
+    "terms": "términos de uso",
+    "privacy": "política de privacidad"
+  }
+}

@@ -13,9 +13,9 @@
     "analytics": {
       "heading": "Analytics (only with your permission)",
       "paragraphs": [
-        "If you accept, we use Google Analytics 4 to measure, in aggregate, which pages are visited and which tools are used: for example, that the waste factor was calculated or a handbook example was loaded.",
-        "We never send the numbers you enter in the calculators. Google Analytics does receive technical data about the visit (truncated IP address, browser, device, approximate country) and sets its own cookies (_ga) to tell visits apart.",
-        "If you don't answer or you reject, the Google script is not loaded and no analytics cookie is set."
+        "If you accept, we load Google Tag Manager and, through it, Google Analytics, to measure in aggregate which pages are visited and which tools are used: for example, that the waste factor was calculated, a handbook example was loaded or a button was tapped.",
+        "We never send the numbers you enter in the calculators. Google does receive technical data about the visit (truncated IP address, browser, device, approximate country) and sets its own cookies (_ga) to tell visits apart.",
+        "If you don't answer or you reject, Google's scripts are not loaded and no analytics cookie is set."
       ]
     },
     "your-choice": {
@@ -28,7 +28,7 @@
       "heading": "Accounts (optional)",
       "paragraphs": [
         "If you sign in with Google or Facebook, we store your name, email and profile picture as the provider shares them, to show who is signed in. We never see or store your password.",
-        "Your profile keeps your currency, language and theme, and the latest values of each calculator, so they follow you to any device. The data is hosted on Supabase and each row can only be read by its owner.",
+        "Your profile keeps your currency, language and theme, the latest values of each calculator and your calculation history, so they follow you to any device. The data lives on our server (API hosted on Render, database on Neon), travels encrypted and only you can access yours.",
         "We don't sell or share this data and we don't use it for advertising."
       ]
     },
@@ -41,6 +41,6 @@
       ]
     }
   },
-  "preference-label": "Allow analytics (Google Analytics)",
+  "preference-label": "Allow analytics (Google Tag Manager and Google Analytics)",
   "analytics-disabled": "Analytics is turned off on this site: no third-party script is loaded."
 }

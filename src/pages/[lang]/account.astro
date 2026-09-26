@@ -3,8 +3,7 @@ import { Breadcrumbs } from '@inzumer/ui-library';
 import { AccountPanel } from '@components';
 import { getTranslations } from '@i18n';
 import PageLayout from '@layouts/page-layout.astro';
-import { readAccountConfig } from '@services';
-import { LOCALES, localizedPath, toLocale } from '@utils';
+import { LOCALES, localizedPath, toLocale, trackingId } from '@utils';
 
 export function getStaticPaths() {
   return LOCALES.map((lang) => ({ params: { lang } }));
@@ -14,8 +13,6 @@ const lang = toLocale(Astro.params.lang);
 const common = getTranslations(lang, 'common');
 const page = getTranslations(lang, 'account-page');
 const breadcrumbs = getTranslations(lang, 'formula-page').breadcrumbs;
-const accountsEnabled = readAccountConfig(import.meta.env) !== null;
-const path = localizedPath(lang, 'account');
 ---
 
 <PageLayout lang={lang} title={page.title} description={page.description} noindex>
@@ -30,14 +27,17 @@ const path = localizedPath(lang, 'account');
       <h1 class="text-5xl">{page.title}</h1>
       <p class="text-lg text-[var(--text-secondary)]">{page.description}</p>
     </header>
-    {accountsEnabled ? (
-      <AccountPanel client:load labels={page.panel} returnPath={path} />
-    ) : (
-      <p class="rounded-lg bg-[var(--surface-secondary)] p-4">{page.disabled}</p>
-    )}
+    <AccountPanel
+      client:load
+      labels={page.panel}
+      migrationLabels={common.migration}
+      unavailableLabel={page.disabled}
+      loginHref={localizedPath(lang, 'login')}
+    />
     <p class="text-sm text-[var(--text-secondary)]">
       {page['privacy-note']}{' '}
       <a
+        id={trackingId('account', 'link', 'privacy')}
         href={localizedPath(lang, 'privacy')}
         class="font-semibold text-[var(--text-link)] underline"
       >

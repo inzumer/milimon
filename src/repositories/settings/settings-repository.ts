@@ -1,3 +1,4 @@
+import { SETTINGS_STORAGE_KEY } from '@constants';
 import {
   getBrowserStorage,
   isLocale,
@@ -10,20 +11,15 @@ import {
 export type ColorScheme = 'light' | 'dark';
 
 export interface Settings {
-  /** Explicit choice; `null` follows the operating system (`prefers-color-scheme`). */
   colorScheme: ColorScheme | null;
-  /** Last language the user picked; `null` lets the root redirect detect it from the browser. */
   locale: Locale | null;
-  /** ISO 4217 code used to display amounts (display only, no conversion). */
   currency: string;
-  /** Analytics cookies: `null` until the person answers the consent banner. */
   analyticsConsent: AnalyticsConsent | null;
 }
 
 export type AnalyticsConsent = 'granted' | 'denied';
 
-/** Shared with the inline theme/redirect scripts in `.astro` files, which can't import modules. */
-export const SETTINGS_STORAGE_KEY = 'milimon:settings';
+export { SETTINGS_STORAGE_KEY } from '@constants';
 
 export const DEFAULT_SETTINGS: Readonly<Settings> = {
   colorScheme: null,

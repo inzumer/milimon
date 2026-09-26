@@ -1,25 +1,45 @@
+import { AUTH_STORAGE_KEY } from '@constants';
 import { getBrowserStorage, readJson, type KeyValueStorage } from '@utils';
 
 export interface AccountConfig {
-  url: string;
-  /** Supabase publishable (or legacy anon) key: public by design, data is protected by RLS. */
-  key: string;
+  apiUrl: string;
+  apiKey: string;
+  appId: string;
+  googleClientId: string | null;
+  facebookAppId: string | null;
 }
 
-/** Where the auth SDK keeps the session, so pages can tell there is one without loading the SDK. */
-export const AUTH_STORAGE_KEY = 'milimon:auth';
+export interface AccountEnv {
+  PUBLIC_API_URL?: string | undefined;
+  PUBLIC_API_KEY?: string | undefined;
+  PUBLIC_API_APP_ID?: string | undefined;
+  PUBLIC_GOOGLE_CLIENT_ID?: string | undefined;
+  PUBLIC_FACEBOOK_APP_ID?: string | undefined;
+}
 
-/** Accounts exist only when both public variables are set; otherwise the login UI is hidden. */
-export const readAccountConfig = (env: {
-  PUBLIC_SUPABASE_URL?: string | undefined;
-  PUBLIC_SUPABASE_PUBLISHABLE_KEY?: string | undefined;
-}): AccountConfig | null => {
-  const url = env.PUBLIC_SUPABASE_URL?.trim();
-  const key = env.PUBLIC_SUPABASE_PUBLISHABLE_KEY?.trim();
-  if (!url || !key || !/^https:\/\/\S+$/.test(url)) {
+const clean = (value: string | undefined): string | null => {
+  const trimmed = value?.trim();
+  return trimmed ? trimmed : null;
+};
+
+/**
+ * Accounts are on when the API address and key are set; each sign-in provider is offered only
+ * when its id is set. The API key ships in the public bundle on purpose: it identifies this
+ * client, it doesn't protect data (the access token does).
+ */
+export const readAccountConfig = (env: AccountEnv): AccountConfig | null => {
+  const apiUrl = clean(env.PUBLIC_API_URL)?.replace(/\/+$/, '') ?? null;
+  const apiKey = clean(env.PUBLIC_API_KEY);
+  if (!apiUrl || !apiKey || !/^https?:\/\/\S+$/.test(apiUrl)) {
     return null;
   }
-  return { url, key };
+  return {
+    apiUrl,
+    apiKey,
+    appId: clean(env.PUBLIC_API_APP_ID) ?? 'web',
+    googleClientId: clean(env.PUBLIC_GOOGLE_CLIENT_ID),
+    facebookAppId: clean(env.PUBLIC_FACEBOOK_APP_ID),
+  };
 };
 
 export const hasStoredSession = (storage: KeyValueStorage | null = getBrowserStorage()): boolean =>

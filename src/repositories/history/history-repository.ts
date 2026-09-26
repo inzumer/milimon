@@ -1,39 +1,29 @@
 import { isDraft, type CalculatorDraft } from '@repositories/calculations';
 import { getBrowserStorage, readJson, writeJson, type KeyValueStorage } from '@utils';
 
-/** Main result shown in the history list (label key from the formula's `outputs` texts). */
 export interface HistoryHeadline {
   output: string;
   value: number;
-  /** A `ValueKind` of the registry (currency, percentage, weight…), used to format the value. */
   kind: string;
 }
 
-/** One line of the worked calculation (same shape as the domain's `Step`). */
 export interface SavedStep {
   id: string;
   values: Record<string, number>;
 }
 
-/** The complete result as the calculator showed it: every output value and every step. */
 export interface SavedResult {
   value: Record<string, unknown>;
   steps: SavedStep[];
 }
 
-/** A whole calculation the person chose to keep: what they entered and what it gave. */
 export interface HistoryEntry {
   id: string;
   formulaId: string;
-  /** ISO 8601 date and time. */
   savedAt: string;
-  /** The values typed in the calculator, restorable as-is. */
   draft: CalculatorDraft;
-  /** Currency the amounts were entered in. */
   currency: string;
-  /** Snapshot of the result: it stays as calculated even if a formula changes later. */
   result: SavedResult;
-  /** Main value for the history list. */
   headline: HistoryHeadline | null;
 }
 
@@ -54,11 +44,9 @@ export type HistoryChange =
 export const HISTORY_CHANGED_EVENT = 'milimon:history-changed';
 
 export interface HistoryRepository {
-  /** Newest first. */
   list: () => HistoryEntry[];
   add: (entry: NewHistoryEntry) => HistoryEntry;
   remove: (id: string) => void;
-  /** Replaces the whole history (account sync applying remote data). */
   replaceAll: (entries: HistoryEntry[]) => void;
 }
 

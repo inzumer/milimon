@@ -1,70 +1,49 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useId, useRef, useState } from 'react';
 import { Button } from '@inzumer/ui-library';
+import { ButtonLink } from '@components/atoms/ButtonLink';
+import { MigrationPrompt } from '@components/molecules/MigrationPrompt';
+import type { Translations } from '@i18n/translations';
 import {
-  AUTH_PROVIDERS,
+  disableGoogleAutoSelect,
   getAccountSession,
+  SessionExpiredError,
   type AccountSession,
   type AccountUser,
-  type AuthProvider,
 } from '@services/account';
-import { interpolate } from '@utils';
+import { track, trackingId } from '@utils';
 
-export interface AccountPanelLabels {
-  loading: string;
-  'signed-out-intro': string;
-  'continue-with': string;
-  'sign-in-error': string;
-  'signed-in-as': string;
-  'sync-note': string;
-  'sign-out': string;
-  'signed-out': string;
-  'migration-title': string;
-  'migration-description': string;
-  'migration-import': string;
-  'migration-fresh': string;
-  'delete-title': string;
-  'delete-description': string;
-  delete: string;
-  'delete-confirm': string;
-  'delete-cancel': string;
-  'delete-question': string;
-  deleted: string;
-  error: string;
-  retry: string;
-}
+export type AccountPanelLabels = Translations<'account-page'>['panel'];
 
 export interface AccountPanelProps {
   labels: AccountPanelLabels;
-  /** Absolute or root-relative URL of this page: the provider sends the person back here. */
-  returnPath: string;
-  /** Injected in tests; defaults to the page's shared account session. */
-  loadSession?: () => Promise<AccountSession | null>;
+  migrationLabels: Translations<'common'>['migration'];
+  unavailableLabel: string;
+  loginHref: string;
+  loadSession?: () => AccountSession | null;
 }
 
 type View =
   | { kind: 'loading' }
+  | { kind: 'unavailable' }
   | { kind: 'signed-out'; notice?: string }
   | { kind: 'migration'; user: AccountUser }
   | { kind: 'signed-in'; user: AccountUser }
   | { kind: 'error' };
 
-const PROVIDER_NAMES: Record<AuthProvider, string> = { google: 'Google', facebook: 'Facebook' };
-
-/**
- * Sign in with Google or Facebook, decide what happens with this device's data on the first
- * sign-in, sign out and delete the account. Rendered only when accounts are configured.
- */
+/** The signed-in person: who they are, sign out and delete the account. */
 export const AccountPanel = ({
   labels,
-  returnPath,
+  migrationLabels,
+  unavailableLabel,
+  loginHref,
   loadSession = getAccountSession,
 }: AccountPanelProps) => {
   const [view, setView] = useState<View>({ kind: 'loading' });
   const [busy, setBusy] = useState(false);
-  const [signInFailed, setSignInFailed] = useState(false);
   const [confirmingDelete, setConfirmingDelete] = useState(false);
   const sessionRef = useRef<AccountSession | null>(null);
   const loadRef = useRef(loadSession);
+  const deleteTitleId = useId();
 
   const refresh = useCallback(async () => {
     const session = sessionRef.current;
@@ -81,36 +60,25 @@ export const AccountPanel = ({
         kind: started.outcome === 'needs-migration' ? 'migration' : 'signed-in',
         user: started.user,
       });
-    } catch {
-      setView({ kind: 'error' });
+    } catch (error) {
+      setView(
+        error instanceof SessionExpiredError
+          ? { kind: 'signed-out', notice: labels['session-expired'] }
+          : { kind: 'error' },
+      );
     }
-  }, []);
+  }, [labels]);
 
   useEffect(() => {
-    let active = true;
-    let unsubscribe: (() => void) | undefined;
-    loadRef
-      .current()
-      .then((session) => {
-        if (!active || !session) {
-          return;
-        }
-        sessionRef.current = session;
-        // Fires when the provider redirect is exchanged for a session, and on sign-out elsewhere.
-        unsubscribe = session.backend.onUserChange(() => {
-          void refresh();
-        });
-        return refresh();
-      })
-      .catch(() => {
-        if (active) {
-          setView({ kind: 'error' });
-        }
-      });
-    return () => {
-      active = false;
-      unsubscribe?.();
-    };
+    const session = loadRef.current();
+    sessionRef.current = session;
+    if (!session) {
+      setView({ kind: 'unavailable' });
+      return;
+    }
+    void refresh();
+    // Sign-in or sign-out in another tab.
+    return session.backend.onUserChange(() => void refresh());
   }, [refresh]);
 
   const run = async (task: (session: AccountSession) => Promise<unknown>, after?: View) => {
@@ -134,21 +102,6 @@ export const AccountPanel = ({
     }
   };
 
-  const signIn = async (provider: AuthProvider) => {
-    const session = sessionRef.current;
-    if (!session) {
-      return;
-    }
-    setBusy(true);
-    setSignInFailed(false);
-    try {
-      await session.backend.signIn(provider, new URL(returnPath, window.location.href).href);
-    } catch {
-      setSignInFailed(true);
-      setBusy(false);
-    }
-  };
-
   const status = (text: string) => (
     <p role="status" className="rounded-lg bg-[var(--surface-secondary)] p-4">
       {text}
@@ -159,11 +112,15 @@ export const AccountPanel = ({
     case 'loading':
       return <p aria-busy="true">{labels.loading}</p>;
 
+    case 'unavailable':
+      return <p className="rounded-lg bg-[var(--surface-secondary)] p-4">{unavailableLabel}</p>;
+
     case 'error':
       return (
         <div className="flex flex-col items-start gap-3">
           <p role="alert">{labels.error}</p>
           <Button
+            id={trackingId('account', 'button', 'retry')}
             type="button"
             variant="secondary"
             className="min-h-11"
@@ -176,54 +133,24 @@ export const AccountPanel = ({
 
     case 'signed-out':
       return (
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col items-start gap-4">
           {view.notice && status(view.notice)}
           <p>{labels['signed-out-intro']}</p>
-          <div className="flex flex-col gap-3 sm:flex-row">
-            {AUTH_PROVIDERS.map((provider) => (
-              <Button
-                key={provider}
-                type="button"
-                variant={provider === 'google' ? 'primary' : 'secondary'}
-                className="min-h-12 flex-1"
-                disabled={busy}
-                onClick={() => void signIn(provider)}
-              >
-                {interpolate(labels['continue-with'], { provider: PROVIDER_NAMES[provider] })}
-              </Button>
-            ))}
-          </div>
-          {signInFailed && <p role="alert">{labels['sign-in-error']}</p>}
+          <ButtonLink id={trackingId('account', 'link', 'sign-in')} href={loginHref}>
+            {labels['sign-in']}
+          </ButtonLink>
         </div>
       );
 
     case 'migration':
       return (
-        <section aria-labelledby="account-migration" className="flex flex-col gap-3">
-          <h2 id="account-migration" className="text-3xl">
-            {labels['migration-title']}
-          </h2>
-          <p>{labels['migration-description']}</p>
-          <div className="flex flex-col gap-3 sm:flex-row">
-            <Button
-              type="button"
-              className="min-h-11 flex-1"
-              disabled={busy}
-              onClick={() => void run((session) => session.sync.importLocal())}
-            >
-              {labels['migration-import']}
-            </Button>
-            <Button
-              type="button"
-              variant="secondary"
-              className="min-h-11 flex-1"
-              disabled={busy}
-              onClick={() => void run((session) => session.sync.startFresh())}
-            >
-              {labels['migration-fresh']}
-            </Button>
-          </div>
-        </section>
+        <MigrationPrompt
+          labels={migrationLabels}
+          scope="account"
+          busy={busy}
+          onImport={() => void run((session) => session.sync.importLocal())}
+          onStartFresh={() => void run((session) => session.sync.startFresh())}
+        />
       );
 
     case 'signed-in':
@@ -250,25 +177,30 @@ export const AccountPanel = ({
           </div>
           <p>{labels['sync-note']}</p>
           <Button
+            id={trackingId('account', 'button', 'sign-out')}
             type="button"
             variant="secondary"
             className="min-h-11 self-start"
             disabled={busy}
             onClick={() =>
-              void run((session) => session.sync.signOut(), {
-                kind: 'signed-out',
-                notice: labels['signed-out'],
-              })
+              void run(
+                async (session) => {
+                  await session.sync.signOut();
+                  disableGoogleAutoSelect();
+                  track('sign_out', {});
+                },
+                { kind: 'signed-out', notice: labels['signed-out'] },
+              )
             }
           >
             {labels['sign-out']}
           </Button>
 
           <section
-            aria-labelledby="account-delete"
+            aria-labelledby={deleteTitleId}
             className="flex flex-col gap-3 border-t border-[var(--border-default)] pt-6"
           >
-            <h2 id="account-delete" className="text-3xl">
+            <h2 id={deleteTitleId} className="text-3xl">
               {labels['delete-title']}
             </h2>
             <p>{labels['delete-description']}</p>
@@ -279,6 +211,7 @@ export const AccountPanel = ({
                 </p>
                 <div className="flex flex-col gap-3 sm:flex-row">
                   <Button
+                    id={trackingId('account', 'button', 'delete-confirm')}
                     type="button"
                     variant="destructive"
                     className="min-h-11 flex-1"
@@ -293,6 +226,7 @@ export const AccountPanel = ({
                     {labels['delete-confirm']}
                   </Button>
                   <Button
+                    id={trackingId('account', 'button', 'delete-cancel')}
                     type="button"
                     variant="secondary"
                     className="min-h-11 flex-1"
@@ -305,6 +239,7 @@ export const AccountPanel = ({
               </div>
             ) : (
               <Button
+                id={trackingId('account', 'button', 'delete')}
                 type="button"
                 variant="ghost"
                 className="min-h-11 self-start"

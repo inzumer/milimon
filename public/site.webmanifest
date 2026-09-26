@@ -2,13 +2,13 @@
   "name": "Milimon Cost Lab",
   "short_name": "Milimon",
   "description": "Calculadora y manual de estudio de costos, desechos y mermas en gastronomía.",
-  "start_url": "/",
-  "scope": "/",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
   "theme_color": "#F6AF27",
   "background_color": "#FDF7F1",
   "icons": [
-    { "src": "/android-chrome-192x192.png", "sizes": "192x192", "type": "image/png" },
-    { "src": "/android-chrome-512x512.png", "sizes": "512x512", "type": "image/png" }
+    { "src": "android-chrome-192x192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "android-chrome-512x512.png", "sizes": "512x512", "type": "image/png" }
   ]
 }

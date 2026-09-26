@@ -15,6 +15,8 @@ import homeEn from './home/en.json';
 import homeEs from './home/es.json';
 import learnPageEn from './learn-page/en.json';
 import learnPageEs from './learn-page/es.json';
+import loginPageEn from './login-page/en.json';
+import loginPageEs from './login-page/es.json';
 import privacyPageEn from './privacy-page/en.json';
 import privacyPageEs from './privacy-page/es.json';
 import termsPageEn from './terms-page/en.json';
@@ -38,6 +40,7 @@ const dictionaries = {
   'formula-page': { es: formulaPageEs, en: formulaPageEn satisfies typeof formulaPageEs },
   'account-page': { es: accountPageEs, en: accountPageEn satisfies typeof accountPageEs },
   'history-page': { es: historyPageEs, en: historyPageEn satisfies typeof historyPageEs },
+  'login-page': { es: loginPageEs, en: loginPageEn satisfies typeof loginPageEs },
   'privacy-page': { es: privacyPageEs, en: privacyPageEn satisfies typeof privacyPageEs },
   'terms-page': { es: termsPageEs, en: termsPageEn satisfies typeof termsPageEs },
 } as const;

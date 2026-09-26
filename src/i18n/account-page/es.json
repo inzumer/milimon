@@ -1,22 +1,15 @@
 {
   "title": "Tu cuenta",
-  "description": "Iniciá sesión con Google o Facebook para guardar tu moneda, tus preferencias y tus cálculos en cualquier dispositivo.",
+  "description": "Tu sesión, tus datos sincronizados entre dispositivos y la opción de borrar tu cuenta.",
   "disabled": "Las cuentas todavía no están disponibles. Mientras tanto, todo lo que cargás se guarda en este dispositivo.",
   "privacy-note": "Qué datos guardamos y cómo borrarlos:",
   "privacy-link": "política de privacidad",
   "panel": {
     "loading": "Cargando tu cuenta…",
-    "signed-out-intro": "No hace falta una cuenta para usar la calculadora. Con una cuenta, tu configuración y tus cálculos te siguen a cualquier dispositivo.",
-    "continue-with": "Continuar con {provider}",
-    "sign-in-error": "No pudimos iniciar la sesión. Probá de nuevo en unos minutos.",
     "signed-in-as": "Sesión iniciada como",
     "sync-note": "Tu moneda, tus preferencias y los últimos valores de cada calculadora se guardan en tu cuenta automáticamente.",
     "sign-out": "Cerrar sesión",
     "signed-out": "Cerraste la sesión. Tus datos quedan guardados en tu cuenta.",
-    "migration-title": "Encontramos datos en este dispositivo",
-    "migration-description": "Tenés una configuración o cálculos guardados en este dispositivo. ¿Querés pasarlos a tu cuenta?",
-    "migration-import": "Sí, guardarlos en mi cuenta",
-    "migration-fresh": "No, empezar de cero",
     "delete-title": "Borrar la cuenta",
     "delete-description": "Se borran tu perfil y todos tus cálculos guardados. No se puede deshacer.",
     "delete": "Borrar mi cuenta",
@@ -25,6 +18,9 @@
     "delete-question": "¿Seguro? Esta acción no se puede deshacer.",
     "deleted": "Tu cuenta y todos tus datos fueron borrados.",
     "error": "Algo salió mal al sincronizar tu cuenta. Revisá tu conexión.",
-    "retry": "Reintentar"
+    "retry": "Reintentar",
+    "signed-out-intro": "No iniciaste sesión. Sin cuenta, todo lo que cargás se guarda solo en este dispositivo.",
+    "sign-in": "Iniciar sesión",
+    "session-expired": "Tu sesión venció. Volvé a iniciar sesión."
   }
 }

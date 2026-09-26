@@ -1,11 +1,11 @@
 ---
 import { Breadcrumbs } from '@inzumer/ui-library';
-import { HistoryList } from '@calculators';
-import { FORMULA_IDS } from '@domain/registry';
+import { HistoryList } from '@components';
 import { getFormulaTranslation, getTranslations } from '@i18n';
 import PageLayout from '@layouts/page-layout.astro';
 import { readAccountConfig } from '@services';
 import { LOCALES, localizedPath, toLocale } from '@utils';
+import { FORMULA_IDS } from '@utils/formulas';
 
 export function getStaticPaths() {
   return LOCALES.map((lang) => ({ params: { lang } }));
@@ -23,7 +23,7 @@ const formulas = Object.fromEntries(
     return [id, { title: text.title, outputs: text.outputs }];
   }),
 );
-const accountHref = readAccountConfig(import.meta.env) ? localizedPath(lang, 'account') : undefined;
+const accountHref = readAccountConfig(import.meta.env) ? localizedPath(lang, 'login') : undefined;
 ---
 
 <PageLayout lang={lang} title={page.title} description={page.description} noindex>

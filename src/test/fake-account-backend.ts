@@ -2,14 +2,12 @@ import type { CalculatorDrafts, HistoryEntry } from '@repositories';
 import type { AccountBackend, AccountUser, RemoteProfile } from '@services/account';
 
 export interface FakeAccountBackend extends AccountBackend {
-  /** Remote state, readable and editable by tests. */
   remote: {
     user: AccountUser | null;
     profile: RemoteProfile | null;
     drafts: CalculatorDrafts;
     history: HistoryEntry[];
   };
-  /** Simulates the provider signing someone in or out (fires `onUserChange`). */
   setUser: (user: AccountUser | null) => void;
 }
 
@@ -46,7 +44,14 @@ export const createFakeAccountBackend = (
         listeners.delete(listener);
       };
     }),
-    signIn: vi.fn(async () => undefined),
+    signInWithGoogle: vi.fn(async () => {
+      setUser(TEST_USER);
+      return TEST_USER;
+    }),
+    signInWithFacebook: vi.fn(async () => {
+      setUser(TEST_USER);
+      return TEST_USER;
+    }),
     signOut: vi.fn(async () => setUser(null)),
     deleteAccount: vi.fn(async () => {
       remote.profile = null;

@@ -1,7 +1,7 @@
 ---
 import { ConsentBanner } from '@components';
 import { getTranslations } from '@i18n';
-import { isMeasurementId } from '@services';
+import { isContainerId } from '@services';
 import { localizedPath, type Locale } from '@utils';
 import BaseLayout from './base-layout.astro';
 import SiteFooter from './site-footer.astro';
@@ -17,7 +17,7 @@ interface Props {
 const { lang, title, description, noindex = false } = Astro.props;
 const common = getTranslations(lang, 'common');
 // Analytics (and its consent banner) only exist when a GA4 measurement ID is configured.
-const analyticsEnabled = isMeasurementId(import.meta.env.PUBLIC_GA_MEASUREMENT_ID);
+const analyticsEnabled = isContainerId(import.meta.env.PUBLIC_GTM_ID);
 ---
 
 <BaseLayout lang={lang} title={title} description={description} noindex={noindex}>
@@ -49,14 +49,14 @@ const analyticsEnabled = isMeasurementId(import.meta.env.PUBLIC_GA_MEASUREMENT_I
 
 <script>
   import { createLocalSettingsRepository } from '@repositories';
-  import { getAccountSession, hasStoredSession, startGoogleAnalytics } from '@services';
+  import { getAccountSession, hasStoredSession, startTagManager } from '@services';
 
-  startGoogleAnalytics(import.meta.env.PUBLIC_GA_MEASUREMENT_ID, createLocalSettingsRepository());
+  startTagManager(import.meta.env.PUBLIC_GTM_ID, createLocalSettingsRepository());
 
-  // Signed-in people get their profile synced on every page. Guests never download the auth SDK.
+  // Signed-in people get their profile synced on every page; guests never call the API.
   if (hasStoredSession()) {
     getAccountSession()
-      .then((session) => session?.sync.start())
+      ?.sync.start()
       .catch((error: unknown) => console.warn('[account] could not start', error));
   }
 </script>

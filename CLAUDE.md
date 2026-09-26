@@ -34,14 +34,25 @@ Key commands (Node from `.nvmrc`, pnpm from `packageManager`):
 - **Every input** has a visible label and a descriptive placeholder (what, unit, example from the manual).
 - **Tests**: every test title starts with `should …` (e.g. `it('should render the menu')`), enforced
   by `vitest/valid-title`. `describe` names the unit under test.
-- **Formulas** are pure functions in `src/domain`, registered once in `registry.ts`, tested with
+- **Formulas** are pure functions in `src/utils/formulas`, registered once in `registry.ts`, tested with
   the manual's worked examples.
-- **Imports**: path aliases (`@components`, `@calculators`, `@domain`, `@repositories`, `@services`, `@hooks`, `@utils`, `@i18n`,
+- **Imports**: path aliases (`@components`, `@constants`, `@calculators`, `@repositories`, `@services`, `@hooks`, `@utils`, `@i18n`,
   `@layouts/*`, `@assets/*`, `@styles/*`, `@test/*`) for anything outside the current folder. Enforced by ESLint.
+- **Constants**: limits, retries, timeouts, patterns and other tunable values live in `src/constants`
+  (`@constants`), never as magic numbers inside components or services.
+- **Tracking ids**: every interactive element (inputs, selects, switches, buttons, CTA links) has a
+  stable id from `trackingId(scope, kind, name)` for Google Tag Manager (see docs/TRACKING.md).
+- **Placement**: UI pieces in `src/components` (atoms / molecules / organisms), calculator islands
+  only in `src/calculators`, hooks in `src/hooks`, pure helpers and formulas in `src/utils`,
+  tunable values in `src/constants`, external integrations (API, GTM, sign-in SDKs) in `src/services`.
 - **Naming**: React components in PascalCase folders; `.astro` files, content folders, slugs and
   i18n keys in kebab-case.
 - **Theming**: colors only via CSS variables (`src/styles/theme.css`); light and dark mode must both work.
 - **Layout**: mobile-first; one layout up to 1024px, centered container above.
+- **Base path**: the site is served under `/milimon-cost-lab` on GitHub Pages. Build internal URLs
+  with `localizedPath`/`withBase` (never hard-coded `/es/...` or `/favicon.ico`).
+- **Security**: a strict Content-Security-Policy (hash-only scripts) is generated at build time
+  (`security.csp` in `astro.config.mjs`); a new external script or API origin must be added there.
 - **Static first**: no `client:*` directive unless the component is interactive.
 - **Persistence**: through repositories only (localStorage now, accounts later). **Analytics**: through `track()` only.
 - **Dependencies**: latest compatible versions, `pnpm audit` clean. Exceptions documented in
@@ -70,7 +81,7 @@ Format: `<type>[optional scope]: <description>`
 
 Breaking changes: append `!` before the colon and/or add a `BREAKING CHANGE:` footer.
 
-Suggested scopes: `domain`, `calculators`, `ui`, `i18n`, `theme`, `pages`, `deps`, `ci`.
+Suggested scopes: `formulas`, `calculators`, `ui`, `i18n`, `theme`, `pages`, `deps`, `ci`.
 
 ## Git workflow (gitflow)
 

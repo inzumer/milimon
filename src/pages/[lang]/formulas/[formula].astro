@@ -2,11 +2,11 @@
 import { Breadcrumbs } from '@inzumer/ui-library';
 import { FormulaCalculator, OmnesCalculator, RecipeCostingCalculator } from '@calculators';
 import { ButtonLink } from '@components';
-import { FORMULA_IDS, formulasByGroup, getFormula } from '@domain/registry';
 import { getFormulaTranslation, getTranslations, toCalculatorText } from '@i18n';
 import StudyNotes from '@layouts/formula/study-notes.astro';
 import PageLayout from '@layouts/page-layout.astro';
-import { LOCALES, localizedPath, toLocale } from '@utils';
+import { LOCALES, localizedPath, toLocale, trackingId } from '@utils';
+import { FORMULA_IDS, formulasByGroup, getFormula } from '@utils/formulas';
 
 export function getStaticPaths() {
   return LOCALES.flatMap((lang) => FORMULA_IDS.map((formula) => ({ params: { lang, formula } })));
@@ -42,7 +42,11 @@ const section = (key: string) => `section-${key}`;
       </p>
       <h1 class="text-5xl">{text.title}</h1>
       <p class="max-w-2xl text-lg text-[var(--text-secondary)]">{text.summary}</p>
-      <ButtonLink href={`#${section('calculator')}`} className="mt-2 self-start">
+      <ButtonLink
+        id={trackingId(formula.id, 'link', 'try-calculator')}
+        href={`#${section('calculator')}`}
+        className="mt-2 self-start"
+      >
         {page['try-calculator']}
       </ButtonLink>
     </header>

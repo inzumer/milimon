@@ -27,8 +27,6 @@
       "@components/*": ["./src/components/*"],
       "@calculators": ["./src/calculators/index.ts"],
       "@calculators/*": ["./src/calculators/*"],
-      "@domain": ["./src/domain/index.ts"],
-      "@domain/*": ["./src/domain/*"],
       "@hooks": ["./src/hooks/index.ts"],
       "@hooks/*": ["./src/hooks/*"],
       "@utils": ["./src/utils/index.ts"],
@@ -42,7 +40,9 @@
       "@repositories/*": ["./src/repositories/*"],
       "@test/*": ["./src/test/*"],
       "@services": ["./src/services/index.ts"],
-      "@services/*": ["./src/services/*"]
+      "@services/*": ["./src/services/*"],
+      "@constants": ["./src/constants/index.ts"],
+      "@constants/*": ["./src/constants/*"]
     }
   },
   "include": [".astro/types.d.ts", "**/*"],

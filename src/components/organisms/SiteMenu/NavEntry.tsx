@@ -1,15 +1,20 @@
 import { Accordion, cn } from '@inzumer/ui-library';
-import { isActivePath } from '@utils';
+import { isActivePath, stripBase, trackingId } from '@utils';
 import { navLinkStyles } from './SiteMenu.styles';
 
 export interface SiteMenuItem {
   href: string;
   label: string;
-  /** Sub-links shown in a collapsible group (e.g. every formula). */
   children?: SiteMenuItem[];
 }
 
 const normalize = (path: string) => path.replace(/\/+$/, '') || '/';
+
+/** `/es/formulas/cooking-loss` → `menu-link-formulas-cooking-loss` (the language is left out). */
+const linkId = (href: string) => {
+  const route = stripBase(href).split('/').filter(Boolean).slice(1);
+  return trackingId('menu', 'link', ...(route.length > 0 ? route : ['home']));
+};
 
 /** A main-menu entry: a link, or a collapsible group (ui-library `Accordion`, native `<details>`). */
 export const NavEntry = ({ item, pathname }: { item: SiteMenuItem; pathname: string }) => {
@@ -19,6 +24,7 @@ export const NavEntry = ({ item, pathname }: { item: SiteMenuItem; pathname: str
   if (!item.children) {
     return (
       <a
+        id={linkId(item.href)}
         href={item.href}
         aria-current={current ? 'page' : undefined}
         className={navLinkStyles({ active: inSection })}
@@ -41,6 +47,7 @@ export const NavEntry = ({ item, pathname }: { item: SiteMenuItem; pathname: str
           return (
             <li key={child.href}>
               <a
+                id={linkId(child.href)}
                 href={child.href}
                 aria-current={childCurrent ? 'page' : undefined}
                 className={cn(navLinkStyles({ active: childCurrent }), 'text-base font-medium')}

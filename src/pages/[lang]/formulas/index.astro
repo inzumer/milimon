@@ -1,10 +1,10 @@
 ---
 import { Breadcrumbs } from '@inzumer/ui-library';
 import { FeatureCard } from '@components';
-import { FORMULA_GROUPS, formulasByGroup } from '@domain/registry';
 import { getFormulaTranslation, getTranslations } from '@i18n';
 import PageLayout from '@layouts/page-layout.astro';
-import { LOCALES, localizedPath, toLocale } from '@utils';
+import { LOCALES, localizedPath, toLocale, trackingId } from '@utils';
+import { FORMULA_GROUPS, formulasByGroup } from '@utils/formulas';
 
 export function getStaticPaths() {
   return LOCALES.map((lang) => ({ params: { lang } }));
@@ -44,6 +44,7 @@ const groups = formulasByGroup();
                   description={text.summary}
                   cta={page.index.open}
                   href={localizedPath(lang, 'formulas', formula.id)}
+                  ctaId={trackingId('formulas', 'link', formula.id)}
                 />
               </li>
             );

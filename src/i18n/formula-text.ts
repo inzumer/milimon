@@ -5,7 +5,6 @@ import type { FormulaTranslation } from './formulas';
  * from here so the validation schema and all translations stay out of the browser bundle.
  */
 
-/** What a calculator island needs: everything except the (long, static) study content. */
 export type CalculatorText = Omit<FormulaTranslation, 'study'>;
 
 /** Strips the study content so it isn't serialized into island props. */

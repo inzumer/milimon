@@ -5,10 +5,10 @@ import {
   onSettingsChange,
   type SettingsRepository,
 } from '@repositories';
+import { trackingId } from '@utils';
 
 export interface AnalyticsPreferenceProps {
   label: string;
-  /** Injected in tests; defaults to the localStorage repository. */
   repository?: SettingsRepository;
 }
 
@@ -30,6 +30,7 @@ export const AnalyticsPreference = ({
 
   return (
     <Switch
+      id={trackingId('privacy', 'switch', 'analytics')}
       label={label}
       checked={granted}
       onCheckedChange={(checked) =>

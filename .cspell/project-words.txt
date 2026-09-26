@@ -1,6 +1,7 @@
 # Project dictionary — brand names, tech terms and Rioplatense Spanish (voseo) not in the es-ES dictionary.
 abatidor
 aceptás
+activador
 ahorrás
 anotás
 aprovechá
@@ -48,10 +49,13 @@ entregable
 entrá
 esperás
 estudiá
+facebook
+fedcm
 firestore
 galette
 gitflow
 guardá
+habilitá
 iniciá
 iniciás
 intentá
@@ -98,17 +102,21 @@ recalculan
 rechazá
 rechazás
 redireccionamiento
+redirecciones
 redondeá
 redondeás
 reformularlo
+reintenta
 renderizan
 reprocesar
 republicarlos
+rerequest
 respondés
 restalo
 restá
 revisalos
 revisá
+reúso
 rodenticides
 sabés
 sachertorte
@@ -140,4 +148,6 @@ valorizalo
 vendés
 verificá
 volcá
+volvé
 wght
+xfbml

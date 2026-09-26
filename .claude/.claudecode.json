@@ -87,7 +87,6 @@
       "allowedAliases": [
         "@components",
         "@calculators",
-        "@domain",
         "@repositories",
         "@services",
         "@hooks",
@@ -96,7 +95,8 @@
         "@layouts",
         "@assets",
         "@styles",
-        "@test"
+        "@test",
+        "@constants"
       ]
     },
     "i18n": {

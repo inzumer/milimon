@@ -1,10 +1,10 @@
 ---
 import { Breadcrumbs } from '@inzumer/ui-library';
 import { CalculatorPicker } from '@calculators';
-import { FORMULA_GROUPS, formulasByGroup } from '@domain/registry';
 import { getFormulaTranslation, getTranslations } from '@i18n';
 import PageLayout from '@layouts/page-layout.astro';
 import { LOCALES, localizedPath, toLocale } from '@utils';
+import { FORMULA_GROUPS, formulasByGroup } from '@utils/formulas';
 
 export function getStaticPaths() {
   return LOCALES.map((lang) => ({ params: { lang } }));

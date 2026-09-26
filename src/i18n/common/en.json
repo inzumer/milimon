@@ -45,9 +45,15 @@
   },
   "consent": {
     "title": "Help us improve?",
-    "message": "We use Google Analytics to learn which formulas are used most and improve the handbook. It only turns on if you accept; we never store the numbers you enter.",
+    "message": "We use Google tools (Tag Manager and Analytics) to learn which formulas are used most and improve the handbook. They only turn on if you accept; we never store the numbers you enter.",
     "accept": "Accept",
     "reject": "Reject",
     "privacy-link": "Privacy policy"
+  },
+  "migration": {
+    "title": "We found data on this device",
+    "description": "You have settings, calculations or a history saved on this device. Do you want to move them to your account?",
+    "import": "Yes, save them to my account",
+    "fresh": "No, start fresh"
   }
 }

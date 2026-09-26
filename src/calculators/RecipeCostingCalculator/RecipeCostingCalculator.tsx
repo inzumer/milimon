@@ -1,14 +1,17 @@
 import { useId } from 'react';
 import { Button } from '@inzumer/ui-library';
-import { SaveToHistory } from '@calculators/shared/SaveToHistory';
+import { IngredientCard } from '@components/molecules/IngredientCard';
 import { NumberField } from '@components/molecules/NumberField';
+import { SaveToHistory } from '@components/molecules/SaveToHistory';
+import { RecipeCostingResult } from '@components/organisms/RecipeCostingResult';
+import { RECIPE_EXAMPLE, useRecipeCostingCalculator } from '@hooks/useRecipeCostingCalculator';
 import { formulaText, type CalculatorText } from '@i18n/formula-text';
 import type { Translations } from '@i18n/translations';
 import type { CalculationsRepository, HistoryRepository, SettingsRepository } from '@repositories';
-import { localizedPath, type Locale } from '@utils';
-import { IngredientCard } from './IngredientCard';
-import { RecipeCostingResult } from './RecipeCostingResult';
-import { RECIPE_EXAMPLE, useRecipeCostingCalculator } from './useRecipeCostingCalculator';
+import { localizedPath, trackingId, type Locale } from '@utils';
+
+/** Tracking scope: the formula id. */
+const SCOPE = 'recipe-costing';
 
 export interface RecipeCostingCalculatorProps {
   lang: Locale;
@@ -46,7 +49,12 @@ export const RecipeCostingCalculator = ({
           {ui['examples-title']}
         </h3>
         <div className="flex flex-wrap items-center gap-3">
-          <Button variant="secondary" className="min-h-11" onClick={calculator.loadExample}>
+          <Button
+            id={trackingId(SCOPE, 'button', 'load-example', RECIPE_EXAMPLE.id)}
+            variant="secondary"
+            className="min-h-11"
+            onClick={calculator.loadExample}
+          >
             {ui['load-example']}: {t.example(RECIPE_EXAMPLE.id)}
           </Button>
           <span className="text-sm text-[var(--text-secondary)]">
@@ -65,7 +73,7 @@ export const RecipeCostingCalculator = ({
           {ui['form-title']}
         </h3>
         <NumberField
-          id={`${id}-servings`}
+          id={trackingId(SCOPE, 'input', 'servings')}
           label={t.input('servings').label}
           placeholder={t.input('servings').placeholder}
           error={servingsCode ? ui.errors[servingsCode as keyof typeof ui.errors] : undefined}
@@ -79,7 +87,6 @@ export const RecipeCostingCalculator = ({
             key={row.id}
             row={row}
             index={index}
-            idPrefix={id}
             currency={calculator.currency}
             canRemove={calculator.rows.length > 1}
             errors={calculator.errors}
@@ -92,6 +99,7 @@ export const RecipeCostingCalculator = ({
         ))}
         <div className="flex flex-wrap gap-3">
           <Button
+            id={trackingId(SCOPE, 'button', 'add-ingredient')}
             type="button"
             variant="secondary"
             className="min-h-11"
@@ -99,7 +107,13 @@ export const RecipeCostingCalculator = ({
           >
             {t.label('add-ingredient')}
           </Button>
-          <Button type="button" variant="ghost" className="min-h-11" onClick={calculator.reset}>
+          <Button
+            id={trackingId(SCOPE, 'button', 'reset')}
+            type="button"
+            variant="ghost"
+            className="min-h-11"
+            onClick={calculator.reset}
+          >
             {ui.reset}
           </Button>
         </div>
