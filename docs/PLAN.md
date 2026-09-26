@@ -58,7 +58,6 @@ sobre `@inzumer/ui-library` + `@inzumer/tokens` personalizados con la identidad 
 ```
 @components  → src/components/index.ts   (atoms / molecules / organisms / templates, React)
 @layouts/*   → src/layouts/*             (layouts .astro)
-@calculators → src/calculators/index.ts  (solo las islas de calculadora)
 @constants   → src/constants/index.ts    (valores ajustables)
 @hooks       → src/hooks/index.ts        (estado de React, incluidos los hooks de cada calculadora)
 @utils       → src/utils/index.ts        (@utils/formulas: fórmulas + registry; @utils/calculation: resultado, validación, redondeo)
@@ -83,7 +82,6 @@ src/
     404.astro
   layouts/          base-layout.astro (head, meta, hreflang, script de tema), page-layout.astro
   components/       atoms | molecules | organisms | templates  (<Name>/Name.tsx, .styles.ts, __tests__/, index.ts)
-  calculators/      solo las islas: FormulaCalculator, RecipeCostingCalculator, OmnesCalculator, CalculatorPicker
   i18n/             ver §3
   hooks/            useFormulaCalculator, useRecipeCostingCalculator, useOmnesCalculator, useDraft, useCurrency, useColorScheme
   utils/

@@ -40,7 +40,7 @@ const analyticsEnabled = isContainerId(import.meta.env.PUBLIC_GTM_ID);
   </div>
   {analyticsEnabled && (
     <ConsentBanner
-      client:idle
+      client:load
       labels={common.consent}
       privacyHref={localizedPath(lang, 'privacy')}
     />
@@ -48,10 +48,17 @@ const analyticsEnabled = isContainerId(import.meta.env.PUBLIC_GTM_ID);
 </BaseLayout>
 
 <script>
+  import { OPEN_COOKIE_PREFERENCES_EVENT } from '@constants';
   import { createLocalSettingsRepository } from '@repositories';
   import { getAccountSession, hasStoredSession, startTagManager } from '@services';
 
   startTagManager(import.meta.env.PUBLIC_GTM_ID, createLocalSettingsRepository());
+
+  document.addEventListener('click', (event) => {
+    if (event.target instanceof Element && event.target.closest('[data-open-cookie-preferences]')) {
+      window.dispatchEvent(new CustomEvent(OPEN_COOKIE_PREFERENCES_EVENT));
+    }
+  });
 
   // Signed-in people get their profile synced on every page; guests never call the API.
   if (hasStoredSession()) {

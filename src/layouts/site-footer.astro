@@ -1,6 +1,7 @@
 ---
 import { getTranslations } from '@i18n';
-import { localizedPath, type Locale } from '@utils';
+import { isContainerId } from '@services';
+import { localizedPath, trackingId, type Locale } from '@utils';
 
 interface Props {
   lang: Locale;
@@ -9,6 +10,8 @@ interface Props {
 const { lang } = Astro.props;
 const common = getTranslations(lang, 'common');
 const year = new Date().getFullYear();
+// Without Tag Manager there are no optional cookies to choose.
+const analyticsEnabled = isContainerId(import.meta.env.PUBLIC_GTM_ID);
 ---
 
 <footer class="mt-16 border-t border-[var(--border-default)] bg-[var(--surface-secondary)]">
@@ -16,20 +19,32 @@ const year = new Date().getFullYear();
     <p class="font-display text-xl font-bold text-[var(--text-primary)]">{common['app-name']}</p>
     <p>{common.footer.tagline}</p>
     <p>{common.footer.source}</p>
-    <p class="flex flex-wrap gap-x-4">
+    <p class="flex flex-wrap items-center gap-x-4 gap-y-2">
       <span>© {year}</span>
       <a
+        id={trackingId('footer', 'link', 'privacy')}
         href={localizedPath(lang, 'privacy')}
-        class="font-semibold text-[var(--text-link)] underline"
+        class="inline-flex min-h-6 items-center font-semibold text-[var(--text-link)] underline"
       >
         {common.footer.privacy}
       </a>
       <a
+        id={trackingId('footer', 'link', 'terms')}
         href={localizedPath(lang, 'terms')}
-        class="font-semibold text-[var(--text-link)] underline"
+        class="inline-flex min-h-6 items-center font-semibold text-[var(--text-link)] underline"
       >
         {common.footer.terms}
       </a>
+      {analyticsEnabled && (
+        <button
+          id={trackingId('footer', 'button', 'cookie-preferences')}
+          type="button"
+          data-open-cookie-preferences
+          class="inline-flex min-h-6 cursor-pointer items-center font-semibold text-[var(--text-link)] underline"
+        >
+          {common.footer['cookie-preferences']}
+        </button>
+      )}
     </p>
   </div>
 </footer>

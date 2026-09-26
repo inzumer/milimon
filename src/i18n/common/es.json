@@ -20,7 +20,11 @@
     "open": "Abrir menú",
     "close": "Cerrar menú",
     "title": "Menú",
-    "preferences": "Preferencias"
+    "preferences": "Preferencias",
+    "account": "Tu cuenta",
+    "signed-in-as": "Sesión iniciada como",
+    "sign-out": "Cerrar sesión",
+    "signed-out-hint": "Guardá tu configuración y tus cálculos en tu cuenta."
   },
   "language": {
     "label": "Idioma",
@@ -33,7 +37,8 @@
     "tagline": "Manual de estudio de costos en gastronomía.",
     "source": "Basado en el manual de Administración y Gestión gastronómica.",
     "privacy": "Privacidad",
-    "terms": "Términos"
+    "terms": "Términos",
+    "cookie-preferences": "Preferencias de cookies"
   },
   "not-found": {
     "title": "Página no encontrada",
@@ -48,7 +53,23 @@
     "message": "Usamos herramientas de Google (Tag Manager y Analytics) para saber qué fórmulas se usan más y mejorar el manual. Solo se activan si aceptás; nunca guardamos los números que cargás.",
     "accept": "Aceptar",
     "reject": "Rechazar",
-    "privacy-link": "Política de privacidad"
+    "privacy-link": "Política de privacidad",
+    "customize": "Personalizar",
+    "preferences-title": "Preferencias de cookies",
+    "preferences-description": "Elegí qué podemos usar. Podés cambiarlo cuando quieras desde \"Preferencias de cookies\", al pie de cada página.",
+    "required": "Siempre activas",
+    "save": "Guardar preferencias",
+    "cancel": "Cancelar",
+    "categories": {
+      "necessary": {
+        "title": "Necesarias",
+        "description": "Guardan en tu dispositivo tu tema, idioma, moneda, los últimos valores de cada calculadora y tu sesión, si iniciaste una. Sin ellas el sitio no funciona."
+      },
+      "analytics": {
+        "title": "Analítica",
+        "description": "Google Tag Manager y Google Analytics: qué páginas se visitan y qué herramientas se usan, de forma agregada. Nunca los números que cargás."
+      }
+    }
   },
   "migration": {
     "title": "Encontramos datos en este dispositivo",

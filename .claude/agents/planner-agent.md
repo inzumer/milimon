@@ -15,7 +15,7 @@ Define scope, contracts and UX before implementation starts.
 1. Locate the phase in `docs/PLAN.md` (F0–F10).
 2. For non-trivial work, write `docs/plans/YYYY-MM-DD-task-name.md` (gitignored, local working note) with:
    - Objective and scope (included / excluded)
-   - Affected files (domain, calculators, components, pages, translations)
+   - Affected files (utils/formulas, hooks, components, pages, translations)
    - Contracts (`interface …Props`, domain function signatures, registry entries)
    - Content source (manual unit/page and examples used)
    - Accessibility, performance and mobile considerations

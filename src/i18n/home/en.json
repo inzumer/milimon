@@ -1,8 +1,7 @@
 {
   "hero": {
     "subtitle": "Work out food cost, trim waste and cooking loss in your kitchen, and understand every formula step by step.",
-    "logo-alt": "Milimon: a cook in a chef's hat holding a wooden spoon",
-    "sign-in-hint": "Optional: keep your settings and calculations in your account."
+    "logo-alt": "Milimon: a cook in a chef's hat holding a wooden spoon"
   },
   "calculator-card": {
     "title": "Calculator",
@@ -19,5 +18,10 @@
     "title": "Learn",
     "description": "Purchasing, receiving, storage, costs, pricing and break-even, with a practical approach.",
     "cta": "Start learning"
+  },
+  "account-card": {
+    "title": "Your account",
+    "description": "Sign in with Google or Facebook and take your settings, calculations and history to any device. It is free and you can delete your account anytime.",
+    "cta": "Sign in"
   }
 }

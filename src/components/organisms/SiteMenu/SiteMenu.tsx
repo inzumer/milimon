@@ -1,6 +1,10 @@
 import { useCallback, useId, useState } from 'react';
 import { Button, Drawer } from '@inzumer/ui-library';
 import { MenuIcon } from '@components/atoms/Icons';
+import {
+  AccountMenuSection,
+  type AccountMenuSectionLabels,
+} from '@components/molecules/AccountMenuSection';
 import { CurrencySelect } from '@components/molecules/CurrencySelect';
 import { LanguageSwitcher } from '@components/molecules/LanguageSwitcher';
 import { ThemeToggle } from '@components/molecules/ThemeToggle';
@@ -23,13 +27,14 @@ export interface SiteMenuProps {
   pathname: string;
   items: SiteMenuItem[];
   labels: SiteMenuLabels;
+  account: { labels: AccountMenuSectionLabels; loginHref: string; accountHref: string };
 }
 
 /**
  * Hamburger button + side drawer (ui-library `Drawer`: focus trap, Escape/backdrop to close,
  * scroll lock) with the main navigation, language, theme and currency preferences.
  */
-export const SiteMenu = ({ lang, pathname, items, labels }: SiteMenuProps) => {
+export const SiteMenu = ({ lang, pathname, items, labels, account }: SiteMenuProps) => {
   const [open, setOpen] = useState(false);
   const panelId = useId();
   const preferencesId = useId();
@@ -63,17 +68,24 @@ export const SiteMenu = ({ lang, pathname, items, labels }: SiteMenuProps) => {
         titleClassName="font-display text-3xl"
         closeLabel={labels.close}
         footer={
-          <section aria-labelledby={preferencesId} className="flex flex-col gap-4">
-            <h3
-              id={preferencesId}
-              className="text-sm font-bold tracking-wide text-[var(--text-secondary)] uppercase"
-            >
-              {labels.preferences}
-            </h3>
-            <LanguageSwitcher lang={lang} pathname={pathname} label={labels.language} />
-            <ThemeToggle label={labels.darkMode} />
-            <CurrencySelect lang={lang} label={labels.currency} />
-          </section>
+          <div className="flex flex-col gap-8">
+            <AccountMenuSection
+              labels={account.labels}
+              loginHref={account.loginHref}
+              accountHref={account.accountHref}
+            />
+            <section aria-labelledby={preferencesId} className="flex flex-col gap-4">
+              <h3
+                id={preferencesId}
+                className="text-sm font-bold tracking-wide text-[var(--text-secondary)] uppercase"
+              >
+                {labels.preferences}
+              </h3>
+              <LanguageSwitcher lang={lang} pathname={pathname} label={labels.language} />
+              <ThemeToggle label={labels.darkMode} />
+              <CurrencySelect lang={lang} label={labels.currency} />
+            </section>
+          </div>
         }
       >
         <nav aria-label={labels.navigation}>
