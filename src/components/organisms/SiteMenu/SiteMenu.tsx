@@ -1,5 +1,5 @@
 import { useCallback, useId, useState } from 'react';
-import { Button, Drawer } from '@inzumer/ui-library';
+import { Button, Drawer, RichText } from '@inzumer/ui-library';
 import { MenuIcon } from '@components/atoms/Icons';
 import {
   AccountMenuSection,
@@ -9,7 +9,7 @@ import { CurrencySelect } from '@components/molecules/CurrencySelect';
 import { LanguageSwitcher } from '@components/molecules/LanguageSwitcher';
 import { ThemeToggle } from '@components/molecules/ThemeToggle';
 import { track, trackingId, type Locale } from '@utils';
-import { NavEntry, type SiteMenuItem } from './NavEntry';
+import { NavEntry, type SiteMenuGroup } from './NavEntry';
 
 export interface SiteMenuLabels {
   open: string;
@@ -25,7 +25,7 @@ export interface SiteMenuLabels {
 export interface SiteMenuProps {
   lang: Locale;
   pathname: string;
-  items: SiteMenuItem[];
+  groups: SiteMenuGroup[];
   labels: SiteMenuLabels;
   account: { labels: AccountMenuSectionLabels; loginHref: string; accountHref: string };
 }
@@ -34,7 +34,7 @@ export interface SiteMenuProps {
  * Hamburger button + side drawer (ui-library `Drawer`: focus trap, Escape/backdrop to close,
  * scroll lock) with the main navigation, language, theme and currency preferences.
  */
-export const SiteMenu = ({ lang, pathname, items, labels, account }: SiteMenuProps) => {
+export const SiteMenu = ({ lang, pathname, groups, labels, account }: SiteMenuProps) => {
   const [open, setOpen] = useState(false);
   const panelId = useId();
   const preferencesId = useId();
@@ -78,12 +78,13 @@ export const SiteMenu = ({ lang, pathname, items, labels, account }: SiteMenuPro
               accountHref={account.accountHref}
             />
             <section aria-labelledby={preferencesId} className="flex flex-col gap-4">
-              <h3
+              <RichText
+                variant="h3"
                 id={preferencesId}
                 className="text-sm font-bold tracking-wide text-[var(--text-secondary)] uppercase"
               >
                 {labels.preferences}
-              </h3>
+              </RichText>
               <LanguageSwitcher lang={lang} pathname={pathname} label={labels.language} />
               <ThemeToggle label={labels.darkMode} />
               <CurrencySelect lang={lang} label={labels.currency} />
@@ -91,14 +92,30 @@ export const SiteMenu = ({ lang, pathname, items, labels, account }: SiteMenuPro
           </div>
         }
       >
-        <nav aria-label={labels.navigation}>
-          <ul className="flex flex-col gap-1">
-            {items.map((item) => (
-              <li key={item.href}>
-                <NavEntry item={item} pathname={pathname} />
-              </li>
-            ))}
-          </ul>
+        <nav aria-label={labels.navigation} className="flex flex-col gap-6">
+          {groups.map((group, index) => (
+            <div key={group.title ?? group.items[0]?.href} className="flex flex-col gap-2">
+              {group.title && (
+                <RichText
+                  variant="h3"
+                  id={`${panelId}-group-${index}`}
+                  className="px-3 text-sm font-bold tracking-wide text-[var(--text-secondary)] uppercase"
+                >
+                  {group.title}
+                </RichText>
+              )}
+              <ul
+                className="flex flex-col gap-1"
+                aria-labelledby={group.title ? `${panelId}-group-${index}` : undefined}
+              >
+                {group.items.map((item) => (
+                  <li key={item.href}>
+                    <NavEntry item={item} pathname={pathname} />
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </nav>
       </Drawer>
     </>

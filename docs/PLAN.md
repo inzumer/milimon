@@ -402,7 +402,7 @@ Texto propio basado en el manual, no copiado literal.
 
 > Implementado: `services/google-analytics` (Consent Mode v2, script solo tras aceptar),
 > `ConsentBanner`, página `/[lang]/privacy` con el interruptor `AnalyticsPreference`, imágenes
-> `public/og/og-{es,en}.png` generadas con `pnpm og:image` y card `summary_large_image`.
+> `public/og/og-<sección>-<idioma>.png` (inicio, administración, recetas, blog) generadas con `pnpm og:image` y card `summary_large_image`.
 > Queda por hacer fuera del código: crear la propiedad GA4, cargar el ID en el hosting y probar la
 > vista previa en WhatsApp, LinkedIn y el Sharing Debugger de Facebook.
 
@@ -489,6 +489,30 @@ idioma, tema), sus recetas y sus cálculos en un perfil propio.
 - Página `/[lang]/history` (en el menú): fecha, fórmula y resultado principal; "Ver la cuenta
   completa" la muestra con los mismos componentes que la calculadora; "Abrir en la calculadora"
   recarga los valores; "Borrar".
+
+## 10 ter. Secciones: administración, recetas y blog (separadas)
+
+- El sitio se divide en tres secciones, en el inicio y en el menú: **Administración gastronómica**
+  (calculadora, fórmulas, aprender, historial), **Recetas** y **Blog**.
+- Todas las páginas públicas terminan con "Compartí esta página" (hoja de compartir del dispositivo,
+  WhatsApp, Facebook, X, LinkedIn, email y copiar enlace), con evento `page_shared`.
+- **Blog** (`/blog`, `/blog/{artículo}`): primer artículo, los _milicitos_ (escala de 1 a 5
+  estrellitas para puntuar lo que probamos). Hasta que exista el CMS, los artículos viven en
+  `src/i18n/blog/{es,en}.json` y se listan en `BLOG_ARTICLE_IDS`.
+- **Recetas** (`/recipes`): página "Próximamente" con la imagen de la estrella.
+- Cada sección tiene su imagen para compartir (`og-{home,management,recipes,blog}-{es,en}.png`).
+
+### Pendientes
+
+- **CMS para recetas y blog**: elegir el CMS (headless, con plan gratuito) y cómo se integra con el
+  build estático (rebuild por webhook), el modelo de contenido (receta con ingredientes y costo por
+  porción, artículo, puntaje en milicitos) y la migración del artículo actual.
+- **Emails** a suscriptores cuando haya recetas o artículos nuevos: alta y baja con doble
+  confirmación, proveedor de envío y consentimiento (se integra con las cuentas o con un formulario
+  propio).
+- **Google Tag Manager**: crear el contenedor y cargar `PUBLIC_GTM_ID` (activa el banner de cookies).
+- **Meta (Facebook Login)**: crear la app cuando Meta lo permita y cargar el App ID y el secreto;
+  hasta entonces el botón queda deshabilitado con el aviso "Próximamente".
 
 ## 11. Fases
 

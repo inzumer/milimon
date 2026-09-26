@@ -2,7 +2,7 @@
   "app-name": "Milimon",
   "skip-to-content": "Saltar al contenido",
   "meta": {
-    "description": "Calculadora y manual de estudio de costos, desechos y mermas en gastronomía, con cada fórmula explicada paso a paso."
+    "description": "Cocina y administración gastronómica: calculadora de costos, desechos y mermas con cada fórmula explicada, recetas y blog."
   },
   "nav": {
     "label": "Navegación principal",
@@ -14,7 +14,15 @@
     "all-topics": "Todos los temas",
     "account": "Mi cuenta",
     "sign-in": "Iniciar sesión",
-    "history": "Historial"
+    "history": "Historial",
+    "recipes": "Recetas",
+    "blog": "Blog",
+    "management-group": "Administración gastronómica",
+    "soon": "Próximamente",
+    "recipes-group": "Recetas",
+    "blog-group": "Blog",
+    "all-recipes": "Todas las recetas",
+    "all-articles": "Todos los artículos"
   },
   "menu": {
     "open": "Abrir menú",
@@ -34,7 +42,7 @@
     "dark-mode": "Modo oscuro"
   },
   "footer": {
-    "tagline": "Manual de estudio de costos en gastronomía.",
+    "tagline": "Cocina y administración gastronómica.",
     "privacy": "Privacidad",
     "terms": "Términos",
     "cookie-preferences": "Preferencias de cookies",
@@ -77,5 +85,36 @@
     "description": "Tenés una configuración, cálculos o un historial guardados en este dispositivo. ¿Querés pasarlos a tu cuenta?",
     "import": "Sí, guardarlos en mi cuenta",
     "fresh": "No, empezar de cero"
+  },
+  "og": {
+    "home": {
+      "tagline": "Cocina y administración gastronómica",
+      "detail": "Calculadora y fórmulas para tu negocio, recetas y blog."
+    },
+    "management": {
+      "tagline": "Administración gastronómica",
+      "detail": "Calculadora, fórmulas y temas para llevar los números de tu cocina."
+    },
+    "recipes": {
+      "tagline": "Recetas",
+      "detail": "Recetas para la cocina profesional con su costo por porción. Próximamente."
+    },
+    "blog": {
+      "tagline": "Blog",
+      "detail": "Cocina, administración gastronómica y lo que probamos, puntuado en milicitos."
+    }
+  },
+  "share": {
+    "title": "Compartí esta página",
+    "description": "Si te sirvió, pasásela a alguien más: así la comunidad crece.",
+    "native": "Compartir",
+    "copy": "Copiar enlace",
+    "copied": "Enlace copiado",
+    "whatsapp": "WhatsApp",
+    "facebook": "Facebook",
+    "x": "X",
+    "linkedin": "LinkedIn",
+    "email": "Email",
+    "new-tab": "(se abre en otra pestaña)"
   }
 }

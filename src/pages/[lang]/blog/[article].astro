@@ -1,0 +1,78 @@
+---
+import { getImage } from 'astro:assets';
+import { Breadcrumbs, RichText } from '@inzumer/ui-library';
+import star from '@assets/star.png';
+import { MilicitosRating } from '@components';
+import { BLOG_ARTICLE_IDS, getBlogArticle, getTranslations, type BlogArticleId } from '@i18n';
+import PageLayout from '@layouts/page-layout.astro';
+import { interpolate, LOCALES, localizedPath, toLocale } from '@utils';
+
+export function getStaticPaths() {
+  return LOCALES.flatMap((lang) =>
+    BLOG_ARTICLE_IDS.map((article) => ({ params: { lang, article } })),
+  );
+}
+
+const lang = toLocale(Astro.params.lang);
+const id = Astro.params.article as BlogArticleId;
+const article = getBlogArticle(lang, id);
+const common = getTranslations(lang, 'common');
+const blog = getTranslations(lang, 'blog');
+const breadcrumbs = getTranslations(lang, 'formula-page').breadcrumbs;
+const dateFormat = new Intl.DateTimeFormat(lang === 'es' ? 'es-AR' : 'en-US', {
+  dateStyle: 'long',
+});
+// One small milicito, shared by every rating on the page.
+const milicito = await getImage({ src: star, width: 64, height: 64, format: 'webp' });
+---
+
+<PageLayout ogSection="blog" lang={lang} title={article.title} description={article.description}>
+  <Breadcrumbs
+    aria-label={breadcrumbs.label}
+    items={[
+      { label: common.nav.home, href: localizedPath(lang, 'home') },
+      { label: blog.index.title, href: localizedPath(lang, 'blog') },
+    ]}
+    current={article.title}
+    className="mb-6"
+  />
+  <article class="flex max-w-3xl flex-col gap-6">
+    <header class="flex flex-col gap-3">
+      <RichText variant="h1" bold className="font-display text-5xl">
+        {article.title}
+      </RichText>
+      <RichText variant="p3" className="text-[var(--text-secondary)]">
+        <time datetime={article.date}>
+          {interpolate(blog.index.published, {
+            date: dateFormat.format(new Date(`${article.date}T12:00:00`)),
+          })}
+        </time>
+      </RichText>
+      <RichText variant="p1" className="text-[var(--text-secondary)]">
+        {article.description}
+      </RichText>
+    </header>
+    {article.intro.map((paragraph) => (
+      <RichText>{paragraph}</RichText>
+    ))}
+    <section aria-labelledby="scale" class="flex flex-col gap-4">
+      <RichText variant="h2" bold id="scale" className="font-display text-3xl">
+        {article['scale-title']}
+      </RichText>
+      <ol class="flex flex-col gap-3">
+        {article.scale.map((meaning, index) => (
+          <li class="flex flex-col gap-2 rounded-xl border border-[var(--border-default)] p-4 sm:flex-row sm:items-center sm:gap-4">
+            <MilicitosRating
+              rating={index + 1}
+              label={interpolate(blog.rating, { count: String(index + 1) })}
+              imageSrc={milicito.src}
+              className="shrink-0"
+            />
+            <RichText>{meaning}</RichText>
+          </li>
+        ))}
+      </ol>
+    </section>
+    <RichText>{article.closing}</RichText>
+  </article>
+</PageLayout>

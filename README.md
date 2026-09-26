@@ -29,20 +29,20 @@ pnpm install
 pnpm dev          # http://localhost:4321 → redirige a /es
 ```
 
-| Script               | Descripción                                                                         |
-| -------------------- | ----------------------------------------------------------------------------------- |
-| `pnpm dev`           | Servidor de desarrollo                                                              |
-| `pnpm build`         | Build estático en `dist/`                                                           |
-| `pnpm preview`       | Sirve el build                                                                      |
-| `pnpm typecheck`     | `astro check`                                                                       |
-| `pnpm lint`          | ESLint                                                                              |
-| `pnpm test`          | Tests                                                                               |
-| `pnpm test:coverage` | Tests con umbral de cobertura del 90%                                               |
-| `pnpm format`        | Prettier                                                                            |
-| `pnpm spellcheck`    | Corrector ortográfico (inglés + español)                                            |
-| `pnpm validate`      | typecheck + lint + test:coverage + build                                            |
-| `pnpm audit:a11y`    | axe-core en todas las páginas, tema claro y oscuro (requiere `pnpm build` y Chrome) |
-| `pnpm og:image`      | Regenera las imágenes para compartir `public/og/og-{es,en}.png` (requiere Chrome)   |
+| Script               | Descripción                                                                            |
+| -------------------- | -------------------------------------------------------------------------------------- |
+| `pnpm dev`           | Servidor de desarrollo                                                                 |
+| `pnpm build`         | Build estático en `dist/`                                                              |
+| `pnpm preview`       | Sirve el build                                                                         |
+| `pnpm typecheck`     | `astro check`                                                                          |
+| `pnpm lint`          | ESLint                                                                                 |
+| `pnpm test`          | Tests                                                                                  |
+| `pnpm test:coverage` | Tests con umbral de cobertura del 90%                                                  |
+| `pnpm format`        | Prettier                                                                               |
+| `pnpm spellcheck`    | Corrector ortográfico (inglés + español)                                               |
+| `pnpm validate`      | typecheck + lint + test:coverage + build                                               |
+| `pnpm audit:a11y`    | axe-core en todas las páginas, tema claro y oscuro (requiere `pnpm build` y Chrome)    |
+| `pnpm og:image`      | Regenera las imágenes para compartir por sección `public/og/og-<sección>-<idioma>.png` |
 
 ## Deploy
 

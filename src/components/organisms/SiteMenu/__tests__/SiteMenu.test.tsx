@@ -6,10 +6,19 @@ import { SiteMenu, type SiteMenuProps } from '../SiteMenu';
 const props: SiteMenuProps = {
   lang: 'es',
   pathname: '/es/formulas/cooking-loss',
-  items: [
-    { href: '/es', label: 'Inicio' },
-    { href: '/es/calculator', label: 'Calculadora' },
-    { href: '/es/formulas', label: 'Fórmulas' },
+  groups: [
+    { items: [{ href: '/es', label: 'Inicio' }] },
+    {
+      title: 'Administración gastronómica',
+      items: [
+        { href: '/es/calculator', label: 'Calculadora' },
+        { href: '/es/formulas', label: 'Fórmulas' },
+      ],
+    },
+    {
+      title: 'Recetas y blog',
+      items: [{ href: '/es/recipes', label: 'Recetas', badge: 'Próximamente' }],
+    },
   ],
   labels: {
     open: 'Abrir menú',
@@ -45,6 +54,15 @@ const openMenu = async () => {
 describe('SiteMenu', () => {
   afterEach(() => {
     setAnalyticsSink(null);
+  });
+
+  it('should group the links under their section titles, with badges', async () => {
+    await openMenu();
+    const management = screen.getByRole('list', { name: 'Administración gastronómica' });
+    expect(management).toHaveTextContent('Calculadora');
+    const content = screen.getByRole('list', { name: 'Recetas y blog' });
+    expect(content).toHaveTextContent('RecetasPróximamente');
+    expect(screen.getByRole('link', { name: /Recetas/ })).toHaveAttribute('href', '/es/recipes');
   });
 
   it('should render a collapsed hamburger button', () => {

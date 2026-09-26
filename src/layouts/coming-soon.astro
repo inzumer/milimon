@@ -1,0 +1,77 @@
+---
+import { Image } from 'astro:assets';
+import { Breadcrumbs, RichText } from '@inzumer/ui-library';
+import star from '@assets/star.png';
+import { ButtonLink } from '@components';
+import { getTranslations } from '@i18n';
+import PageLayout from '@layouts/page-layout.astro';
+import { localizedPath, trackingId, type Locale } from '@utils';
+
+interface Props {
+  lang: Locale;
+  section: 'recipes';
+}
+
+// Placeholder for the sections that will come from the CMS: same URL now and later.
+const { lang, section } = Astro.props;
+const common = getTranslations(lang, 'common');
+const page = getTranslations(lang, 'coming-soon');
+const breadcrumbs = getTranslations(lang, 'formula-page').breadcrumbs;
+const text = page[section];
+---
+
+<PageLayout
+  ogSection="recipes"
+  lang={lang}
+  title={text.title}
+  description={text.description}
+  noindex
+>
+  <Breadcrumbs
+    aria-label={breadcrumbs.label}
+    items={[{ label: common.nav.home, href: localizedPath(lang, 'home') }]}
+    current={text.title}
+    className="mb-6"
+  />
+  <section class="flex flex-col items-center gap-4 py-6 text-center">
+    <Image
+      src={star}
+      alt={page['star-alt']}
+      width={224}
+      height={224}
+      densities={[1, 2]}
+      loading="eager"
+      class="size-48 sm:size-56"
+    />
+    <RichText
+      as="p"
+      variant="s3"
+      bold
+      className="rounded-full bg-primary-500 px-3 py-1 tracking-wide text-neutral-950 uppercase"
+    >
+      {page.badge}
+    </RichText>
+    <RichText variant="h1" bold className="font-display text-5xl">
+      {text.title}
+    </RichText>
+    <RichText variant="p1" className="max-w-xl text-[var(--text-secondary)]">
+      {text.description}
+    </RichText>
+    <RichText className="max-w-xl">{page.meanwhile}</RichText>
+    <div class="flex flex-wrap justify-center gap-3">
+      <ButtonLink
+        id={trackingId(section, 'link', 'calculator')}
+        href={localizedPath(lang, 'calculator')}
+      >
+        {page['calculator-cta']}
+      </ButtonLink>
+      <ButtonLink
+        id={trackingId(section, 'link', 'formulas')}
+        href={localizedPath(lang, 'formulas')}
+        variant="secondary"
+      >
+        {page['formulas-cta']}
+      </ButtonLink>
+    </div>
+  </section>
+</PageLayout>

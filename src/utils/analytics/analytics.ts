@@ -13,6 +13,7 @@ export interface AnalyticsEvents {
   sign_out: Record<string, never>;
   history_opened: { formula: string };
   history_deleted: { formula: string };
+  page_shared: { method: string; path: string };
 }
 
 export type AnalyticsEventName = keyof AnalyticsEvents;

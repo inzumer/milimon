@@ -26,7 +26,9 @@ export const FeatureCard = ({
     noPadding
     className={cn(
       'flex h-full flex-col',
-      highlighted && 'border-transparent bg-primary-500 text-neutral-950',
+      highlighted
+        ? 'border-transparent bg-primary-500 text-neutral-950'
+        : 'bg-[var(--surface-primary)]',
     )}
   >
     <CardHeader className="gap-3">

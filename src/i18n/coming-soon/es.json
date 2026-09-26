@@ -1,0 +1,11 @@
+{
+  "badge": "Próximamente",
+  "star-alt": "Milimon con una estrella, anunciando lo que viene",
+  "recipes": {
+    "title": "Recetas",
+    "description": "Recetas pensadas para la cocina profesional, con su costo por porción calculado y listas para adaptar a tu carta."
+  },
+  "meanwhile": "Mientras tanto, podés usar la calculadora o repasar las fórmulas.",
+  "calculator-cta": "Ir a la calculadora",
+  "formulas-cta": "Ver fórmulas"
+}

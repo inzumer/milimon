@@ -1,10 +1,14 @@
 import type { Locale } from '@utils/locale';
 import accountPageEn from './account-page/en.json';
 import accountPageEs from './account-page/es.json';
+import blogEn from './blog/en.json';
+import blogEs from './blog/es.json';
 import calculatorPageEn from './calculator-page/en.json';
 import calculatorPageEs from './calculator-page/es.json';
 import calculatorEn from './calculator/en.json';
 import calculatorEs from './calculator/es.json';
+import comingSoonEn from './coming-soon/en.json';
+import comingSoonEs from './coming-soon/es.json';
 import commonEn from './common/en.json';
 import commonEs from './common/es.json';
 import formulaPageEn from './formula-page/en.json';
@@ -29,7 +33,9 @@ import termsPageEs from './terms-page/es.json';
  * Formula folders (`src/i18n/formulas/<id>/`) are loaded and validated by `formulas.ts`.
  */
 const dictionaries = {
+  blog: { es: blogEs, en: blogEn satisfies typeof blogEs },
   common: { es: commonEs, en: commonEn satisfies typeof commonEs },
+  'coming-soon': { es: comingSoonEs, en: comingSoonEn satisfies typeof comingSoonEs },
   home: { es: homeEs, en: homeEn satisfies typeof homeEs },
   'learn-page': { es: learnPageEs, en: learnPageEn satisfies typeof learnPageEs },
   calculator: { es: calculatorEs, en: calculatorEn satisfies typeof calculatorEs },

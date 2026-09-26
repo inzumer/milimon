@@ -1,0 +1,58 @@
+---
+import { Breadcrumbs, RichText } from '@inzumer/ui-library';
+import { FeatureCard } from '@components';
+import { BLOG_ARTICLE_IDS, getBlogArticle, getTranslations } from '@i18n';
+import PageLayout from '@layouts/page-layout.astro';
+import { interpolate, LOCALES, localizedPath, toLocale, trackingId } from '@utils';
+
+export function getStaticPaths() {
+  return LOCALES.map((lang) => ({ params: { lang } }));
+}
+
+const lang = toLocale(Astro.params.lang);
+const common = getTranslations(lang, 'common');
+const blog = getTranslations(lang, 'blog');
+const breadcrumbs = getTranslations(lang, 'formula-page').breadcrumbs;
+const dateFormat = new Intl.DateTimeFormat(lang === 'es' ? 'es-AR' : 'en-US', {
+  dateStyle: 'long',
+});
+const articles = BLOG_ARTICLE_IDS.map((id) => ({ id, ...getBlogArticle(lang, id) }));
+---
+
+<PageLayout
+  ogSection="blog"
+  lang={lang}
+  title={blog.index.title}
+  description={blog.index.description}
+>
+  <Breadcrumbs
+    aria-label={breadcrumbs.label}
+    items={[{ label: common.nav.home, href: localizedPath(lang, 'home') }]}
+    current={blog.index.title}
+    className="mb-6"
+  />
+  <header class="mb-8 flex flex-col gap-3">
+    <RichText variant="h1" bold className="font-display text-5xl">
+      {blog.index.title}
+    </RichText>
+    <RichText variant="p1" className="max-w-2xl text-[var(--text-secondary)]">
+      {blog.index.intro}
+    </RichText>
+  </header>
+  <ul class="grid gap-6 lg:grid-cols-2">
+    {articles.map((article) => (
+      <li>
+        <FeatureCard
+          headingLevel="h2"
+          title={article.title}
+          description={`${interpolate(blog.index.published, {
+            date: dateFormat.format(new Date(`${article.date}T12:00:00`)),
+          })} · ${article.description}`}
+          cta={blog.index['read-more']}
+          href={localizedPath(lang, 'blog', article.id)}
+          ctaId={trackingId('blog', 'link', article.id)}
+        />
+      </li>
+    ))}
+  </ul>
+</PageLayout>
