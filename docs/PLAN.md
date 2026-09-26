@@ -521,6 +521,9 @@ Ideas y análisis de cada tema en [docs/suggestions](./suggestions/README.md).
 
 **Contenido**
 
+- **Keystatic con vista previa y acceso solo admin**: rol `admin` en las cuentas (se puede adelantar),
+  sesión en cookie y middleware en `/keystatic` con el deploy en Cloudflare Pages; vista previa por
+  rama de borrador. Ver [02](./suggestions/02-cms-y-emails.md#keystatic-vista-previa-y-acceso-solo-para-admins).
 - **CMS sin dependencia técnica** para que Milagros gestione recetas, blog, guías, "Sobre mí", textos
   del inicio y secciones nuevas (recomendado: Keystatic + Keystatic Cloud), migrando los textos
   que hoy están en `src/i18n`; **emails** a suscriptores (RSS a email). Ver [02](./suggestions/02-cms-y-emails.md).
