@@ -4,3 +4,4 @@ export * from './locale';
 export * from './numbers';
 export * from './routes';
 export * from './storage';
+export * from './tracking';

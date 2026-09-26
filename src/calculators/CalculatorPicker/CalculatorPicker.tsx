@@ -8,7 +8,7 @@ import { isFormulaId, type FormulaGroup, type FormulaId } from '@domain/registry
 import type { CalculatorText } from '@i18n/formula-text';
 import { loadCalculatorText, type CalculatorTextLoader } from '@i18n/load-calculator-text';
 import type { Translations } from '@i18n/translations';
-import { localizedPath, track, type Locale } from '@utils';
+import { localizedPath, track, trackingId, type Locale } from '@utils';
 
 export interface CalculatorPickerGroup {
   group: FormulaGroup;
@@ -21,7 +21,6 @@ export interface CalculatorPickerProps {
   groups: CalculatorPickerGroup[];
   page: Translations<'calculator-page'>;
   ui: Translations<'calculator'>;
-  /** Injected in tests; defaults to lazy per-formula chunks. */
   loadText?: CalculatorTextLoader;
 }
 
@@ -93,6 +92,7 @@ export const CalculatorPicker = ({
   return (
     <div className="flex flex-col gap-8">
       <Select
+        id={trackingId('calculator', 'select', 'tool')}
         label={page['select-label']}
         inputSize="lg"
         value={selected}
@@ -137,6 +137,7 @@ export const CalculatorPicker = ({
             <h2 className="text-3xl">{state.text.title}</h2>
             <p className="text-[var(--text-secondary)]">{state.text.summary}</p>
             <ButtonLink
+              id={trackingId('calculator', 'link', 'how-it-works', state.id)}
               href={localizedPath(lang, 'formulas', state.id)}
               variant="secondary"
               className="self-start"

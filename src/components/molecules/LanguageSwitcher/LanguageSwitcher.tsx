@@ -1,15 +1,13 @@
 import { Language } from '@inzumer/ui-library';
 import { createLocalSettingsRepository, type SettingsRepository } from '@repositories';
-import { isLocale, LOCALES, switchLocalePath, track, type Locale } from '@utils';
+import { isLocale, LOCALES, switchLocalePath, track, trackingId, type Locale } from '@utils';
 
 const OPTIONS = LOCALES.map((value) => ({ value, label: value.toUpperCase() }));
 
 export interface LanguageSwitcherProps {
   lang: Locale;
   pathname: string;
-  /** Accessible name of the group, e.g. "Idioma". */
   label: string;
-  /** Injected in tests; defaults to a full page navigation. */
   navigate?: (href: string) => void;
   repository?: SettingsRepository;
 }
@@ -30,6 +28,7 @@ export const LanguageSwitcher = ({
   repository = createLocalSettingsRepository(),
 }: LanguageSwitcherProps) => (
   <Language
+    id={trackingId('settings', 'select', 'language')}
     aria-label={label}
     options={OPTIONS}
     value={lang}

@@ -74,7 +74,7 @@ describe('RecipeCostingCalculator', () => {
     expect(within(card).getByRole('alert')).toHaveTextContent('Tiene que ser menor que 100 %.');
 
     await user.clear(within(card).getByRole('textbox', { name: /Precio de compra/ }));
-    await user.type(within(card).getByRole('textbox', { name: /Precio de compra/ }), 'x');
+    await user.type(within(card).getByRole('textbox', { name: /Precio de compra/ }), '1,2,3');
     await user.tab();
     expect(within(card).getAllByRole('alert')[1]).toHaveTextContent('Escribí un número válido');
 

@@ -1,10 +1,10 @@
 import { Switch } from '@inzumer/ui-library';
 import { useColorScheme } from '@hooks';
 import type { SettingsRepository } from '@repositories';
+import { trackingId } from '@utils';
 
 export interface ThemeToggleProps {
   label: string;
-  /** Injected in tests; defaults to the localStorage repository. */
   repository?: SettingsRepository;
 }
 
@@ -14,6 +14,7 @@ export const ThemeToggle = ({ label, repository }: ThemeToggleProps) => {
 
   return (
     <Switch
+      id={trackingId('settings', 'switch', 'dark-mode')}
       label={label}
       checked={scheme === 'dark'}
       onCheckedChange={(dark) => setScheme(dark ? 'dark' : 'light')}

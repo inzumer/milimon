@@ -1,6 +1,7 @@
 # Project dictionary — brand names, tech terms and Rioplatense Spanish (voseo) not in the es-ES dictionary.
 abatidor
 aceptás
+activador
 ahorrás
 anotás
 aprovechá
@@ -52,6 +53,7 @@ firestore
 galette
 gitflow
 guardá
+habilitá
 iniciá
 iniciás
 intentá

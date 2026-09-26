@@ -1,11 +1,6 @@
 import { failure, nonNegative, success, validate } from '@domain/shared';
 import type { CalculationResult } from '@domain/shared';
 
-/**
- * Costo de las mercaderías consumidas (manual, Unidad 2 — "Control de stocks").
- * CMC = existencia inicial + compras del período − existencia final.
- * Ambos inventarios se valorizan con el mismo método.
- */
 export interface CostOfGoodsInput {
   openingInventory: number | null;
   purchases: number | null;

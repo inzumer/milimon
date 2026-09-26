@@ -1,0 +1,1 @@
+export { trackingId } from './tracking';

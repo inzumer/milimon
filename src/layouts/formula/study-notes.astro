@@ -1,4 +1,5 @@
 ---
+import { Card, CardDescription, CardHeader, CardTitle } from '@inzumer/ui-library';
 import type { FormulaTranslation } from '@i18n/formulas';
 import type { Translations } from '@i18n/translations';
 
@@ -8,24 +9,21 @@ interface Props {
 }
 
 const { notes, labels } = Astro.props;
-
-// Each note type has its own accent so it's recognizable at a glance, never by color alone:
-// the type label is always written out.
-const accents: Record<(typeof notes)[number]['type'], string> = {
-  tip: 'border-l-[rgb(var(--color-success-600))]',
-  'common-mistake': 'border-l-[var(--border-error)]',
-  rounding: 'border-l-[var(--border-strong)]',
-  'manual-difference': 'border-l-[rgb(var(--color-primary-500))]',
-};
 ---
 
 <ul class="flex flex-col gap-4">
   {notes.map((note) => (
-    <li
-      class={`rounded-lg border border-l-8 border-[var(--border-default)] bg-[var(--surface-secondary)] p-4 ${accents[note.type]}`}
-    >
-      <p class="mb-1 text-sm font-bold tracking-wide uppercase">{labels[note.type]}</p>
-      <p class="leading-relaxed">{note.text}</p>
+    <li>
+      <Card noPadding>
+        <CardHeader className="gap-2">
+          <CardTitle as="h3" className="text-sm font-bold tracking-wide uppercase">
+            {labels[note.type]}
+          </CardTitle>
+          <CardDescription className="text-base leading-relaxed text-[var(--text-primary)]">
+            {note.text}
+          </CardDescription>
+        </CardHeader>
+      </Card>
     </li>
   ))}
 </ul>

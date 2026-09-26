@@ -1,4 +1,11 @@
-import { formatCurrency, formatNumber, formatPercentage, parseDecimal } from '../numbers';
+import {
+  formatCurrency,
+  formatNumber,
+  formatPercentage,
+  keepNumberListCharacters,
+  keepNumericCharacters,
+  parseDecimal,
+} from '../numbers';
 
 /** Intl uses narrow/regular no-break spaces depending on the runtime; compare with plain spaces. */
 const plain = (text: string) => text.replace(/[  ]/g, ' ');
@@ -55,5 +62,17 @@ describe('formatting', () => {
     expect(plain(formatPercentage(29.1667, 'es'))).toBe('29,17%');
     expect(formatPercentage(29.1667, 'en')).toBe('29.17%');
     expect(formatPercentage(30, 'en', 0)).toBe('30%');
+  });
+});
+
+describe('numeric input filters', () => {
+  it('should keep only digits and decimal separators in a number', () => {
+    expect(keepNumericCharacters('2,4 kg')).toBe('2,4');
+    expect(keepNumericCharacters('$ 1.234,50')).toBe('1.234,50');
+    expect(keepNumericCharacters('abc-5e3')).toBe('53');
+  });
+
+  it('should also keep the separators of a list of numbers', () => {
+    expect(keepNumberListCharacters('40\n50; 80 abc')).toBe('40\n50; 80 ');
   });
 });

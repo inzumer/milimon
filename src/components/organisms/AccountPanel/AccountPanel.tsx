@@ -35,9 +35,7 @@ export interface AccountPanelLabels {
 
 export interface AccountPanelProps {
   labels: AccountPanelLabels;
-  /** Absolute or root-relative URL of this page: the provider sends the person back here. */
   returnPath: string;
-  /** Injected in tests; defaults to the page's shared account session. */
   loadSession?: () => Promise<AccountSession | null>;
 }
 

@@ -96,7 +96,8 @@
         "@layouts",
         "@assets",
         "@styles",
-        "@test"
+        "@test",
+        "@constants"
       ]
     },
     "i18n": {

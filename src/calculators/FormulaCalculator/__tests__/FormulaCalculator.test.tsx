@@ -75,9 +75,14 @@ describe('FormulaCalculator', () => {
     );
   });
 
-  it('should flag text that is not a number', async () => {
+  it('should drop letters as they are typed and flag malformed numbers', async () => {
     const { user } = setup();
-    await user.type(screen.getByRole('textbox', { name: /Peso bruto/ }), 'abc');
+    const gross = screen.getByRole('textbox', { name: /Peso bruto/ });
+    await user.type(gross, 'a2b,4c');
+    expect(gross).toHaveValue('2,4');
+
+    await user.clear(gross);
+    await user.type(gross, '1,2,3');
     await user.tab();
     expect(screen.getByRole('alert')).toHaveTextContent(
       'Escribí un número válido (por ejemplo 2,4).',

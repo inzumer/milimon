@@ -15,7 +15,6 @@ const TOTALS = [
 export interface RecipeCostingResultProps {
   value: RecipeCostingOutput;
   steps: Step[];
-  /** Stable React keys for the ingredient rows, in order. */
   ids: string[];
   text: CalculatorText;
   ui: Translations<'calculator'>;

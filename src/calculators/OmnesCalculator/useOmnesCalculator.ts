@@ -35,6 +35,8 @@ export const parsePriceList = (
 
 const EMPTY = { prices: '', averageTicket: '', dailySpecialPrice: '' };
 
+export type OptionalField = 'averageTicket' | 'dailySpecialPrice';
+
 export const useOmnesCalculator = ({
   lang,
   calculations,
@@ -47,6 +49,9 @@ export const useOmnesCalculator = ({
   const { draft, setDraft, resetDraft } = useDraft('omnes-rules', EMPTY, calculations);
   const currency = useCurrency(settings);
   const [touched, setTouched] = useState(false);
+  const [touchedOptional, setTouchedOptional] = useState<ReadonlySet<OptionalField>>(
+    () => new Set(),
+  );
 
   const text = (key: keyof typeof EMPTY) => {
     const value = draft[key];
@@ -79,6 +84,19 @@ export const useOmnesCalculator = ({
     list,
     result: result.ok && list.invalid.length === 0 ? result : null,
     errors: result.ok ? [] : result.errors,
+    /** Error code of an optional field, once the person left it: unreadable number or domain rule. */
+    optionalError: (key: OptionalField): string | undefined => {
+      if (!touchedOptional.has(key)) {
+        return undefined;
+      }
+      const raw = text(key).trim();
+      if (raw !== '' && parseDecimal(raw, lang) === null) {
+        return 'invalid-number';
+      }
+      return result.ok ? undefined : result.errors.find((error) => error.field === key)?.code;
+    },
+    touchOptional: (key: OptionalField) =>
+      setTouchedOptional((current) => new Set(current).add(key)),
     loadExample: () => {
       setDraft({
         prices: OMNES_EXAMPLE.prices.map((price) => formatInputValue(price, lang)).join('\n'),
@@ -91,6 +109,7 @@ export const useOmnesCalculator = ({
     reset: () => {
       resetDraft();
       setTouched(false);
+      setTouchedOptional(new Set());
       track('calculator_reset', { formula: 'omnes-rules' });
     },
   };

@@ -9,7 +9,6 @@ export interface ResultPanelProps {
   values: Record<string, unknown>;
   text: CalculatorText;
   context: FormatContext;
-  /** Unit words appended to plain numbers (kg, m², months); currency and % carry their own symbol. */
   units?: Partial<Record<'weight' | 'area' | 'months', string>>;
 }
 

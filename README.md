@@ -51,12 +51,12 @@ solo, sin configuración.
 
 Variables de entorno (ver `.env.example`):
 
-| Variable                          | Para qué                                                                             |
-| --------------------------------- | ------------------------------------------------------------------------------------ |
-| `SITE_URL`                        | URL pública: canónicas, `hreflang`, sitemap y Open Graph (obligatoria en producción) |
-| `PUBLIC_GA_MEASUREMENT_ID`        | ID de Google Analytics 4 (`G-…`). Vacío = sin analítica ni banner de cookies         |
-| `PUBLIC_SUPABASE_URL`             | URL del proyecto de Supabase (cuentas). Vacío = sin login                            |
-| `PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Clave publicable de Supabase (pública por diseño; los datos se protegen con RLS)     |
+| Variable                          | Para qué                                                                               |
+| --------------------------------- | -------------------------------------------------------------------------------------- |
+| `SITE_URL`                        | URL pública: canónicas, `hreflang`, sitemap y Open Graph (obligatoria en producción)   |
+| `PUBLIC_GTM_ID`                   | Contenedor de Google Tag Manager (`GTM-…`). Vacío = sin analítica ni banner de cookies |
+| `PUBLIC_SUPABASE_URL`             | URL del proyecto de Supabase (cuentas). Vacío = sin login                              |
+| `PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Clave publicable de Supabase (pública por diseño; los datos se protegen con RLS)       |
 
 Para activar el login con Google y Facebook, seguí [docs/ACCOUNTS.md](docs/ACCOUNTS.md).
 

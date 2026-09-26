@@ -1,11 +1,6 @@
 import { failure, nonNegative, percentage, positive, success, validate } from '@domain/shared';
 import type { CalculationResult } from '@domain/shared';
 
-/**
- * % de merma de cocción (manual, Unidad 2 — "Cálculo del porcentaje de mermas").
- * Peso antes de cocción = peso limpio + aderezos, salsas, rebozados o rellenos que no se pueden separar.
- * Merma = peso antes de cocción − peso cocido; % merma = merma / peso antes de cocción × 100.
- */
 export interface CookingLossInput {
   netWeight: number | null;
   additionsWeight: number | null;
@@ -16,7 +11,6 @@ export interface CookingLossOutput {
   weightBeforeCooking: number;
   lossWeight: number;
   lossPercentage: number;
-  /** Cooked weight obtained per unit of weight before cooking (yield, 0–1). */
   cookedYield: number;
 }
 

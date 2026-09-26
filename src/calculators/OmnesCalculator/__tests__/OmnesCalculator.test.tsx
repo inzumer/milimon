@@ -66,13 +66,15 @@ describe('OmnesCalculator', () => {
     expect(within(region).getByText(/Ideal/)).toBeInTheDocument();
   });
 
-  it('should flag values that are not numbers after leaving the list', async () => {
+  it('should drop letters and flag malformed prices after leaving the list', async () => {
     const { user } = setup();
-    await user.type(screen.getByRole('textbox', { name: /Precios de la carta/ }), '40 abc 90');
+    const list = screen.getByRole('textbox', { name: /Precios de la carta/ });
+    await user.type(list, '40 abc 1,2,3');
+    expect(list).toHaveValue('40  1,2,3');
     expect(screen.queryByRole('alert')).not.toBeInTheDocument();
 
     await user.tab();
-    expect(screen.getByRole('alert')).toHaveTextContent('no son números válidos: abc');
+    expect(screen.getByRole('alert')).toHaveTextContent('no son números válidos: 1,2,3');
     expect(within(result()).getByText(/Completá los datos/)).toBeInTheDocument();
   });
 
@@ -87,5 +89,22 @@ describe('OmnesCalculator', () => {
     expect(list).toHaveValue('');
     expect(screen.queryByRole('alert')).not.toBeInTheDocument();
     expect(calculations.loadDraft('omnes-rules')).toBeNull();
+  });
+
+  it('should flag the optional fields only after leaving them, then clear on reset', async () => {
+    const { user } = setup();
+    const ticket = screen.getByRole('textbox', { name: /Ticket promedio/ });
+    await user.type(ticket, '1,2,3');
+    expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+    await user.tab();
+    expect(screen.getByRole('alert')).toHaveTextContent('Escribí un número válido');
+
+    await user.clear(ticket);
+    await user.type(ticket, '0');
+    await user.tab();
+    expect(screen.getByRole('alert')).toHaveTextContent('Tiene que ser mayor que 0.');
+
+    await user.click(screen.getByRole('button', { name: 'Limpiar datos' }));
+    expect(screen.queryByRole('alert')).not.toBeInTheDocument();
   });
 });

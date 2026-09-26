@@ -5,7 +5,7 @@ import { ButtonLink, FeatureCard } from '@components';
 import { getTranslations } from '@i18n';
 import PageLayout from '@layouts/page-layout.astro';
 import { readAccountConfig } from '@services';
-import { LOCALES, localizedPath, toLocale } from '@utils';
+import { LOCALES, localizedPath, toLocale, trackingId } from '@utils';
 
 export function getStaticPaths() {
   return LOCALES.map((lang) => ({ params: { lang } }));
@@ -33,7 +33,11 @@ const accountsEnabled = readAccountConfig(import.meta.env) !== null;
     <p class="max-w-xl text-lg text-[var(--text-secondary)]">{home.hero.subtitle}</p>
     {accountsEnabled && (
       <div class="flex flex-col items-center gap-2">
-        <ButtonLink href={localizedPath(lang, 'account')} variant="secondary">
+        <ButtonLink
+          id={trackingId('home', 'link', 'sign-in')}
+          href={localizedPath(lang, 'account')}
+          variant="secondary"
+        >
           {common.nav['sign-in']}
         </ButtonLink>
         <p class="text-sm text-[var(--text-secondary)]">{home.hero['sign-in-hint']}</p>
@@ -49,6 +53,7 @@ const accountsEnabled = readAccountConfig(import.meta.env) !== null;
       description={home['calculator-card'].description}
       cta={home['calculator-card'].cta}
       href={localizedPath(lang, 'calculator')}
+      ctaId={trackingId('home', 'link', 'calculator')}
     />
 
     <h2 class="pt-4 text-3xl">{home['sections-title']}</h2>
@@ -58,12 +63,14 @@ const accountsEnabled = readAccountConfig(import.meta.env) !== null;
         description={home['formulas-card'].description}
         cta={home['formulas-card'].cta}
         href={localizedPath(lang, 'formulas')}
+        ctaId={trackingId('home', 'link', 'formulas')}
       />
       <FeatureCard
         title={home['learn-card'].title}
         description={home['learn-card'].description}
         cta={home['learn-card'].cta}
         href={localizedPath(lang, 'learn')}
+        ctaId={trackingId('home', 'link', 'learn')}
       />
     </div>
   </section>

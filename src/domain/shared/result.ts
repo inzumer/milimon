@@ -19,7 +19,6 @@ export interface FieldError<K extends string = string> {
   code: ErrorCode;
 }
 
-/** One line of the worked calculation, e.g. `{ id: 'waste-weight', values: { gross: 2.4, … } }`. */
 export interface Step {
   id: string;
   values: Record<string, number>;

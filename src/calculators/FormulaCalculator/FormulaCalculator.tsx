@@ -5,7 +5,7 @@ import { getFormula, type FormulaId, type StandardFormulaDefinition } from '@dom
 import { formulaText, type CalculatorText } from '@i18n/formula-text';
 import type { Translations } from '@i18n/translations';
 import type { CalculationsRepository, HistoryRepository, SettingsRepository } from '@repositories';
-import { localizedPath, type Locale } from '@utils';
+import { localizedPath, trackingId, type Locale } from '@utils';
 import { FormulaFields } from './FormulaFields';
 import { FormulaResult } from './FormulaResult';
 import { useFormulaCalculator } from './useFormulaCalculator';
@@ -13,7 +13,6 @@ import { useFormulaCalculator } from './useFormulaCalculator';
 export interface FormulaCalculatorProps {
   formulaId: FormulaId;
   lang: Locale;
-  /** Translations are resolved on the server and passed in, so no dictionary ships to the client. */
   text: CalculatorText;
   ui: Translations<'calculator'>;
   calculations?: CalculationsRepository;
@@ -51,6 +50,7 @@ export const FormulaCalculator = ({
           {formula.examples.map((example) => (
             <li key={example.id} className="flex flex-wrap items-center gap-3">
               <Button
+                id={trackingId(formulaId, 'button', 'load-example', example.id)}
                 variant="secondary"
                 className="min-h-11"
                 onClick={() => calculator.loadExample(example.id)}
@@ -75,7 +75,7 @@ export const FormulaCalculator = ({
           {ui['form-title']}
         </h3>
         <FormulaFields
-          idPrefix={id}
+          scope={formulaId}
           inputs={formula.inputs}
           draft={calculator.draft}
           errors={calculator.errors}
@@ -86,6 +86,7 @@ export const FormulaCalculator = ({
           onBlur={calculator.touch}
         />
         <Button
+          id={trackingId(formulaId, 'button', 'reset')}
           type="button"
           variant="ghost"
           className="min-h-11 self-start"
