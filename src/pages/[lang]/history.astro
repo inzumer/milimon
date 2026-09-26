@@ -26,7 +26,13 @@ const formulas = Object.fromEntries(
 const accountHref = readAccountConfig(import.meta.env) ? localizedPath(lang, 'login') : undefined;
 ---
 
-<PageLayout lang={lang} title={page.title} description={page.description} noindex>
+<PageLayout
+  ogSection="management"
+  lang={lang}
+  title={page.title}
+  description={page.description}
+  noindex
+>
   <Breadcrumbs
     aria-label={breadcrumbs.label}
     items={[{ label: common.nav.home, href: localizedPath(lang, 'home') }]}

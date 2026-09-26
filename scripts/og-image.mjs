@@ -1,4 +1,5 @@
-// Generates the Open Graph / Twitter share images (1200×630, one per language) into public/og/.
+// Generates the Open Graph / Twitter share images (1200×630, one per section and language) into
+// public/og/og-<section>-<lang>.png. Texts come from src/i18n/common/<lang>.json (`og`).
 // Rendered by headless Chrome so the brand fonts (Lobster Two, Nunito) and colors are exact.
 // The PNGs are committed: run this only when the logo, the texts or the brand change.
 //
@@ -23,19 +24,13 @@ const nunito = dataUrl(
   'font/woff2',
 );
 const logo = dataUrl('src/assets/logo.png', 'image/png');
+const star = dataUrl('src/assets/star.png', 'image/png');
+// Recipes and blog use the star (milicitos); the rest, the logo.
+const IMAGES = { home: logo, management: logo, recipes: star, blog: star };
+const LANGS = ['es', 'en'];
+const texts = (lang) => JSON.parse(readFileSync(`src/i18n/common/${lang}.json`, 'utf8')).og;
 
-const TEXTS = {
-  es: {
-    tagline: 'Costos, desechos y mermas en gastronomía',
-    detail: 'Calculadora y manual de estudio con cada fórmula explicada paso a paso.',
-  },
-  en: {
-    tagline: 'Food cost, trim waste and cooking loss',
-    detail: 'Calculator and study guide with every formula explained step by step.',
-  },
-};
-
-const html = ({ tagline, detail }) => `<!doctype html>
+const html = ({ tagline, detail, image }) => `<!doctype html>
 <html><head><meta charset="utf-8"><style>
   @font-face { font-family: 'Lobster Two'; font-weight: 700; src: url(${lobster}) format('woff2'); }
   @font-face { font-family: 'Nunito'; font-weight: 200 1000; src: url(${nunito}) format('woff2'); }
@@ -48,7 +43,7 @@ const html = ({ tagline, detail }) => `<!doctype html>
   .tagline { margin-top: 24px; font-size: 38px; font-weight: 800; line-height: 1.2; }
   .detail { margin-top: 16px; font-size: 28px; line-height: 1.35; color: #5b4a42; }
 </style></head><body>
-  <img src="${logo}" alt="">
+  <img src="${image}" alt="">
   <div>
     <h1>Milimon</h1>
     <p class="tagline">${tagline}</p>
@@ -67,9 +62,11 @@ try {
     mobile: false,
   });
   mkdirSync('public/og', { recursive: true });
-  for (const [lang, texts] of Object.entries(TEXTS)) {
-    const file = join(tmpdir(), `milimon-og-${lang}.html`);
-    writeFileSync(file, html(texts));
+  for (const [lang, section] of LANGS.flatMap((lang) =>
+    Object.keys(IMAGES).map((section) => [lang, section]),
+  )) {
+    const file = join(tmpdir(), `milimon-og-${section}-${lang}.html`);
+    writeFileSync(file, html({ ...texts(lang)[section], image: IMAGES[section] }));
     await send('Page.navigate', { url: pathToFileURL(file).href });
     await sleep(500);
     await evaluate('document.fonts.ready.then(() => true)');
@@ -80,8 +77,9 @@ try {
         clip: { x: 0, y: 0, width: 1200, height: 630, scale: 1 },
       })
     ).result;
-    writeFileSync(`public/og/og-${lang}.png`, Buffer.from(data, 'base64'));
-    console.log(`public/og/og-${lang}.png`);
+    const out = `public/og/og-${section}-${lang}.png`;
+    writeFileSync(out, Buffer.from(data, 'base64'));
+    console.log(out);
   }
 } finally {
   browser.close();

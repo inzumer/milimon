@@ -1,11 +1,19 @@
-import { Accordion, cn } from '@inzumer/ui-library';
+import { Accordion, cn, RichText } from '@inzumer/ui-library';
 import { isActivePath, stripBase, trackingId } from '@utils';
 import { navLinkStyles } from './SiteMenu.styles';
 
 export interface SiteMenuItem {
   href: string;
   label: string;
+  /** Short tag next to the label, e.g. "Coming soon". */
+  badge?: string;
   children?: SiteMenuItem[];
+}
+
+export interface SiteMenuGroup {
+  /** Heading shown above the group; the first group (home) has none. */
+  title?: string;
+  items: SiteMenuItem[];
 }
 
 const normalize = (path: string) => path.replace(/\/+$/, '') || '/';
@@ -27,9 +35,18 @@ export const NavEntry = ({ item, pathname }: { item: SiteMenuItem; pathname: str
         id={linkId(item.href)}
         href={item.href}
         aria-current={current ? 'page' : undefined}
-        className={navLinkStyles({ active: inSection })}
+        className={cn(navLinkStyles({ active: inSection }), item.badge && 'gap-2')}
       >
         {item.label}
+        {item.badge && (
+          <RichText
+            variant="s4"
+            bold
+            className="rounded-full bg-primary-500 px-2 py-0.5 tracking-wide text-neutral-950 uppercase"
+          >
+            {item.badge}
+          </RichText>
+        )}
       </a>
     );
   }

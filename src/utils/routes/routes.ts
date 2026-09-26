@@ -11,6 +11,8 @@ export const ROUTES = {
   account: 'account',
   login: 'login',
   history: 'history',
+  recipes: 'recipes',
+  blog: 'blog',
 } as const;
 
 export type RouteName = keyof typeof ROUTES;
@@ -24,7 +26,7 @@ export const SITE_BASE = (import.meta.env.BASE_URL ?? '/').replace(/\/+$/, '');
 const join = (...parts: string[]): string =>
   `/${parts.filter((part) => part.length > 0).join('/')}`;
 
-/** Prefixes a root-relative path with the site base: `/og/og-es.png` → `/milimon/og/og-es.png`. */
+/** Prefixes a root-relative path with the site base: `/og/og-home-es.png` → `/milimon/og/og-home-es.png`. */
 export const withBase = (path: string, base: string = SITE_BASE): string =>
   `${base}${path.startsWith('/') ? path : `/${path}`}`;
 

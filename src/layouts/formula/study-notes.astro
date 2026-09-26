@@ -14,7 +14,7 @@ const { notes, labels } = Astro.props;
 <ul class="flex flex-col gap-4">
   {notes.map((note) => (
     <li>
-      <Card noPadding>
+      <Card noPadding className="bg-[var(--surface-primary)]">
         <CardHeader className="gap-2">
           <CardTitle as="h3" className="text-sm font-bold tracking-wide uppercase">
             {labels[note.type]}

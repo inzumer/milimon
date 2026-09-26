@@ -27,7 +27,7 @@ const groups = FORMULA_GROUPS.map((group) => ({
 }));
 ---
 
-<PageLayout lang={lang} title={page.title} description={page.intro}>
+<PageLayout ogSection="management" lang={lang} title={page.title} description={page.intro}>
   <Breadcrumbs
     aria-label={formulaPage.breadcrumbs.label}
     items={[{ label: common.nav.home, href: localizedPath(lang, 'home') }]}

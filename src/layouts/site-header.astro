@@ -3,7 +3,14 @@ import { Image } from 'astro:assets';
 import { RichText } from '@inzumer/ui-library';
 import logo from '@assets/logo.png';
 import { SiteMenu } from '@components';
-import { getFormulaTranslation, getLearnTopic, getTranslations, LEARN_TOPIC_IDS } from '@i18n';
+import {
+  BLOG_ARTICLE_IDS,
+  getBlogArticle,
+  getFormulaTranslation,
+  getLearnTopic,
+  getTranslations,
+  LEARN_TOPIC_IDS,
+} from '@i18n';
 import { localizedPath, type Locale } from '@utils';
 import { FORMULA_IDS } from '@utils/formulas';
 
@@ -15,32 +22,57 @@ interface Props {
 const { lang, pathname } = Astro.props;
 const common = getTranslations(lang, 'common');
 
-const items = [
-  { href: localizedPath(lang, 'home'), label: common.nav.home },
-  { href: localizedPath(lang, 'calculator'), label: common.nav.calculator },
+const groups = [
+  { items: [{ href: localizedPath(lang, 'home'), label: common.nav.home }] },
   {
-    href: localizedPath(lang, 'formulas'),
-    label: common.nav.formulas,
-    children: [
-      { href: localizedPath(lang, 'formulas'), label: common.nav['all-formulas'] },
-      ...FORMULA_IDS.map((id) => ({
-        href: localizedPath(lang, 'formulas', id),
-        label: getFormulaTranslation(lang, id).title,
-      })),
+    title: common.nav['management-group'],
+    items: [
+      { href: localizedPath(lang, 'calculator'), label: common.nav.calculator },
+      {
+        href: localizedPath(lang, 'formulas'),
+        label: common.nav.formulas,
+        children: [
+          { href: localizedPath(lang, 'formulas'), label: common.nav['all-formulas'] },
+          ...FORMULA_IDS.map((id) => ({
+            href: localizedPath(lang, 'formulas', id),
+            label: getFormulaTranslation(lang, id).title,
+          })),
+        ],
+      },
+      {
+        href: localizedPath(lang, 'learn'),
+        label: common.nav.learn,
+        children: [
+          { href: localizedPath(lang, 'learn'), label: common.nav['all-topics'] },
+          ...LEARN_TOPIC_IDS.map((id) => ({
+            href: localizedPath(lang, 'learn', id),
+            label: getLearnTopic(lang, id).title,
+          })),
+        ],
+      },
+      { href: localizedPath(lang, 'history'), label: common.nav.history },
     ],
   },
   {
-    href: localizedPath(lang, 'learn'),
-    label: common.nav.learn,
-    children: [
-      { href: localizedPath(lang, 'learn'), label: common.nav['all-topics'] },
-      ...LEARN_TOPIC_IDS.map((id) => ({
-        href: localizedPath(lang, 'learn', id),
-        label: getLearnTopic(lang, id).title,
+    title: common.nav['recipes-group'],
+    items: [
+      {
+        href: localizedPath(lang, 'recipes'),
+        label: common.nav['all-recipes'],
+        badge: common.nav.soon,
+      },
+    ],
+  },
+  {
+    title: common.nav['blog-group'],
+    items: [
+      { href: localizedPath(lang, 'blog'), label: common.nav['all-articles'] },
+      ...BLOG_ARTICLE_IDS.map((id) => ({
+        href: localizedPath(lang, 'blog', id),
+        label: getBlogArticle(lang, id).title,
       })),
     ],
   },
-  { href: localizedPath(lang, 'history'), label: common.nav.history },
 ];
 
 const account = {
@@ -91,7 +123,7 @@ const labels = {
       client:load
       lang={lang}
       pathname={pathname}
-      items={items}
+      groups={groups}
       labels={labels}
       account={account}
     />

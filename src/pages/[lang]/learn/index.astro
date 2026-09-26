@@ -15,7 +15,12 @@ const page = getTranslations(lang, 'learn-page');
 const breadcrumbs = getTranslations(lang, 'formula-page').breadcrumbs;
 ---
 
-<PageLayout lang={lang} title={page.index.title} description={page.index.intro}>
+<PageLayout
+  ogSection="management"
+  lang={lang}
+  title={page.index.title}
+  description={page.index.intro}
+>
   <Breadcrumbs
     aria-label={breadcrumbs.label}
     items={[{ label: common.nav.home, href: localizedPath(lang, 'home') }]}

@@ -28,7 +28,7 @@ const related = formulasByGroup()[formula.group].filter((item) => item.id !== fo
 const section = (key: string) => `section-${key}`;
 ---
 
-<PageLayout lang={lang} title={text.title} description={text.summary}>
+<PageLayout ogSection="management" lang={lang} title={text.title} description={text.summary}>
   <Breadcrumbs
     aria-label={page.breadcrumbs.label}
     items={[
@@ -109,7 +109,7 @@ const section = (key: string) => `section-${key}`;
         {page.sections.examples}
       </RichText>
       {study.examples.map((example) => (
-        <div class="flex flex-col gap-2 rounded-xl bg-[var(--surface-secondary)] p-5">
+        <div class="flex flex-col gap-2 rounded-xl border border-[var(--border-default)] bg-[var(--surface-primary)] p-5">
           <RichText variant="h3" className="text-xl font-bold">
             {example.title}
           </RichText>
