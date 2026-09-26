@@ -1,5 +1,4 @@
 export {
-  CURRENCIES,
   DEFAULT_SETTINGS,
   sanitizeSettings,
   useSettingsStore,

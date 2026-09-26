@@ -28,6 +28,8 @@ export const LanguageSwitcher = ({
   <Language
     id={trackingId('settings', 'select', 'language')}
     aria-label={label}
+    // Only as wide as its options (plus padding), even inside a stretching flex column.
+    className="w-fit self-start"
     options={OPTIONS}
     value={lang}
     onChange={(next) => {
