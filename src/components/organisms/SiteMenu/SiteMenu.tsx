@@ -1,6 +1,7 @@
 import { useCallback, useId, useState } from 'react';
-import { Button, Drawer, RichText } from '@inzumer/ui-library';
+import { Button, Drawer } from '@inzumer/ui-library';
 import { MenuIcon } from '@components/atoms/Icons';
+import { SectionLabel } from '@components/atoms/SectionLabel';
 import {
   AccountMenuSection,
   type AccountMenuSectionLabels,
@@ -66,9 +67,9 @@ export const SiteMenu = ({ lang, pathname, groups, labels, account }: SiteMenuPr
         onClose={close}
         title={labels.title}
         titleClassName="font-display text-3xl"
-        // Title row as tall as the site header and the same side padding, so the close button sits
-        // exactly where the menu button is.
-        className="px-4 pt-0 [&>div:first-child]:h-header [&>div:first-child]:shrink-0"
+        // 85% of the screen on phones (labels fit on one line), 20rem from 768px up. The title row is as
+        // tall as the site header with the same padding, so the close button sits where the menu one is.
+        className="w-[85vw] max-w-none px-4 pt-0 md:w-full md:max-w-80 [&>div:first-child]:h-header [&>div:first-child]:shrink-0"
         closeLabel={labels.close}
         footer={
           <div className="flex flex-col gap-8">
@@ -78,13 +79,7 @@ export const SiteMenu = ({ lang, pathname, groups, labels, account }: SiteMenuPr
               accountHref={account.accountHref}
             />
             <section aria-labelledby={preferencesId} className="flex flex-col gap-4">
-              <RichText
-                variant="h3"
-                id={preferencesId}
-                className="text-sm font-bold tracking-wide text-[var(--text-secondary)] uppercase"
-              >
-                {labels.preferences}
-              </RichText>
+              <SectionLabel id={preferencesId}>{labels.preferences}</SectionLabel>
               <LanguageSwitcher lang={lang} pathname={pathname} label={labels.language} />
               <ThemeToggle label={labels.darkMode} />
               <CurrencySelect lang={lang} label={labels.currency} />
@@ -96,13 +91,9 @@ export const SiteMenu = ({ lang, pathname, groups, labels, account }: SiteMenuPr
           {groups.map((group, index) => (
             <div key={group.title ?? group.items[0]?.href} className="flex flex-col gap-2">
               {group.title && (
-                <RichText
-                  variant="h3"
-                  id={`${panelId}-group-${index}`}
-                  className="px-3 text-sm font-bold tracking-wide text-[var(--text-secondary)] uppercase"
-                >
+                <SectionLabel id={`${panelId}-group-${index}`} className="px-3">
                   {group.title}
-                </RichText>
+                </SectionLabel>
               )}
               <ul
                 className="flex flex-col gap-1"

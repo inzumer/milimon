@@ -59,18 +59,15 @@ const text = page[section];
     </RichText>
     <RichText className="max-w-xl">{page.meanwhile}</RichText>
     <div class="flex flex-wrap justify-center gap-3">
+      <ButtonLink id={trackingId(section, 'link', 'blog')} href={localizedPath(lang, 'blog')}>
+        {page['blog-cta']}
+      </ButtonLink>
       <ButtonLink
         id={trackingId(section, 'link', 'calculator')}
         href={localizedPath(lang, 'calculator')}
-      >
-        {page['calculator-cta']}
-      </ButtonLink>
-      <ButtonLink
-        id={trackingId(section, 'link', 'formulas')}
-        href={localizedPath(lang, 'formulas')}
         variant="secondary"
       >
-        {page['formulas-cta']}
+        {page['calculator-cta']}
       </ButtonLink>
     </div>
   </section>

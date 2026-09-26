@@ -9,7 +9,7 @@ export const navLinkStyles = cva(
   {
     variants: {
       active: {
-        true: 'bg-[var(--surface-secondary)] underline decoration-[var(--color-primary-500)] decoration-4 underline-offset-8',
+        true: 'bg-[var(--surface-secondary)] text-[var(--text-accent)] hover:text-[var(--text-accent)]',
         false: '',
       },
     },
