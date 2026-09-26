@@ -1,0 +1,95 @@
+---
+import { Image } from 'astro:assets';
+import { Breadcrumbs, RichText } from '@inzumer/ui-library';
+import portrait from '@assets/logo.png';
+import { ButtonLink } from '@components';
+import { INSTITUTE_URL } from '@constants';
+import { getTranslations } from '@i18n';
+import PageLayout from '@layouts/page-layout.astro';
+import { LOCALES, localizedPath, toLocale, trackingId } from '@utils';
+
+export function getStaticPaths() {
+  return LOCALES.map((lang) => ({ params: { lang } }));
+}
+
+const lang = toLocale(Astro.params.lang);
+const common = getTranslations(lang, 'common');
+const page = getTranslations(lang, 'about-page');
+const breadcrumbs = getTranslations(lang, 'formula-page').breadcrumbs;
+---
+
+<PageLayout lang={lang} title={page.title} description={page.description}>
+  <Breadcrumbs
+    aria-label={breadcrumbs.label}
+    items={[{ label: common.nav.home, href: localizedPath(lang, 'home') }]}
+    current={page.title}
+    className="mb-6"
+  />
+  <article class="flex max-w-3xl flex-col gap-8">
+    <header class="flex flex-col items-center gap-6 text-center sm:flex-row sm:text-left">
+      <Image
+        src={portrait}
+        alt={page['portrait-alt']}
+        width={176}
+        height={176}
+        densities={[1, 2]}
+        loading="eager"
+        class="size-44 shrink-0"
+      />
+      <div class="flex flex-col gap-3">
+        <RichText variant="h1" bold className="font-display text-5xl">
+          {page.title}
+        </RichText>
+        {page.intro.map((paragraph) => (
+          <RichText variant="p1">{paragraph}</RichText>
+        ))}
+      </div>
+    </header>
+
+    <section aria-labelledby="studies" class="flex flex-col gap-4">
+      <RichText variant="h2" bold id="studies" className="font-display text-3xl">
+        {page['studies-title']}
+      </RichText>
+      <ul class="grid gap-4 sm:grid-cols-2">
+        {page.studies.map((study) => (
+          <li class="flex flex-col gap-2 rounded-xl border border-[var(--border-default)] p-5">
+            <RichText variant="h3" className="text-xl font-bold">
+              {study.title}
+            </RichText>
+            <RichText className="text-[var(--text-secondary)]">{study.description}</RichText>
+          </li>
+        ))}
+      </ul>
+      <a
+        id={trackingId('about', 'link', 'institute')}
+        href={INSTITUTE_URL}
+        target="_blank"
+        rel="noopener"
+        class="inline-flex min-h-6 items-center self-start font-semibold text-[var(--text-link)] underline"
+      >
+        {page['institute-link']}
+      </a>
+    </section>
+
+    <section aria-labelledby="why" class="flex flex-col gap-4">
+      <RichText variant="h2" bold id="why" className="font-display text-3xl">
+        {page['why-title']}
+      </RichText>
+      {page.why.map((paragraph) => (
+        <RichText>{paragraph}</RichText>
+      ))}
+      <div class="flex flex-wrap gap-3">
+        <ButtonLink id={trackingId('about', 'link', 'blog')} href={localizedPath(lang, 'blog')}>
+          {page['blog-cta']}
+        </ButtonLink>
+        <ButtonLink
+          id={trackingId('about', 'link', 'calculator')}
+          href={localizedPath(lang, 'calculator')}
+          variant="secondary"
+        >
+          {page['calculator-cta']}
+        </ButtonLink>
+      </div>
+    </section>
+  </article>
+</PageLayout>

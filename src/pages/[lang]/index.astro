@@ -136,6 +136,22 @@ const blog = getTranslations(lang, 'blog');
     </div>
   </section>
 
+  <section aria-labelledby="about" class="mt-12 flex flex-col gap-6">
+    <header class="flex flex-col gap-2">
+      <RichText variant="h2" bold id="about" className="font-display text-3xl">
+        {home['about-section'].title}
+      </RichText>
+      <RichText className="text-[var(--text-secondary)]">{home['about-section'].intro}</RichText>
+    </header>
+    <FeatureCard
+      title={home['about-card'].title}
+      description={home['about-card'].description}
+      cta={home['about-card'].cta}
+      href={localizedPath(lang, 'about')}
+      ctaId={trackingId('home', 'link', 'about')}
+    />
+  </section>
+
   <section aria-labelledby="account" class="mt-12 flex flex-col gap-6">
     <header class="flex flex-col gap-2">
       <RichText variant="h2" bold id="account" className="font-display text-3xl">

@@ -1,0 +1,29 @@
+{
+  "title": "About me",
+  "description": "Milagros Tessey: IAG-trained pastry chef, Culinary Professional student and author of Milimon.",
+  "portrait-alt": "Illustration of Milagros with a chef hat and a wooden spoon",
+  "intro": [
+    "Hi, I am Milagros Tessey. I studied gastronomy at IAG (Instituto Argentino de Gastronomía) in Buenos Aires: this year I graduated as a Professional Pastry Chef, and I am still studying to become a Culinary Professional.",
+    "I now live in Zaragoza, Spain, where I keep cooking, tasting and learning."
+  ],
+  "studies-title": "What I study",
+  "studies": [
+    {
+      "title": "Professional Pastry (graduated)",
+      "description": "One year covering basic pastry and bread-making techniques, advanced pastry and chocolate work, plus food safety and hygiene and restaurant management."
+    },
+    {
+      "title": "Culinary Professional (in progress)",
+      "description": "A \"360°\" program combining cooking, pastry and bread-making: basic and advanced cooking techniques, catering and pasta, ethnic cuisine, chocolate, service, drinks and cocktails, event planning and management."
+    }
+  ],
+  "why-title": "Why I made this site",
+  "why": [
+    "Milimon applies part of what I learned at the institute, above all how to run a food business: costs, trim waste, cooking loss and pricing, with tools to do the math and examples of my own.",
+    "Sharing what I learn is how I study: explaining something forces me to really understand it, and it may help someone else along the way.",
+    "In the blog I share what I taste as I go through life, rated in milicitos."
+  ],
+  "institute-link": "Learn about IAG",
+  "blog-cta": "Read the blog",
+  "calculator-cta": "Go to the calculator"
+}
