@@ -173,7 +173,10 @@ describe('LoginPanel', () => {
     await screen.findByRole('button', { name: labels['continue-with-facebook'] });
 
     (await google()).onCredential('id-token');
-    expect(await screen.findByRole('status')).toHaveTextContent(labels['signing-in']);
+    // Under load the 50 ms "slow" timer can fire before this first check: either text is fine here.
+    expect(await screen.findByRole('status')).toHaveTextContent(
+      new RegExp(`${labels['signing-in']}|${labels['waking-up']}`),
+    );
     await vi.waitFor(() =>
       expect(screen.getByRole('status')).toHaveTextContent(labels['waking-up']),
     );
