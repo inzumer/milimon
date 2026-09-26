@@ -6,7 +6,7 @@ const SESSION: StoredSession = {
   accessToken: 'access',
   refreshToken: 'refresh',
   expiresAt: 1_000,
-  user: { id: 'u1', name: 'Ada', email: null, avatarUrl: null },
+  user: { id: 'u1', name: 'Ada', email: null, avatarUrl: null, role: 'user' },
 };
 
 describe('session store', () => {
@@ -24,6 +24,13 @@ describe('session store', () => {
     store.write(SESSION);
 
     expect(listener.mock.calls).toStrictEqual([[SESSION], [null]]);
+  });
+
+  it('should read sessions saved before roles existed as plain users', () => {
+    const storage = createMemoryStorage();
+    const { role: _role, ...legacyUser } = SESSION.user;
+    storage.setItem('milimon:auth', JSON.stringify({ ...SESSION, user: legacyUser }));
+    expect(createSessionStore(storage).read()?.user.role).toBe('user');
   });
 
   it('should ignore stored data that is not a session', () => {

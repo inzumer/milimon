@@ -1,6 +1,6 @@
 import { AUTH_STORAGE_KEY, SESSION_CHANGED_EVENT } from '@constants';
 import { getBrowserStorage, readJson, writeJson, type KeyValueStorage } from '@utils';
-import type { AccountUser } from './account-backend';
+import { isAccountRole, type AccountUser } from './account-backend';
 
 export interface StoredSession {
   accessToken: string;
@@ -44,9 +44,15 @@ const isSession = (value: unknown): value is StoredSession => {
 export const createSessionStore = (
   storage: KeyValueStorage | null = getBrowserStorage(),
 ): SessionStore => {
-  const read = () => {
+  const read = (): StoredSession | null => {
     const raw = readJson<unknown>(storage, AUTH_STORAGE_KEY);
-    return isSession(raw) ? raw : null;
+    if (!isSession(raw)) {
+      return null;
+    }
+    return {
+      ...raw,
+      user: { ...raw.user, role: isAccountRole(raw.user.role) ? raw.user.role : 'user' },
+    };
   };
   const notify = () => {
     window.dispatchEvent(new CustomEvent(SESSION_CHANGED_EVENT));

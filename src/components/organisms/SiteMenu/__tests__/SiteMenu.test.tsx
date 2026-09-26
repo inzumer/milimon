@@ -33,12 +33,14 @@ const props: SiteMenuProps = {
   account: {
     loginHref: '/es/login',
     accountHref: '/es/account',
+    adminHref: '/es/admin',
     labels: {
       title: 'Tu cuenta',
       signedInAs: 'Sesión iniciada como',
       signIn: 'Iniciar sesión',
       signOut: 'Cerrar sesión',
       account: 'Mi cuenta',
+      admin: 'Administración',
       signedOutHint: 'Guardá tu configuración.',
     },
   },

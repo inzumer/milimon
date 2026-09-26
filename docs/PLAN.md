@@ -512,7 +512,8 @@ Ideas y análisis de cada tema en [docs/suggestions](./suggestions/README.md).
 - **Deploy oficial con dominio propio** (Cloudflare Pages o similar) y **auditoría de seguridad**:
   cabeceras HTTP, escaneos externos, revisión de la API y aviso legal (RGPD/LSSI). Ver
   [01](./suggestions/01-deploy-y-seguridad.md).
-- **API en Render**: crear el servicio desde el Blueprint con el `DATABASE_URL` de Neon.
+- **API en Render**: crear el servicio desde el Blueprint con el `DATABASE_URL` de Neon y
+  `BOOTSTRAP_ADMIN_EMAILS` con los emails de Milagros y del admin técnico.
 - **Google Cloud**: orígenes autorizados (`https://inzumer.github.io` hoy, el dominio propio después).
 - **Search Console y Bing Webmaster Tools**: verificar el sitio y enviar el sitemap.
 - **Google Tag Manager**: contenedor + `PUBLIC_GTM_ID` (activa el banner de cookies). Ver [04](./suggestions/04-medicion-y-cuentas.md).
@@ -521,8 +522,8 @@ Ideas y análisis de cada tema en [docs/suggestions](./suggestions/README.md).
 
 **Contenido**
 
-- **Keystatic con vista previa y acceso solo admin**: rol `admin` en las cuentas (se puede adelantar),
-  sesión en cookie y middleware en `/keystatic` con el deploy en Cloudflare Pages; vista previa por
+- **Keystatic con vista previa y acceso solo admin**: los roles (`user`, `editor`, `admin`) y la
+  sección **Administración** ya están hechos (API 1.1.0); falta sesión en cookie y middleware en `/keystatic` con el deploy en Cloudflare Pages; vista previa por
   rama de borrador. Ver [02](./suggestions/02-cms-y-emails.md#keystatic-vista-previa-y-acceso-solo-para-admins).
 - **CMS sin dependencia técnica** para que Milagros gestione recetas, blog, guías, "Sobre mí", textos
   del inicio y secciones nuevas (recomendado: Keystatic + Keystatic Cloud), migrando los textos

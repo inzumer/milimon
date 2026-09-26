@@ -1,4 +1,10 @@
-import type { AccountBackend, AccountUser, RemoteProfile } from '@services/account';
+import type {
+  AccountBackend,
+  AccountUser,
+  AdminUser,
+  RemoteProfile,
+  RoleChange,
+} from '@services/account';
 import type { CalculatorDrafts, HistoryEntry } from '@stores';
 
 export interface FakeAccountBackend extends AccountBackend {
@@ -7,6 +13,8 @@ export interface FakeAccountBackend extends AccountBackend {
     profile: RemoteProfile | null;
     drafts: CalculatorDrafts;
     history: HistoryEntry[];
+    users: AdminUser[];
+    roleChanges: RoleChange[];
   };
   setUser: (user: AccountUser | null) => void;
 }
@@ -16,6 +24,7 @@ export const TEST_USER: AccountUser = {
   name: 'Ada Cook',
   email: 'ada@example.com',
   avatarUrl: null,
+  role: 'user',
 };
 
 /** In-memory `AccountBackend` with vi.fn spies on every method. */
@@ -27,6 +36,8 @@ export const createFakeAccountBackend = (
     profile: null,
     drafts: {},
     history: [],
+    users: [],
+    roleChanges: [],
     ...initial,
   };
   const listeners = new Set<(user: AccountUser | null) => void>();
@@ -78,5 +89,26 @@ export const createFakeAccountBackend = (
     deleteHistoryEntry: vi.fn(async (id: string) => {
       remote.history = remote.history.filter((item) => item.id !== id);
     }),
+    fetchMe: vi.fn(async () => {
+      if (!remote.user) {
+        throw new Error('signed out');
+      }
+      return remote.user;
+    }),
+    listUsers: vi.fn(async (search: string, page: number) => {
+      const items = remote.users.filter((user) =>
+        `${user.name ?? ''} ${user.email ?? ''}`.toLowerCase().includes(search.toLowerCase()),
+      );
+      return { items, total: items.length, page, pageSize: 20 };
+    }),
+    setUserRole: vi.fn(async (userId: string, role: AdminUser['role']) => {
+      const user = remote.users.find((item) => item.id === userId);
+      if (!user) {
+        throw new Error('not found');
+      }
+      user.role = role;
+      return { ...user };
+    }),
+    listRoleChanges: vi.fn(async () => remote.roleChanges),
   };
 };

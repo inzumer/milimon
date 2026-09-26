@@ -1,0 +1,57 @@
+{
+  "title": "Administration",
+  "description": "Manage the site content and account roles.",
+  "loading": "Loading…",
+  "unavailable": "Accounts are not available yet.",
+  "signed-out": "Sign in with an administration account to enter.",
+  "sign-in": "Sign in",
+  "forbidden": "Your account has no access to this section.",
+  "error": "Could not load. Please try again.",
+  "retry": "Try again",
+  "content": {
+    "title": "Content",
+    "description": "Recipes, blog, \"About me\" and the site sections.",
+    "soon": "The content editor arrives with the official deploy on our own domain."
+  },
+  "users": {
+    "title": "Users and roles",
+    "search-label": "Search accounts",
+    "search-placeholder": "Name or email (e.g. milagros)",
+    "search": "Search",
+    "name": "Name",
+    "email": "Email",
+    "role": "Role",
+    "since": "Joined",
+    "you": "(you)",
+    "empty": "No matching accounts.",
+    "page": "Page {page} of {pages}",
+    "previous": "Previous",
+    "next": "Next",
+    "role-label": "Role of {name}"
+  },
+  "roles": {
+    "user": "User",
+    "editor": "Editor",
+    "admin": "Admin"
+  },
+  "confirm": {
+    "title": "Change role",
+    "message": "Change {name}’s role from {from} to {to}?",
+    "confirm": "Change role",
+    "cancel": "Cancel"
+  },
+  "results": {
+    "changed": "Done: {name} is now {role}.",
+    "last-admin": "At least one admin account must remain.",
+    "self": "You cannot change your own role.",
+    "forbidden": "Your account can no longer change roles.",
+    "error": "Could not change the role. Please try again."
+  },
+  "log": {
+    "title": "Change log",
+    "empty": "No role changes yet.",
+    "entry": "{user}: from {from} to {to}",
+    "by": "by {author}",
+    "bootstrap": "initial assignment"
+  }
+}
