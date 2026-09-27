@@ -509,7 +509,7 @@ en **Gestión del sitio → Sugerencias**, solo para editores y admins).
 **Para lanzar**
 
 - [ ] **Publicar la gestión del sitio**: commits listos en `feature/publishing-agenda` (API) y
-      `feature/admin-tools` (front), sin mergear. Falta: `--no-ff` a `dev`, `release/1.2.0` (API)
+      `feature/admin-tools` (front), sin fusionar. Falta: `--no-ff` a `dev`, `release/1.2.0` (API)
       y `release/1.17.0` (front) a `main` con tag, y push. Primero la API: la agenda del front la usa.
 
 - [ ] **Deploy oficial con dominio propio** (Cloudflare Pages o similar) y **auditoría de seguridad**:
