@@ -1,3 +1,4 @@
+import type { AgendaKind, AgendaStatus } from '@constants';
 import type { CalculatorDraft, CalculatorDrafts, ColorScheme, HistoryEntry } from '@stores';
 import type { Locale } from '@utils';
 
@@ -48,6 +49,20 @@ export interface RoleChange {
   createdAt: string;
 }
 
+/** A planned publication of the shared agenda (`date` is `YYYY-MM-DD`). */
+export interface AgendaEntry {
+  id: string;
+  date: string;
+  kind: AgendaKind;
+  status: AgendaStatus;
+  title: string;
+  notes: string | null;
+  updatedByEmail: string | null;
+  updatedAt: string;
+}
+
+export type AgendaEntryInput = Pick<AgendaEntry, 'date' | 'kind' | 'status' | 'title' | 'notes'>;
+
 export interface RemoteProfile {
   currency: string;
   locale: Locale | null;
@@ -78,4 +93,8 @@ export interface AccountBackend {
   listUsers: (search: string, page: number) => Promise<AdminUserPage>;
   setUserRole: (userId: string, role: AccountRole) => Promise<AdminUser>;
   listRoleChanges: (page: number) => Promise<RoleChange[]>;
+  listAgenda: (from: string, to: string) => Promise<AgendaEntry[]>;
+  createAgendaEntry: (entry: AgendaEntryInput) => Promise<AgendaEntry>;
+  updateAgendaEntry: (id: string, entry: AgendaEntryInput) => Promise<AgendaEntry>;
+  deleteAgendaEntry: (id: string) => Promise<void>;
 }

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useId, useRef, useState, type SyntheticEvent } from 'react';
+import { useEffect, useId, useState, type SyntheticEvent } from 'react';
 import {
   Button,
   Dropdown,
@@ -12,17 +12,15 @@ import {
   TableHeaderCell,
   TableRow,
 } from '@inzumer/ui-library';
-import { ButtonLink } from '@components/atoms/ButtonLink';
 import { SectionLabel } from '@components/atoms/SectionLabel';
+import { AdminAccessNotice } from '@components/molecules/AdminAccessNotice';
+import { useAdminAccess } from '@hooks';
 import type { Translations } from '@i18n/translations';
 import {
   ACCOUNT_ROLES,
-  ADMIN_SECTION_ROLES,
   getAccountSession,
-  SessionExpiredError,
   type AccountRole,
   type AccountSession,
-  type AccountUser,
   type AdminUser,
   type AdminUserPage,
   type RoleChange,
@@ -37,14 +35,6 @@ export interface AdminPanelProps {
   loginHref: string;
   loadSession?: () => AccountSession | null;
 }
-
-type View =
-  | { kind: 'loading' }
-  | { kind: 'unavailable' }
-  | { kind: 'signed-out' }
-  | { kind: 'forbidden' }
-  | { kind: 'error' }
-  | { kind: 'ready'; me: AccountUser };
 
 interface PendingChange {
   user: AdminUser;
@@ -75,9 +65,7 @@ export const AdminPanel = ({
   loginHref,
   loadSession = getAccountSession,
 }: AdminPanelProps) => {
-  const loadRef = useRef(loadSession);
-  const sessionRef = useRef<AccountSession | null>(null);
-  const [view, setView] = useState<View>({ kind: 'loading' });
+  const { access: view, retry } = useAdminAccess(loadSession);
   const [search, setSearch] = useState('');
   const [query, setQuery] = useState('');
   const [page, setPage] = useState(1);
@@ -86,6 +74,7 @@ export const AdminPanel = ({
   const [pending, setPending] = useState<PendingChange | null>(null);
   const [busy, setBusy] = useState(false);
   const [notice, setNotice] = useState('');
+  const [reloads, setReloads] = useState(0);
   const usersTitleId = useId();
   const logTitleId = useId();
   const dateFormat = new Intl.DateTimeFormat(lang === 'es' ? 'es-AR' : 'en-US', {
@@ -95,53 +84,31 @@ export const AdminPanel = ({
   const displayName = (user: { name: string | null; email: string | null }) =>
     user.name ?? user.email ?? '—';
 
-  const load = useCallback(async () => {
-    const session = loadRef.current();
-    sessionRef.current = session;
-    if (!session) {
-      setView({ kind: 'unavailable' });
-      return;
-    }
-    if (!(await session.backend.getUser())) {
-      setView({ kind: 'signed-out' });
-      return;
-    }
-    try {
-      const me = await session.backend.fetchMe();
-      setView(
-        ADMIN_SECTION_ROLES.includes(me.role) ? { kind: 'ready', me } : { kind: 'forbidden' },
-      );
-    } catch (error) {
-      setView(error instanceof SessionExpiredError ? { kind: 'signed-out' } : { kind: 'error' });
-    }
-  }, []);
-
-  useEffect(() => {
-    void load();
-  }, [load]);
-
   const isAdmin = view.kind === 'ready' && view.me.role === 'admin';
-
-  const loadUsers = useCallback(async () => {
-    const session = sessionRef.current;
-    if (!session || !isAdmin) {
-      return;
-    }
-    try {
-      const [list, log] = await Promise.all([
-        session.backend.listUsers(query, page),
-        session.backend.listRoleChanges(1),
-      ]);
-      setUsers(list);
-      setChanges(log);
-    } catch (error) {
-      setNotice(resultFor(error, labels.results));
-    }
-  }, [isAdmin, query, page, labels.results]);
+  const session = view.kind === 'ready' ? view.session : null;
 
   useEffect(() => {
-    void loadUsers();
-  }, [loadUsers]);
+    if (!session || !isAdmin) {
+      return undefined;
+    }
+    let active = true;
+    Promise.all([session.backend.listUsers(query, page), session.backend.listRoleChanges(1)]).then(
+      ([list, log]) => {
+        if (active) {
+          setUsers(list);
+          setChanges(log);
+        }
+      },
+      (error: unknown) => {
+        if (active) {
+          setNotice(resultFor(error, labels.results));
+        }
+      },
+    );
+    return () => {
+      active = false;
+    };
+  }, [session, isAdmin, query, page, reloads, labels.results]);
 
   const submitSearch = (event: SyntheticEvent) => {
     event.preventDefault();
@@ -150,7 +117,6 @@ export const AdminPanel = ({
   };
 
   const confirmChange = async () => {
-    const session = sessionRef.current;
     if (!session || !pending) {
       return;
     }
@@ -163,7 +129,7 @@ export const AdminPanel = ({
           role: roleName(updated.role),
         }),
       );
-      await loadUsers();
+      setReloads((count) => count + 1);
     } catch (error) {
       setNotice(resultFor(error, labels.results));
     } finally {
@@ -172,40 +138,15 @@ export const AdminPanel = ({
     }
   };
 
-  if (view.kind === 'loading') {
-    return <RichText aria-busy="true">{labels.loading}</RichText>;
-  }
-  if (view.kind === 'unavailable' || view.kind === 'forbidden') {
+  if (view.kind !== 'ready') {
     return (
-      <RichText className="rounded-lg bg-[var(--surface-secondary)] p-4">
-        {view.kind === 'unavailable' ? labels.unavailable : labels.forbidden}
-      </RichText>
-    );
-  }
-  if (view.kind === 'signed-out') {
-    return (
-      <div className="flex flex-col items-start gap-4">
-        <RichText>{labels['signed-out']}</RichText>
-        <ButtonLink id={trackingId('admin', 'link', 'sign-in')} href={loginHref}>
-          {labels['sign-in']}
-        </ButtonLink>
-      </div>
-    );
-  }
-  if (view.kind === 'error') {
-    return (
-      <div className="flex flex-col items-start gap-4">
-        <RichText role="alert">{labels.error}</RichText>
-        <Button
-          id={trackingId('admin', 'button', 'retry')}
-          type="button"
-          variant="secondary"
-          className="min-h-11"
-          onClick={() => void load()}
-        >
-          {labels.retry}
-        </Button>
-      </div>
+      <AdminAccessNotice
+        access={view}
+        labels={labels}
+        loginHref={loginHref}
+        onRetry={() => void retry()}
+        scope="admin"
+      />
     );
   }
 

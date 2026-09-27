@@ -7,6 +7,7 @@ import {
   type AccountUser,
   type AdminUser,
   type AdminUserPage,
+  type AgendaEntry,
   type RemoteProfile,
   type RoleChange,
 } from './account-backend';
@@ -209,5 +210,17 @@ export const createApiBackend = (
         body: { role },
       }),
     listRoleChanges: async (page) => authed<RoleChange[]>(`/admin/role-changes?page=${page}`),
+    listAgenda: async (from, to) =>
+      authed<AgendaEntry[]>(`/admin/agenda?${new URLSearchParams({ from, to }).toString()}`),
+    createAgendaEntry: async (entry) =>
+      authed<AgendaEntry>('/admin/agenda', { method: 'POST', body: entry }),
+    updateAgendaEntry: async (id, entry) =>
+      authed<AgendaEntry>(`/admin/agenda/${encodeURIComponent(id)}`, {
+        method: 'PATCH',
+        body: entry,
+      }),
+    deleteAgendaEntry: async (id) => {
+      await authed(`/admin/agenda/${encodeURIComponent(id)}`, { method: 'DELETE' });
+    },
   };
 };

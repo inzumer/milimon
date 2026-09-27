@@ -3,8 +3,12 @@ import aboutPageEn from './about-page/en.json';
 import aboutPageEs from './about-page/es.json';
 import accountPageEn from './account-page/en.json';
 import accountPageEs from './account-page/es.json';
+import adminDocsEn from './admin-docs/en.json';
+import adminDocsEs from './admin-docs/es.json';
 import adminPageEn from './admin-page/en.json';
 import adminPageEs from './admin-page/es.json';
+import agendaPageEn from './agenda-page/en.json';
+import agendaPageEs from './agenda-page/es.json';
 import blogEn from './blog/en.json';
 import blogEs from './blog/es.json';
 import calculatorPageEn from './calculator-page/en.json';
@@ -38,7 +42,9 @@ import termsPageEs from './terms-page/es.json';
  */
 const dictionaries = {
   'about-page': { es: aboutPageEs, en: aboutPageEn satisfies typeof aboutPageEs },
+  'admin-docs': { es: adminDocsEs, en: adminDocsEn satisfies typeof adminDocsEs },
   'admin-page': { es: adminPageEs, en: adminPageEn satisfies typeof adminPageEs },
+  'agenda-page': { es: agendaPageEs, en: agendaPageEn satisfies typeof agendaPageEs },
   blog: { es: blogEs, en: blogEn satisfies typeof blogEs },
   common: { es: commonEs, en: commonEn satisfies typeof commonEs },
   'coming-soon': { es: comingSoonEs, en: comingSoonEn satisfies typeof comingSoonEs },

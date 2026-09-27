@@ -1,6 +1,11 @@
 {
   "title": "Tu cuenta",
   "description": "Tu sesión, tus datos sincronizados entre dispositivos y la opción de borrar tu cuenta.",
+  "settings": {
+    "title": "Configuración",
+    "currency": "Moneda",
+    "currency-hint": "La moneda en la que las calculadoras muestran los importes. Solo cambia el símbolo, no convierte valores."
+  },
   "disabled": "Las cuentas todavía no están disponibles. Mientras tanto, todo lo que cargás se guarda en este dispositivo.",
   "privacy-note": "Qué datos guardamos y cómo borrarlos:",
   "privacy-link": "política de privacidad",

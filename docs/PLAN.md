@@ -423,12 +423,10 @@ Texto propio basado en el manual, no copiado literal.
 
 - Ya hay Open Graph básico en todas las páginas (título, descripción, imagen del logo, idioma) e
   íconos de ventana: favicon, apple-touch, android y manifest.
-- Pendiente de revisar juntos:
-  - Imagen para compartir de 1200 × 630 con la marca (logo + título de la página), una por página
-    o una general. Si ya hay diseños, se usan esos; si no, se pueden generar en el build a partir del
-    título de cada fórmula.
-  - Card `summary_large_image` de X/Twitter.
-  - Probar la vista previa en WhatsApp, LinkedIn y Facebook (este último con su Sharing Debugger).
+- [x] Imagen para compartir de 1200 × 630 con la marca, una por sección
+      (`og-{home,management,recipes,blog}-{es,en}.png`, generadas con `scripts/og-image.mjs`).
+- [x] Card `summary_large_image` de X/Twitter.
+- [ ] Probar la vista previa en WhatsApp, LinkedIn y Facebook (este último con su Sharing Debugger).
 
 ---
 
@@ -505,54 +503,97 @@ idioma, tema), sus recetas y sus cálculos en un perfil propio.
 
 ### Pendientes
 
-Ideas y análisis de cada tema en [docs/suggestions](./suggestions/README.md).
+Ideas y análisis de cada tema en [docs/suggestions](./suggestions/README.md) (también en el sitio,
+en **Gestión del sitio → Sugerencias**, solo para editores y admins).
 
 **Para lanzar**
 
-- **Deploy oficial con dominio propio** (Cloudflare Pages o similar) y **auditoría de seguridad**:
-  cabeceras HTTP, escaneos externos, revisión de la API y aviso legal (RGPD/LSSI). Ver
-  [01](./suggestions/01-deploy-y-seguridad.md).
-- **API en Render**: crear el servicio desde el Blueprint con el `DATABASE_URL` de Neon y
-  `BOOTSTRAP_ADMIN_EMAILS` con los emails de Milagros y del admin técnico.
-- **Google Cloud**: orígenes autorizados (`https://inzumer.github.io` hoy, el dominio propio después).
-- **Search Console y Bing Webmaster Tools**: verificar el sitio y enviar el sitemap.
-- **Google Tag Manager**: contenedor + `PUBLIC_GTM_ID` (activa el banner de cookies). Ver [04](./suggestions/04-medicion-y-cuentas.md).
-- **Meta (Facebook Login)**: crear la app cuando Meta lo permita; hasta entonces el botón queda
-  deshabilitado con el aviso "Próximamente".
+- [ ] **Publicar la gestión del sitio**: commits listos en `feature/publishing-agenda` (API) y
+      `feature/admin-tools` (front), sin fusionar. Falta: `--no-ff` a `dev`, `release/1.2.0` (API)
+      y `release/1.17.0` (front) a `main` con tag, y push. Primero la API: la agenda del front la usa.
+
+- [ ] **Deploy oficial con dominio propio** (Cloudflare Pages o similar) y **auditoría de seguridad**:
+      cabeceras HTTP, escaneos externos, revisión de la API y aviso legal (RGPD/LSSI). Ver
+      [01](./suggestions/01-deploy-y-seguridad.md).
+- [ ] **API en Render**: crear el servicio desde el Blueprint con el `DATABASE_URL` de Neon y
+      `BOOTSTRAP_ADMIN_EMAILS` con los emails de Milagros y del admin técnico.
+- [ ] **Google Cloud**: orígenes autorizados (`https://inzumer.github.io` hoy, el dominio propio después).
+- [ ] **Search Console y Bing Webmaster Tools**: verificar el sitio y enviar el sitemap.
+- [ ] **Google Tag Manager**: contenedor + `PUBLIC_GTM_ID` (activa el banner de cookies). Ver
+      [04](./suggestions/04-medicion-y-cuentas.md).
+- [ ] **Meta (Facebook Login)**: crear la app cuando Meta lo permita; hasta entonces el botón queda
+      deshabilitado con el aviso "Próximamente".
+
+**Gestión del sitio**
+
+- [x] **Roles** (`user`, `editor`, `admin`) y sección **Administración** con usuarios, roles y
+      registro de cambios (API 1.1.0, front 1.16.0).
+- [x] **Menú "Gestión del sitio"** solo para editores y admins: panel, agenda, guía de fotos y
+      sugerencias (desplegable con los 11 documentos de `docs/suggestions`).
+- [x] **Zócalo "Modo gestión"** debajo del header con el rol de quien navega; nadie más lo ve.
+- [x] **Agenda de publicaciones** editable y compartida (recetas, reseñas, guías, artículos y
+      redes, con estado), guardada en la base (`/admin/agenda`, API 1.2.0).
+- [ ] **Keystatic con vista previa y acceso solo admin**: falta sesión en cookie y middleware en
+      `/keystatic` con el deploy en Cloudflare Pages; vista previa por rama de borrador. Ver
+      [02](./suggestions/02-cms-y-emails.md#keystatic-vista-previa-y-acceso-solo-para-admins).
 
 **Contenido**
 
-- **Keystatic con vista previa y acceso solo admin**: los roles (`user`, `editor`, `admin`) y la
-  sección **Administración** ya están hechos (API 1.1.0); falta sesión en cookie y middleware en `/keystatic` con el deploy en Cloudflare Pages; vista previa por
-  rama de borrador. Ver [02](./suggestions/02-cms-y-emails.md#keystatic-vista-previa-y-acceso-solo-para-admins).
-- **CMS sin dependencia técnica** para que Milagros gestione recetas, blog, guías, "Sobre mí", textos
-  del inicio y secciones nuevas (recomendado: Keystatic + Keystatic Cloud), migrando los textos
-  que hoy están en `src/i18n`; **emails** a suscriptores (RSS a email). Ver [02](./suggestions/02-cms-y-emails.md).
-- Revisión del texto de "Sobre mí" por Milagros.
-- Comparar el texto explicativo con el material del curso (hace falta el PDF) para confirmar que no
-  quedó ninguna frase igual.
+- [ ] **CMS sin dependencia técnica** para que Milagros gestione recetas, blog, guías, "Sobre mí",
+      textos del inicio y secciones nuevas (recomendado: Keystatic + Keystatic Cloud), migrando los
+      textos que hoy están en `src/i18n`; **emails** a suscriptores (RSS a email). Ver
+      [02](./suggestions/02-cms-y-emails.md).
+- [ ] Revisión del texto de "Sobre mí" por Milagros.
+- [ ] Comparar el texto explicativo con el material del curso (hace falta el PDF) para confirmar que
+      no quedó ninguna frase igual.
+- [ ] **Emails transaccionales** (bienvenida al registrarse, confirmación al eliminar la cuenta) con
+      un paquete `@inzumer/email` (React Email + tokens) y envío desde la API. Ver
+      [10](./suggestions/10-emails-transaccionales.md).
+- [ ] **Recetas con UI de referencia** (Pinterest): cards verticales con imagen y degradado, botones
+      flotantes, carrusel, chips de filtro, ficha de receta con modo "Empezar a cocinar"; isotipo
+      nuevo. Ver [09](./suggestions/09-direccion-visual.md).
+- [ ] **Fotografía**: aplicar la [guía de fotografía](./suggestions/11-guia-de-fotografia.md) (luz,
+      ángulos, distancia y foco, fondos, formatos, edición) y armar un preset de edición común.
 
-- **Emails transaccionales** (bienvenida al registrarse, confirmación al eliminar la cuenta) con un
-  paquete `@inzumer/email` (React Email + tokens) y envío desde la API. Ver
-  [10](./suggestions/10-emails-transaccionales.md).
-- **Dirección visual** más fina y editorial, conservando la ilustración y los milicitos. Ver
-  [09](./suggestions/09-direccion-visual.md) y animaciones en [06](./suggestions/06-animaciones.md).
+**Diseño**
 
-- **Recetas con UI de referencia** (Pinterest): cards verticales con imagen y degradado, botones
-  flotantes, carrusel, chips de filtro, ficha de receta con modo "Empezar a cocinar"; evaluar una
-  escala de color terracota y un isotipo nuevo. Ver [09](./suggestions/09-direccion-visual.md).
-
-- **Fotografía**: aplicar la [guía de fotografía](./suggestions/11-guia-de-fotografia.md) (luz,
-  ángulos, distancia y foco, fondos, formatos, edición) y armar un preset de edición común.
+- [x] **Paleta de la referencia**: escala **terracota** (`--color-accent-*`) para enlaces, acentos
+      y el zócalo de gestión; el amarillo queda para botones, marca y milicitos. Crema más cálido en
+      las superficies y chocolate de la referencia en el modo oscuro. Contraste AA medido en los dos
+      modos.
+- [x] **Preferencias del menú**: solo idioma y modo oscuro, cada uno con una aclaración corta; la
+      **moneda** pasó a **Configuración** en "Tu cuenta".
+- [ ] **Dirección visual** más fina y editorial (inicio tipo portada, cards con imagen,
+      tipografía), conservando la ilustración y los milicitos. Ver
+      [09](./suggestions/09-direccion-visual.md) y animaciones en [06](./suggestions/06-animaciones.md).
 
 **Técnico**
 
-- Renombrar las carpetas locales (`milimon`, `api-milimon`) con VS Code, Codex, Docker y
-  `pnpm dev` cerrados.
-- `.gitattributes` en `ui-library` (finales de línea).
-- **Librería de componentes**: `Carousel` accesible y `MediaCard` (card con imagen, degradado y
-  acciones flotantes) en `@inzumer/ui-library`.
-- Tests e2e con Playwright y auditoría a11y en CI. Ver [08](./suggestions/08-calidad-y-tests.md).
+- [x] Renombrar las carpetas locales (`milimon`, `api-milimon`).
+- [ ] **Repositorios con el prefijo `milimon-`** (detalle y orden en
+      [08](./suggestions/08-calidad-y-tests.md#repositorios-y-paquetes-decidido-2026-09-27)): `milimon` → `milimon-web` y `api-milimon` →
+      `milimon-backend`; los nuevos nacen con el prefijo (`milimon-e2e`, `milimon-emails`,
+      `milimon-cms`…). Al renombrar el front, GitHub redirige el repo pero **no** GitHub Pages: la
+      URL pasa a `/milimon-web`, así que hay que cambiar `BASE_PATH` y `SITE_URL` en el deploy,
+      el `CORS_ORIGIN` de la API y los enlaces ya compartidos (o hacerlo junto con el dominio propio,
+      que deja de depender del nombre del repo). Después, las carpetas locales y los remotes.
+- [x] `.gitattributes` en `ui-library` (finales de línea).
+- [ ] **Librería de componentes**: `Carousel` accesible y `MediaCard` (card con imagen, degradado y
+      acciones flotantes) en `@inzumer/ui-library`.
+- [ ] **`milimon-e2e`**: tests e2e con Playwright y la auditoría a11y (hoy
+      `scripts/a11y-audit.mjs`) y las revisiones de SEO (title, description, canonical, hreflang,
+      JSON-LD, sitemap, robots, imágenes para compartir) y rendimiento (Lighthouse) en su propio
+      repo, llamados desde las Actions de cada proyecto; lo genérico, en `inzumer-ci`.
+      `scripts/og-image.mjs` no es un test: queda en el front como herramienta del build. Ver
+      [08](./suggestions/08-calidad-y-tests.md).
+- [ ] **Releases automáticos** una o dos veces por semana, cerrados solos si no hay cambios
+      (versión por Conventional Commits, tag, GitHub Release y vuelta a `dev`). Diseño en
+      [08](./suggestions/08-calidad-y-tests.md#releases-automáticos-a-implementar).
+- [ ] **Un repo por paquete publicado de `@inzumer`** (hoy todos viven en el monorepo `ui-library`):
+      `inzumer-ui-lib` (`@inzumer/ui-library`), `inzumer-ui-tokens` (`@inzumer/tokens`),
+      `inzumer-prettier`, `inzumer-eslint` y `inzumer-tsconfig` (hoy privados; publicarlos permite
+      dejar de copiarlos en cada proyecto) e `inzumer-ci` con los workflows reutilizables de
+      GitHub Actions (lint, tests, build, e2e, release) que comparten todos los repos.
 
 ## 11. Fases
 
@@ -590,3 +631,5 @@ Flujo de ramas (gitflow, ver CLAUDE.md): cada fase se trabaja en `feature/*` des
 - Alcance: calculadora + administración del restaurante; sin RRHH, marketing ni comunicación.
 - Pesos por defecto, moneda configurable; `localStorage` hasta la fase de cuentas.
 - Cuentas con Google/Facebook en la fase final (F10).
+- Repositorios del proyecto con el prefijo `milimon-` (`milimon-web`, `milimon-backend`,
+  `milimon-e2e`, `milimon-emails`, `milimon-cms`…).

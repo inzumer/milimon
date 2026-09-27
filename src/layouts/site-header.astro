@@ -2,7 +2,8 @@
 import { Image } from 'astro:assets';
 import { RichText } from '@inzumer/ui-library';
 import logo from '@assets/logo.png';
-import { SiteMenu } from '@components';
+import { AdminBar, SiteMenu } from '@components';
+import { ADMIN_DOCS } from '@constants';
 import { getFormulaTranslation, getLearnTopic, getTranslations, LEARN_TOPIC_IDS } from '@i18n';
 import { localizedPath, type Locale } from '@utils';
 import { FORMULA_IDS } from '@utils/formulas';
@@ -14,6 +15,7 @@ interface Props {
 
 const { lang, pathname } = Astro.props;
 const common = getTranslations(lang, 'common');
+const docs = getTranslations(lang, 'admin-docs');
 
 const groups = [
   {
@@ -73,17 +75,38 @@ const groups = [
   },
 ];
 
+const adminGroup = {
+  title: common.nav['site-group'],
+  items: [
+    { href: localizedPath(lang, 'admin'), label: common.nav['admin-panel'], exact: true },
+    { href: localizedPath(lang, 'admin', 'agenda'), label: common.nav.agenda },
+    {
+      href: localizedPath(lang, 'admin', 'suggestions', 'photo-guide'),
+      label: common.nav['photo-guide'],
+    },
+    {
+      href: localizedPath(lang, 'admin', 'suggestions'),
+      label: common.nav.suggestions,
+      children: [
+        { href: localizedPath(lang, 'admin', 'suggestions'), label: common.nav['all-suggestions'] },
+        ...ADMIN_DOCS.map(({ id }) => ({
+          href: localizedPath(lang, 'admin', 'suggestions', id),
+          label: docs.docs[id].title,
+        })),
+      ],
+    },
+  ],
+};
+
 const account = {
   loginHref: localizedPath(lang, 'login'),
   accountHref: localizedPath(lang, 'account'),
-  adminHref: localizedPath(lang, 'admin'),
   labels: {
     title: common.menu.account,
     signedInAs: common.menu['signed-in-as'],
     signIn: common.nav['sign-in'],
     signOut: common.menu['sign-out'],
     account: common.nav.account,
-    admin: common.menu.admin,
     signedOutHint: common.menu['signed-out-hint'],
   },
 };
@@ -95,8 +118,9 @@ const labels = {
   navigation: common.nav.label,
   preferences: common.menu.preferences,
   language: common.language.label,
+  languageHint: common.menu['language-hint'],
   darkMode: common.theme['dark-mode'],
-  currency: common.settings.currency,
+  darkModeHint: common.menu['dark-mode-hint'],
 };
 ---
 
@@ -124,8 +148,10 @@ const labels = {
       lang={lang}
       pathname={pathname}
       groups={groups}
+      adminGroup={adminGroup}
       labels={labels}
       account={account}
     />
   </div>
+  <AdminBar client:load labels={common['admin-bar']} href={localizedPath(lang, 'admin')} />
 </header>

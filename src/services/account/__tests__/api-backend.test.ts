@@ -152,6 +152,41 @@ describe('api backend', () => {
     expect(calls[2]?.body).toStrictEqual({ role: 'editor' });
   });
 
+  it('should call the agenda routes', async () => {
+    const { backend, calls, queue } = setup(fresh);
+    const entry = {
+      id: 'e 1',
+      date: '2026-10-06',
+      kind: 'recipe',
+      status: 'planned',
+      title: 'Budín de limón',
+      notes: null,
+      updatedByEmail: 'ada@example.com',
+      updatedAt: '2026-09-27T12:00:00.000Z',
+    } as const;
+    const input = {
+      date: entry.date,
+      kind: entry.kind,
+      status: entry.status,
+      title: entry.title,
+      notes: null,
+    };
+    queue(reply(200, [entry]), reply(201, entry), reply(200, entry), reply(204));
+
+    await expect(backend.listAgenda('2026-10-01', '2026-10-31')).resolves.toStrictEqual([entry]);
+    await expect(backend.createAgendaEntry(input)).resolves.toStrictEqual(entry);
+    await backend.updateAgendaEntry('e 1', input);
+    await backend.deleteAgendaEntry('e 1');
+
+    expect(calls.map((call) => `${call.method} ${call.url}`)).toStrictEqual([
+      'GET https://api.example.com/admin/agenda?from=2026-10-01&to=2026-10-31',
+      'POST https://api.example.com/admin/agenda',
+      'PATCH https://api.example.com/admin/agenda/e%201',
+      'DELETE https://api.example.com/admin/agenda/e%201',
+    ]);
+    expect(calls[1]?.body).toStrictEqual(input);
+  });
+
   it('should refresh ahead of expiry, once for concurrent calls', async () => {
     const { backend, calls, queue } = setup({ ...fresh, expiresAt: NOW + 30_000 });
     queue(

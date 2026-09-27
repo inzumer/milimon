@@ -244,3 +244,9 @@ presets
 quitafondos
 keystatic
 cloudflare
+monetizacion
+optimizacion
+direccion
+guia
+fotografia
+medicion

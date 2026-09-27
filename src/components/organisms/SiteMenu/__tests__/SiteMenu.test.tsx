@@ -1,5 +1,6 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { sessionStoreWith as storeWith } from '@test/session-store';
 import { setAnalyticsSink } from '@utils';
 import { SiteMenu, type SiteMenuProps } from '../SiteMenu';
 
@@ -27,28 +28,34 @@ const props: SiteMenuProps = {
     navigation: 'Navegación principal',
     preferences: 'Preferencias',
     language: 'Idioma',
+    languageHint: 'Cambia el idioma de los textos.',
     darkMode: 'Modo oscuro',
-    currency: 'Moneda',
+    darkModeHint: 'Fondo oscuro, más cómodo de noche.',
+  },
+  adminGroup: {
+    title: 'Gestión del sitio',
+    items: [
+      { href: '/es/admin', label: 'Panel de gestión', exact: true },
+      { href: '/es/admin/agenda', label: 'Agenda de publicaciones' },
+    ],
   },
   account: {
     loginHref: '/es/login',
     accountHref: '/es/account',
-    adminHref: '/es/admin',
     labels: {
       title: 'Tu cuenta',
       signedInAs: 'Sesión iniciada como',
       signIn: 'Iniciar sesión',
       signOut: 'Cerrar sesión',
       account: 'Mi cuenta',
-      admin: 'Administración',
       signedOutHint: 'Guardá tu configuración.',
     },
   },
 };
 
-const openMenu = async () => {
+const openMenu = async (overrides: Partial<SiteMenuProps> = {}) => {
   const user = userEvent.setup();
-  render(<SiteMenu {...props} />);
+  render(<SiteMenu store={storeWith(null)} {...props} {...overrides} />);
   await user.click(screen.getByRole('button', { name: 'Abrir menú' }));
   return user;
 };
@@ -86,8 +93,13 @@ describe('SiteMenu', () => {
     );
     expect(screen.getByRole('navigation', { name: 'Navegación principal' })).toBeInTheDocument();
     expect(screen.getByRole('radiogroup', { name: 'Idioma' })).toBeInTheDocument();
-    expect(screen.getByRole('switch', { name: 'Modo oscuro' })).toBeInTheDocument();
-    expect(screen.getByRole('combobox', { name: /Moneda/ })).toHaveTextContent(/^ARS/);
+    expect(screen.getByRole('radiogroup', { name: 'Idioma' })).toHaveAccessibleDescription(
+      'Cambia el idioma de los textos.',
+    );
+    expect(screen.getByRole('switch', { name: 'Modo oscuro' })).toHaveAccessibleDescription(
+      'Fondo oscuro, más cómodo de noche.',
+    );
+    expect(screen.queryByRole('combobox', { name: /Moneda/ })).not.toBeInTheDocument();
     expect(sink).toHaveBeenCalledWith('menu_opened', {});
   });
 
@@ -121,5 +133,30 @@ describe('SiteMenu', () => {
     expect(document.body.style.overflow).toBe('hidden');
     await user.keyboard('{Escape}');
     await waitFor(() => expect(document.body.style.overflow).toBe(''));
+  });
+
+  it('should show the site management links only to editors and admins', async () => {
+    for (const [role, visible] of [
+      [null, false],
+      ['user', false],
+      ['editor', true],
+      ['admin', true],
+    ] as const) {
+      const { unmount } = render(<SiteMenu {...props} store={storeWith(role)} />);
+      await userEvent.setup().click(screen.getByRole('button', { name: 'Abrir menú' }));
+      expect(screen.queryByRole('list', { name: 'Gestión del sitio' }) !== null).toBe(visible);
+      unmount();
+    }
+  });
+
+  it('should highlight an exact link only on its own page', async () => {
+    await openMenu({ pathname: '/es/admin/agenda', store: storeWith('admin') });
+    expect(screen.getByRole('link', { name: 'Panel de gestión' })).not.toHaveClass(
+      'bg-[var(--surface-secondary)]',
+    );
+    expect(screen.getByRole('link', { name: 'Agenda de publicaciones' })).toHaveAttribute(
+      'aria-current',
+      'page',
+    );
   });
 });
