@@ -1,14 +1,13 @@
-import { useId, useMemo, useRef, useState, useSyncExternalStore } from 'react';
+import { useId, useRef, useState } from 'react';
 import { Button, RichText } from '@inzumer/ui-library';
 import { ButtonLink } from '@components/atoms/ButtonLink';
 import { SectionLabel } from '@components/atoms/SectionLabel';
+import { useAccountUser } from '@hooks';
 import {
-  ADMIN_SECTION_ROLES,
   createSessionStore,
   disableGoogleAutoSelect,
   getAccountSession,
   type AccountSession,
-  type AccountUser,
   type SessionStore,
 } from '@services/account';
 import { track, trackingId } from '@utils';
@@ -19,7 +18,6 @@ export interface AccountMenuSectionLabels {
   signIn: string;
   signOut: string;
   account: string;
-  admin: string;
   signedOutHint: string;
 }
 
@@ -27,33 +25,26 @@ export interface AccountMenuSectionProps {
   labels: AccountMenuSectionLabels;
   loginHref: string;
   accountHref: string;
-  adminHref: string;
   store?: SessionStore;
   loadSession?: () => AccountSession | null;
 }
 
 /**
- * The account block of the side menu: who is signed in, "My account", "Administration" (editors
- * and admins only) and "Sign out", or a sign-in link. Reads the session saved on this device (no API call to render) and follows sign-in and
+ * The account block of the side menu: who is signed in, "My account" and "Sign out", or a sign-in
+ * link. Reads the session saved on this device (no API call to render) and follows sign-in and
  * sign-out from any tab.
  */
 export const AccountMenuSection = ({
   labels,
   loginHref,
   accountHref,
-  adminHref,
   store = createSessionStore(),
   loadSession = getAccountSession,
 }: AccountMenuSectionProps) => {
   const titleId = useId();
   const depsRef = useRef({ store, loadSession });
   const [busy, setBusy] = useState(false);
-  const snapshot = useSyncExternalStore(
-    (onChange) => depsRef.current.store.subscribe(onChange),
-    () => JSON.stringify(depsRef.current.store.read()?.user ?? null),
-    () => 'null',
-  );
-  const user = useMemo(() => JSON.parse(snapshot) as AccountUser | null, [snapshot]);
+  const user = useAccountUser(store);
 
   const signOut = async () => {
     setBusy(true);
@@ -92,15 +83,6 @@ export const AccountMenuSection = ({
             >
               {labels.account}
             </ButtonLink>
-            {ADMIN_SECTION_ROLES.includes(user.role) && (
-              <ButtonLink
-                id={trackingId('menu', 'link', 'admin')}
-                href={adminHref}
-                variant="secondary"
-              >
-                {labels.admin}
-              </ButtonLink>
-            )}
             <Button
               id={trackingId('menu', 'button', 'sign-out')}
               type="button"

@@ -25,7 +25,13 @@
     "all-articles": "All articles",
     "about": "About me",
     "new": "New",
-    "featured": "Featured"
+    "featured": "Featured",
+    "site-group": "Site management",
+    "admin-panel": "Management panel",
+    "agenda": "Publishing agenda",
+    "suggestions": "Suggestions",
+    "all-suggestions": "All suggestions",
+    "photo-guide": "Photo guide"
   },
   "menu": {
     "open": "Open menu",
@@ -36,7 +42,8 @@
     "signed-in-as": "Signed in as",
     "sign-out": "Sign out",
     "signed-out-hint": "Keep your settings and calculations in your account.",
-    "admin": "Administration"
+    "language-hint": "Changes the language of the texts.",
+    "dark-mode-hint": "Dark background, easier at night."
   },
   "language": {
     "label": "Language",
@@ -58,9 +65,6 @@
     "title": "Page not found",
     "description": "The page you are looking for doesn't exist or isn't available yet.",
     "back-home": "Back to home"
-  },
-  "settings": {
-    "currency": "Currency"
   },
   "consent": {
     "title": "Help us improve?",
@@ -121,5 +125,15 @@
     "linkedin": "LinkedIn",
     "email": "Email",
     "new-tab": "(opens in a new tab)"
+  },
+  "admin-bar": {
+    "label": "Management mode",
+    "role": "Role: {role}",
+    "hint": "Only editors and admins see this.",
+    "roles": {
+      "user": "User",
+      "editor": "Editor",
+      "admin": "Admin"
+    }
   }
 }

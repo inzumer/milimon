@@ -1,0 +1,60 @@
+{
+  "title": "Suggestions",
+  "description": "Ideas and next steps for the site, at no cost and grouped by topic. They aren't committed tasks: each one joins the to-do list once we decide to do it.",
+  "language-note": "These internal documents are written in Spanish.",
+  "back": "All suggestions",
+  "order-title": "Suggested order",
+  "order": [
+    "Official deploy with our own domain and a security audit: everything else is best done on the final domain.",
+    "Tag Manager: measure from launch to decide with data.",
+    "CMS and the first recipes and articles: they bring visits and get shared.",
+    "End-to-end tests before adding big features.",
+    "Animations and monetization once traffic is steady."
+  ],
+  "docs": {
+    "deploy-and-security": {
+      "title": "Official deploy and security",
+      "description": "Own domain, hosting, security audit and checklist."
+    },
+    "cms-and-emails": {
+      "title": "CMS and emails",
+      "description": "Letting the owner manage recipes and the blog, and email updates."
+    },
+    "content-and-social": {
+      "title": "Content and social media",
+      "description": "Blog, recipes and guides; editorial calendar and social media."
+    },
+    "analytics-and-accounts": {
+      "title": "Analytics and accounts",
+      "description": "Tag Manager, what to measure and what to keep for signed-in people."
+    },
+    "monetization": {
+      "title": "Monetization",
+      "description": "Income without being intrusive."
+    },
+    "animations": {
+      "title": "Animations",
+      "description": "Where to add transitions and micro-interactions."
+    },
+    "optimization": {
+      "title": "Optimization",
+      "description": "Performance, image weight and technical debt."
+    },
+    "quality-and-tests": {
+      "title": "Quality and tests",
+      "description": "End-to-end tests, CI and monitoring."
+    },
+    "visual-direction": {
+      "title": "Visual direction",
+      "description": "A refined, elegant site with the illustration and the milicitos."
+    },
+    "transactional-emails": {
+      "title": "Transactional emails",
+      "description": "Welcome, deleted account and an email library."
+    },
+    "photo-guide": {
+      "title": "Photography guide",
+      "description": "Light, angles, focus, apps, filters and editing presets."
+    }
+  }
+}

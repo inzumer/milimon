@@ -37,8 +37,16 @@ disponibles. Cada botón de login aparece solo si su id está configurado.
 - **Primer admin**: en Render, la variable `BOOTSTRAP_ADMIN_EMAILS` (emails separados por coma)
   convierte en admin a esas personas la primera vez que inician sesión con ese email verificado.
   Después, los roles se gestionan desde **Administración** (`/es/admin`), no desde la variable.
-- **Administración** (en el menú, solo para editores y admins): la sección de contenido (donde irá
-  el CMS) y, para admins, la lista de cuentas con búsqueda, el cambio de rol con confirmación y el
-  registro de cambios.
+- **Gestión del sitio** (grupo del menú, solo para editores y admins):
+  - **Panel de gestión** (`/admin`): la sección de contenido (donde irá el CMS) y, para admins, la
+    lista de cuentas con búsqueda, el cambio de rol con confirmación y el registro de cambios.
+  - **Agenda de publicaciones** (`/admin/agenda`): qué se publica y cuándo, por mes; se guarda en
+    la API (`/admin/agenda`), que vuelve a comprobar el rol en cada cambio.
+  - **Guía de fotos** y **Sugerencias** (`/admin/suggestions/{id}`): los documentos de
+    `docs/suggestions`, generados en el build (ids en `ADMIN_DOCS`). Ya son públicos en el
+    repositorio, así que se ocultan con la sesión guardada en el dispositivo (sin llamar a la
+    API), no se indexan y no están en el sitemap.
+- **Zócalo "Modo gestión"**: franja debajo del header con el rol de quien navega; solo la ven
+  editores y admins.
 - Reglas (las aplica la API): nadie cambia su propio rol, siempre queda al menos un admin y cada
   cambio queda registrado con quién lo hizo y cuándo. Detalle en `docs/SECURITY.md` de la API.

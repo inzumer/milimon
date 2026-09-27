@@ -8,6 +8,8 @@ export {
   type AccountUser,
   type AdminUser,
   type AdminUserPage,
+  type AgendaEntry,
+  type AgendaEntryInput,
   type AuthProvider,
   type RemoteProfile,
   type RoleChange,

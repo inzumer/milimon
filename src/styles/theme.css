@@ -12,7 +12,7 @@
   --color-primary-950: 78 55 34;
 
   --color-neutral-50: 253 247 241;
-  --color-neutral-100: 239 232 226;
+  --color-neutral-100: 249 239 227;
   --color-neutral-200: 221 213 207;
   --color-neutral-300: 199 190 184;
   --color-neutral-400: 173 162 156;
@@ -20,8 +20,20 @@
   --color-neutral-600: 119 106 100;
   --color-neutral-700: 97 83 77;
   --color-neutral-800: 78 63 58;
-  --color-neutral-900: 61 46 41;
-  --color-neutral-950: 47 32 27;
+  --color-neutral-900: 58 39 30;
+  --color-neutral-950: 43 27 20;
+
+  --color-accent-50: 255 240 231;
+  --color-accent-100: 254 228 214;
+  --color-accent-200: 251 207 184;
+  --color-accent-300: 247 179 144;
+  --color-accent-400: 240 147 99;
+  --color-accent-500: 233 121 58;
+  --color-accent-600: 195 100 48;
+  --color-accent-700: 155 78 38;
+  --color-accent-800: 119 59 29;
+  --color-accent-900: 89 43 21;
+  --color-accent-950: 70 33 15;
 
   --font-display: 'Lobster Two', ui-serif, Georgia, serif;
   --font-body: 'Nunito Variable', 'Nunito', ui-sans-serif, system-ui, sans-serif;
@@ -42,9 +54,14 @@
   --text-tertiary: rgb(var(--color-neutral-600));
   --text-disabled: rgb(var(--color-neutral-400));
   --text-inverse: rgb(var(--color-neutral-50));
-  --text-accent: rgb(var(--color-primary-800));
-  --text-link: rgb(var(--color-primary-800));
-  --text-link-hover: rgb(var(--color-primary-900));
+  --text-accent: rgb(var(--color-accent-700));
+  --text-link: rgb(var(--color-accent-700));
+  --text-link-hover: rgb(var(--color-accent-800));
+
+  --admin-bar-bg: rgb(var(--color-accent-700));
+  --admin-bar-text: rgb(var(--color-neutral-50));
+  --admin-bar-badge-bg: rgb(var(--color-neutral-50));
+  --admin-bar-badge-text: rgb(var(--color-accent-800));
 
   --border-default: rgb(var(--color-neutral-200));
   --border-muted: rgb(var(--color-neutral-100));
@@ -90,9 +107,14 @@
   --text-tertiary: rgb(var(--color-neutral-400));
   --text-disabled: rgb(var(--color-neutral-600));
   --text-inverse: rgb(var(--color-neutral-950));
-  --text-accent: rgb(var(--color-primary-400));
-  --text-link: rgb(var(--color-primary-400));
-  --text-link-hover: rgb(var(--color-primary-300));
+  --text-accent: rgb(var(--color-accent-300));
+  --text-link: rgb(var(--color-accent-300));
+  --text-link-hover: rgb(var(--color-accent-200));
+
+  --admin-bar-bg: rgb(var(--color-accent-300));
+  --admin-bar-text: rgb(var(--color-neutral-950));
+  --admin-bar-badge-bg: rgb(var(--color-neutral-950));
+  --admin-bar-badge-text: rgb(var(--color-accent-200));
 
   --border-default: rgb(var(--color-neutral-800));
   --border-muted: rgb(var(--color-neutral-900));

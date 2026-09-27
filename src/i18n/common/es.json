@@ -25,7 +25,13 @@
     "all-articles": "Todos los artículos",
     "about": "Sobre mí",
     "new": "Nuevo",
-    "featured": "Destacado"
+    "featured": "Destacado",
+    "site-group": "Gestión del sitio",
+    "admin-panel": "Panel de gestión",
+    "agenda": "Agenda de publicaciones",
+    "suggestions": "Sugerencias",
+    "all-suggestions": "Todas las sugerencias",
+    "photo-guide": "Guía de fotos"
   },
   "menu": {
     "open": "Abrir menú",
@@ -36,7 +42,8 @@
     "signed-in-as": "Sesión iniciada como",
     "sign-out": "Cerrar sesión",
     "signed-out-hint": "Guardá tu configuración y tus cálculos en tu cuenta.",
-    "admin": "Administración"
+    "language-hint": "Cambia el idioma de los textos.",
+    "dark-mode-hint": "Fondo oscuro, más cómodo de noche."
   },
   "language": {
     "label": "Idioma",
@@ -58,9 +65,6 @@
     "title": "Página no encontrada",
     "description": "La página que buscás no existe o todavía no está disponible.",
     "back-home": "Volver al inicio"
-  },
-  "settings": {
-    "currency": "Moneda"
   },
   "consent": {
     "title": "¿Nos ayudás a mejorar?",
@@ -121,5 +125,15 @@
     "linkedin": "LinkedIn",
     "email": "Email",
     "new-tab": "(se abre en otra pestaña)"
+  },
+  "admin-bar": {
+    "label": "Modo gestión",
+    "role": "Rol: {role}",
+    "hint": "Solo lo ven editores y admins.",
+    "roles": {
+      "user": "Usuario",
+      "editor": "Editor",
+      "admin": "Admin"
+    }
   }
 }

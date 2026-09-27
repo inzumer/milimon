@@ -1,0 +1,99 @@
+/* Internal documents (docs/suggestions) rendered from Markdown in the administration section. */
+.doc-prose {
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+  max-width: 72ch;
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+}
+
+.doc-prose h2 {
+  margin-top: 2.4rem;
+  font-size: 2.8rem;
+}
+
+.doc-prose h3,
+.doc-prose h4 {
+  margin-top: 1.2rem;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.doc-prose ul,
+.doc-prose ol {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding-left: 2.4rem;
+}
+
+.doc-prose ul {
+  list-style: disc;
+}
+
+.doc-prose ol {
+  list-style: decimal;
+}
+
+.doc-prose a {
+  color: var(--text-link);
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.doc-prose a:hover {
+  color: var(--text-link-hover);
+}
+
+.doc-prose code {
+  white-space: nowrap;
+  border-radius: 0.4rem;
+  background: var(--surface-secondary);
+  padding: 0.1rem 0.5rem;
+  font-size: 0.9em;
+}
+
+.doc-prose pre {
+  overflow-x: auto;
+  border-radius: 0.8rem;
+  background: var(--surface-secondary);
+  padding: 1.6rem;
+}
+
+.doc-prose pre code {
+  padding: 0;
+}
+
+.doc-prose blockquote {
+  border-left: 0.4rem solid var(--border-strong);
+  padding-left: 1.6rem;
+  color: var(--text-secondary);
+}
+
+.doc-prose table {
+  display: block;
+  overflow-x: auto;
+  border-collapse: collapse;
+  font-size: 1.5rem;
+}
+
+.doc-prose th,
+.doc-prose td {
+  border: 1px solid var(--border-default);
+  padding: 0.8rem 1.2rem;
+  min-width: 14ch;
+  text-align: left;
+  vertical-align: top;
+  overflow-wrap: normal;
+}
+
+.doc-prose th {
+  background: var(--surface-secondary);
+  font-weight: 700;
+}
+
+.doc-prose hr {
+  border: 0;
+  border-top: 1px solid var(--border-default);
+}

@@ -6,6 +6,7 @@ import { track, trackingId, type Locale } from '@utils';
 export interface CurrencySelectProps {
   lang: Locale;
   label: string;
+  hint?: string;
 }
 
 const currencyName = (code: string, lang: Locale): string =>
@@ -15,7 +16,7 @@ const currencyName = (code: string, lang: Locale): string =>
  * Currency used to display amounts in every calculator (display only, no conversion). A themed
  * ui-library `Dropdown`, so the list keeps the site's styles on every device.
  */
-export const CurrencySelect = ({ lang, label }: CurrencySelectProps) => {
+export const CurrencySelect = ({ lang, label, hint }: CurrencySelectProps) => {
   const currency = useSettingsStore((state) => state.currency);
   const update = useSettingsStore((state) => state.update);
 
@@ -23,6 +24,7 @@ export const CurrencySelect = ({ lang, label }: CurrencySelectProps) => {
     <Dropdown
       id={trackingId('settings', 'select', 'currency')}
       label={label}
+      {...(hint ? { hint } : {})}
       inputSize="lg"
       value={currency}
       options={CURRENCIES.map((code) => ({

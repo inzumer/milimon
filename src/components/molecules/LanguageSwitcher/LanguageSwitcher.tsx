@@ -8,6 +8,8 @@ export interface LanguageSwitcherProps {
   lang: Locale;
   pathname: string;
   label: string;
+  /** Id of a short text explaining the selector. */
+  describedBy?: string;
   navigate?: (href: string) => void;
 }
 
@@ -23,11 +25,13 @@ export const LanguageSwitcher = ({
   lang,
   pathname,
   label,
+  describedBy,
   navigate = defaultNavigate,
 }: LanguageSwitcherProps) => (
   <Language
     id={trackingId('settings', 'select', 'language')}
     aria-label={label}
+    aria-describedby={describedBy}
     className="w-fit self-start"
     options={OPTIONS}
     value={lang}

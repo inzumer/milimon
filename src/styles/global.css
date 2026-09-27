@@ -5,6 +5,7 @@
 @import '@fontsource/lobster-two/latin-700.css';
 @import '@fontsource-variable/nunito/wght.css';
 @import './theme.css';
+@import './doc-prose.css';
 
 @config '../../tailwind.config.ts';
 
