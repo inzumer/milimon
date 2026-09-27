@@ -1,14 +1,15 @@
 import { useCallback, useId, useState } from 'react';
-import { Button, Drawer } from '@inzumer/ui-library';
+import { Button, Drawer, RichText } from '@inzumer/ui-library';
 import { MenuIcon } from '@components/atoms/Icons';
 import { SectionLabel } from '@components/atoms/SectionLabel';
 import {
   AccountMenuSection,
   type AccountMenuSectionLabels,
 } from '@components/molecules/AccountMenuSection';
-import { CurrencySelect } from '@components/molecules/CurrencySelect';
 import { LanguageSwitcher } from '@components/molecules/LanguageSwitcher';
 import { ThemeToggle } from '@components/molecules/ThemeToggle';
+import { useAccountUser } from '@hooks';
+import { ADMIN_SECTION_ROLES, createSessionStore, type SessionStore } from '@services/account';
 import { track, trackingId, type Locale } from '@utils';
 import { NavEntry, type SiteMenuGroup } from './NavEntry';
 
@@ -19,31 +20,46 @@ export interface SiteMenuLabels {
   navigation: string;
   preferences: string;
   language: string;
+  languageHint: string;
   darkMode: string;
-  currency: string;
+  darkModeHint: string;
 }
 
 export interface SiteMenuProps {
   lang: Locale;
   pathname: string;
   groups: SiteMenuGroup[];
+  /** Site management links, shown only to editors and admins. */
+  adminGroup: SiteMenuGroup;
   labels: SiteMenuLabels;
   account: {
     labels: AccountMenuSectionLabels;
     loginHref: string;
     accountHref: string;
-    adminHref: string;
   };
+  store?: SessionStore;
 }
 
 /**
  * Hamburger button + side drawer (ui-library `Drawer`: focus trap, Escape/backdrop to close,
- * scroll lock) with the main navigation, language, theme and currency preferences.
+ * scroll lock) with the main navigation, the site management links for editors and admins, and
+ * the language and theme preferences.
  */
-export const SiteMenu = ({ lang, pathname, groups, labels, account }: SiteMenuProps) => {
+export const SiteMenu = ({
+  lang,
+  pathname,
+  groups,
+  adminGroup,
+  labels,
+  account,
+  store = createSessionStore(),
+}: SiteMenuProps) => {
   const [open, setOpen] = useState(false);
   const panelId = useId();
   const preferencesId = useId();
+  const user = useAccountUser(store);
+  const visibleGroups =
+    user && ADMIN_SECTION_ROLES.includes(user.role) ? [...groups, adminGroup] : groups;
 
   const close = useCallback(() => setOpen(false), []);
   const openMenu = () => {
@@ -80,19 +96,48 @@ export const SiteMenu = ({ lang, pathname, groups, labels, account }: SiteMenuPr
               labels={account.labels}
               loginHref={account.loginHref}
               accountHref={account.accountHref}
-              adminHref={account.adminHref}
+              store={store}
             />
             <section aria-labelledby={preferencesId} className="flex flex-col gap-4">
               <SectionLabel id={preferencesId}>{labels.preferences}</SectionLabel>
-              <LanguageSwitcher lang={lang} pathname={pathname} label={labels.language} />
-              <ThemeToggle label={labels.darkMode} />
-              <CurrencySelect lang={lang} label={labels.currency} />
+              <div className="flex items-center justify-between gap-4">
+                <RichText as="div" className="flex flex-col">
+                  <RichText as="span" variant="s2" className="font-semibold">
+                    {labels.language}
+                  </RichText>
+                  <RichText
+                    as="span"
+                    id={`${preferencesId}-language`}
+                    variant="s4"
+                    className="text-[var(--text-secondary)]"
+                  >
+                    {labels.languageHint}
+                  </RichText>
+                </RichText>
+                <LanguageSwitcher
+                  lang={lang}
+                  pathname={pathname}
+                  label={labels.language}
+                  describedBy={`${preferencesId}-language`}
+                />
+              </div>
+              <div className="flex flex-col gap-1">
+                <ThemeToggle label={labels.darkMode} describedBy={`${preferencesId}-dark-mode`} />
+                <RichText
+                  as="span"
+                  id={`${preferencesId}-dark-mode`}
+                  variant="s4"
+                  className="text-[var(--text-secondary)]"
+                >
+                  {labels.darkModeHint}
+                </RichText>
+              </div>
             </section>
           </div>
         }
       >
         <nav aria-label={labels.navigation} className="flex flex-col gap-6">
-          {groups.map((group, index) => (
+          {visibleGroups.map((group, index) => (
             <div key={group.title ?? group.items[0]?.href} className="flex flex-col gap-2">
               {group.title && (
                 <SectionLabel id={`${panelId}-group-${index}`} className="px-3">

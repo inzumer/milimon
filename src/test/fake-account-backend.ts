@@ -2,6 +2,8 @@ import type {
   AccountBackend,
   AccountUser,
   AdminUser,
+  AgendaEntry,
+  AgendaEntryInput,
   RemoteProfile,
   RoleChange,
 } from '@services/account';
@@ -15,6 +17,7 @@ export interface FakeAccountBackend extends AccountBackend {
     history: HistoryEntry[];
     users: AdminUser[];
     roleChanges: RoleChange[];
+    agenda: AgendaEntry[];
   };
   setUser: (user: AccountUser | null) => void;
 }
@@ -38,6 +41,7 @@ export const createFakeAccountBackend = (
     history: [],
     users: [],
     roleChanges: [],
+    agenda: [],
     ...initial,
   };
   const listeners = new Set<(user: AccountUser | null) => void>();
@@ -110,5 +114,31 @@ export const createFakeAccountBackend = (
       return { ...user };
     }),
     listRoleChanges: vi.fn(async () => remote.roleChanges),
+    listAgenda: vi.fn(async (from: string, to: string) =>
+      remote.agenda
+        .filter((entry) => entry.date >= from && entry.date <= to)
+        .sort((a, b) => a.date.localeCompare(b.date)),
+    ),
+    createAgendaEntry: vi.fn(async (input: AgendaEntryInput) => {
+      const entry: AgendaEntry = {
+        ...input,
+        id: `entry-${remote.agenda.length + 1}`,
+        updatedByEmail: remote.user?.email ?? null,
+        updatedAt: '2026-09-27T12:00:00.000Z',
+      };
+      remote.agenda.push(entry);
+      return { ...entry };
+    }),
+    updateAgendaEntry: vi.fn(async (id: string, input: AgendaEntryInput) => {
+      const entry = remote.agenda.find((item) => item.id === id);
+      if (!entry) {
+        throw new Error('not found');
+      }
+      Object.assign(entry, input);
+      return { ...entry };
+    }),
+    deleteAgendaEntry: vi.fn(async (id: string) => {
+      remote.agenda = remote.agenda.filter((item) => item.id !== id);
+    }),
   };
 };

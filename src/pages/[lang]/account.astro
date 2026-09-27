@@ -1,6 +1,6 @@
 ---
 import { RichText } from '@inzumer/ui-library';
-import { AccountPanel } from '@components';
+import { AccountPanel, CurrencySelect, SectionLabel } from '@components';
 import { getTranslations } from '@i18n';
 import PageLayout from '@layouts/page-layout.astro';
 import { LOCALES, localizedPath, toLocale, trackingId } from '@utils';
@@ -37,6 +37,15 @@ const page = getTranslations(lang, 'account-page');
       unavailableLabel={page.disabled}
       loginHref={localizedPath(lang, 'login')}
     />
+    <section aria-labelledby="account-settings" class="flex flex-col gap-4">
+      <SectionLabel id="account-settings">{page.settings.title}</SectionLabel>
+      <CurrencySelect
+        client:load
+        lang={lang}
+        label={page.settings.currency}
+        hint={page.settings['currency-hint']}
+      />
+    </section>
     <RichText variant="p3" className="text-[var(--text-secondary)]">
       {page['privacy-note']}{' '}
       <a

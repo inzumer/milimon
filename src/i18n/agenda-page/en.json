@@ -1,0 +1,65 @@
+{
+  "title": "Publishing agenda",
+  "description": "What gets published and when: recipes, reviews, guides, articles and social posts. Shared by editors and admins.",
+  "cadence": {
+    "title": "Suggested pace",
+    "items": [
+      "1 recipe a week, alternating sweet and savory.",
+      "1 review with milicitos every two weeks.",
+      "1 guide a month.",
+      "1 management article a month that uses one of the site's calculators."
+    ]
+  },
+  "month": {
+    "previous": "Previous month",
+    "next": "Next month",
+    "today": "Today"
+  },
+  "add": "New publication",
+  "empty": "Nothing planned for this month.",
+  "updated-by": "Last change: {author}",
+  "edit": "Edit",
+  "delete": "Delete",
+  "edit-label": "Edit {title}",
+  "delete-label": "Delete {title}",
+  "kinds": {
+    "recipe": "Recipe",
+    "review": "Review",
+    "guide": "Guide",
+    "article": "Article",
+    "social": "Social"
+  },
+  "statuses": {
+    "planned": "Planned",
+    "in-progress": "In progress",
+    "published": "Published"
+  },
+  "form": {
+    "create-title": "New publication",
+    "edit-title": "Edit publication",
+    "date": "Date",
+    "date-placeholder": "Publishing day (e.g. 10/06/2026)",
+    "kind": "Type",
+    "status": "Status",
+    "title": "Title",
+    "title-placeholder": "What gets published (e.g. The café's lemon loaf)",
+    "notes": "Notes (optional)",
+    "notes-placeholder": "Details, pending photos or where it's shared (e.g. reel and pin)",
+    "save": "Save",
+    "cancel": "Cancel",
+    "date-required": "Pick a date.",
+    "title-required": "Write a title."
+  },
+  "confirm": {
+    "title": "Delete publication",
+    "message": "Delete \"{title}\" from the agenda?",
+    "confirm": "Delete",
+    "cancel": "Cancel"
+  },
+  "results": {
+    "saved": "Done, the agenda is up to date.",
+    "deleted": "The publication was removed from the agenda.",
+    "forbidden": "Your account can no longer edit the agenda.",
+    "error": "Couldn't save. Try again."
+  }
+}

@@ -1,6 +1,11 @@
 {
   "title": "Your account",
   "description": "Your session, your data synced across devices and the option to delete your account.",
+  "settings": {
+    "title": "Settings",
+    "currency": "Currency",
+    "currency-hint": "The currency the calculators show amounts in. It only changes the symbol; values are not converted."
+  },
   "disabled": "Accounts aren't available yet. Meanwhile, everything you enter is saved on this device.",
   "privacy-note": "What we store and how to delete it:",
   "privacy-link": "privacy policy",

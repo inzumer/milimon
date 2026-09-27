@@ -6,6 +6,8 @@ export interface SiteMenuItem {
   href: string;
   label: string;
   badge?: string;
+  /** Highlight only on this exact page, not on the pages under it (e.g. `/admin`). */
+  exact?: boolean;
   children?: SiteMenuItem[];
 }
 
@@ -25,7 +27,7 @@ const linkId = (href: string) => {
 /** A main-menu entry: a link, or a collapsible group (ui-library `Accordion`, native `<details>`). */
 export const NavEntry = ({ item, pathname }: { item: SiteMenuItem; pathname: string }) => {
   const current = normalize(pathname) === normalize(item.href);
-  const inSection = isActivePath(pathname, item.href);
+  const inSection = item.exact ? current : isActivePath(pathname, item.href);
 
   if (!item.children) {
     return (

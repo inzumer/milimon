@@ -1,0 +1,60 @@
+{
+  "title": "Sugerencias",
+  "description": "Ideas y próximos pasos del sitio, con costo cero y ordenados por tema. No son tareas comprometidas: cada una pasa a la lista de pendientes cuando se decide hacerla.",
+  "language-note": "Estos documentos internos están escritos en español.",
+  "back": "Todas las sugerencias",
+  "order-title": "Orden sugerido",
+  "order": [
+    "Deploy oficial con dominio y auditoría de seguridad: todo lo demás conviene hacerlo sobre el dominio definitivo.",
+    "Tag Manager: medir desde el lanzamiento para decidir con datos.",
+    "CMS y primeras recetas y artículos: es lo que trae visitas y lo que se comparte.",
+    "Tests e2e antes de sumar funciones grandes.",
+    "Animaciones y monetización cuando haya tráfico estable."
+  ],
+  "docs": {
+    "deploy-and-security": {
+      "title": "Deploy oficial y seguridad",
+      "description": "Dominio propio, hosting, auditoría de seguridad y checklist."
+    },
+    "cms-and-emails": {
+      "title": "CMS y emails",
+      "description": "Que la dueña gestione recetas y blog, y avisos por email."
+    },
+    "content-and-social": {
+      "title": "Contenido y redes",
+      "description": "Blog, recetas y guías; calendario editorial y redes sociales."
+    },
+    "analytics-and-accounts": {
+      "title": "Medición y cuentas",
+      "description": "Tag Manager, qué medir y qué reservar a quienes se registran."
+    },
+    "monetization": {
+      "title": "Monetización",
+      "description": "Ingresos sin ser invasivos."
+    },
+    "animations": {
+      "title": "Animaciones",
+      "description": "Dónde sumar transiciones y microinteracciones."
+    },
+    "optimization": {
+      "title": "Optimización",
+      "description": "Rendimiento, peso de imágenes y deuda técnica."
+    },
+    "quality-and-tests": {
+      "title": "Calidad y tests",
+      "description": "Tests e2e, CI y monitoreo."
+    },
+    "visual-direction": {
+      "title": "Dirección visual",
+      "description": "Un sitio fino y elegante con la ilustración y los milicitos."
+    },
+    "transactional-emails": {
+      "title": "Emails transaccionales",
+      "description": "Bienvenida, cuenta eliminada y librería de emails."
+    },
+    "photo-guide": {
+      "title": "Guía de fotografía",
+      "description": "Luz, ángulos, foco, apps, filtros y presets de edición."
+    }
+  }
+}

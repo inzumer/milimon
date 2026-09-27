@@ -1,0 +1,65 @@
+{
+  "title": "Agenda de publicaciones",
+  "description": "Qué se publica y cuándo: recetas, reseñas, guías, artículos y redes. La comparten editores y admins.",
+  "cadence": {
+    "title": "Ritmo sugerido",
+    "items": [
+      "1 receta por semana, alternando dulce y salado.",
+      "1 reseña con milicitos cada 15 días.",
+      "1 guía por mes.",
+      "1 artículo de administración por mes que use una calculadora del sitio."
+    ]
+  },
+  "month": {
+    "previous": "Mes anterior",
+    "next": "Mes siguiente",
+    "today": "Hoy"
+  },
+  "add": "Nueva publicación",
+  "empty": "No hay publicaciones planificadas este mes.",
+  "updated-by": "Último cambio: {author}",
+  "edit": "Editar",
+  "delete": "Borrar",
+  "edit-label": "Editar {title}",
+  "delete-label": "Borrar {title}",
+  "kinds": {
+    "recipe": "Receta",
+    "review": "Reseña",
+    "guide": "Guía",
+    "article": "Artículo",
+    "social": "Redes"
+  },
+  "statuses": {
+    "planned": "Planificada",
+    "in-progress": "En preparación",
+    "published": "Publicada"
+  },
+  "form": {
+    "create-title": "Nueva publicación",
+    "edit-title": "Editar publicación",
+    "date": "Fecha",
+    "date-placeholder": "Día de publicación (ej.: 06/10/2026)",
+    "kind": "Tipo",
+    "status": "Estado",
+    "title": "Título",
+    "title-placeholder": "Qué se publica (ej.: Budín de limón del café)",
+    "notes": "Notas (opcional)",
+    "notes-placeholder": "Detalles, fotos pendientes o red donde se comparte (ej.: reel y pin)",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "date-required": "Elegí una fecha.",
+    "title-required": "Escribí un título."
+  },
+  "confirm": {
+    "title": "Borrar publicación",
+    "message": "¿Borrar \"{title}\" de la agenda?",
+    "confirm": "Borrar",
+    "cancel": "Cancelar"
+  },
+  "results": {
+    "saved": "Listo, la agenda está actualizada.",
+    "deleted": "La publicación se borró de la agenda.",
+    "forbidden": "Tu cuenta ya no tiene permiso para editar la agenda.",
+    "error": "No se pudo guardar. Probá de nuevo."
+  }
+}

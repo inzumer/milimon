@@ -116,7 +116,8 @@ export default defineConfig({
         return (
           route !== '/' &&
           !route.includes('404') &&
-          !/\/(account|history|login|recipes|admin)$/.test(route)
+          !/\/(account|history|login|recipes|admin)$/.test(route) &&
+          !route.includes('/admin/')
         );
       },
     }),
@@ -129,6 +130,7 @@ export default defineConfig({
       redirectToDefaultLocale: false,
     },
   },
+  markdown: { syntaxHighlight: false },
   vite: {
     plugins: [tailwindcss()],
   },
