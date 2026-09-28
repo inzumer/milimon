@@ -55,6 +55,10 @@
     "photo-guide": {
       "title": "Photography guide",
       "description": "Light, angles, focus, apps, filters and editing presets."
+    },
+    "docs-site": {
+      "title": "Documentation site",
+      "description": "How the app works, flow diagrams, plan and suggestions on a subdomain."
     }
   }
 }

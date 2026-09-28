@@ -17,6 +17,7 @@ tarea (y pasa a los pendientes de [PLAN.md](../PLAN.md)) cuando se decide hacerl
 | [09 · Dirección visual](./09-direccion-visual.md)             | Un sitio fino y elegante con la ilustración y los milicitos    |
 | [10 · Emails transaccionales](./10-emails-transaccionales.md) | Bienvenida, cuenta eliminada; librería de emails               |
 | [11 · Guía de fotografía](./11-guia-de-fotografia.md)         | Luz, ángulos, foco, apps, filtros y presets de edición         |
+| [12 · Sitio de documentación](./12-sitio-de-documentacion.md) | Cómo funciona la app, diagramas, plan y sugerencias (`docs.`)  |
 
 ## Orden sugerido
 
