@@ -17,10 +17,7 @@ const defaultNavigate = (href: string) => {
   window.location.assign(href);
 };
 
-/**
- * ES / EN switch (ui-library `Language`). Keeps the current route, since slugs are the same in
- * every locale, and remembers the choice for the root redirect.
- */
+/** ES / EN switch: keeps the route (slugs match) and remembers the choice. */
 export const LanguageSwitcher = ({
   lang,
   pathname,

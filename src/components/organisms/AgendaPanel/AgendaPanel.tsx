@@ -58,11 +58,7 @@ const STATUS_STYLES: Record<AgendaStatus, string> = {
   published: 'bg-[rgb(var(--color-accent-100))] text-[rgb(var(--color-accent-900))]',
 };
 
-/**
- * Shared publishing agenda for editors and admins, one month at a time: plan, edit and remove
- * publications (recipes, reviews, guides, articles, social posts). The API checks the role on
- * every change.
- */
+/** Shared monthly publishing agenda for editors and admins; the API checks every change. */
 export const AgendaPanel = ({
   lang,
   labels,

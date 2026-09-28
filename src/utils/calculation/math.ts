@@ -1,7 +1,4 @@
-/**
- * Numeric helpers. Formulas always compute with full precision; rounding happens only for display
- * or when a purchase is rounded on purpose (e.g. buying whole kilograms).
- */
+// Formulas compute with full precision; rounding is only for display or deliberate purchases.
 
 /** Rounds half away from zero to `decimals` places, avoiding binary artifacts (1.005 → 1.01). */
 export const roundTo = (value: number, decimals: number): number => {

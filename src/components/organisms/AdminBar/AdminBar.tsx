@@ -22,10 +22,7 @@ export interface AdminBarProps {
   store?: SessionStore;
 }
 
-/**
- * Strip under the header, only for editors and admins: tells them they browse the site in
- * management mode and with which role. Nobody else ever sees it.
- */
+/** "Management mode" strip with the role, only for editors and admins. */
 export const AdminBar = ({ labels, href, store = createSessionStore() }: AdminBarProps) => {
   const user = useAccountUser(store);
 

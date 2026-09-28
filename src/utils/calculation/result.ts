@@ -1,8 +1,4 @@
-/**
- * Every formula returns a `CalculationResult`: either the computed values plus the worked steps
- * (so the UI can show the full calculation with the user's numbers), or field-level errors.
- * The domain is language-free: errors and steps are ids that the i18n layer turns into text.
- */
+/** A formula result: values and worked steps, or field errors; ids that i18n turns into text. */
 
 export type ErrorCode =
   | 'required'

@@ -13,11 +13,7 @@ export interface AnalyticsPreferenceProps {
   labels: ConsentLabels;
 }
 
-/**
- * Lets people change their cookie choices at any time (privacy page): ui-library `CookieConsent`
- * in `inline` mode, saved on every change. Analytics is off until they accept; stays in sync
- * with the consent banner through the settings store.
- */
+/** Cookie choices on the privacy page (`CookieConsent` inline), saved on every change. */
 export const AnalyticsPreference = ({ labels }: AnalyticsPreferenceProps) => {
   const consent = useSettingsStore((state) => state.analyticsConsent);
   const update = useSettingsStore((state) => state.update);

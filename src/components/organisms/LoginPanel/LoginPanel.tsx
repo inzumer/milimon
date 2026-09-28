@@ -42,11 +42,7 @@ type View =
 const colorScheme = (): 'light' | 'dark' =>
   document.documentElement.dataset['colorScheme'] === 'dark' ? 'dark' : 'light';
 
-/**
- * Sign-in page island: Google's own button, a Facebook button, a "waking up" hint while the
- * free API instance starts, and the first-sign-in choice about this device's data. On success it
- * goes to the account page.
- */
+/** Sign-in island: Google and Facebook, a "waking up" hint and the first-sign-in data choice. */
 export const LoginPanel = ({
   lang,
   labels,

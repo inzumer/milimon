@@ -69,11 +69,7 @@ export interface RemoteProfile {
   colorScheme: ColorScheme | null;
 }
 
-/**
- * Everything the app needs from the accounts API (`milimon-backend-nest`). `api-backend.ts`
- * implements it over HTTP; tests use an in-memory fake. Every data method acts on the signed-in
- * person only.
- */
+/** What the app needs from the accounts API; `api-backend.ts` over HTTP, a fake in tests. */
 export interface AccountBackend {
   getUser: () => Promise<AccountUser | null>;
   onUserChange: (listener: (user: AccountUser | null) => void) => () => void;

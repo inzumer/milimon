@@ -18,10 +18,7 @@ const NETWORKS = Object.keys(SHARE_NETWORKS) as ShareNetwork[];
 const linkClass =
   'inline-flex min-h-11 items-center rounded-full border border-[var(--border-default)] px-4 text-sm font-semibold text-[var(--text-primary)] no-underline hover:bg-[var(--surface-secondary)] focus-visible:ring-2 focus-visible:ring-[var(--border-focus)] focus-visible:outline-none';
 
-/**
- * "Share this page": the device's share sheet when the browser has one, plus direct links to
- * WhatsApp, Facebook, X, LinkedIn and email, and "Copy link". Every option is tracked.
- */
+/** Share sheet when available, plus direct links and "Copy link"; every option is tracked. */
 export const SharePage = ({ url, title, labels }: SharePageProps) => {
   const titleId = useId();
   const hydrated = useHydrated();

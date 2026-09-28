@@ -1,15 +1,7 @@
 import { failure, positive, success, sum } from '@utils/calculation';
 import type { CalculationResult, FieldError } from '@utils/calculation';
 
-/**
- * Reglas de Omnes (distribución armoniosa de precios).
- * 1. Proporcionalidad: el más caro cuesta hasta 2–3 veces el más barato.
- * 2. Zonas: rango (máx − mín) dividido en 3 zonas iguales; la zona media debería tener tantos
- *    productos como las zonas baja y alta juntas (25 % / 50 % / 25 %).
- * 3. Adecuación: ticket promedio dentro de ±10 % del precio promedio de la oferta.
- *    Menos del 90 % → precios "muy altos"; más del 110 % → precios "muy baratos".
- * 4. La sugerencia del día debe estar en la zona de precios medios.
- */
+/** Reglas de Omnes: proporcionalidad, zonas 25/50/25, adecuación ±10 % y sugerencia en la zona media. */
 export const MAX_PRICE_RATIO = 3;
 export const IDEAL_PRICE_RATIO = 2;
 export const TICKET_TOLERANCE = 0.1;

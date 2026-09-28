@@ -14,10 +14,7 @@ const required = <T>(record: Record<string, T> | undefined, key: string, section
   return value;
 };
 
-/**
- * Typed accessors for a formula translation. Every key is validated by the i18n tests, so a
- * missing one is a bug: fail loudly instead of rendering a fallback key on screen.
- */
+/** Typed formula text accessors; a missing key is a bug, so they throw instead of falling back. */
 export const formulaText = (text: CalculatorText) => ({
   input: (key: string) => required(text.inputs, key, 'inputs'),
   output: (key: string) => required(text.outputs, key, 'outputs'),

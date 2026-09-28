@@ -1,14 +1,5 @@
-// Splits each brand illustration (src/assets/<name>.png) into two layers so the background
-// color can follow the theme:
-// - src/assets/illustrations/<name>-figure.webp: the character, smoke, flames and frame, with the
-//   yellow background made transparent (edge pixels are unmixed from the yellow so no halo is left);
-// - src/assets/illustrations/<name>-background.svg: the background shape (circle or star) as a
-//   vector path filled with `currentColor`;
-// - src/assets/illustrations/<name>.webp: both layers with the brand color baked in (the primary
-//   500 of src/styles/theme.css), for single-image uses: share images, favicons, the milicito;
-// - public/ favicons (png sizes and favicon.ico) from the baked logo.
-// Run by hand after changing an illustration or the primary color: `pnpm illustrations`
-// (then `pnpm og:image` for the share images).
+// Splits each brand PNG into a figure (webp) and a recolorable SVG background, plus baked
+// orange composites and favicons. Run `pnpm illustrations` after changing an illustration.
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import sharp from 'sharp';
 
@@ -30,10 +21,7 @@ const BACKGROUND = [250, 176, 22];
 const TOLERANCE = 58;
 /** Background pockets smaller than this (in pixels) are left alone. */
 const MIN_POCKET = 400;
-/**
- * The background is a flat yellow: its regions stay very close to BACKGROUND on average (under 20),
- * while yellow parts of the drawing (flame cores, the spoon) are gradients further away (over 35).
- */
+/** Flat background regions average under 20 from BACKGROUND; yellow drawing parts over 35. */
 const MAX_MEAN_DISTANCE = 25;
 /** Outline color the anti-aliased edges are unmixed against. */
 const OUTLINE = [36, 24, 20];

@@ -12,10 +12,7 @@ export interface CurrencySelectProps {
 const currencyName = (code: string, lang: Locale): string =>
   new Intl.DisplayNames([lang], { type: 'currency' }).of(code) ?? code;
 
-/**
- * Currency used to display amounts in every calculator (display only, no conversion). A themed
- * ui-library `Dropdown`, so the list keeps the site's styles on every device.
- */
+/** Display currency for every calculator (no conversion), as a themed `Dropdown`. */
 export const CurrencySelect = ({ lang, label, hint }: CurrencySelectProps) => {
   const currency = useSettingsStore((state) => state.currency);
   const update = useSettingsStore((state) => state.update);

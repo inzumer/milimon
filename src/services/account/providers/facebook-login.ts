@@ -33,11 +33,7 @@ export class FacebookLoginCancelledError extends Error {
 
 const initialized = new Set<string>();
 
-/**
- * Opens Facebook Login and resolves with the user access token, which the accounts API verifies
- * (it must have been issued to our app). The SDK loads only when this is called; it must run from
- * a click so the browser allows the popup.
- */
+/** Facebook Login from a click (popup); resolves with the token the API verifies. */
 export const loginWithFacebook = async (appId: string, lang: Locale): Promise<string> => {
   await loadScript(FACEBOOK_SDK_URL.replace('{locale}', PROVIDER_LOCALES[lang].facebook));
   const sdk = window.FB;

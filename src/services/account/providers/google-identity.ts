@@ -31,11 +31,7 @@ export interface GoogleButtonOptions {
   onCredential: (credential: string) => void;
 }
 
-/**
- * Renders Google's own "Sign in with Google" button (Google Identity Services) inside
- * `container`. Clicking it opens Google's popup and hands back an ID token (`credential`), which
- * the accounts API verifies. The script loads only when this is called.
- */
+/** Renders Google’s own button; its ID token (`credential`) is verified by the API. */
 export const renderGoogleButton = async (
   container: HTMLElement,
   { clientId, lang, width, theme, onCredential }: GoogleButtonOptions,

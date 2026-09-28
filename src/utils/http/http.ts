@@ -59,11 +59,7 @@ const parseBody = async (response: Response): Promise<unknown> => {
   }
 };
 
-/**
- * `fetch` for JSON APIs: per-attempt timeout and up to `API_MAX_RETRIES` retries with exponential
- * backoff, only for transient failures (network errors, 408, 429 and 5xx). Other statuses are
- * answers, not failures: they are thrown as `HttpError` right away.
- */
+/** JSON `fetch` with timeout and backoff retries on transient failures; other statuses throw. */
 export const requestJson = async <T>(
   url: string,
   init: RequestInit,

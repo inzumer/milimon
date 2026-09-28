@@ -19,12 +19,7 @@ export interface ConsentBannerProps {
   privacyHref: string;
 }
 
-/**
- * Cookie consent (ui-library `CookieConsent` in `banner` mode). The banner shows at the bottom
- * of every page until the person answers; "Customize" and the footer's "Cookie preferences" open
- * the per-category choices at any time. The answer is stored in the settings store, which Google
- * Tag Manager follows: nothing loads before `granted`.
- */
+/** Cookie banner (`CookieConsent` banner mode); GTM loads only after `granted`. */
 export const ConsentBanner = ({ labels, privacyHref }: ConsentBannerProps) => {
   const consent = useSettingsStore((state) => state.analyticsConsent);
   const hydrated = useHydrated();

@@ -16,14 +16,7 @@ const LOOKS_LIKE_GROUPING = /^[1-9]\d{0,2}[.,]\d{3}$/;
 const isValidGrouping = (value: string, separator: string): boolean =>
   !value.includes(separator) || new RegExp(`^\\d{1,3}(\\${separator}\\d{3})+$`).test(value);
 
-/**
- * Parses what a person types into a number, accepting both decimal separators:
- * - Both `.` and `,` present → the last one is the decimal separator (`1.234,5` / `1,234.5`).
- * - The same separator repeated → thousands grouping (`1.234.567`).
- * - A single separator → decimal, except the "other" separator in a thousands pattern
- *   (`2.400` in Spanish is 2400; `2,400` in English is 2400; `0.180` is always 0.18).
- * Returns `null` for empty or invalid input.
- */
+/** Parses typed numbers with `,` or `.` decimals and thousands grouping; `null` when invalid. */
 export const parseDecimal = (raw: string, lang: Locale): number | null => {
   const cleaned = raw.replace(/[\s$% ]/g, '');
   if (cleaned === '' || cleaned === '-') {

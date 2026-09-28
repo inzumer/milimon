@@ -36,12 +36,7 @@ import recipePageEs from './recipe-page/es.json';
 import termsPageEn from './terms-page/en.json';
 import termsPageEs from './terms-page/es.json';
 
-/**
- * Translations live in kebab-case folders, one JSON file per language: `src/i18n/<folder>/{es,en}.json`.
- * Spanish is the source language: each English file must match its shape (checked here by the
- * type system and, in both directions, by `__tests__/translations.test.ts`).
- * Formula folders (`src/i18n/formulas/<id>/`) are loaded and validated by `formulas.ts`.
- */
+/** `src/i18n/<folder>/{es,en}.json`; Spanish is the source and English must match its shape. */
 const dictionaries = {
   'about-page': { es: aboutPageEs, en: aboutPageEn satisfies typeof aboutPageEs },
   'admin-docs': { es: adminDocsEs, en: adminDocsEn satisfies typeof adminDocsEs },

@@ -15,10 +15,7 @@ export type AdminAccess =
   | { kind: 'error' }
   | { kind: 'ready'; me: AccountUser; session: AccountSession };
 
-/**
- * Whether the signed-in person can use the administration section, asked to the API (the role
- * is re-read there, so a change applies at once). `retry` checks again after an error.
- */
+/** Whether the person can use the administration section, asked to the API; `retry` re-checks. */
 export const useAdminAccess = (loadSession: () => AccountSession | null = getAccountSession) => {
   const loadRef = useRef(loadSession);
   const [access, setAccess] = useState<AdminAccess>({ kind: 'loading' });

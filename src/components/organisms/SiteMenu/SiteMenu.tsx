@@ -40,11 +40,7 @@ export interface SiteMenuProps {
   store?: SessionStore;
 }
 
-/**
- * Hamburger button + side drawer (ui-library `Drawer`: focus trap, Escape/backdrop to close,
- * scroll lock) with the main navigation, the site management links for editors and admins, and
- * the language and theme preferences.
- */
+/** Hamburger and side drawer: navigation, management links for editors and admins, preferences. */
 export const SiteMenu = ({
   lang,
   pathname,

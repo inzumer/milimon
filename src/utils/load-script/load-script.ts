@@ -1,9 +1,6 @@
 const pending = new Map<string, Promise<void>>();
 
-/**
- * Adds an external script once and resolves when it has loaded. Calls with the same `src` share
- * the same promise; a failed load can be retried.
- */
+/** Adds an external script once (shared promise); a failed load can be retried. */
 export const loadScript = (src: string): Promise<void> => {
   const existing = pending.get(src);
   if (existing) {
