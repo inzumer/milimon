@@ -516,7 +516,9 @@ en **Gestión del sitio → Sugerencias**, solo para editores y admins).
       cabeceras HTTP, escaneos externos, revisión de la API y aviso legal (RGPD/LSSI). Ver
       [01](./suggestions/01-deploy-y-seguridad.md).
 - [ ] **API en Render**: crear el servicio desde el Blueprint con el `DATABASE_URL` de Neon y
-      `BOOTSTRAP_ADMIN_EMAILS` con los emails de Milagros y del admin técnico.
+      `BOOTSTRAP_ADMIN_EMAILS` con los emails de Milagros y del admin técnico. **Es lo que falta para que
+      funcione el inicio de sesión con Google** (28/09: el dominio de la API en Render responde
+      `no-server`; la base en Neon ya está creada y las migraciones nuevas corren al arrancar).
 - [ ] **Google Cloud**: orígenes autorizados (`https://inzumer.github.io` hoy, el dominio propio después).
 - [ ] **Search Console y Bing Webmaster Tools**: verificar el sitio y enviar el sitemap.
 - [ ] **Google Tag Manager**: contenedor + `PUBLIC_GTM_ID` (activa el banner de cookies). Ver
@@ -578,6 +580,9 @@ en **Gestión del sitio → Sugerencias**, solo para editores y admins).
       el `CORS_ORIGIN` de la API y los enlaces ya compartidos (o hacerlo junto con el dominio propio,
       que deja de depender del nombre del repo). Después, las carpetas locales y los remotes.
 - [x] `.gitattributes` en `ui-library` (finales de línea).
+- [ ] **Cookies en un solo componente**: `CookieConsent` (modos `banner`, `modal` e `inline`) en
+      `@inzumer/ui-library` 2.0.0 ([ui-library #29](https://github.com/inzumer/ui-library/pull/29)).
+      Cuando se publique, migrar `ConsentBanner` y `AnalyticsPreference` del sitio.
 - [ ] **Librería de componentes**: `Carousel` accesible y `MediaCard` (card con imagen, degradado y
       acciones flotantes) en `@inzumer/ui-library`.
 - [ ] **`milimon-e2e`**: tests e2e con Playwright y la auditoría a11y (hoy
@@ -589,9 +594,11 @@ en **Gestión del sitio → Sugerencias**, solo para editores y admins).
 - [ ] **Releases automáticos** una o dos veces por semana, cerrados solos si no hay cambios
       (versión por Conventional Commits, tag, GitHub Release y vuelta a `dev`). Diseño en
       [08](./suggestions/08-calidad-y-tests.md#releases-automáticos-a-implementar).
-- [ ] **Sitio de documentación** en `docs.<dominio>` (repo `milimon-docs`, Starlight): cómo
-      funciona la app con diagramas de flujo en Mermaid, arquitectura, guías, plan y sugerencias.
-      Diseño y lista de diagramas en [12](./suggestions/12-sitio-de-documentacion.md).
+- [x] **Sitio de documentación**: [`inzumer/milimon-docs`](https://github.com/inzumer/milimon-docs),
+      publicado en https://inzumer.github.io/milimon-docs/ (Starlight): arquitectura, 9 flujos con
+      diagramas, guía de gestión, desarrollo, y el plan y las sugerencias sincronizados desde `docs/`.
+- [ ] Pasar la documentación a `docs.<dominio>` con el deploy oficial y enlazarla desde **Gestión del
+      sitio**. Ver [12](./suggestions/12-sitio-de-documentacion.md).
 - [ ] **Un repo por paquete publicado de `@inzumer`** (hoy todos viven en el monorepo `ui-library`):
       `inzumer-ui-lib` (`@inzumer/ui-library`), `inzumer-ui-tokens` (`@inzumer/tokens`),
       `inzumer-prettier`, `inzumer-eslint` y `inzumer-tsconfig` (hoy privados; publicarlos permite

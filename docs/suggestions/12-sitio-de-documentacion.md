@@ -65,7 +65,12 @@ sugerencias, separado del sitio principal: **`docs.<dominio>`** (decidido 2026-0
 
 ## Pasos
 
-1. Crear `milimon-docs` con Starlight, el tema y los diagramas de Mermaid generados en el build.
+**Estado (2026-09-28):** los pasos 1, 2, 3 y 5 están hechos en
+[`inzumer/milimon-docs`](https://github.com/inzumer/milimon-docs), publicado en
+https://inzumer.github.io/milimon-docs/. Cambio respecto del diseño: los diagramas se dibujan en el
+navegador (`astro-mermaid`), así siguen el modo claro u oscuro y el build no necesita un navegador.
+
+1. Crear `milimon-docs` con Starlight, el tema y los diagramas de Mermaid.
 2. Traer `docs/` de los repos en el build y armar la navegación.
 3. Escribir primero los diagramas 1 a 4 (lo que más se consulta) y después el resto.
 4. Publicarlo en el subdominio con el deploy oficial; enlazarlo desde **Gestión del sitio**.
