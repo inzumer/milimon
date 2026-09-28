@@ -59,6 +59,9 @@
   --text-link: rgb(var(--color-accent-700));
   --text-link-hover: rgb(var(--color-accent-800));
 
+  /* Background of the brand illustrations (logo, star, error): the primary color. */
+  --illustration-bg: rgb(var(--color-primary-500));
+
   --admin-bar-bg: rgb(var(--color-accent-700));
   --admin-bar-text: rgb(var(--color-neutral-50));
   --admin-bar-badge-bg: rgb(var(--color-neutral-50));

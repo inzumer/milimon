@@ -1,8 +1,7 @@
 ---
-import { Image } from 'astro:assets';
 import { RichText } from '@inzumer/ui-library';
-import logo from '@assets/logo.png';
 import { AdminBar, SiteMenu } from '@components';
+import BrandIllustration from '@components/atoms/BrandIllustration/brand-illustration.astro';
 import { ADMIN_DOCS } from '@constants';
 import { getFormulaTranslation, getLearnTopic, getTranslations, LEARN_TOPIC_IDS } from '@i18n';
 import { localizedPath, type Locale } from '@utils';
@@ -130,15 +129,7 @@ const labels = {
       href={localizedPath(lang, 'home')}
       class="flex min-h-11 items-center gap-3 rounded-lg text-[var(--text-primary)] no-underline hover:text-[var(--text-primary)] focus-visible:ring-2 focus-visible:ring-[var(--border-focus)] focus-visible:outline-none"
     >
-      <Image
-        src={logo}
-        alt=""
-        width={44}
-        height={44}
-        densities={[1, 2]}
-        class="size-11 rounded-full"
-        loading="eager"
-      />
+      <BrandIllustration name="logo" alt="" width={44} class="size-11" loading="eager" />
       <RichText variant="s2" className="font-display text-2xl font-bold">
         {common['app-name']}
       </RichText>

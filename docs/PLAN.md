@@ -566,8 +566,11 @@ en **Gestión del sitio → Sugerencias**, solo para editores y admins).
 - [x] **Naranja como color principal** (28/09): la escala `--color-primary-*` pasa del amarillo al
       naranja de la referencia (`#F29A3E`) en botones, etiquetas, tarjetas destacadas y focos; también
       el color del manifest y las imágenes para compartir. Auditoría a11y sin errores en 102 páginas.
-- [ ] **Ilustraciones en naranja**: el logo y la estrella de los milicitos siguen con fondo amarillo
-      (son imágenes). Decidir si Milagros las pasa a naranja o se hace el isotipo nuevo.
+- [x] **Ilustraciones en naranja** (28/09): el logo, la estrella y el 404 se separan en dos capas
+      (`pnpm illustrations`): la figura sin el fondo amarillo y el fondo como SVG vectorial que toma
+      `--illustration-bg` (hoy el primario naranja), con el átomo `BrandIllustration`. Favicons,
+      milicitos e imágenes para compartir usan la versión ya compuesta en naranja. Cambiar el color
+      del fondo es cambiar esa variable (y volver a correr el script para las versiones compuestas).
 - [x] **Preferencias del menú**: solo idioma y modo oscuro, cada uno con una aclaración corta; la
       **moneda** pasó a **Configuración** en "Tu cuenta".
 - [ ] **Dirección visual** más fina y editorial (inicio tipo portada, cards con imagen,
