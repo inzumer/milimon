@@ -1,9 +1,8 @@
 ---
 import { RichText } from '@inzumer/ui-library';
 import { AnalyticsPreference } from '@components';
-import PageHeader from '@components/molecules/PageHeader/page-header.astro';
 import { getTranslations } from '@i18n';
-import PageLayout from '@layouts/page-layout.astro';
+import LegalPage from '@layouts/legal-page.astro';
 import { isContainerId } from '@services';
 import { localePaths, toLocale } from '@utils';
 
@@ -15,30 +14,12 @@ const page = getTranslations(lang, 'privacy-page');
 const analyticsEnabled = isContainerId(import.meta.env.PUBLIC_GTM_ID);
 ---
 
-<PageLayout lang={lang} title={page.title} description={page.description} breadcrumbs={[]}>
-  <article class="flex max-w-2xl flex-col gap-8">
-    <PageHeader title={page.title} intro={page.description}>
-      <RichText variant="p3" className="text-[var(--text-secondary)]">
-        {page.updated}
-      </RichText>
-    </PageHeader>
-    {Object.entries(page.sections).map(([key, section]) => (
-      <section id={key} class="flex scroll-mt-24 flex-col gap-3">
-        <RichText variant="h2" bold className="font-display text-3xl">
-          {section.heading}
-        </RichText>
-        {section.paragraphs.map((paragraph) => (
-          <RichText>{paragraph}</RichText>
-        ))}
-        {key === 'your-choice' &&
-          (analyticsEnabled ? (
-            <AnalyticsPreference client:visible labels={common.consent} />
-          ) : (
-            <RichText className="text-[var(--text-secondary)]">
-              {page['analytics-disabled']}
-            </RichText>
-          ))}
-      </section>
-    ))}
-  </article>
-</PageLayout>
+<LegalPage lang={lang} page={page}>
+  {analyticsEnabled ? (
+    <AnalyticsPreference slot="your-choice" client:visible labels={common.consent} />
+  ) : (
+    <RichText slot="your-choice" className="text-[var(--text-secondary)]">
+      {page['analytics-disabled']}
+    </RichText>
+  )}
+</LegalPage>

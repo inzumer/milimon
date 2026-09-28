@@ -2,10 +2,9 @@
 import { getCollection } from 'astro:content';
 import { RichText } from '@inzumer/ui-library';
 import { AdminGate } from '@components';
-import PageHeader from '@components/molecules/PageHeader/page-header.astro';
 import { ADMIN_DOCS, DOCS_REPO_URL } from '@constants';
 import { getTranslations } from '@i18n';
-import PageLayout from '@layouts/page-layout.astro';
+import PanelPage from '@layouts/panel-page.astro';
 import { adaptDocHtml, LOCALES, localizedPath, toLocale, trackingId } from '@utils';
 
 export const getStaticPaths = async () => {
@@ -34,39 +33,33 @@ interface Props {
 
 const { id, html } = Astro.props;
 const lang = toLocale(Astro.params.lang);
-const common = getTranslations(lang, 'common');
 const admin = getTranslations(lang, 'admin-page');
 const page = getTranslations(lang, 'admin-docs');
 const doc = page.docs[id];
 ---
 
-<PageLayout
+<PanelPage
   lang={lang}
   title={doc.title}
   description={doc.description}
-  noindex
-  breadcrumbs={[
-    { label: common.nav['site-group'], href: localizedPath(lang, 'admin') },
-    { label: page.title, href: localizedPath(lang, 'admin', 'suggestions') },
-  ]}
+  management
+  parents={[{ label: page.title, href: localizedPath(lang, 'admin', 'suggestions') }]}
 >
-  <div class="flex flex-col gap-8">
-    <PageHeader title={doc.title} intro={doc.description}>
-      {lang !== 'es' && (
-        <RichText variant="p3" className="text-[var(--text-secondary)] italic">
-          {page['language-note']}
-        </RichText>
-      )}
-    </PageHeader>
-    <AdminGate client:load labels={admin} loginHref={localizedPath(lang, 'login')}>
-      <article class="doc-prose" lang="es" set:html={html} />
-      <a
-        id={trackingId('admin-docs', 'link', 'back')}
-        href={localizedPath(lang, 'admin', 'suggestions')}
-        class="mt-10 inline-flex font-semibold text-[var(--text-link)] underline hover:text-[var(--text-link-hover)]"
-      >
-        ← {page.back}
-      </a>
-    </AdminGate>
-  </div>
-</PageLayout>
+  <Fragment slot="header">
+    {lang !== 'es' && (
+      <RichText variant="p3" className="text-[var(--text-secondary)] italic">
+        {page['language-note']}
+      </RichText>
+    )}
+  </Fragment>
+  <AdminGate client:load labels={admin} loginHref={localizedPath(lang, 'login')}>
+    <article class="doc-prose" lang="es" set:html={html} />
+    <a
+      id={trackingId('admin-docs', 'link', 'back')}
+      href={localizedPath(lang, 'admin', 'suggestions')}
+      class="mt-10 inline-flex font-semibold text-[var(--text-link)] underline hover:text-[var(--text-link-hover)]"
+    >
+      ← {page.back}
+    </a>
+  </AdminGate>
+</PanelPage>

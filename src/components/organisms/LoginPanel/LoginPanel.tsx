@@ -2,6 +2,7 @@ import { useCallback, useEffect, useId, useRef, useState } from 'react';
 import { Button, Image, RichText } from '@inzumer/ui-library';
 import facebookIcon from '@assets/facebook.png';
 import { ButtonLink } from '@components/atoms/ButtonLink';
+import { Notice } from '@components/atoms/Notice';
 import { MigrationPrompt } from '@components/molecules/MigrationPrompt';
 import { API_SLOW_REQUEST_MS, PROVIDER_BUTTON_WIDTH } from '@constants';
 import type { Translations } from '@i18n/translations';
@@ -161,22 +162,14 @@ export const LoginPanel = ({
     }
   };
 
-  const status = notice && (
-    <RichText role="alert" className="rounded-lg bg-[var(--surface-secondary)] p-4">
-      {notice}
-    </RichText>
-  );
+  const status = notice && <Notice role="alert">{notice}</Notice>;
 
   switch (view.kind) {
     case 'loading':
       return <RichText aria-busy="true">{labels.loading}</RichText>;
 
     case 'unavailable':
-      return (
-        <RichText className="rounded-lg bg-[var(--surface-secondary)] p-4">
-          {labels.unavailable}
-        </RichText>
-      );
+      return <Notice>{labels.unavailable}</Notice>;
 
     case 'signed-in':
       return (

@@ -1,8 +1,7 @@
 ---
 import { LoginPanel } from '@components';
-import PageHeader from '@components/molecules/PageHeader/page-header.astro';
 import { getTranslations } from '@i18n';
-import PageLayout from '@layouts/page-layout.astro';
+import PanelPage from '@layouts/panel-page.astro';
 import { localePaths, localizedPath, toLocale } from '@utils';
 
 export const getStaticPaths = localePaths;
@@ -12,17 +11,14 @@ const common = getTranslations(lang, 'common');
 const page = getTranslations(lang, 'login-page');
 ---
 
-<PageLayout lang={lang} title={page.title} description={page.description} noindex breadcrumbs={[]}>
-  <div class="flex max-w-2xl flex-col gap-8">
-    <PageHeader title={page.title} intro={page.description} />
-    <LoginPanel
-      client:load
-      lang={lang}
-      labels={page.panel}
-      migrationLabels={common.migration}
-      accountHref={localizedPath(lang, 'account')}
-      termsHref={localizedPath(lang, 'terms')}
-      privacyHref={localizedPath(lang, 'privacy')}
-    />
-  </div>
-</PageLayout>
+<PanelPage lang={lang} title={page.title} description={page.description} narrow>
+  <LoginPanel
+    client:load
+    lang={lang}
+    labels={page.panel}
+    migrationLabels={common.migration}
+    accountHref={localizedPath(lang, 'account')}
+    termsHref={localizedPath(lang, 'terms')}
+    privacyHref={localizedPath(lang, 'privacy')}
+  />
+</PanelPage>

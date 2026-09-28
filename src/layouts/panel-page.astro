@@ -1,0 +1,34 @@
+---
+import PageHeader from '@components/molecules/PageHeader/page-header.astro';
+import { getTranslations } from '@i18n';
+import { localizedPath, type BreadcrumbTrailItem, type Locale } from '@utils';
+import PageLayout from './page-layout.astro';
+
+interface Props {
+  lang: Locale;
+  title: string;
+  description: string;
+  /** Narrow column for forms (account, sign-in). */
+  narrow?: boolean;
+  /** Inside "Site management": adds its breadcrumb before `parents`. */
+  management?: boolean;
+  parents?: BreadcrumbTrailItem[];
+}
+
+/** Private page (not indexed) with its header: account, sign-in and site management. */
+const { lang, title, description, narrow = false, management = false, parents = [] } = Astro.props;
+const common = getTranslations(lang, 'common');
+const breadcrumbs = [
+  ...(management ? [{ label: common.nav['site-group'], href: localizedPath(lang, 'admin') }] : []),
+  ...parents,
+];
+---
+
+<PageLayout lang={lang} title={title} description={description} noindex breadcrumbs={breadcrumbs}>
+  <div class:list={['flex flex-col gap-8', narrow && 'max-w-2xl']}>
+    <PageHeader title={title} intro={description}>
+      <slot name="header" />
+    </PageHeader>
+    <slot />
+  </div>
+</PageLayout>

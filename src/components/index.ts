@@ -1,5 +1,6 @@
 export * from './atoms/ButtonLink';
 export * from './atoms/Icons';
+export * from './atoms/Notice';
 export * from './atoms/SectionLabel';
 export * from './molecules/AccountMenuSection';
 export * from './molecules/AdminAccessNotice';

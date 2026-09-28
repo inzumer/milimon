@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useId, useRef, useState } from 'react';
 import { Button, RichText } from '@inzumer/ui-library';
 import { ButtonLink } from '@components/atoms/ButtonLink';
+import { Notice } from '@components/atoms/Notice';
 import { MigrationPrompt } from '@components/molecules/MigrationPrompt';
 import type { Translations } from '@i18n/translations';
 import {
@@ -101,22 +102,14 @@ export const AccountPanel = ({
     }
   };
 
-  const status = (text: string) => (
-    <RichText role="status" className="rounded-lg bg-[var(--surface-secondary)] p-4">
-      {text}
-    </RichText>
-  );
+  const status = (text: string) => <Notice role="status">{text}</Notice>;
 
   switch (view.kind) {
     case 'loading':
       return <RichText aria-busy="true">{labels.loading}</RichText>;
 
     case 'unavailable':
-      return (
-        <RichText className="rounded-lg bg-[var(--surface-secondary)] p-4">
-          {unavailableLabel}
-        </RichText>
-      );
+      return <Notice>{unavailableLabel}</Notice>;
 
     case 'error':
       return (

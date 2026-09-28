@@ -1,0 +1,40 @@
+---
+import { RichText } from '@inzumer/ui-library';
+import PageHeader from '@components/molecules/PageHeader/page-header.astro';
+import type { Locale } from '@utils';
+import PageLayout from './page-layout.astro';
+
+interface Props {
+  lang: Locale;
+  page: {
+    title: string;
+    description: string;
+    updated: string;
+    sections: Record<string, { heading: string; paragraphs: string[] }>;
+  };
+}
+
+/** Legal page (privacy, terms); a slot named after a section adds content at its end. */
+const { lang, page } = Astro.props;
+---
+
+<PageLayout lang={lang} title={page.title} description={page.description} breadcrumbs={[]}>
+  <article class="flex max-w-2xl flex-col gap-8">
+    <PageHeader title={page.title} intro={page.description}>
+      <RichText variant="p3" className="text-[var(--text-secondary)]">
+        {page.updated}
+      </RichText>
+    </PageHeader>
+    {Object.entries(page.sections).map(([key, section]) => (
+      <section id={key} class="flex scroll-mt-24 flex-col gap-3">
+        <RichText variant="h2" bold className="font-display text-3xl">
+          {section.heading}
+        </RichText>
+        {section.paragraphs.map((paragraph) => (
+          <RichText>{paragraph}</RichText>
+        ))}
+        <slot name={key} />
+      </section>
+    ))}
+  </article>
+</PageLayout>

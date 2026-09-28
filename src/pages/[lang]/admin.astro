@@ -1,8 +1,7 @@
 ---
 import { AdminPanel } from '@components';
-import PageHeader from '@components/molecules/PageHeader/page-header.astro';
 import { getTranslations } from '@i18n';
-import PageLayout from '@layouts/page-layout.astro';
+import PanelPage from '@layouts/panel-page.astro';
 import { localePaths, localizedPath, toLocale } from '@utils';
 
 export const getStaticPaths = localePaths;
@@ -11,9 +10,6 @@ const lang = toLocale(Astro.params.lang);
 const page = getTranslations(lang, 'admin-page');
 ---
 
-<PageLayout lang={lang} title={page.title} description={page.description} noindex breadcrumbs={[]}>
-  <div class="flex flex-col gap-8">
-    <PageHeader title={page.title} intro={page.description} />
-    <AdminPanel client:load lang={lang} labels={page} loginHref={localizedPath(lang, 'login')} />
-  </div>
-</PageLayout>
+<PanelPage lang={lang} title={page.title} description={page.description}>
+  <AdminPanel client:load lang={lang} labels={page} loginHref={localizedPath(lang, 'login')} />
+</PanelPage>
