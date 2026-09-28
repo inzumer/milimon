@@ -3,10 +3,7 @@ import { cn, RichText } from '@inzumer/ui-library';
 
 export type SectionLabelProps = HTMLAttributes<HTMLHeadingElement>;
 
-/**
- * Title of a group inside a menu or panel ("Recipes", "Preferences"): accent color, small caps and
- * a rule to its right, so it reads as a label and not as something to click.
- */
+/** Group title in a menu or panel: accent small caps with a rule, not clickable. */
 export const SectionLabel = ({ className, children, ...props }: SectionLabelProps) => (
   <RichText
     variant="h3"

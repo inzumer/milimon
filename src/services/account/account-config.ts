@@ -22,11 +22,7 @@ const clean = (value: string | undefined): string | null => {
   return trimmed ? trimmed : null;
 };
 
-/**
- * Accounts are on when the API address and key are set; each sign-in provider is offered only
- * when its id is set. The API key ships in the public bundle on purpose: it identifies this
- * client, it doesn't protect data (the access token does).
- */
+/** Accounts need the API URL and key (public: it identifies the client); providers need their id. */
 export const readAccountConfig = (env: AccountEnv): AccountConfig | null => {
   const apiUrl = clean(env.PUBLIC_API_URL)?.replace(/\/+$/, '') ?? null;
   const apiKey = clean(env.PUBLIC_API_KEY);

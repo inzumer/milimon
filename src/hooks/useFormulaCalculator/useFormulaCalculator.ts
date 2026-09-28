@@ -31,10 +31,7 @@ const defaultDraft = (formula: StandardFormulaDefinition, lang: Locale): Calcula
     lang,
   );
 
-/**
- * State and logic of a standard calculator: raw text per field, parsing (comma or dot decimals),
- * live calculation, errors shown only for fields the person already left, examples and persistence.
- */
+/** Standard calculator state: raw fields, parsing, live result, errors on blur, examples, drafts. */
 export const useFormulaCalculator = ({ formula, lang }: UseFormulaCalculatorOptions) => {
   const { draft, setDraft, resetDraft } = useDraft(formula.id, defaultDraft(formula, lang));
   const currency = useCurrency();

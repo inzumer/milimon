@@ -29,11 +29,7 @@ export interface AccountMenuSectionProps {
   loadSession?: () => AccountSession | null;
 }
 
-/**
- * The account block of the side menu: who is signed in, "My account" and "Sign out", or a sign-in
- * link. Reads the session saved on this device (no API call to render) and follows sign-in and
- * sign-out from any tab.
- */
+/** Menu account block from the saved session (no API call); follows sign-in/out in any tab. */
 export const AccountMenuSection = ({
   labels,
   loginHref,

@@ -19,10 +19,7 @@ export const ROUTES = {
 
 export type RouteName = keyof typeof ROUTES;
 
-/**
- * Where the site is served from: `/` locally, `/milimon` on GitHub Pages (Astro's
- * `base`). Every internal URL goes through `withBase`.
- */
+/** Astro `base` without the trailing slash; every internal URL goes through `withBase`. */
 export const SITE_BASE = (import.meta.env.BASE_URL ?? '/').replace(/\/+$/, '');
 
 const join = (...parts: string[]): string =>
@@ -38,10 +35,7 @@ export const stripBase = (pathname: string, base: string = SITE_BASE): string =>
     ? pathname.slice(base.length) || '/'
     : pathname;
 
-/**
- * Public URL path of a page: the build writes one `.html` file per page (`build.format: 'file'`),
- * but links, the sitemap and canonical URLs use the clean path: `/es/blog.html` → `/es/blog`.
- */
+/** Clean public path of a built page: `/es/blog.html` → `/es/blog`. */
 export const canonicalPath = (pathname: string): string =>
   pathname.replace(/\.html$/, '').replace(/\/index$/, '') || '/';
 

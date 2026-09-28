@@ -1,7 +1,4 @@
-/**
- * Internal suggestion documents (`docs/suggestions`) shown in the administration section:
- * English route slug → source file. The order is the menu order.
- */
+/** Internal suggestion docs in menu order: English route slug → file in `docs/suggestions`. */
 export const ADMIN_DOCS = [
   { id: 'deploy-and-security', file: '01-deploy-y-seguridad' },
   { id: 'cms-and-emails', file: '02-cms-y-emails' },

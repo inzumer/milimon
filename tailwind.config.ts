@@ -1,12 +1,7 @@
 import type { Config } from 'tailwindcss';
 import { DefaultPreset } from '@inzumer/tokens/tailwind';
 
-/**
- * Tailwind v4 loads this legacy JS config through `@config` in `src/styles/global.css`,
- * so the `@inzumer/tokens` preset (written for the v3 config format) keeps working as-is.
- * Content sources are declared with `@source` in that same CSS file.
- * Brand values live as CSS variables in `src/styles/theme.css`; this file only exposes them.
- */
+/** Legacy config loaded by `@config` in global.css so the `@inzumer/tokens` preset keeps working. */
 const config: Config = {
   presets: [DefaultPreset],
   content: [],

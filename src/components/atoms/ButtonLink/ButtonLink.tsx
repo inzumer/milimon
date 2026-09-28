@@ -13,10 +13,7 @@ export interface ButtonLinkProps extends AnchorHTMLAttributes<HTMLAnchorElement>
   size?: keyof typeof SIZE_CLASSES;
 }
 
-/**
- * A navigation link styled as a ui-library `Button` (`asChild`), with a touch target of at least
- * 44px. It stays a real `<a>` so it works without JavaScript and in static pages.
- */
+/** A real `<a>` styled as a ui-library `Button`, with a 44px touch target. */
 export const ButtonLink = ({
   variant = 'primary',
   size = 'md',

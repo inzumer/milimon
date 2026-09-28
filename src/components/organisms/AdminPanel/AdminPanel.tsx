@@ -54,11 +54,7 @@ const resultFor = (error: unknown, labels: AdminPanelLabels['results']): string 
   return labels.error;
 };
 
-/**
- * Administration section: content (editors and admins) and, for admins, the account list with
- * role changes (confirmed in a dialog) and the audit log. The API enforces every rule; this
- * panel only mirrors them.
- */
+/** Administration: content and, for admins, accounts with role changes and the audit log. */
 export const AdminPanel = ({
   lang,
   labels,

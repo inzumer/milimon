@@ -13,11 +13,7 @@ export interface AdminGateProps {
   store?: SessionStore;
 }
 
-/**
- * Shows internal pages (the suggestion documents) only to editors and admins signed in on this
- * device. It hides content that is already public in the repository, so it trusts the saved
- * session instead of asking the API; anything that writes data is checked by the API.
- */
+/** Shows internal docs only to editors and admins from the saved session; writes go through the API. */
 export const AdminGate = ({
   labels,
   loginHref,

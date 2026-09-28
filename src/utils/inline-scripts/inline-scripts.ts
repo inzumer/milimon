@@ -1,9 +1,4 @@
-/**
- * Scripts that must run inline, before the first paint or before any module loads. They are built
- * here as exact strings so `astro.config.mjs` can hash them for the Content-Security-Policy: the
- * page renders them with `set:html`, byte for byte the same text. No imports on purpose (the
- * config loads this file directly).
- */
+// Inline scripts as exact strings, hashed for the CSP in astro.config.mjs. No imports on purpose.
 
 /** Applies the color scheme before the first paint: saved choice first, then the OS (live). */
 export const themeScript = (storageKey: string): string =>

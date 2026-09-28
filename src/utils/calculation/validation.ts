@@ -16,10 +16,7 @@ export const atMostHundred: Rule = (value) => (value <= 100 ? null : 'must-be-at
 
 export const integer: Rule = (value) => (Number.isInteger(value) ? null : 'must-be-integer');
 
-/**
- * Validates a record of numeric inputs. Returns the errors (first failing rule per field) and,
- * when there are none, the values narrowed to `number`.
- */
+/** Validates numeric inputs: first failing rule per field, or the values as numbers. */
 export const validate = <K extends string>(
   input: Record<K, number | null | undefined>,
   rules: Record<K, Rule[]>,

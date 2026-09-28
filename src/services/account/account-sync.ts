@@ -8,17 +8,8 @@ import {
 import { readJson, writeJson, type KeyValueStorage } from '@utils';
 import type { AccountBackend, AccountUser, RemoteProfile } from './account-backend';
 
-/**
- * Keeps the local stores (what the UI reads, synchronously and offline) in sync with the
- * signed-in person's profile:
- *
- * 1. On sign-in (once per browser session) the remote profile wins and is copied locally.
- * 2. On the first sign-in there is no profile yet: if this device has data worth keeping
- *    (drafts, saved calculations or a non-default currency) the person decides between importing it or starting
- *    fresh; otherwise the local preferences simply become the profile.
- * 3. While signed in, every local change is pushed (debounced per item).
- * 4. On sign-out this device goes back to guest mode without the person's data.
- */
+// Sync with the profile: remote wins on sign-in, migration choice on the first one,
+// debounced pushes while signed in, and back to guest mode on sign-out.
 export type SignInOutcome = 'restored' | 'created' | 'needs-migration';
 
 export interface AccountSyncOptions {

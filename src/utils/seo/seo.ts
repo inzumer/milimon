@@ -1,9 +1,6 @@
 import { INSTITUTE_NAME, INSTITUTE_URL, SITE_AUTHOR } from '@constants';
 
-/**
- * schema.org structured data (JSON-LD) for search engines. Pure builders: the layouts render the
- * result as `<script type="application/ld+json">`.
- */
+/** schema.org JSON-LD builders; the layouts render them. */
 export type StructuredData = Record<string, unknown>;
 
 export interface BreadcrumbTrailItem {
