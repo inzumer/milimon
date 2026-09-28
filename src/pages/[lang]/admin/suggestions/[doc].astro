@@ -2,12 +2,13 @@
 import { getCollection } from 'astro:content';
 import { RichText } from '@inzumer/ui-library';
 import { AdminGate } from '@components';
+import PageHeader from '@components/molecules/PageHeader/page-header.astro';
 import { ADMIN_DOCS, DOCS_REPO_URL } from '@constants';
 import { getTranslations } from '@i18n';
 import PageLayout from '@layouts/page-layout.astro';
 import { adaptDocHtml, LOCALES, localizedPath, toLocale, trackingId } from '@utils';
 
-export async function getStaticPaths() {
+export const getStaticPaths = async () => {
   const entries = await getCollection('suggestions');
   const pages = Object.fromEntries(ADMIN_DOCS.map(({ id, file }) => [file, id]));
   return LOCALES.flatMap((lang) =>
@@ -24,7 +25,7 @@ export async function getStaticPaths() {
       return { params: { lang, doc: id }, props: { id, html } };
     }),
   );
-}
+};
 
 interface Props {
   id: (typeof ADMIN_DOCS)[number]['id'];
@@ -45,25 +46,18 @@ const doc = page.docs[id];
   description={doc.description}
   noindex
   breadcrumbs={[
-    { label: common.nav.home, href: localizedPath(lang, 'home') },
     { label: common.nav['site-group'], href: localizedPath(lang, 'admin') },
     { label: page.title, href: localizedPath(lang, 'admin', 'suggestions') },
   ]}
 >
   <div class="flex flex-col gap-8">
-    <header class="flex flex-col gap-3">
-      <RichText variant="h1" bold className="font-display text-5xl">
-        {doc.title}
-      </RichText>
-      <RichText variant="p1" className="text-[var(--text-secondary)]">
-        {doc.description}
-      </RichText>
+    <PageHeader title={doc.title} intro={doc.description}>
       {lang !== 'es' && (
         <RichText variant="p3" className="text-[var(--text-secondary)] italic">
           {page['language-note']}
         </RichText>
       )}
-    </header>
+    </PageHeader>
     <AdminGate client:load labels={admin} loginHref={localizedPath(lang, 'login')}>
       <article class="doc-prose" lang="es" set:html={html} />
       <a

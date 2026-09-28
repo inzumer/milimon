@@ -1,35 +1,21 @@
 ---
 import { RichText } from '@inzumer/ui-library';
 import { AccountPanel, CurrencySelect, SectionLabel } from '@components';
+import PageHeader from '@components/molecules/PageHeader/page-header.astro';
 import { getTranslations } from '@i18n';
 import PageLayout from '@layouts/page-layout.astro';
-import { LOCALES, localizedPath, toLocale, trackingId } from '@utils';
+import { localePaths, localizedPath, toLocale, trackingId } from '@utils';
 
-export function getStaticPaths() {
-  return LOCALES.map((lang) => ({ params: { lang } }));
-}
+export const getStaticPaths = localePaths;
 
 const lang = toLocale(Astro.params.lang);
 const common = getTranslations(lang, 'common');
 const page = getTranslations(lang, 'account-page');
 ---
 
-<PageLayout
-  lang={lang}
-  title={page.title}
-  description={page.description}
-  noindex
-  breadcrumbs={[{ label: common.nav.home, href: localizedPath(lang, 'home') }]}
->
+<PageLayout lang={lang} title={page.title} description={page.description} noindex breadcrumbs={[]}>
   <div class="flex max-w-2xl flex-col gap-8">
-    <header class="flex flex-col gap-3">
-      <RichText variant="h1" bold className="font-display text-5xl">
-        {page.title}
-      </RichText>
-      <RichText variant="p1" className="text-[var(--text-secondary)]">
-        {page.description}
-      </RichText>
-    </header>
+    <PageHeader title={page.title} intro={page.description} />
     <AccountPanel
       client:load
       labels={page.panel}

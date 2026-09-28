@@ -1,14 +1,13 @@
 ---
 import { RichText } from '@inzumer/ui-library';
 import { AdminGate } from '@components';
+import PageHeader from '@components/molecules/PageHeader/page-header.astro';
 import { ADMIN_DOCS } from '@constants';
 import { getTranslations } from '@i18n';
 import PageLayout from '@layouts/page-layout.astro';
-import { LOCALES, localizedPath, toLocale, trackingId } from '@utils';
+import { localePaths, localizedPath, toLocale, trackingId } from '@utils';
 
-export function getStaticPaths() {
-  return LOCALES.map((lang) => ({ params: { lang } }));
-}
+export const getStaticPaths = localePaths;
 
 const lang = toLocale(Astro.params.lang);
 const common = getTranslations(lang, 'common');
@@ -21,20 +20,10 @@ const page = getTranslations(lang, 'admin-docs');
   title={page.title}
   description={page.description}
   noindex
-  breadcrumbs={[
-    { label: common.nav.home, href: localizedPath(lang, 'home') },
-    { label: common.nav['site-group'], href: localizedPath(lang, 'admin') },
-  ]}
+  breadcrumbs={[{ label: common.nav['site-group'], href: localizedPath(lang, 'admin') }]}
 >
   <div class="flex flex-col gap-8">
-    <header class="flex flex-col gap-3">
-      <RichText variant="h1" bold className="font-display text-5xl">
-        {page.title}
-      </RichText>
-      <RichText variant="p1" className="text-[var(--text-secondary)]">
-        {page.description}
-      </RichText>
-    </header>
+    <PageHeader title={page.title} intro={page.description} />
     <AdminGate client:load labels={admin} loginHref={localizedPath(lang, 'login')}>
       <div class="flex flex-col gap-10">
         <ol class="grid gap-4 md:grid-cols-2">

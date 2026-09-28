@@ -9,12 +9,10 @@ import {
 import { getFormulaTranslation, getTranslations, toCalculatorText } from '@i18n';
 import StudyNotes from '@layouts/formula/study-notes.astro';
 import PageLayout from '@layouts/page-layout.astro';
-import { LOCALES, localizedPath, toLocale, trackingId } from '@utils';
+import { localeIdPaths, localizedPath, toLocale, trackingId } from '@utils';
 import { FORMULA_IDS, formulasByGroup, getFormula } from '@utils/formulas';
 
-export function getStaticPaths() {
-  return LOCALES.flatMap((lang) => FORMULA_IDS.map((formula) => ({ params: { lang, formula } })));
-}
+export const getStaticPaths = localeIdPaths('formula', FORMULA_IDS);
 
 const lang = toLocale(Astro.params.lang);
 const formula = getFormula(Astro.params.formula as (typeof FORMULA_IDS)[number]);
@@ -33,10 +31,7 @@ const section = (key: string) => `section-${key}`;
   lang={lang}
   title={text.title}
   description={text.summary}
-  breadcrumbs={[
-    { label: common.nav.home, href: localizedPath(lang, 'home') },
-    { label: common.nav.formulas, href: localizedPath(lang, 'formulas') },
-  ]}
+  breadcrumbs={[{ label: common.nav.formulas, href: localizedPath(lang, 'formulas') }]}
 >
   <article class="flex flex-col gap-12">
     <header class="flex flex-col gap-3">

@@ -3,20 +3,23 @@ import { getImage } from 'astro:assets';
 import { RichText } from '@inzumer/ui-library';
 import star from '@assets/illustrations/star.webp';
 import { MilicitosRating } from '@components';
+import PageHeader from '@components/molecules/PageHeader/page-header.astro';
 import { BLOG_ARTICLE_IDS, getBlogArticle, getTranslations, type BlogArticleId } from '@i18n';
 import PageLayout from '@layouts/page-layout.astro';
-import { blogPostingSchema, interpolate, LOCALES, localizedPath, toLocale, withBase } from '@utils';
+import {
+  blogPostingSchema,
+  interpolate,
+  localeIdPaths,
+  localizedPath,
+  toLocale,
+  withBase,
+} from '@utils';
 
-export function getStaticPaths() {
-  return LOCALES.flatMap((lang) =>
-    BLOG_ARTICLE_IDS.map((article) => ({ params: { lang, article } })),
-  );
-}
+export const getStaticPaths = localeIdPaths('article', BLOG_ARTICLE_IDS);
 
 const lang = toLocale(Astro.params.lang);
 const id = Astro.params.article as BlogArticleId;
 const article = getBlogArticle(lang, id);
-const common = getTranslations(lang, 'common');
 const blog = getTranslations(lang, 'blog');
 const dateFormat = new Intl.DateTimeFormat(lang === 'es' ? 'es-AR' : 'en-US', {
   dateStyle: 'long',
@@ -43,16 +46,10 @@ const posting = blogPostingSchema({
   structuredData={[posting]}
   article={{ publishedTime: article.date, authorUrl: new URL(aboutHref, site).href }}
   description={article.description}
-  breadcrumbs={[
-    { label: common.nav.home, href: localizedPath(lang, 'home') },
-    { label: blog.index.title, href: localizedPath(lang, 'blog') },
-  ]}
+  breadcrumbs={[{ label: blog.index.title, href: localizedPath(lang, 'blog') }]}
 >
   <article class="flex max-w-3xl flex-col gap-6">
-    <header class="flex flex-col gap-3">
-      <RichText variant="h1" bold className="font-display text-5xl">
-        {article.title}
-      </RichText>
+    <PageHeader title={article.title}>
       <RichText variant="p3" className="text-[var(--text-secondary)]">
         <time datetime={article.date}>
           {interpolate(blog.index.published, {
@@ -63,7 +60,7 @@ const posting = blogPostingSchema({
       <RichText variant="p1" className="text-[var(--text-secondary)]">
         {article.description}
       </RichText>
-    </header>
+    </PageHeader>
     {article.intro.map((paragraph) => (
       <RichText>{paragraph}</RichText>
     ))}

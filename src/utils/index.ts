@@ -11,5 +11,6 @@ export * from './numbers';
 export * from './routes';
 export * from './seo';
 export * from './share';
+export * from './static-paths';
 export * from './storage';
 export * from './tracking';

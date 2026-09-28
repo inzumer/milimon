@@ -4,14 +4,11 @@ import { ButtonLink } from '@components';
 import { INSTITUTE_URL } from '@constants';
 import { getTranslations } from '@i18n';
 import PageLayout from '@layouts/page-layout.astro';
-import { LOCALES, localizedPath, profilePageSchema, toLocale, trackingId } from '@utils';
+import { localePaths, localizedPath, profilePageSchema, toLocale, trackingId } from '@utils';
 
-export function getStaticPaths() {
-  return LOCALES.map((lang) => ({ params: { lang } }));
-}
+export const getStaticPaths = localePaths;
 
 const lang = toLocale(Astro.params.lang);
-const common = getTranslations(lang, 'common');
 const page = getTranslations(lang, 'about-page');
 const profile = profilePageSchema({
   site: Astro.site ?? Astro.url,
@@ -25,7 +22,7 @@ const profile = profilePageSchema({
   lang={lang}
   title={page.title}
   description={page.description}
-  breadcrumbs={[{ label: common.nav.home, href: localizedPath(lang, 'home') }]}
+  breadcrumbs={[]}
   structuredData={[profile]}
 >
   <article class="flex flex-col gap-10">

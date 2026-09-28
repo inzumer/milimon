@@ -1,10 +1,8 @@
 ---
 import ComingSoon from '@layouts/coming-soon.astro';
-import { LOCALES, toLocale } from '@utils';
+import { localePaths, toLocale } from '@utils';
 
-export function getStaticPaths() {
-  return LOCALES.map((lang) => ({ params: { lang } }));
-}
+export const getStaticPaths = localePaths;
 
 const lang = toLocale(Astro.params.lang);
 ---
