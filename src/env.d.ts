@@ -1,5 +1,7 @@
 interface ImportMetaEnv {
   readonly PUBLIC_GTM_ID?: string;
+  readonly PUBLIC_GTM_AUTH?: string;
+  readonly PUBLIC_GTM_PREVIEW?: string;
   readonly PUBLIC_API_URL?: string;
   readonly PUBLIC_API_KEY?: string;
   readonly PUBLIC_API_APP_ID?: string;

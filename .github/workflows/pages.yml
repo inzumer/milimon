@@ -25,6 +25,8 @@ jobs:
       BASE_PATH: /${{ github.event.repository.name }}
       # Public by design (they end up in the static bundle); set them as repository variables.
       PUBLIC_GTM_ID: ${{ vars.PUBLIC_GTM_ID }}
+      PUBLIC_GTM_AUTH: ${{ vars.PUBLIC_GTM_AUTH }}
+      PUBLIC_GTM_PREVIEW: ${{ vars.PUBLIC_GTM_PREVIEW }}
       PUBLIC_API_URL: ${{ vars.PUBLIC_API_URL }}
       PUBLIC_API_KEY: ${{ vars.PUBLIC_API_KEY }}
       PUBLIC_API_APP_ID: ${{ vars.PUBLIC_API_APP_ID }}
