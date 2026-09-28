@@ -29,45 +29,58 @@ Contra el build (`astro preview`) y en mobile y escritorio:
 
 ## Repositorios y paquetes (decidido 2026-09-27)
 
-**Nombres de los repos de Milimon**: todos con el prefijo `milimon-`.
+**Repos de Milimon**: `milimon-<área>-<tecnología>` (actualizado el 28/09), para que el nombre
+diga qué es y con qué está hecho.
 
-| Hoy           | Nuevo nombre      | Contenido                                                       |
-| ------------- | ----------------- | --------------------------------------------------------------- |
-| `milimon`     | `milimon-web`     | El sitio (Astro)                                                |
-| `api-milimon` | `milimon-backend` | La API (NestJS)                                                 |
-| —             | `milimon-e2e`     | Playwright + auditorías de accesibilidad, SEO y Lighthouse      |
-| —             | `milimon-emails`  | Plantillas de emails (ver [10](./10-emails-transaccionales.md)) |
-| —             | `milimon-cms`     | El CMS, si termina separado (ver [02](./02-cms-y-emails.md))    |
+| Antes         | Nombre                   | Contenido                                                                       | Estado        |
+| ------------- | ------------------------ | ------------------------------------------------------------------------------- | ------------- |
+| `milimon`     | `milimon-frontend-web`   | El sitio (Astro + React)                                                        | Pendiente     |
+| `api-milimon` | `milimon-backend-nest`   | La API (NestJS + Postgres)                                                      | Hecho (28/09) |
+| —             | `milimon-docs`           | El sitio de documentación (Starlight)                                           | Existe        |
+| —             | `milimon-e2e-playwright` | Playwright + auditorías de accesibilidad, SEO y Lighthouse                      | A crear       |
+| —             | `milimon-emails-react`   | Plantillas de emails con React Email (ver [10](./10-emails-transaccionales.md)) | A crear       |
+| —             | `milimon-cms-keystatic`  | El CMS, si termina separado (ver [02](./02-cms-y-emails.md))                    | A crear       |
 
-- Renombrar el front mueve GitHub Pages a `/milimon-web`: cambian `BASE_PATH` y `SITE_URL` del
-  deploy, el `CORS_ORIGIN` de la API y se rompen los enlaces ya compartidos. Conviene hacerlo
-  junto con el dominio propio ([01](./01-deploy-y-seguridad.md)), que deja de depender del nombre.
-- GitHub redirige el repo viejo, pero igual hay que actualizar los remotes (`git remote set-url`),
-  las carpetas locales y las referencias en `CLAUDE.md`, `README.md`, `docs/` y el Blueprint de Render.
-- `scripts/a11y-audit.mjs` pasa a `milimon-e2e`; `scripts/og-image.mjs` queda en el front (es
-  una herramienta del build, no un test).
+- **Sitio:** el deploy toma `BASE_PATH` del nombre del repo, así que renombrarlo solo mueve la URL
+  a `/milimon-frontend-web` después del próximo deploy. Se rompen los enlaces ya compartidos a
+  `/milimon`; con el dominio propio la URL deja de depender del nombre.
+- **API:** el servicio de Render (todavía sin crear) se llama igual, así que su URL será
+  `https://milimon-backend-nest.onrender.com` (variable `PUBLIC_API_URL` del sitio ya actualizada).
+- GitHub redirige los nombres viejos, pero igual se actualizan los remotes
+  (`git remote set-url`), las carpetas locales y las referencias en `CLAUDE.md`, `README.md` y `docs/`.
+- `scripts/a11y-audit.mjs` pasa a `milimon-e2e-playwright`; `scripts/og-image.mjs` queda en el
+  sitio (es una herramienta del build, no un test).
 
-**Paquetes de `@inzumer`**: un repo por paquete publicado, en lugar del monorepo `ui-library`.
+**Paquetes compartidos**: un repo `inzumer-<nombre>` por paquete, publicado como
+`@inzumer/<nombre>`, en lugar del monorepo `ui-library`. Las carpetas locales usan el mismo nombre
+que el repo.
 
-| Paquete hoy                          | Repo nuevo          |
-| ------------------------------------ | ------------------- |
-| `@inzumer/ui-library` (publicado)    | `inzumer-ui-lib`    |
-| `@inzumer/tokens` (publicado)        | `inzumer-ui-tokens` |
-| `@inzumer/prettier-config` (privado) | `inzumer-prettier`  |
-| `@inzumer/eslint-config` (privado)   | `inzumer-eslint`    |
-| `@inzumer/tsconfig` (privado)        | `inzumer-tsconfig`  |
-| workflows de `.github/` de cada repo | `inzumer-ci`        |
+| Paquete hoy                          | Repo y carpeta      | Paquete nuevo             |
+| ------------------------------------ | ------------------- | ------------------------- |
+| `@inzumer/ui-library` (publicado)    | `inzumer-ui-lib`    | `@inzumer/ui-lib`         |
+| `@inzumer/tokens` (publicado)        | `inzumer-ui-tokens` | `@inzumer/ui-tokens`      |
+| `@inzumer/prettier-config` (privado) | `inzumer-prettier`  | `@inzumer/prettier`       |
+| `@inzumer/eslint-config` (privado)   | `inzumer-eslint`    | `@inzumer/eslint`         |
+| `@inzumer/tsconfig` (privado)        | `inzumer-tsconfig`  | `@inzumer/tsconfig`       |
+| workflows de `.github/` de cada repo | `inzumer-ci`        | (workflows reutilizables) |
 
 - Publicar las configs (hoy privadas) permite dejar de copiarlas en cada proyecto.
+- Los nombres viejos en npm (`@inzumer/ui-library`, `@inzumer/tokens`) se marcan como deprecados
+  con un mensaje que apunta al nuevo, así nadie queda con una versión sin mantenimiento.
 - `inzumer-ci`: workflows reutilizables de GitHub Actions (`workflow_call`) para lint, tests con
   cobertura, build, e2e, auditorías (accesibilidad, SEO, Lighthouse) y release, que llaman todos los
   repos (Milimon, Zamuner…).
-- Orden sugerido: `inzumer-ci` y las configs primero (no rompen nada), después tokens y la
-  librería (cambia de dónde publica el release), y por último los repos de Milimon con el dominio.
+- Orden: primero las configs (`tsconfig`, `prettier`, `eslint`), después los tokens, la librería
+  (el repo `ui-library` se renombra a `inzumer-ui-lib` y conserva su historia), `inzumer-ci` y por
+  último los consumidores (Milimon y Zamuner) con los nombres nuevos.
 
 ## Releases automáticos
 
-**Estado: implementado (2026-09-28)** en `milimon` y `api-milimon`, con horario de Madrid:
+**Estado: implementado (2026-09-28)** en `milimon-frontend-web` y `milimon-backend-nest`, con horario de
+Madrid. Los workflows viven en [`inzumer-ci`](https://github.com/inzumer/inzumer-ci) (`@v1`) y cada repo
+los llama con una línea `uses:` (`release-prepare`, `release-find` + `release-merge` y
+`release-finish`); el CI de cada repo usa `node-ci` con sus propios comandos. Los mismos workflows
+sirven para los demás proyectos (Zamuner, Inzumer, los paquetes `inzumer-*`).
 
 - **Viernes 12:00** (`release-prepare.yml`): si `dev` tiene cambios desde el último tag, crea
   `release/X.Y.Z` (versión por Conventional Commits), abre el PR a `main` y corre el CI. Si no hay

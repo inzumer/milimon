@@ -1,72 +1,19 @@
 name: Release finish
 
-# After a release/* PR lands on main: tag vX.Y.Z, publish the GitHub Release, open and merge the
-# backport PR to dev (left open if it conflicts) and delete the release branch. Runs when someone
-# merges the PR by hand, and from release-publish.yml after the automatic merge (merges made with
-# GITHUB_TOKEN don't trigger other workflows, so that path also starts the deploy itself).
+# A release PR merged by hand: tag, GitHub Release and backport to dev (inzumer-ci).
 on:
   pull_request:
     types: [closed]
     branches: [main]
-  workflow_call:
-    inputs:
-      version:
-        type: string
-        required: true
-      deploy:
-        type: boolean
-        default: false
 
 permissions:
   contents: write
   pull-requests: write
-  actions: write
 
 jobs:
   finish:
-    if: >-
-      github.event_name != 'pull_request' ||
-      (github.event.pull_request.merged == true &&
-       startsWith(github.event.pull_request.head.ref, 'release/'))
-    runs-on: ubuntu-latest
-    env:
-      GH_TOKEN: ${{ github.token }}
-      VERSION: ${{ inputs.version || github.event.pull_request.head.ref }}
-    steps:
-      - name: Checkout main
-        uses: actions/checkout@v4
-        with:
-          ref: main
-          fetch-depth: 0
-
-      - name: Tag and publish the GitHub Release
-        run: |
-          VERSION="${VERSION#release/}"
-          echo "VERSION=$VERSION" >> "$GITHUB_ENV"
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898283+github-actions[bot]@users.noreply.github.com'
-          if ! git rev-parse "v$VERSION" >/dev/null 2>&1; then
-            git tag -a "v$VERSION" -m "v$VERSION"
-            git push origin "v$VERSION"
-          fi
-          gh release view "v$VERSION" >/dev/null 2>&1 ||
-            gh release create "v$VERSION" --title "v$VERSION" --generate-notes --verify-tag
-
-      - name: Backport to dev
-        run: |
-          git fetch origin dev
-          if ! git merge-base --is-ancestor HEAD origin/dev; then
-            branch="backport/v$VERSION"
-            git push -f origin "HEAD:refs/heads/$branch"
-            url=$(gh pr view "$branch" --json url --jq .url 2>/dev/null ||
-              gh pr create --base dev --head "$branch" \
-                --title "chore(release): backport v$VERSION to dev" \
-                --body "Automatic backport of v$VERSION from main.")
-            gh pr merge "$url" --merge --subject "Merge branch 'release/$VERSION' into dev" ||
-              echo "::warning::Backport PR left open (conflict?): $url"
-          fi
-          git push origin --delete "release/$VERSION" 2>/dev/null || true
-
-      - name: Deploy
-        if: inputs.deploy
-        run: gh workflow run pages.yml --ref main
+    if: github.event.pull_request.merged && startsWith(github.event.pull_request.head.ref, 'release/')
+    uses: inzumer/inzumer-ci/.github/workflows/release-finish.yml@v1
+    with:
+      version: ${{ github.event.pull_request.head.ref }}
+      development-branch: dev

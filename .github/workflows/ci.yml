@@ -5,7 +5,7 @@ on:
     branches: [main, dev]
   pull_request:
     branches: [main, dev]
-  # The automatic release runs this same validation on its release branch.
+  # The weekly release runs this same validation on its release branch.
   workflow_call:
     inputs:
       ref:
@@ -18,48 +18,15 @@ concurrency:
 
 jobs:
   ci:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ inputs.ref || github.ref }}
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: .nvmrc
-          cache: pnpm
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Release scripts
-        run: node --test ".github/scripts/*.test.mjs"
-
-      - name: Audit dependencies
-        run: pnpm audit --audit-level moderate
-
-      - name: Typecheck
-        run: pnpm typecheck
-
-      - name: Lint
-        run: pnpm lint
-
-      - name: Format
-        run: pnpm format:check
-
-      - name: Spellcheck
-        run: pnpm spellcheck
-
-      - name: Test (coverage)
-        run: pnpm test:coverage
-
-      - name: Build
-        run: pnpm build
-
-      - name: Accessibility audit
-        run: pnpm audit:a11y
+    uses: inzumer/inzumer-ci/.github/workflows/node-ci.yml@v1
+    with:
+      ref: ${{ inputs.ref || github.ref }}
+      commands: |
+        pnpm audit --audit-level moderate
+        pnpm typecheck
+        pnpm lint
+        pnpm format:check
+        pnpm spellcheck
+        pnpm test:coverage
+        pnpm build
+        pnpm audit:a11y

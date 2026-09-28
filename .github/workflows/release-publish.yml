@@ -1,12 +1,10 @@
 name: Release publish
 
-# Mondays at noon (Madrid): merge the release PR opened on Friday (after running CI on it again),
-# then release-finish.yml tags it, publishes the GitHub Release, backports it to `dev` and
-# deploys. Nothing to do if there is no open release PR. Set the repository variable
-# RELEASE_AUTO_MERGE to 'false' to merge by hand instead.
+# Mondays at 12:30 (Madrid), half an hour after the API, through inzumer-ci: CI again on the
+# release PR, merge, tag, GitHub Release, backport to dev and the Pages deploy.
+# Set the repository variable RELEASE_AUTO_MERGE to 'false' to merge by hand instead.
 on:
   schedule:
-    # 12:30 in Madrid, half an hour after the API (which the site may depend on).
     - cron: '30 10 * * 1'
     - cron: '30 11 * * 1'
   workflow_dispatch:
@@ -20,27 +18,9 @@ concurrency:
   group: release
   cancel-in-progress: false
 
-env:
-  GH_TOKEN: ${{ github.token }}
-
 jobs:
   find:
-    runs-on: ubuntu-latest
-    outputs:
-      version: ${{ steps.find.outputs.version }}
-    steps:
-      - name: Find the release PR (only at noon in Madrid)
-        id: find
-        env:
-          SCHEDULE: ${{ github.event.schedule }}
-        run: |
-          if [ -n "$SCHEDULE" ]; then
-            hour=$(node -p "const d=new Date();const m=+new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/Madrid',hour:'numeric',hourCycle:'h23'}).format(d);12-((m-d.getUTCHours()+24)%24)")
-            [ "$(echo "$SCHEDULE" | cut -d' ' -f2)" = "$hour" ] || exit 0
-          fi
-          branch=$(gh pr list --repo "$GITHUB_REPOSITORY" --state open --base main \
-            --json headRefName --jq '[.[] | select(.headRefName | startswith("release/"))][0].headRefName // ""')
-          echo "version=${branch#release/}" >> "$GITHUB_OUTPUT"
+    uses: inzumer/inzumer-ci/.github/workflows/release-find.yml@v1
 
   validate:
     needs: find
@@ -51,17 +31,8 @@ jobs:
 
   merge:
     needs: [find, validate]
-    if: vars.RELEASE_AUTO_MERGE != 'false'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Merge the release PR
-        run: |
-          gh pr merge "release/${{ needs.find.outputs.version }}" --repo "$GITHUB_REPOSITORY" \
-            --merge --subject "Merge branch 'release/${{ needs.find.outputs.version }}'"
-
-  finish:
-    needs: [find, merge]
-    uses: ./.github/workflows/release-finish.yml
+    uses: inzumer/inzumer-ci/.github/workflows/release-merge.yml@v1
     with:
       version: ${{ needs.find.outputs.version }}
-      deploy: true
+      development-branch: dev
+      deploy-workflow: pages.yml

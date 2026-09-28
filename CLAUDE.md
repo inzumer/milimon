@@ -4,8 +4,13 @@ Guidance for Claude Code (and any other AI coding agent) working in this reposit
 
 ## Project
 
-**Milimon** (`milimon`): a bilingual (`/es`, `/en`) study manual and set of
+**Milimon** (`milimon-frontend-web`): a bilingual (`/es`, `/en`) study manual and set of
 calculators for food cost, waste (desechos) and cooking loss (mermas) in gastronomy.
+
+- Repository names: Milimon repos are `milimon-<area>-<technology>` (`milimon-frontend-web`,
+  `milimon-backend-nest`, `milimon-docs`…); shared packages live in `inzumer-<name>` repos and are
+  published as `@inzumer/<name>` (`@inzumer/ui-lib`, `@inzumer/ui-tokens`, `@inzumer/prettier`…).
+  Local folders use the repository name.
 
 - Master plan and decisions: [docs/PLAN.md](./docs/PLAN.md). Architecture decisions: [docs/adr](./docs/adr).
 - Content: the course material (`AyG- Manual.pdf`, `FORMULAS 2026.xlsx`) is only a reference for
