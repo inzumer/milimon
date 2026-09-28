@@ -589,6 +589,9 @@ en **Gestión del sitio → Sugerencias**, solo para editores y admins).
 - [ ] **Releases automáticos** una o dos veces por semana, cerrados solos si no hay cambios
       (versión por Conventional Commits, tag, GitHub Release y vuelta a `dev`). Diseño en
       [08](./suggestions/08-calidad-y-tests.md#releases-automáticos-a-implementar).
+- [ ] **Sitio de documentación** en `docs.<dominio>` (repo `milimon-docs`, Starlight): cómo
+      funciona la app con diagramas de flujo en Mermaid, arquitectura, guías, plan y sugerencias.
+      Diseño y lista de diagramas en [12](./suggestions/12-sitio-de-documentacion.md).
 - [ ] **Un repo por paquete publicado de `@inzumer`** (hoy todos viven en el monorepo `ui-library`):
       `inzumer-ui-lib` (`@inzumer/ui-library`), `inzumer-ui-tokens` (`@inzumer/tokens`),
       `inzumer-prettier`, `inzumer-eslint` y `inzumer-tsconfig` (hoy privados; publicarlos permite

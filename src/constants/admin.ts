@@ -14,6 +14,7 @@ export const ADMIN_DOCS = [
   { id: 'visual-direction', file: '09-direccion-visual' },
   { id: 'transactional-emails', file: '10-emails-transaccionales' },
   { id: 'photo-guide', file: '11-guia-de-fotografia' },
+  { id: 'docs-site', file: '12-sitio-de-documentacion' },
 ] as const;
 
 export type AdminDocId = (typeof ADMIN_DOCS)[number]['id'];
