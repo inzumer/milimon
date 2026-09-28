@@ -1,4 +1,4 @@
-import { localize, publishedRecipes, recipeTitle } from '../recipes';
+import { localize, publishedRecipes, recipeCardText, recipeTitle } from '../recipes';
 
 const entry = (id: string, title: string, draft = false, featured = false) => ({
   id,
@@ -26,5 +26,22 @@ describe('recipes', () => {
       entry('lemon-loaf', 'Budín'),
     ]);
     expect(result.map(({ id }) => id)).toEqual(['quiche', 'lemon-loaf', 'scones']);
+  });
+
+  it('should build the card texts with category and time', () => {
+    const recipe = {
+      title: 'Lemon loaf',
+      titleEs: 'Budín de limón',
+      category: 'sweet',
+      minutes: 70,
+      photoAlt: { es: 'Budín en un plato', en: '' },
+    };
+    const labels = { categories: { sweet: 'Dulce' }, minutes: '{minutes} min' };
+    expect(recipeCardText(recipe, 'es', labels)).toEqual({
+      title: 'Budín de limón',
+      subtitle: 'Dulce · 70 min',
+      alt: 'Budín en un plato',
+    });
+    expect(recipeCardText({ ...recipe, minutes: null }, 'en', labels).subtitle).toBe('Dulce');
   });
 });

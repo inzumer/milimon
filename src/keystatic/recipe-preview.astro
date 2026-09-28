@@ -7,19 +7,13 @@ import { getTranslations } from '@i18n';
 import { toLocale } from '@utils';
 import PreviewLayout from './preview-layout.astro';
 
-const { slug = '' } = Astro.params;
 const lang = toLocale(Astro.url.searchParams.get('lang') ?? 'es');
-const recipe = await getEntry('recipes', slug);
+const recipe = await getEntry('recipes', Astro.params.slug ?? '');
 const text = getTranslations(lang, 'recipe-page').preview;
 ---
 
-<PreviewLayout
-  lang={lang}
-  title={slug}
-  versionUrl={`/keystatic-preview/version/recipes/${slug}`}
-  draft={recipe?.data.draft ?? false}
->
-  {recipe ? (
+<PreviewLayout collection="recipes" entry={recipe}>
+  {recipe && (
     <main class="flex flex-col gap-8">
       <section class="flex flex-col gap-2">
         <RichText variant="s2" bold>
@@ -36,7 +30,5 @@ const text = getTranslations(lang, 'recipe-page').preview;
         <RecipeArticle recipe={recipe} lang={lang} />
       </section>
     </main>
-  ) : (
-    <RichText>{text.pick}</RichText>
   )}
 </PreviewLayout>

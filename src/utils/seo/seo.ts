@@ -119,3 +119,46 @@ export const blogPostingSchema = ({
   mainEntityOfPage: url,
   author: personSchema(site, aboutHref),
 });
+
+/** schema.org `Recipe`: what search engines show as a recipe result. */
+export const recipeSchema = ({
+  site,
+  url,
+  aboutHref,
+  name,
+  description,
+  image,
+  minutes,
+  servings,
+  category,
+  ingredients,
+  steps,
+  lang,
+}: {
+  site: URL | string;
+  url: string;
+  aboutHref: string;
+  name: string;
+  description: string;
+  image?: string | undefined;
+  minutes?: number | null;
+  servings?: number | null;
+  category: string;
+  ingredients: string[];
+  steps: string[];
+  lang: string;
+}): StructuredData => ({
+  '@context': CONTEXT,
+  '@type': 'Recipe',
+  name,
+  description,
+  url,
+  inLanguage: lang,
+  recipeCategory: category,
+  author: personSchema(site, aboutHref),
+  ...(image && { image }),
+  ...(minutes && { totalTime: `PT${minutes}M` }),
+  ...(servings && { recipeYield: String(servings) }),
+  recipeIngredient: ingredients,
+  recipeInstructions: steps.map((text) => ({ '@type': 'HowToStep', text })),
+});

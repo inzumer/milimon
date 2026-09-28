@@ -188,8 +188,8 @@ importers:
         specifier: ^1.1.0
         version: 1.1.0(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       '@inzumer/ui-library':
-        specifier: ^2.0.1
-        version: 2.0.1(class-variance-authority@0.7.1)(clsx@2.1.1)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(tailwind-merge@3.7.0)
+        specifier: ^2.1.0
+        version: 2.1.0(class-variance-authority@0.7.1)(clsx@2.1.1)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(tailwind-merge@3.7.0)
       '@keystatic/astro':
         specifier: ^6.0.0
         version: 6.0.0(@keystatic/core@0.6.9(@keystar/ui@0.10.0(react-aria@3.50.0(react-dom@19.3.0(react@19.3.0))(react@19.3.0))(react-dom@19.3.0(react@19.3.0))(react-stately@3.48.0(react@19.3.0))(react@19.3.0))(react-aria@3.50.0(react-dom@19.3.0(react@19.3.0))(react@19.3.0))(react-dom@19.3.0(react@19.3.0))(react-stately@3.48.0(react@19.3.0))(react@19.3.0))(astro@7.3.5(@types/node@24.13.6)(idb-keyval@6.3.0)(jiti@2.7.0)(yaml@2.9.1))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
@@ -1548,8 +1548,8 @@ packages:
       react: '>=18 || ^19'
       react-dom: '>=18 || ^19'
 
-  '@inzumer/ui-library@2.0.1':
-    resolution: {integrity: sha512-KHjyTq//1h+C6H+zB/itIRX+YniZKCaKis58DdCJQEvi8KIagka4mU86Ou2Etefx3CD1jYpg/ZmuGvyjIWICag==}
+  '@inzumer/ui-library@2.1.0':
+    resolution: {integrity: sha512-FOhXfd35c2vVa7ci9MG5Km2I80lO47wLvu4mkXlFoacwp0D40nYYhU1E0Ukzk7PwuAf4LPlAoICuUlmsWKA/iA==}
     peerDependencies:
       class-variance-authority: '>=0.7.0'
       clsx: '>=2.0.0'
@@ -5885,7 +5885,7 @@ snapshots:
       react: 19.3.0
       react-dom: 19.3.0(react@19.3.0)
 
-  '@inzumer/ui-library@2.0.1(class-variance-authority@0.7.1)(clsx@2.1.1)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(tailwind-merge@3.7.0)':
+  '@inzumer/ui-library@2.1.0(class-variance-authority@0.7.1)(clsx@2.1.1)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(tailwind-merge@3.7.0)':
     dependencies:
       '@inzumer/tokens': 1.1.0(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       class-variance-authority: 0.7.1

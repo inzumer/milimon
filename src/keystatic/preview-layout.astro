@@ -2,17 +2,20 @@
 import '@styles/global.css';
 import { RichText } from '@inzumer/ui-library';
 import { getTranslations } from '@i18n';
-import type { Locale } from '@utils';
+import { toLocale } from '@utils';
 
 interface Props {
-  lang: Locale;
-  title: string;
-  versionUrl: string;
-  draft: boolean;
+  collection: 'recipes' | 'blog';
+  entry: { data: { draft: boolean } } | undefined;
 }
 
-const { lang, title, versionUrl, draft } = Astro.props;
+const { collection, entry } = Astro.props;
+const { slug = '' } = Astro.params;
+const lang = toLocale(Astro.url.searchParams.get('lang') ?? 'es');
 const text = getTranslations(lang, 'recipe-page').preview;
+const title = slug;
+const versionUrl = `/keystatic-preview/version/${collection}/${slug}`;
+const draft = entry?.data.draft ?? false;
 ---
 
 <html lang={lang}>
@@ -41,7 +44,7 @@ const text = getTranslations(lang, 'recipe-page').preview;
         {text.draft}
       </RichText>
     )}
-    <slot />
+    {entry ? <slot /> : <RichText>{text.pick}</RichText>}
     <script>
       const url = document.body.dataset.versionUrl ?? '';
       let version = '';

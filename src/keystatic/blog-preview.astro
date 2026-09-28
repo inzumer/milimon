@@ -1,22 +1,13 @@
 ---
 import { getEntry } from 'astro:content';
-import { RichText } from '@inzumer/ui-library';
 import BlogPost from '@components/organisms/BlogPost/blog-post.astro';
-import { getTranslations } from '@i18n';
 import { toLocale } from '@utils';
 import PreviewLayout from './preview-layout.astro';
 
-const { slug = '' } = Astro.params;
 const lang = toLocale(Astro.url.searchParams.get('lang') ?? 'es');
-const post = await getEntry('blog', slug);
-const text = getTranslations(lang, 'recipe-page').preview;
+const post = await getEntry('blog', Astro.params.slug ?? '');
 ---
 
-<PreviewLayout
-  lang={lang}
-  title={slug}
-  versionUrl={`/keystatic-preview/version/blog/${slug}`}
-  draft={post?.data.draft ?? false}
->
-  {post ? <BlogPost post={post} lang={lang} /> : <RichText>{text.pick}</RichText>}
+<PreviewLayout collection="blog" entry={post}>
+  {post && <BlogPost post={post} lang={lang} />}
 </PreviewLayout>

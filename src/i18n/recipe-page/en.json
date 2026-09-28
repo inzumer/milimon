@@ -16,5 +16,16 @@
     "draft": "Draft: not published yet",
     "pick": "Open a recipe or an article in the panel to see how it looks.",
     "saved": "Updates when you save."
+  },
+  "index": {
+    "title": "Recipes",
+    "description": "The café's recipes with quantities, steps and photos, ready to be costed.",
+    "intro": "What comes out of the café's kitchen, with quantities and steps to make it at home.",
+    "featured": "Featured",
+    "all": "All recipes",
+    "previous": "Previous recipes",
+    "next": "Next recipes",
+    "choose": "Choose a recipe",
+    "go-to": "Recipe {n} of {total}"
   }
 }

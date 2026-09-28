@@ -554,9 +554,12 @@ en **Gestión del sitio → Sugerencias**, solo para editores y admins).
 - [ ] **Emails transaccionales** (bienvenida al registrarse, confirmación al eliminar la cuenta) con
       un paquete `@inzumer/email` (React Email + tokens) y envío desde la API. Ver
       [10](./suggestions/10-emails-transaccionales.md).
-- [ ] **Recetas con UI de referencia** (Pinterest): cards verticales con imagen y degradado, botones
-      flotantes, carrusel, chips de filtro, ficha de receta con modo "Empezar a cocinar"; isotipo
-      nuevo. Ver [09](./suggestions/09-direccion-visual.md).
+- [x] **Páginas públicas de recetas y blog** (28/09): `/recipes` con destacadas en `Carousel` y
+      la grilla de `Showcase`, ficha `/recipes/<dirección>` con schema.org `Recipe`; el blog y su RSS
+      suman los artículos de Keystatic. Recetas sigue "Próximamente" hasta publicar la primera.
+- [ ] **Recetas con UI de referencia** (Pinterest), lo que falta: chips de filtro por categoría,
+      botones flotantes (guardar, compartir), modo "Empezar a cocinar" e isotipo nuevo. Ver
+      [09](./suggestions/09-direccion-visual.md).
 - [ ] **Fotografía**: aplicar la [guía de fotografía](./suggestions/11-guia-de-fotografia.md) (luz,
       ángulos, distancia y foco, fondos, formatos, edición) y armar un preset de edición común.
 

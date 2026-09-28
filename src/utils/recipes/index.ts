@@ -1,1 +1,7 @@
-export { localize, publishedRecipes, recipeTitle, type LocalizedText } from './recipes';
+export {
+  localize,
+  publishedRecipes,
+  recipeCardText,
+  recipeTitle,
+  type LocalizedText,
+} from './recipes';
