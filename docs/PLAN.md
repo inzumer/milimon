@@ -586,9 +586,9 @@ en **Gestión del sitio → Sugerencias**, solo para editores y admins).
       repo, llamados desde las Actions de cada proyecto; lo genérico, en `inzumer-ci`.
       `scripts/og-image.mjs` no es un test: queda en el front como herramienta del build. Ver
       [08](./suggestions/08-calidad-y-tests.md).
-- [x] **Releases automáticos** martes y viernes (API 07:00 UTC, sitio 09:00 UTC), cerrados solos
-      si no hay cambios: versión por Conventional Commits, tag, GitHub Release, vuelta a `dev` y
-      deploy. Permisos de Actions y borrado automático de ramas ya configurados en los dos repos. Ver
+- [x] **Releases automáticos**: el viernes al mediodía (Madrid) se arma el PR de release y el lunes
+      al mediodía se fusiona, con tag, GitHub Release, backport automático a `dev` y deploy; si no hay
+      cambios, se cierran solos. Dependabot abre PRs cada 15 días. Permisos de Actions y borrado automático de ramas ya configurados en los dos repos. Ver
       [08](./suggestions/08-calidad-y-tests.md#releases-automáticos).
 - [ ] **Un repo por paquete publicado de `@inzumer`** (hoy todos viven en el monorepo `ui-library`):
       `inzumer-ui-lib` (`@inzumer/ui-library`), `inzumer-ui-tokens` (`@inzumer/tokens`),

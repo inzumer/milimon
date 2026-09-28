@@ -67,10 +67,18 @@ Contra el build (`astro preview`) y en mobile y escritorio:
 
 ## Releases automáticos
 
-**Estado: implementado (2026-09-28)** en `milimon` y `api-milimon`: `.github/workflows/release.yml`,
-`release-finish.yml` y `.github/scripts/release-plan.mjs` (con tests en `node --test`). La API
-corre martes y viernes a las 07:00 UTC y el sitio a las 09:00 UTC. Se puede lanzar a mano desde
-**Actions → Release → Run workflow**, eligiendo el tipo de versión.
+**Estado: implementado (2026-09-28)** en `milimon` y `api-milimon`, con horario de Madrid:
+
+- **Viernes 12:00** (`release-prepare.yml`): si `dev` tiene cambios desde el último tag, crea
+  `release/X.Y.Z` (versión por Conventional Commits), abre el PR a `main` y corre el CI. Si no hay
+  cambios, cierra los PRs de release que hayan quedado abiertos.
+- **Lunes 12:00 la API y 12:30 el sitio** (`release-publish.yml`): vuelve a correr el CI, fusiona el
+  PR y `release-finish.yml` crea el tag, el GitHub Release y el **backport a `dev`** (rama
+  `backport/vX.Y.Z` con su PR, fusionado solo; si hay conflicto queda abierto) y despliega.
+- Todo se puede lanzar a mano desde **Actions** (prepare permite elegir el tipo de versión).
+- GitHub solo acepta horarios en UTC: cada workflow tiene dos horarios (verano e invierno) y corre el
+  que cae al mediodía en Madrid.
+- **Dependabot**: los días 1 y 15 de cada mes a las 9:00 (Madrid), no cada semana.
 
 **Configuración de cada repo** (una sola vez, en GitHub; ya hecha en `milimon` y `api-milimon` el 2026-09-28):
 
@@ -81,7 +89,7 @@ corre martes y viernes a las 07:00 UTC y el sitio a las 09:00 UTC. Se puede lanz
   la variable del repo `RELEASE_AUTO_MERGE=false` (entonces el PR queda para fusionarlo a mano y
   `release-finish.yml` hace el tag, el release y la vuelta a `dev`).
 
-**Diseño**
+**Diseño inicial** (un solo workflow; después se separó en viernes y lunes, como se describe arriba)
 
 Objetivo: que el release (`dev` → `main`, versión, tag y vuelta a `dev`) salga solo **una o dos
 veces por semana** (por ejemplo martes y viernes) y que **se cierre sin hacer nada si no hay

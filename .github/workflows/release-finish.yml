@@ -1,9 +1,9 @@
 name: Release finish
 
-# After a release/* PR lands on main: tag vX.Y.Z, publish the GitHub Release, merge main back
-# into dev and delete the branch. Runs when someone merges the PR by hand, and from release.yml
-# after an automatic merge (merges made with GITHUB_TOKEN don't trigger other workflows, so that
-# path also starts the Pages deploy itself).
+# After a release/* PR lands on main: tag vX.Y.Z, publish the GitHub Release, open and merge the
+# backport PR to dev (left open if it conflicts) and delete the release branch. Runs when someone
+# merges the PR by hand, and from release-publish.yml after the automatic merge (merges made with
+# GITHUB_TOKEN don't trigger other workflows, so that path also starts the deploy itself).
 on:
   pull_request:
     types: [closed]
@@ -52,14 +52,18 @@ jobs:
           gh release view "v$VERSION" >/dev/null 2>&1 ||
             gh release create "v$VERSION" --title "v$VERSION" --generate-notes --verify-tag
 
-      - name: Merge main back into dev
+      - name: Backport to dev
         run: |
-          git checkout -B dev origin/dev
-          if ! git merge-base --is-ancestor origin/main dev; then
-            git merge --no-ff origin/main -m "Merge branch 'release/$VERSION' into dev"
-            git push origin dev || gh pr create --base dev --head main \
-              --title "chore(release): merge v$VERSION back into dev" \
-              --body "dev is protected: merge this PR to bring the release back."
+          git fetch origin dev
+          if ! git merge-base --is-ancestor HEAD origin/dev; then
+            branch="backport/v$VERSION"
+            git push -f origin "HEAD:refs/heads/$branch"
+            url=$(gh pr view "$branch" --json url --jq .url 2>/dev/null ||
+              gh pr create --base dev --head "$branch" \
+                --title "chore(release): backport v$VERSION to dev" \
+                --body "Automatic backport of v$VERSION from main.")
+            gh pr merge "$url" --merge --subject "Merge branch 'release/$VERSION' into dev" ||
+              echo "::warning::Backport PR left open (conflict?): $url"
           fi
           git push origin --delete "release/$VERSION" 2>/dev/null || true
 
