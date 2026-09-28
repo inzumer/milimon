@@ -16,8 +16,8 @@ const nunito = dataUrl(
   require.resolve('@fontsource-variable/nunito/files/nunito-latin-wght-normal.woff2'),
   'font/woff2',
 );
-const logo = dataUrl('src/assets/logo.png', 'image/png');
-const star = dataUrl('src/assets/star.png', 'image/png');
+const logo = dataUrl('src/assets/illustrations/logo.webp', 'image/webp');
+const star = dataUrl('src/assets/illustrations/star.webp', 'image/webp');
 const IMAGES = { home: logo, management: logo, recipes: star, blog: star };
 const LANGS = ['es', 'en'];
 const texts = (lang) => JSON.parse(readFileSync(`src/i18n/common/${lang}.json`, 'utf8')).og;

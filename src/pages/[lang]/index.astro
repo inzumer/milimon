@@ -1,9 +1,7 @@
 ---
-import { Image } from 'astro:assets';
 import { RichText } from '@inzumer/ui-library';
-import logo from '@assets/logo.png';
-import star from '@assets/star.png';
 import { ButtonLink, FeatureCard } from '@components';
+import BrandIllustration from '@components/atoms/BrandIllustration/brand-illustration.astro';
 import { BLOG_ARTICLE_IDS, getBlogArticle, getTranslations } from '@i18n';
 import PageLayout from '@layouts/page-layout.astro';
 import { LOCALES, localizedPath, toLocale, trackingId, websiteSchema } from '@utils';
@@ -29,12 +27,10 @@ const blog = getTranslations(lang, 'blog');
 
 <PageLayout lang={lang} structuredData={[website]}>
   <section class="flex flex-col items-center gap-4 pb-10 text-center">
-    <Image
-      src={logo}
+    <BrandIllustration
+      name="logo"
       alt={home.hero['logo-alt']}
       width={224}
-      height={224}
-      densities={[1, 2]}
       class="size-56"
       loading="eager"
       fetchpriority="high"
@@ -90,14 +86,7 @@ const blog = getTranslations(lang, 'blog');
       <RichText className="text-[var(--text-secondary)]">{home['recipes-section'].intro}</RichText>
     </header>
     <div class="flex flex-col items-center gap-6 rounded-xl border border-[var(--border-default)] bg-[var(--surface-primary)] p-6 text-center shadow-sm sm:flex-row sm:text-left">
-      <Image
-        src={star}
-        alt={comingSoon['star-alt']}
-        width={112}
-        height={112}
-        densities={[1, 2]}
-        class="size-28 shrink-0"
-      />
+      <BrandIllustration name="star" alt={comingSoon['star-alt']} width={112} class="size-28" />
       <div class="flex flex-col items-center gap-3 sm:items-start">
         <RichText
           as="p"

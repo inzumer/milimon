@@ -1,8 +1,7 @@
 ---
-import { Image } from 'astro:assets';
 import { RichText } from '@inzumer/ui-library';
-import star from '@assets/star.png';
 import { ButtonLink } from '@components';
+import BrandIllustration from '@components/atoms/BrandIllustration/brand-illustration.astro';
 import { getTranslations } from '@i18n';
 import PageLayout from '@layouts/page-layout.astro';
 import { localizedPath, trackingId, type Locale } from '@utils';
@@ -27,12 +26,10 @@ const text = page[section];
   breadcrumbs={[{ label: common.nav.home, href: localizedPath(lang, 'home') }]}
 >
   <section class="flex flex-col items-center gap-4 py-6 text-center">
-    <Image
-      src={star}
+    <BrandIllustration
+      name="star"
       alt={page['star-alt']}
       width={224}
-      height={224}
-      densities={[1, 2]}
       loading="eager"
       class="size-48 sm:size-56"
     />
