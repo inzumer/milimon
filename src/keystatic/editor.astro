@@ -1,0 +1,44 @@
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Milimon · Editor</title>
+    <style>
+      body {
+        margin: 0;
+        display: flex;
+        height: 100dvh;
+      }
+      iframe {
+        border: 0;
+        height: 100%;
+      }
+      #admin {
+        flex: 3;
+      }
+      #preview {
+        flex: 2;
+        border-left: 1px solid #ccc;
+      }
+    </style>
+  </head>
+  <body>
+    <iframe id="admin" src="/keystatic" title="Keystatic"></iframe>
+    <iframe id="preview" src="/keystatic-preview/recipes/none" title="Preview"></iframe>
+    <script>
+      const admin = document.querySelector<HTMLIFrameElement>('#admin');
+      const preview = document.querySelector<HTMLIFrameElement>('#preview');
+      let current = '';
+      setInterval(() => {
+        const path = admin?.contentWindow?.location.pathname ?? '';
+        const [, collection = 'recipes', slug = 'none'] =
+          /\/keystatic\/collection\/(recipes|blog)\/item\/([^/]+)/.exec(path) ?? [];
+        const next = `/keystatic-preview/${collection}/${slug}`;
+        if (preview && next !== current) {
+          current = next;
+          preview.src = next;
+        }
+      }, 700);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,42 @@
+---
+import { getEntry } from 'astro:content';
+import { RichText } from '@inzumer/ui-library';
+import RecipeCard from '@components/molecules/RecipeCard/recipe-card.astro';
+import RecipeArticle from '@components/organisms/RecipeArticle/recipe-article.astro';
+import { getTranslations } from '@i18n';
+import { toLocale } from '@utils';
+import PreviewLayout from './preview-layout.astro';
+
+const { slug = '' } = Astro.params;
+const lang = toLocale(Astro.url.searchParams.get('lang') ?? 'es');
+const recipe = await getEntry('recipes', slug);
+const text = getTranslations(lang, 'recipe-page').preview;
+---
+
+<PreviewLayout
+  lang={lang}
+  title={slug}
+  versionUrl={`/keystatic-preview/version/recipes/${slug}`}
+  draft={recipe?.data.draft ?? false}
+>
+  {recipe ? (
+    <main class="flex flex-col gap-8">
+      <section class="flex flex-col gap-2">
+        <RichText variant="s2" bold>
+          {text.cover}
+        </RichText>
+        <div class="w-64">
+          <RecipeCard recipe={recipe} lang={lang} />
+        </div>
+      </section>
+      <section class="flex flex-col gap-2">
+        <RichText variant="s2" bold>
+          {text.page}
+        </RichText>
+        <RecipeArticle recipe={recipe} lang={lang} />
+      </section>
+    </main>
+  ) : (
+    <RichText>{text.pick}</RichText>
+  )}
+</PreviewLayout>

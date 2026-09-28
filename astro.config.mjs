@@ -1,7 +1,9 @@
 // @ts-check
 import { createHash } from 'node:crypto';
+import markdoc from '@astrojs/markdoc';
 import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
+import keystatic from '@keystatic/astro';
 import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'astro/config';
 import { SETTINGS_STORAGE_KEY } from './src/constants/storage.ts';
@@ -20,6 +22,24 @@ try {
 
 const site = process.env.SITE_URL ?? 'https://inzumer.github.io';
 const base = process.env.BASE_PATH || '/';
+/** The Keystatic admin (/keystatic) runs only with `astro dev`; the build stays static. */
+const isDev = process.argv.includes('dev');
+
+/** Dev-only editor with a live preview next to Keystatic (/keystatic-editor). */
+const keystaticPreview = () => ({
+  name: 'keystatic-preview',
+  hooks: {
+    /** @param {{ injectRoute: (route: { pattern: string, entrypoint: string, prerender: boolean }) => void }} options */
+    'astro:config:setup': ({ injectRoute }) => {
+      /** @param {string} pattern @param {string} entrypoint */
+      const route = (pattern, entrypoint) => injectRoute({ pattern, entrypoint, prerender: false });
+      route('/keystatic-editor', './src/keystatic/editor.astro');
+      route('/keystatic-preview/recipes/[slug]', './src/keystatic/recipe-preview.astro');
+      route('/keystatic-preview/blog/[slug]', './src/keystatic/blog-preview.astro');
+      route('/keystatic-preview/version/[...file]', './src/keystatic/version.ts');
+    },
+  },
+});
 
 /** @param {string | undefined} url */
 const origin = (url) => {
@@ -116,6 +136,8 @@ export default defineConfig({
   security: { csp },
   integrations: [
     react(),
+    markdoc(),
+    ...(isDev ? [keystatic(), keystaticPreview()] : []),
     sitemap({
       i18n: { defaultLocale: 'es', locales: { es: 'es', en: 'en' } },
       filter: (page) => {
@@ -130,14 +152,16 @@ export default defineConfig({
       },
     }),
   ],
-  i18n: {
-    locales: ['es', 'en'],
-    defaultLocale: 'es',
-    routing: {
-      prefixDefaultLocale: true,
-      redirectToDefaultLocale: false,
-    },
-  },
+  // Not in dev: its prefix check 404s /keystatic, and pages are [lang]/… routes anyway.
+  ...(isDev
+    ? {}
+    : {
+        i18n: {
+          locales: ['es', 'en'],
+          defaultLocale: 'es',
+          routing: { prefixDefaultLocale: true, redirectToDefaultLocale: false },
+        },
+      }),
   markdown: { syntaxHighlight: false },
   vite: {
     plugins: [tailwindcss()],

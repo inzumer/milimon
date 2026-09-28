@@ -31,6 +31,8 @@ import loginPageEn from './login-page/en.json';
 import loginPageEs from './login-page/es.json';
 import privacyPageEn from './privacy-page/en.json';
 import privacyPageEs from './privacy-page/es.json';
+import recipePageEn from './recipe-page/en.json';
+import recipePageEs from './recipe-page/es.json';
 import termsPageEn from './terms-page/en.json';
 import termsPageEs from './terms-page/es.json';
 
@@ -60,6 +62,7 @@ const dictionaries = {
   'history-page': { es: historyPageEs, en: historyPageEn satisfies typeof historyPageEs },
   'login-page': { es: loginPageEs, en: loginPageEn satisfies typeof loginPageEs },
   'privacy-page': { es: privacyPageEs, en: privacyPageEn satisfies typeof privacyPageEs },
+  'recipe-page': { es: recipePageEs, en: recipePageEn satisfies typeof recipePageEs },
   'terms-page': { es: termsPageEs, en: termsPageEn satisfies typeof termsPageEs },
 } as const;
 

@@ -541,6 +541,9 @@ en **Gestión del sitio → Sugerencias**, solo para editores y admins).
 
 **Contenido**
 
+- [x] **Keystatic, fase 1** (28/09): colección **Recetas** (español e inglés, fotos, ingredientes,
+      pasos con foto, borrador y destacada) guardada como YAML en `src/content/recipes`, leída por
+      Astro en el build. Se edita en local con `pnpm dev` → `/keystatic` (el panel no se publica).
 - [ ] **CMS sin dependencia técnica** para que Milagros gestione recetas, blog, guías, "Sobre mí",
       textos del inicio y secciones nuevas (recomendado: Keystatic + Keystatic Cloud), migrando los
       textos que hoy están en `src/i18n`; **emails** a suscriptores (RSS a email). Ver
