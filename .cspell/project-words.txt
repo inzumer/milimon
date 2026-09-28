@@ -251,3 +251,4 @@ guia
 fotografia
 medicion
 documentacion
+tagmanager

@@ -99,9 +99,12 @@ const schemas = [
 
 <script>
   import { OPEN_COOKIE_PREFERENCES_EVENT } from '@constants';
-  import { getAccountSession, hasStoredSession, startTagManager } from '@services';
+  import { getAccountSession, gtmEnvironment, hasStoredSession, startTagManager } from '@services';
 
-  startTagManager(import.meta.env.PUBLIC_GTM_ID);
+  startTagManager(
+    import.meta.env.PUBLIC_GTM_ID,
+    gtmEnvironment(import.meta.env.PUBLIC_GTM_AUTH, import.meta.env.PUBLIC_GTM_PREVIEW),
+  );
 
   document.addEventListener('click', (event) => {
     if (event.target instanceof Element && event.target.closest('[data-open-cookie-preferences]')) {

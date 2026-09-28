@@ -1,7 +1,12 @@
 import { GTM_SCRIPT_URL } from '@constants';
 import { useSettingsStore } from '@stores';
 import { setAnalyticsSink, track } from '@utils';
-import { createTagManager, isContainerId, startTagManager } from '../google-tag-manager';
+import {
+  createTagManager,
+  gtmEnvironment,
+  isContainerId,
+  startTagManager,
+} from '../google-tag-manager';
 
 const ID = 'GTM-TEST123';
 
@@ -81,6 +86,24 @@ describe('google tag manager', () => {
     tagManager.applyConsent('denied');
     expect(gtmScripts()).toHaveLength(0);
     expect(entries()).toHaveLength(1);
+  });
+
+  it('should accept a GTM environment only when both values are valid', () => {
+    expect(gtmEnvironment('aBc_123-xyz', 'env-3')).toEqual({
+      auth: 'aBc_123-xyz',
+      preview: 'env-3',
+    });
+    expect(gtmEnvironment('aBc_123-xyz', 'live')).toBeUndefined();
+    expect(gtmEnvironment('', 'env-3')).toBeUndefined();
+    expect(gtmEnvironment(undefined, undefined)).toBeUndefined();
+  });
+
+  it('should load the environment version of the container', () => {
+    const tagManager = createTagManager(ID, { auth: 'aBc_123-xyz', preview: 'env-3' });
+    tagManager.applyConsent('granted');
+    expect(gtmScripts()[0]?.getAttribute('src')).toBe(
+      `${GTM_SCRIPT_URL}?id=${ID}&gtm_auth=aBc_123-xyz&gtm_preview=env-3&gtm_cookies_win=x`,
+    );
   });
 
   it('should do nothing without a valid container id', () => {
