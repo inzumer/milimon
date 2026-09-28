@@ -558,9 +558,14 @@ en **Gestión del sitio → Sugerencias**, solo para editores y admins).
 **Diseño**
 
 - [x] **Paleta de la referencia**: escala **terracota** (`--color-accent-*`) para enlaces, acentos
-      y el zócalo de gestión; el amarillo queda para botones, marca y milicitos. Crema más cálido en
+      y el zócalo de gestión; los botones y destacados usan el color principal. Crema más cálido en
       las superficies y chocolate de la referencia en el modo oscuro. Contraste AA medido en los dos
       modos.
+- [x] **Naranja como color principal** (28/09): la escala `--color-primary-*` pasa del amarillo al
+      naranja de la referencia (`#F29A3E`) en botones, etiquetas, tarjetas destacadas y focos; también
+      el color del manifest y las imágenes para compartir. Auditoría a11y sin errores en 102 páginas.
+- [ ] **Ilustraciones en naranja**: el logo y la estrella de los milicitos siguen con fondo amarillo
+      (son imágenes). Decidir si Milagros las pasa a naranja o se hace el isotipo nuevo.
 - [x] **Preferencias del menú**: solo idioma y modo oscuro, cada uno con una aclaración corta; la
       **moneda** pasó a **Configuración** en "Tu cuenta".
 - [ ] **Dirección visual** más fina y editorial (inicio tipo portada, cards con imagen,

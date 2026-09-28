@@ -29,7 +29,7 @@ const html = ({ tagline, detail, image }) => `<!doctype html>
   * { margin: 0; box-sizing: border-box; }
   body { width: 1200px; height: 630px; overflow: hidden; background: #FDF7F1; color: #2F201B;
     font-family: 'Nunito', sans-serif; display: flex; align-items: center; gap: 56px; padding: 0 80px;
-    border-bottom: 24px solid #F6AF27; }
+    border-bottom: 24px solid #F29A3E; }
   img { width: 380px; height: 380px; flex: none; }
   h1 { font-family: 'Lobster Two', cursive; font-weight: 700; font-size: 84px; line-height: 1.05; }
   .tagline { margin-top: 24px; font-size: 38px; font-weight: 800; line-height: 1.2; }
