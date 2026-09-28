@@ -1,15 +1,16 @@
 :root {
-  --color-primary-50: 255 247 237;
-  --color-primary-100: 254 238 215;
-  --color-primary-200: 253 223 178;
-  --color-primary-300: 251 207 140;
-  --color-primary-400: 249 190 96;
-  --color-primary-500: 246 175 39;
-  --color-primary-600: 206 147 44;
-  --color-primary-700: 168 119 44;
-  --color-primary-800: 136 96 43;
-  --color-primary-900: 104 74 39;
-  --color-primary-950: 78 55 34;
+  /* Primary: the orange of the reference (#F29A3E) for buttons, badges and highlights. */
+  --color-primary-50: 255 243 231;
+  --color-primary-100: 254 233 215;
+  --color-primary-200: 253 218 187;
+  --color-primary-300: 250 197 149;
+  --color-primary-400: 246 173 105;
+  --color-primary-500: 242 154 62;
+  --color-primary-600: 203 127 50;
+  --color-primary-700: 161 99 38;
+  --color-primary-800: 125 74 27;
+  --color-primary-900: 94 53 18;
+  --color-primary-950: 74 40 12;
 
   --color-neutral-50: 253 247 241;
   --color-neutral-100: 249 239 227;
