@@ -450,7 +450,7 @@ el plan premium sobre las cuentas de F10.
 ## 10. Cuentas y perfiles (fase final) — hecho
 
 > Implementado con una API propia en otro repositorio ([ADR 0004](adr/0004-accounts-api.md)):
-> [api-milimon](https://github.com/inzumer/api-milimon) (NestJS + PostgreSQL), login
+> [milimon-backend-nest](https://github.com/inzumer/milimon-backend-nest) (NestJS + PostgreSQL), login
 > con Google Identity Services y Facebook Login, sincronización offline-first, páginas `/login` y
 > `/account`, términos, privacidad con instrucciones de borrado. Configuración en
 > [ACCOUNTS.md](ACCOUNTS.md). (La primera versión con Supabase, ADR 0003, quedó reemplazada.)
@@ -577,13 +577,13 @@ en **Gestión del sitio → Sugerencias**, solo para editores y admins).
 **Técnico**
 
 - [x] Renombrar las carpetas locales (`milimon`, `api-milimon`).
-- [ ] **Repositorios con el prefijo `milimon-`** (detalle y orden en
-      [08](./suggestions/08-calidad-y-tests.md#repositorios-y-paquetes-decidido-2026-09-27)): `milimon` → `milimon-web` y `api-milimon` →
-      `milimon-backend`; los nuevos nacen con el prefijo (`milimon-e2e`, `milimon-emails`,
-      `milimon-cms`…). Al renombrar el front, GitHub redirige el repo pero **no** GitHub Pages: la
-      URL pasa a `/milimon-web`, así que hay que cambiar `BASE_PATH` y `SITE_URL` en el deploy,
-      el `CORS_ORIGIN` de la API y los enlaces ya compartidos (o hacerlo junto con el dominio propio,
-      que deja de depender del nombre del repo). Después, las carpetas locales y los remotes.
+- [ ] **Repositorios `milimon-<área>-<tecnología>`** (detalle en
+      [08](./suggestions/08-calidad-y-tests.md#repositorios-y-paquetes-decidido-2026-09-27)):
+  - [x] `api-milimon` → **`milimon-backend-nest`** (28/09): repo, paquete, servicio de Render y
+        emisor de los tokens.
+  - [ ] `milimon` → **`milimon-frontend-web`**: `BASE_PATH` ya sale del nombre del repo (hotfix #14);
+        falta fusionarlo a `main`, renombrar y lanzar el deploy de Pages.
+  - [ ] Carpetas locales y remotes con los nombres nuevos.
 - [x] `.gitattributes` en `ui-library` (finales de línea).
 - [ ] **Cookies en un solo componente**: `CookieConsent` (modos `banner`, `modal` e `inline`) en
       `@inzumer/ui-library` 2.0.0 ([ui-library #29](https://github.com/inzumer/ui-library/pull/29)).
@@ -604,11 +604,12 @@ en **Gestión del sitio → Sugerencias**, solo para editores y admins).
       diagramas, guía de gestión, desarrollo, y el plan y las sugerencias sincronizados desde `docs/`.
 - [ ] Pasar la documentación a `docs.<dominio>` con el deploy oficial y enlazarla desde **Gestión del
       sitio**. Ver [12](./suggestions/12-sitio-de-documentacion.md).
-- [ ] **Un repo por paquete publicado de `@inzumer`** (hoy todos viven en el monorepo `ui-library`):
-      `inzumer-ui-lib` (`@inzumer/ui-library`), `inzumer-ui-tokens` (`@inzumer/tokens`),
-      `inzumer-prettier`, `inzumer-eslint` y `inzumer-tsconfig` (hoy privados; publicarlos permite
-      dejar de copiarlos en cada proyecto) e `inzumer-ci` con los workflows reutilizables de
-      GitHub Actions (lint, tests, build, e2e, release) que comparten todos los repos.
+- [ ] **Un repo `inzumer-<nombre>` por paquete, publicado como `@inzumer/<nombre>`** (hoy todos
+      viven en el monorepo `ui-library`): `inzumer-ui-lib` (`@inzumer/ui-lib`), `inzumer-ui-tokens`
+      (`@inzumer/ui-tokens`), `inzumer-prettier`, `inzumer-eslint` e `inzumer-tsconfig` (hoy privados;
+      publicarlos permite dejar de copiarlos) e `inzumer-ci` con los workflows reutilizables. Las
+      carpetas locales se llaman igual que el repo. Orden y detalle en
+      [08](./suggestions/08-calidad-y-tests.md#repositorios-y-paquetes-decidido-2026-09-27).
 
 ## 11. Fases
 
@@ -646,5 +647,6 @@ Flujo de ramas (gitflow, ver CLAUDE.md): cada fase se trabaja en `feature/*` des
 - Alcance: calculadora + administración del restaurante; sin RRHH, marketing ni comunicación.
 - Pesos por defecto, moneda configurable; `localStorage` hasta la fase de cuentas.
 - Cuentas con Google/Facebook en la fase final (F10).
-- Repositorios del proyecto con el prefijo `milimon-` (`milimon-web`, `milimon-backend`,
-  `milimon-e2e`, `milimon-emails`, `milimon-cms`…).
+- Repositorios con el nombre `milimon-<área>-<tecnología>` (`milimon-frontend-web`,
+  `milimon-backend-nest`, `milimon-e2e-playwright`, `milimon-emails-react`, `milimon-cms-keystatic`);
+  los paquetes compartidos, `inzumer-<nombre>` publicados como `@inzumer/<nombre>`.

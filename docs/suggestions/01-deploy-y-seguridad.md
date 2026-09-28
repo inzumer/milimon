@@ -1,6 +1,6 @@
 # 01 · Deploy oficial y seguridad
 
-Hoy el sitio vive en GitHub Pages (`inzumer.github.io/milimon`) y la API se prepara para Render +
+Hoy el sitio vive en GitHub Pages (`inzumer.github.io/milimon-frontend-web`) y la API se prepara para Render +
 Neon. Para el lanzamiento oficial conviene un dominio propio y un hosting que permita **cabeceras
 HTTP de seguridad**, algo que GitHub Pages no deja configurar.
 

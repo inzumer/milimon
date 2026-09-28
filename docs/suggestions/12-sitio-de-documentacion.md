@@ -29,7 +29,7 @@ sugerencias, separado del sitio principal: **`docs.<dominio>`** (decidido 2026-0
 - **Acceso**: el plan y las sugerencias ya son públicos en el repo. Si más adelante hay algo
   privado, Cloudflare Access (gratis hasta 50 personas) pide el email antes de entrar.
 - **Fuente única**: `docs/` de cada repo sigue siendo la fuente; el sitio los toma en el build
-  (con `git submodule`, o un paso de CI que copia `milimon-web/docs` y `milimon-backend/docs`) para no
+  (con `git submodule`, o un paso de CI que copia `milimon-frontend-web/docs` y `milimon-backend-nest/docs`) para no
   duplicar texto.
 
 ## Contenido
