@@ -588,7 +588,7 @@ en **Gestión del sitio → Sugerencias**, solo para editores y admins).
       [08](./suggestions/08-calidad-y-tests.md).
 - [x] **Releases automáticos** martes y viernes (API 07:00 UTC, sitio 09:00 UTC), cerrados solos
       si no hay cambios: versión por Conventional Commits, tag, GitHub Release, vuelta a `dev` y
-      deploy. Falta la configuración de cada repo en GitHub (permisos de Actions). Ver
+      deploy. Permisos de Actions y borrado automático de ramas ya configurados en los dos repos. Ver
       [08](./suggestions/08-calidad-y-tests.md#releases-automáticos).
 - [ ] **Un repo por paquete publicado de `@inzumer`** (hoy todos viven en el monorepo `ui-library`):
       `inzumer-ui-lib` (`@inzumer/ui-library`), `inzumer-ui-tokens` (`@inzumer/tokens`),

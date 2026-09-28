@@ -72,7 +72,7 @@ Contra el build (`astro preview`) y en mobile y escritorio:
 corre martes y viernes a las 07:00 UTC y el sitio a las 09:00 UTC. Se puede lanzar a mano desde
 **Actions → Release → Run workflow**, eligiendo el tipo de versión.
 
-**Configuración de cada repo** (una sola vez, en GitHub):
+**Configuración de cada repo** (una sola vez, en GitHub; ya hecha en `milimon` y `api-milimon` el 2026-09-28):
 
 - **Settings → Actions → General → Workflow permissions**: "Read and write permissions" y "Allow
   GitHub Actions to create and approve pull requests".
