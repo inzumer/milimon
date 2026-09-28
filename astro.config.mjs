@@ -1,5 +1,6 @@
 // @ts-check
 import { createHash } from 'node:crypto';
+import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import markdoc from '@astrojs/markdoc';
 import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
@@ -24,6 +25,16 @@ const site = process.env.SITE_URL ?? 'https://inzumer.github.io';
 const base = process.env.BASE_PATH || '/';
 /** The Keystatic admin (/keystatic) runs only with `astro dev`; the build stays static. */
 const isDev = process.argv.includes('dev');
+/** Recipes stays "coming soon" (out of the sitemap) until one is published. */
+const RECIPES_DIR = 'src/content/recipes';
+const hasRecipes =
+  existsSync(RECIPES_DIR) &&
+  readdirSync(RECIPES_DIR).some((file) =>
+    /^draft: false$/m.test(readFileSync(`${RECIPES_DIR}/${file}`, 'utf8')),
+  );
+const privateRoute = hasRecipes
+  ? /\/(account|history|login|admin)$/
+  : /\/(account|history|login|recipes|admin)$/;
 
 /** Dev-only editor with a live preview next to Keystatic (/keystatic-editor). */
 const keystaticPreview = () => ({
@@ -146,7 +157,7 @@ export default defineConfig({
         return (
           route !== '/' &&
           !route.includes('404') &&
-          !/\/(account|history|login|recipes|admin)$/.test(route) &&
+          !privateRoute.test(route) &&
           !route.includes('/admin/')
         );
       },

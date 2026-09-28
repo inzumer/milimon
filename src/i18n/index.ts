@@ -16,13 +16,6 @@ export {
   type LearnTopic,
   type LearnTopicId,
 } from './learn';
-export {
-  BLOG_ARTICLE_IDS,
-  blogFeedItems,
-  getBlogArticle,
-  type BlogArticle,
-  type BlogArticleId,
-  type BlogFeedItem,
-} from './blog';
+export { BLOG_ARTICLE_IDS, getBlogArticle, type BlogArticle, type BlogArticleId } from './blog';
 export { loadCalculatorText, type CalculatorTextLoader } from './load-calculator-text';
 export { getTranslations, type Namespace, type Translations } from './translations';

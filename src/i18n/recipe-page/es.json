@@ -16,5 +16,16 @@
     "draft": "Borrador: todavía no se publica",
     "pick": "Abrí una receta o un artículo en el panel para ver cómo va quedando.",
     "saved": "Se actualiza al guardar."
+  },
+  "index": {
+    "title": "Recetas",
+    "description": "Recetas del café con sus cantidades, pasos y fotos, listas para costear.",
+    "intro": "Lo que sale de la cocina del café, con cantidades y pasos para hacerlo en casa.",
+    "featured": "Destacadas",
+    "all": "Todas las recetas",
+    "previous": "Recetas anteriores",
+    "next": "Recetas siguientes",
+    "choose": "Elegí una receta",
+    "go-to": "Receta {n} de {total}"
   }
 }

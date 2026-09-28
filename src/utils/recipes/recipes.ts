@@ -27,3 +27,25 @@ export const publishedRecipes = <
         Number(b.data.featured) - Number(a.data.featured) ||
         a.data.title.localeCompare(b.data.title, 'es'),
     );
+
+/** Texts of a recipe card: title, "Category · 70 min" and the photo description. */
+export const recipeCardText = (
+  recipe: {
+    title: string;
+    titleEs: string;
+    category: string;
+    minutes: number | null;
+    photoAlt: LocalizedText;
+  },
+  lang: Locale,
+  labels: { categories: Record<string, string>; minutes: string },
+) => ({
+  title: recipeTitle(recipe, lang),
+  subtitle: [
+    labels.categories[recipe.category] ?? recipe.category,
+    recipe.minutes ? labels.minutes.replace('{minutes}', String(recipe.minutes)) : '',
+  ]
+    .filter(Boolean)
+    .join(' · '),
+  alt: localize(recipe.photoAlt, lang),
+});
