@@ -1,0 +1,38 @@
+name: Release publish
+
+# Mondays at 12:30 (Madrid), half an hour after the API, through inzumer-ci: CI again on the
+# release PR, merge, tag, GitHub Release, backport to dev and the Pages deploy.
+# Set the repository variable RELEASE_AUTO_MERGE to 'false' to merge by hand instead.
+on:
+  schedule:
+    - cron: '30 10 * * 1'
+    - cron: '30 11 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+  actions: write
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  find:
+    uses: inzumer/inzumer-ci/.github/workflows/release-find.yml@v1
+
+  validate:
+    needs: find
+    if: needs.find.outputs.version != ''
+    uses: ./.github/workflows/ci.yml
+    with:
+      ref: release/${{ needs.find.outputs.version }}
+
+  merge:
+    needs: [find, validate]
+    uses: inzumer/inzumer-ci/.github/workflows/release-merge.yml@v1
+    with:
+      version: ${{ needs.find.outputs.version }}
+      development-branch: dev
+      deploy-workflow: pages.yml

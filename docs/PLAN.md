@@ -450,7 +450,7 @@ el plan premium sobre las cuentas de F10.
 ## 10. Cuentas y perfiles (fase final) — hecho
 
 > Implementado con una API propia en otro repositorio ([ADR 0004](adr/0004-accounts-api.md)):
-> [api-milimon](https://github.com/inzumer/api-milimon) (NestJS + PostgreSQL), login
+> [milimon-backend-nest](https://github.com/inzumer/milimon-backend-nest) (NestJS + PostgreSQL), login
 > con Google Identity Services y Facebook Login, sincronización offline-first, páginas `/login` y
 > `/account`, términos, privacidad con instrucciones de borrado. Configuración en
 > [ACCOUNTS.md](ACCOUNTS.md). (La primera versión con Supabase, ADR 0003, quedó reemplazada.)
@@ -516,7 +516,9 @@ en **Gestión del sitio → Sugerencias**, solo para editores y admins).
       cabeceras HTTP, escaneos externos, revisión de la API y aviso legal (RGPD/LSSI). Ver
       [01](./suggestions/01-deploy-y-seguridad.md).
 - [ ] **API en Render**: crear el servicio desde el Blueprint con el `DATABASE_URL` de Neon y
-      `BOOTSTRAP_ADMIN_EMAILS` con los emails de Milagros y del admin técnico.
+      `BOOTSTRAP_ADMIN_EMAILS` con los emails de Milagros y del admin técnico. **Es lo que falta para que
+      funcione el inicio de sesión con Google** (28/09: el dominio de la API en Render responde
+      `no-server`; la base en Neon ya está creada y las migraciones nuevas corren al arrancar).
 - [ ] **Google Cloud**: orígenes autorizados (`https://inzumer.github.io` hoy, el dominio propio después).
 - [ ] **Search Console y Bing Webmaster Tools**: verificar el sitio y enviar el sitemap.
 - [ ] **Google Tag Manager**: contenedor + `PUBLIC_GTM_ID` (activa el banner de cookies). Ver
@@ -558,9 +560,17 @@ en **Gestión del sitio → Sugerencias**, solo para editores y admins).
 **Diseño**
 
 - [x] **Paleta de la referencia**: escala **terracota** (`--color-accent-*`) para enlaces, acentos
-      y el zócalo de gestión; el amarillo queda para botones, marca y milicitos. Crema más cálido en
+      y el zócalo de gestión; los botones y destacados usan el color principal. Crema más cálido en
       las superficies y chocolate de la referencia en el modo oscuro. Contraste AA medido en los dos
       modos.
+- [x] **Naranja como color principal** (28/09): la escala `--color-primary-*` pasa del amarillo al
+      naranja de la referencia (`#F29A3E`) en botones, etiquetas, tarjetas destacadas y focos; también
+      el color del manifest y las imágenes para compartir. Auditoría a11y sin errores en 102 páginas.
+- [x] **Ilustraciones en naranja** (28/09): el logo, la estrella y el 404 se separan en dos capas
+      (`pnpm illustrations`): la figura sin el fondo amarillo y el fondo como SVG vectorial que toma
+      `--illustration-bg` (hoy el primario naranja), con el átomo `BrandIllustration`. Favicons,
+      milicitos e imágenes para compartir usan la versión ya compuesta en naranja. Cambiar el color
+      del fondo es cambiar esa variable (y volver a correr el script para las versiones compuestas).
 - [x] **Preferencias del menú**: solo idioma y modo oscuro, cada uno con una aclaración corta; la
       **moneda** pasó a **Configuración** en "Tu cuenta".
 - [ ] **Dirección visual** más fina y editorial (inicio tipo portada, cards con imagen,
@@ -570,30 +580,47 @@ en **Gestión del sitio → Sugerencias**, solo para editores y admins).
 **Técnico**
 
 - [x] Renombrar las carpetas locales (`milimon`, `api-milimon`).
-- [ ] **Repositorios con el prefijo `milimon-`** (detalle y orden en
-      [08](./suggestions/08-calidad-y-tests.md#repositorios-y-paquetes-decidido-2026-09-27)): `milimon` → `milimon-web` y `api-milimon` →
-      `milimon-backend`; los nuevos nacen con el prefijo (`milimon-e2e`, `milimon-emails`,
-      `milimon-cms`…). Al renombrar el front, GitHub redirige el repo pero **no** GitHub Pages: la
-      URL pasa a `/milimon-web`, así que hay que cambiar `BASE_PATH` y `SITE_URL` en el deploy,
-      el `CORS_ORIGIN` de la API y los enlaces ya compartidos (o hacerlo junto con el dominio propio,
-      que deja de depender del nombre del repo). Después, las carpetas locales y los remotes.
+- [ ] **Repositorios `milimon-<área>-<tecnología>`** (detalle en
+      [08](./suggestions/08-calidad-y-tests.md#repositorios-y-paquetes-decidido-2026-09-27)):
+  - [x] `api-milimon` → **`milimon-backend-nest`** (28/09): repo, paquete, servicio de Render y
+        emisor de los tokens.
+  - [ ] `milimon` → **`milimon-frontend-web`**: `BASE_PATH` ya sale del nombre del repo (hotfix #14);
+        falta fusionarlo a `main`, renombrar y lanzar el deploy de Pages.
+  - [ ] Carpetas locales y remotes con los nombres nuevos.
 - [x] `.gitattributes` en `ui-library` (finales de línea).
-- [ ] **Librería de componentes**: `Carousel` accesible y `MediaCard` (card con imagen, degradado y
-      acciones flotantes) en `@inzumer/ui-library`.
+- [x] **Cookies en un solo componente** (28/09): `CookieConsent` (modos `banner`, `modal` e
+      `inline`) en `@inzumer/ui-library` 2.0; el sitio usa 2.0.1: `ConsentBanner` en modo `banner`
+      (mismos ids de seguimiento) y `AnalyticsPreference` en modo `inline` en la página de
+      privacidad, con las necesarias siempre activas.
+- [x] **Librería de componentes**: `Carousel` accesible y `MediaCard` (card con imagen, degradado y
+      acciones flotantes) en `@inzumer/ui-library` 2.0. `MediaCard` pasa a llamarse `Showcase`
+      (badge arriba del título, fotos por CDN en Storybook).
 - [ ] **`milimon-e2e`**: tests e2e con Playwright y la auditoría a11y (hoy
       `scripts/a11y-audit.mjs`) y las revisiones de SEO (title, description, canonical, hreflang,
       JSON-LD, sitemap, robots, imágenes para compartir) y rendimiento (Lighthouse) en su propio
       repo, llamados desde las Actions de cada proyecto; lo genérico, en `inzumer-ci`.
       `scripts/og-image.mjs` no es un test: queda en el front como herramienta del build. Ver
       [08](./suggestions/08-calidad-y-tests.md).
-- [ ] **Releases automáticos** una o dos veces por semana, cerrados solos si no hay cambios
-      (versión por Conventional Commits, tag, GitHub Release y vuelta a `dev`). Diseño en
-      [08](./suggestions/08-calidad-y-tests.md#releases-automáticos-a-implementar).
-- [ ] **Un repo por paquete publicado de `@inzumer`** (hoy todos viven en el monorepo `ui-library`):
-      `inzumer-ui-lib` (`@inzumer/ui-library`), `inzumer-ui-tokens` (`@inzumer/tokens`),
-      `inzumer-prettier`, `inzumer-eslint` y `inzumer-tsconfig` (hoy privados; publicarlos permite
-      dejar de copiarlos en cada proyecto) e `inzumer-ci` con los workflows reutilizables de
-      GitHub Actions (lint, tests, build, e2e, release) que comparten todos los repos.
+- [x] **Releases automáticos**: el viernes al mediodía (Madrid) se arma el PR de release y el lunes
+      al mediodía se fusiona, con tag, GitHub Release, backport automático a `dev` y deploy; si no hay
+      cambios, se cierran solos. Los workflows son los reutilizables de
+      [`inzumer-ci`](https://github.com/inzumer/inzumer-ci) (`@v1`), compartidos con los demás repos.
+      Dependabot abre PRs los días 1 y 15. Ver
+      [08](./suggestions/08-calidad-y-tests.md#releases-automáticos).
+- [x] **Sitio de documentación**: [`inzumer/milimon-docs`](https://github.com/inzumer/milimon-docs),
+      publicado en https://inzumer.github.io/milimon-docs/ (Starlight): arquitectura, 9 flujos con
+      diagramas, guía de gestión, desarrollo, y el plan y las sugerencias sincronizados desde `docs/`.
+- [ ] Pasar la documentación a `docs.<dominio>` con el deploy oficial y enlazarla desde **Gestión del
+      sitio**. Ver [12](./suggestions/12-sitio-de-documentacion.md).
+- [ ] **Un repo `inzumer-<nombre>` por paquete, publicado como `@inzumer/<nombre>`** (hoy todos
+      viven en el monorepo `ui-library`):
+  - [x] `inzumer-tsconfig`, `inzumer-prettier` e `inzumer-eslint` creados (28/09, con su historia);
+        falta el secret `NPM_TOKEN` en cada uno para publicar la 1.0.0.
+  - [x] `inzumer-ci` con los workflows reutilizables (CI, release de paquetes y release semanal).
+  - [ ] `inzumer-ui-tokens` (`@inzumer/ui-tokens`) e `inzumer-ui-lib` (`@inzumer/ui-lib`), cuando
+        estén publicadas las configs; después, deprecar los nombres viejos en npm.
+  - Orden y detalle en
+    [08](./suggestions/08-calidad-y-tests.md#repositorios-y-paquetes-decidido-2026-09-27).
 
 ## 11. Fases
 
@@ -631,5 +658,6 @@ Flujo de ramas (gitflow, ver CLAUDE.md): cada fase se trabaja en `feature/*` des
 - Alcance: calculadora + administración del restaurante; sin RRHH, marketing ni comunicación.
 - Pesos por defecto, moneda configurable; `localStorage` hasta la fase de cuentas.
 - Cuentas con Google/Facebook en la fase final (F10).
-- Repositorios del proyecto con el prefijo `milimon-` (`milimon-web`, `milimon-backend`,
-  `milimon-e2e`, `milimon-emails`, `milimon-cms`…).
+- Repositorios con el nombre `milimon-<área>-<tecnología>` (`milimon-frontend-web`,
+  `milimon-backend-nest`, `milimon-e2e-playwright`, `milimon-emails-react`, `milimon-cms-keystatic`);
+  los paquetes compartidos, `inzumer-<nombre>` publicados como `@inzumer/<nombre>`.

@@ -14,12 +14,13 @@ export const ADMIN_DOCS = [
   { id: 'visual-direction', file: '09-direccion-visual' },
   { id: 'transactional-emails', file: '10-emails-transaccionales' },
   { id: 'photo-guide', file: '11-guia-de-fotografia' },
+  { id: 'docs-site', file: '12-sitio-de-documentacion' },
 ] as const;
 
 export type AdminDocId = (typeof ADMIN_DOCS)[number]['id'];
 
 /** Where links from those documents to the rest of `docs/` point (not published on the site). */
-export const DOCS_REPO_URL = 'https://github.com/inzumer/milimon/blob/dev/docs';
+export const DOCS_REPO_URL = 'https://github.com/inzumer/milimon-frontend-web/blob/dev/docs';
 
 /** Publishing agenda: kinds of pieces and their states (same values as the API). */
 export const AGENDA_KINDS = ['recipe', 'review', 'guide', 'article', 'social'] as const;

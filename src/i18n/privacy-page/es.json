@@ -21,7 +21,7 @@
     "your-choice": {
       "heading": "Cambiar tu decisión",
       "paragraphs": [
-        "Podés activar o desactivar la analítica en cualquier momento con este interruptor. Si la desactivás, dejamos de enviar datos desde ese momento."
+        "Podés activar o desactivar la analítica en cualquier momento acá abajo; las necesarias quedan siempre activas. Si desactivás la analítica, dejamos de enviar datos desde ese momento."
       ]
     },
     "accounts": {
@@ -41,6 +41,5 @@
       ]
     }
   },
-  "preference-label": "Permitir la analítica (Google Tag Manager y Google Analytics)",
   "analytics-disabled": "La analítica está desactivada en este sitio: no se carga ningún script de terceros."
 }

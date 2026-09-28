@@ -1,5 +1,6 @@
 export * from './agenda';
 export * from './analytics';
+export * from './consent';
 export * from './http';
 export * from './inline-scripts';
 export * from './interpolate';

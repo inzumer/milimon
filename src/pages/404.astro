@@ -1,8 +1,7 @@
 ---
-import { Image } from 'astro:assets';
 import { RichText } from '@inzumer/ui-library';
-import errorImage from '@assets/error.png';
 import { ButtonLink } from '@components';
+import BrandIllustration from '@components/atoms/BrandIllustration/brand-illustration.astro';
 import { getTranslations } from '@i18n';
 import PageLayout from '@layouts/page-layout.astro';
 import {
@@ -30,11 +29,10 @@ const title = getTranslations(DEFAULT_LOCALE, 'common')['not-found'].title;
       hidden={lang !== DEFAULT_LOCALE}
       class="flex flex-col items-center gap-4 py-12 text-center"
     >
-      <Image
-        src={errorImage}
+      <BrandIllustration
+        name="error"
         alt=""
         width={256}
-        height={256}
         loading="eager"
         class="size-48 sm:size-64"
       />

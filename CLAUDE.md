@@ -4,8 +4,13 @@ Guidance for Claude Code (and any other AI coding agent) working in this reposit
 
 ## Project
 
-**Milimon** (`milimon`): a bilingual (`/es`, `/en`) study manual and set of
+**Milimon** (`milimon-frontend-web`): a bilingual (`/es`, `/en`) study manual and set of
 calculators for food cost, waste (desechos) and cooking loss (mermas) in gastronomy.
+
+- Repository names: Milimon repos are `milimon-<area>-<technology>` (`milimon-frontend-web`,
+  `milimon-backend-nest`, `milimon-docs`…); shared packages live in `inzumer-<name>` repos and are
+  published as `@inzumer/<name>` (`@inzumer/ui-lib`, `@inzumer/ui-tokens`, `@inzumer/prettier`…).
+  Local folders use the repository name.
 
 - Master plan and decisions: [docs/PLAN.md](./docs/PLAN.md). Architecture decisions: [docs/adr](./docs/adr).
 - Content: the course material (`AyG- Manual.pdf`, `FORMULAS 2026.xlsx`) is only a reference for
@@ -96,7 +101,10 @@ Suggested scopes: `formulas`, `calculators`, `ui`, `i18n`, `theme`, `pages`, `de
 - `main`: production. Only receives `release/*` (and `hotfix/*`) merges, tagged `vX.Y.Z`.
 - `dev`: integration branch. Every feature is merged here with `--no-ff`.
 - `feature/<kebab-name>` from `dev` → back into `dev`. One phase (or part of one) per feature branch.
-- `release/<version>` from `dev` → `main` (tag) and back into `dev`.
+- `release/<version>` from `dev` → `main` (tag) and back into `dev`. **Automatic** (Madrid time): `release-prepare.yml` cuts
+  the release PR on Fridays at noon, `release-publish.yml` merges it on Mondays at 12:30 and
+  `release-finish.yml` tags, publishes the GitHub Release, backports to `dev` and deploys; with no
+  changes the release PRs are closed. Dependabot opens PRs on the 1st and 15th.
 - `hotfix/<kebab-name>` from `main` → `main` (tag) and `dev`.
 - Releases so far: v1.0.0 (F0–F10, accounts and history) and v1.1.0 (F9: components moved to
   ui-library). New work keeps going through `feature/*` → `dev` → `release/*`.

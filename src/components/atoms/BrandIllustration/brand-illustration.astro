@@ -1,0 +1,49 @@
+---
+import { Image } from 'astro:assets';
+import ErrorBackground from '@assets/illustrations/error-background.svg';
+import errorFigure from '@assets/illustrations/error-figure.webp';
+import LogoBackground from '@assets/illustrations/logo-background.svg';
+import logoFigure from '@assets/illustrations/logo-figure.webp';
+import StarBackground from '@assets/illustrations/star-background.svg';
+import starFigure from '@assets/illustrations/star-figure.webp';
+
+/**
+ * A brand illustration (Milagros' logo, the milicitos star or the kitchen-fire error) in two
+ * layers: the background shape is an SVG filled with `--illustration-bg` (the primary color by
+ * default, override it on any parent) and the figure is an optimized image with a transparent
+ * background. Generated from the PNG originals by `scripts/illustrations.mjs`.
+ */
+interface Props {
+  name: 'logo' | 'star' | 'error';
+  /** Rendered width in CSS pixels (the image is square). */
+  width: number;
+  /** Describe the figure, or `''` when it only decorates. */
+  alt: string;
+  loading?: 'eager' | 'lazy';
+  fetchpriority?: 'high' | 'low' | 'auto';
+  class?: string;
+}
+
+const ILLUSTRATIONS = {
+  logo: { Background: LogoBackground, figure: logoFigure },
+  star: { Background: StarBackground, figure: starFigure },
+  error: { Background: ErrorBackground, figure: errorFigure },
+} as const;
+
+const { name, width, alt, loading = 'lazy', fetchpriority, class: className } = Astro.props;
+const { Background, figure } = ILLUSTRATIONS[name];
+---
+
+<span class:list={['relative inline-block shrink-0', className]}>
+  <Background aria-hidden="true" class="absolute inset-0 size-full text-[var(--illustration-bg)]" />
+  <Image
+    src={figure}
+    alt={alt}
+    width={width}
+    height={width}
+    densities={[1, 2]}
+    loading={loading}
+    fetchpriority={fetchpriority}
+    class="relative block size-full"
+  />
+</span>

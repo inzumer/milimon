@@ -21,7 +21,7 @@
     "your-choice": {
       "heading": "Changing your choice",
       "paragraphs": [
-        "You can turn analytics on or off at any time with this switch. If you turn it off, we stop sending data from that moment on."
+        "You can turn analytics on or off at any time below; the necessary cookies are always on. If you turn analytics off, we stop sending data from that moment on."
       ]
     },
     "accounts": {
@@ -41,6 +41,5 @@
       ]
     }
   },
-  "preference-label": "Allow analytics (Google Tag Manager and Google Analytics)",
   "analytics-disabled": "Analytics is turned off on this site: no third-party script is loaded."
 }

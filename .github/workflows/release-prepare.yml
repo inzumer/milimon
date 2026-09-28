@@ -1,0 +1,39 @@
+name: Release prepare
+
+# Fridays at noon (Madrid), through inzumer-ci: if dev has changes since the last tag, cut
+# release/X.Y.Z (version from Conventional Commits) and open the PR to main, then run CI on it.
+# With no changes, stale release PRs are closed.
+on:
+  schedule:
+    # UTC only: 10:00 is noon in summer, 11:00 in winter; inzumer-ci keeps the right one.
+    - cron: '0 10 * * 5'
+    - cron: '0 11 * * 5'
+  workflow_dispatch:
+    inputs:
+      bump:
+        description: Version bump (auto = from Conventional Commits)
+        type: choice
+        options: [auto, patch, minor, major]
+        default: auto
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  prepare:
+    uses: inzumer/inzumer-ci/.github/workflows/release-prepare.yml@v1
+    with:
+      development-branch: dev
+      bump: ${{ inputs.bump || 'auto' }}
+
+  validate:
+    needs: prepare
+    if: needs.prepare.outputs.version != ''
+    uses: ./.github/workflows/ci.yml
+    with:
+      ref: release/${{ needs.prepare.outputs.version }}
