@@ -30,6 +30,7 @@
     "illustrations": "node scripts/illustrations.mjs"
   },
   "dependencies": {
+    "@astrojs/markdoc": "^2.0.9",
     "@astrojs/react": "^7.0.0",
     "@astrojs/rss": "^4.0.19",
     "@astrojs/sitemap": "^3.7.4",

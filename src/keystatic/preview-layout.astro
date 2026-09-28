@@ -1,0 +1,59 @@
+---
+import '@styles/global.css';
+import { RichText } from '@inzumer/ui-library';
+import { getTranslations } from '@i18n';
+import type { Locale } from '@utils';
+
+interface Props {
+  lang: Locale;
+  title: string;
+  versionUrl: string;
+  draft: boolean;
+}
+
+const { lang, title, versionUrl, draft } = Astro.props;
+const text = getTranslations(lang, 'recipe-page').preview;
+---
+
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Preview · {title}</title>
+  </head>
+  <body class="min-h-dvh bg-[var(--surface-primary)] p-4 antialiased" data-version-url={versionUrl}>
+    <nav class="mb-4 flex items-center gap-3">
+      {['es', 'en'].map((code) => (
+        <a
+          href={`?lang=${code}`}
+          aria-current={code === lang ? 'page' : undefined}
+          class="rounded-full px-3 py-1 text-sm font-bold aria-[current=page]:bg-[var(--btn-primary-bg)]"
+        >
+          {code.toUpperCase()}
+        </a>
+      ))}
+      <RichText as="span" variant="s4" className="text-[var(--text-secondary)]">
+        {text.saved}
+      </RichText>
+    </nav>
+    {draft && (
+      <RichText variant="s3" bold className="mb-4 rounded-lg bg-[var(--surface-secondary)] p-2">
+        {text.draft}
+      </RichText>
+    )}
+    <slot />
+    <script>
+      const url = document.body.dataset.versionUrl ?? '';
+      let version = '';
+      setInterval(async () => {
+        const next = await fetch(url)
+          .then((res) => res.text())
+          .catch(() => version);
+        if (version && next !== version) {
+          location.reload();
+        }
+        version = next;
+      }, 1500);
+    </script>
+  </body>
+</html>

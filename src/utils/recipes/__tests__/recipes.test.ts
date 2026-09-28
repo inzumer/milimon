@@ -13,10 +13,9 @@ describe('recipes', () => {
   });
 
   it('should give the title in each language', () => {
-    const recipe = { title: 'Budín de limón', titleEn: 'Lemon loaf' };
+    const recipe = { title: 'Lemon loaf', titleEs: 'Budín de limón' };
     expect(recipeTitle(recipe, 'es')).toBe('Budín de limón');
     expect(recipeTitle(recipe, 'en')).toBe('Lemon loaf');
-    expect(recipeTitle({ ...recipe, titleEn: '' }, 'en')).toBe('Budín de limón');
   });
 
   it('should leave drafts out and list featured recipes first, then by title', () => {

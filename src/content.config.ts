@@ -17,7 +17,7 @@ const recipes = defineCollection({
   schema: ({ image }) =>
     z.object({
       title: z.string().min(1),
-      titleEn: z.string().default(''),
+      titleEs: z.string().min(1),
       summary: localized,
       category: z.enum(['sweet', 'savory', 'bread', 'drinks']),
       minutes: z.number().int().positive().nullable(),
@@ -35,4 +35,23 @@ const recipes = defineCollection({
     }),
 });
 
-export const collections = { suggestions, recipes };
+/** Blog articles edited with Keystatic: `<slug>/index.yaml` plus `<slug>/content/{es,en}.mdoc`. */
+const blog = defineCollection({
+  loader: glob({ pattern: '*/index.yaml', base: './src/content/blog' }),
+  schema: ({ image }) =>
+    z.object({
+      title: z.string().min(1),
+      titleEs: z.string().min(1),
+      description: localized,
+      date: z.coerce.date(),
+      cover: image().nullable().optional(),
+      coverAlt: optionalLocalized.default({ es: '', en: '' }),
+      draft: z.boolean().default(true),
+    }),
+});
+
+const blogContent = defineCollection({
+  loader: glob({ pattern: '*/content/*.mdoc', base: './src/content/blog' }),
+});
+
+export const collections = { suggestions, recipes, blog, blogContent };

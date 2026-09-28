@@ -1,0 +1,20 @@
+{
+  "ingredients": "Ingredients",
+  "steps": "Step by step",
+  "step": "Step {n}",
+  "minutes": "{minutes} min",
+  "servings": "{servings} servings",
+  "categories": {
+    "sweet": "Sweet",
+    "savory": "Savory",
+    "bread": "Bakery",
+    "drinks": "Drinks"
+  },
+  "preview": {
+    "cover": "Cover",
+    "page": "Page",
+    "draft": "Draft: not published yet",
+    "pick": "Open a recipe or an article in the panel to see how it looks.",
+    "saved": "Updates when you save."
+  }
+}

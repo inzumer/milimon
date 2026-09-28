@@ -1,0 +1,20 @@
+{
+  "ingredients": "Ingredientes",
+  "steps": "Paso a paso",
+  "step": "Paso {n}",
+  "minutes": "{minutes} min",
+  "servings": "{servings} porciones",
+  "categories": {
+    "sweet": "Dulce",
+    "savory": "Salado",
+    "bread": "Panadería",
+    "drinks": "Bebidas"
+  },
+  "preview": {
+    "cover": "Portada",
+    "page": "Ficha",
+    "draft": "Borrador: todavía no se publica",
+    "pick": "Abrí una receta o un artículo en el panel para ver cómo va quedando.",
+    "saved": "Se actualiza al guardar."
+  }
+}

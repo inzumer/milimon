@@ -10,26 +10,78 @@ const localized = (label: string, { multiline = false, required = true } = {}) =
     { label, layout: [6, 6] },
   );
 
+/** Rich text: section titles (h2/h3), lists, quotes, links and images anywhere. */
+const article = (label: string) =>
+  fields.markdoc({
+    label,
+    options: {
+      heading: [2, 3],
+      bold: true,
+      italic: true,
+      strikethrough: false,
+      code: false,
+      codeBlock: false,
+      table: false,
+      image: { directory: 'src/assets/blog', publicPath: '../../../../assets/blog/' },
+    },
+  });
+
 export default config({
   storage: { kind: 'local' },
   ui: { brand: { name: 'Milimon' } },
   collections: {
+    blog: collection({
+      label: 'Blog',
+      slugField: 'title',
+      path: 'src/content/blog/*/',
+      format: { data: 'yaml' },
+      columns: ['titleEs', 'date', 'draft'],
+      schema: {
+        title: fields.slug({
+          name: {
+            label: 'Título en inglés',
+            description: 'Arma la dirección del artículo (igual en los dos idiomas).',
+            validation: { isRequired: true },
+          },
+          slug: { label: 'Dirección', description: 'Se completa sola; ej.: first-review.' },
+        }),
+        titleEs: fields.text({ label: 'Título en español', validation: { isRequired: true } }),
+        description: localized('Bajada (para la lista y los buscadores)', { multiline: true }),
+        date: fields.date({ label: 'Fecha', defaultValue: { kind: 'today' } }),
+        cover: fields.image({
+          label: 'Imagen de portada (opcional)',
+          directory: 'src/assets/blog',
+          publicPath: '../../../assets/blog/',
+        }),
+        coverAlt: localized('Descripción de la portada', { required: false }),
+        content: fields.object(
+          { es: article('Texto en español'), en: article('Text in English') },
+          { label: 'Artículo' },
+        ),
+        draft: fields.checkbox({
+          label: 'Borrador',
+          description: 'Los borradores no se publican.',
+          defaultValue: true,
+        }),
+      },
+    }),
     recipes: collection({
       label: 'Recetas',
       slugField: 'title',
       path: 'src/content/recipes/*',
       format: { data: 'yaml' },
-      columns: ['title', 'category', 'draft'],
+      columns: ['titleEs', 'category', 'draft'],
       entryLayout: 'form',
       schema: {
         title: fields.slug({
-          name: { label: 'Título en español', validation: { isRequired: true } },
-          slug: {
-            label: 'Dirección',
-            description: 'En inglés y con guiones, igual en los dos idiomas (ej.: lemon-loaf).',
+          name: {
+            label: 'Título en inglés',
+            description: 'Arma la dirección de la receta (igual en los dos idiomas).',
+            validation: { isRequired: true },
           },
+          slug: { label: 'Dirección', description: 'Se completa sola; ej.: lemon-loaf.' },
         }),
-        titleEn: fields.text({ label: 'Título en inglés' }),
+        titleEs: fields.text({ label: 'Título en español', validation: { isRequired: true } }),
         summary: localized('Resumen (una o dos frases)', { multiline: true }),
         category: fields.select({
           label: 'Categoría',

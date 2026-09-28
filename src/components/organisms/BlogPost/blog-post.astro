@@ -1,0 +1,45 @@
+---
+import { Image } from 'astro:assets';
+import { getEntry, render, type CollectionEntry } from 'astro:content';
+import { RichText } from '@inzumer/ui-library';
+import { localize, type Locale } from '@utils';
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+  lang: Locale;
+}
+
+/** A CMS blog article: header, optional cover and the rich text of `lang` (Spanish fallback). */
+const { post, lang } = Astro.props;
+const { data } = post;
+const body =
+  (await getEntry('blogContent', `${post.id}/content/${lang}`)) ??
+  (await getEntry('blogContent', `${post.id}/content/es`));
+const { Content } = body ? await render(body) : { Content: null };
+const date = new Intl.DateTimeFormat(lang === 'es' ? 'es-AR' : 'en-US', { dateStyle: 'long' });
+---
+
+<article class="flex flex-col gap-6">
+  <header class="flex flex-col gap-3">
+    <RichText variant="h1" bold className="font-display text-5xl">
+      {lang === 'en' ? data.title : data.titleEs}
+    </RichText>
+    <RichText variant="p3" className="text-[var(--text-secondary)]">
+      {date.format(data.date)}
+    </RichText>
+    <RichText variant="p1" className="text-[var(--text-secondary)]">
+      {localize(data.description, lang)}
+    </RichText>
+  </header>
+  {data.cover && (
+    <Image
+      src={data.cover}
+      alt={localize(data.coverAlt, lang)}
+      width={1200}
+      class="w-full rounded-2xl object-cover"
+    />
+  )}
+  <div class="flex flex-col gap-4 [&_img]:rounded-2xl [&_li]:ms-5 [&_ol]:list-decimal [&_ul]:list-disc">
+    {Content && <Content />}
+  </div>
+</article>

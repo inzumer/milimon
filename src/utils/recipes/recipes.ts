@@ -10,9 +10,9 @@ export interface LocalizedText {
 export const localize = (text: LocalizedText, lang: Locale): string =>
   (lang === 'en' && text.en.trim()) || text.es;
 
-/** The recipe title in `lang` (Spanish title plus optional English one). */
-export const recipeTitle = (recipe: { title: string; titleEn: string }, lang: Locale): string =>
-  localize({ es: recipe.title, en: recipe.titleEn }, lang);
+/** The recipe title in `lang` (`title` is the English one, which sets the address). */
+export const recipeTitle = (recipe: { title: string; titleEs: string }, lang: Locale): string =>
+  lang === 'en' ? recipe.title : recipe.titleEs;
 
 /** Published recipes (drafts left out), featured first, then by title. */
 export const publishedRecipes = <
