@@ -12,6 +12,11 @@ on:
         type: string
         required: true
 
+permissions:
+  contents: read
+  # Coverage comment on PRs (inzumer-ci node-ci).
+  pull-requests: write
+
 concurrency:
   group: ci-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
@@ -21,8 +26,9 @@ jobs:
     uses: inzumer/inzumer-ci/.github/workflows/node-ci.yml@v1
     with:
       ref: ${{ inputs.ref || github.ref }}
+      audit-level: moderate
+      coverage-summary: coverage/coverage-summary.json
       commands: |
-        pnpm audit --audit-level moderate
         pnpm typecheck
         pnpm lint
         pnpm format:check

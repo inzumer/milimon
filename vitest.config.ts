@@ -9,7 +9,7 @@ export default getViteConfig({
     include: ['src/**/*.test.{ts,tsx}'],
     coverage: {
       provider: 'v8',
-      reporter: ['text', 'lcov'],
+      reporter: ['text', 'lcov', 'json-summary'],
       include: ['src/**/*.{ts,tsx}'],
       exclude: ['src/test/**', 'src/i18n/**', 'src/**/index.ts', 'src/**/*.d.ts', 'src/env.d.ts'],
       thresholds: {
