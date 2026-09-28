@@ -515,11 +515,11 @@ en **Gestión del sitio → Sugerencias**, solo para editores y admins).
 - [ ] **Deploy oficial con dominio propio** (Cloudflare Pages o similar) y **auditoría de seguridad**:
       cabeceras HTTP, escaneos externos, revisión de la API y aviso legal (RGPD/LSSI). Ver
       [01](./suggestions/01-deploy-y-seguridad.md).
-- [ ] **API en Render**: crear el servicio desde el Blueprint con el `DATABASE_URL` de Neon y
-      `BOOTSTRAP_ADMIN_EMAILS` con los emails de Milagros y del admin técnico. **Es lo que falta para que
-      funcione el inicio de sesión con Google** (28/09: el dominio de la API en Render responde
-      `no-server`; la base en Neon ya está creada y las migraciones nuevas corren al arrancar).
-- [ ] **Google Cloud**: orígenes autorizados (`https://inzumer.github.io` hoy, el dominio propio después).
+- [x] **API en Render** (28/09): servicio `milimon-backend-nest` desde el Blueprint
+      `milimon-db-blueprint`, base Neon `milimon-db`, API 1.2.0. Keep-alive diurno a
+      `/health/live` (API #17).
+- [x] **Google Cloud** (28/09): origen autorizado `https://inzumer.github.io` (el dominio propio,
+      después: ver "Moving to the official domain" en `docs/DEPLOY.md` de la API).
 - [ ] **Search Console y Bing Webmaster Tools**: verificar el sitio y enviar el sitemap.
 - [ ] **Google Tag Manager**: contenedor + `PUBLIC_GTM_ID` (activa el banner de cookies). Ver
       [04](./suggestions/04-medicion-y-cuentas.md).
@@ -612,13 +612,13 @@ en **Gestión del sitio → Sugerencias**, solo para editores y admins).
       diagramas, guía de gestión, desarrollo, y el plan y las sugerencias sincronizados desde `docs/`.
 - [ ] Pasar la documentación a `docs.<dominio>` con el deploy oficial y enlazarla desde **Gestión del
       sitio**. Ver [12](./suggestions/12-sitio-de-documentacion.md).
-- [ ] **Un repo `inzumer-<nombre>` por paquete, publicado como `@inzumer/<nombre>`** (hoy todos
-      viven en el monorepo `ui-library`):
-  - [x] `inzumer-tsconfig`, `inzumer-prettier` e `inzumer-eslint` creados (28/09, con su historia);
-        falta el secret `NPM_TOKEN` en cada uno para publicar la 1.0.0.
+- [x] **Un repo `inzumer-<nombre>` por paquete, publicado como `@inzumer/<nombre>`** (28/09):
+  - [x] `inzumer-tsconfig`, `inzumer-prettier` e `inzumer-eslint` (1.0.0 en npm).
+  - [x] `inzumer-tokens` separado de la lib (mantiene `@inzumer/tokens`) e `inzumer-ui-library`
+        solo con los componentes (mantiene `@inzumer/ui-library`).
   - [x] `inzumer-ci` con los workflows reutilizables (CI, release de paquetes y release semanal).
-  - [ ] `inzumer-ui-tokens` (`@inzumer/ui-tokens`) e `inzumer-ui-lib` (`@inzumer/ui-lib`), cuando
-        estén publicadas las configs; después, deprecar los nombres viejos en npm.
+  - [ ] Publicación desde Actions con trusted publishing de npm (inzumer-ci #2 y configurar cada
+        paquete en npmjs.com).
   - Orden y detalle en
     [08](./suggestions/08-calidad-y-tests.md#repositorios-y-paquetes-decidido-2026-09-27).
 
