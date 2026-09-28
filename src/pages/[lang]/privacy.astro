@@ -44,7 +44,7 @@ const analyticsEnabled = isContainerId(import.meta.env.PUBLIC_GTM_ID);
         ))}
         {key === 'your-choice' &&
           (analyticsEnabled ? (
-            <AnalyticsPreference client:visible label={page['preference-label']} />
+            <AnalyticsPreference client:visible labels={common.consent} />
           ) : (
             <RichText className="text-[var(--text-secondary)]">
               {page['analytics-disabled']}

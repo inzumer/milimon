@@ -588,11 +588,13 @@ en **Gestión del sitio → Sugerencias**, solo para editores y admins).
         falta fusionarlo a `main`, renombrar y lanzar el deploy de Pages.
   - [ ] Carpetas locales y remotes con los nombres nuevos.
 - [x] `.gitattributes` en `ui-library` (finales de línea).
-- [ ] **Cookies en un solo componente**: `CookieConsent` (modos `banner`, `modal` e `inline`) en
-      `@inzumer/ui-library` 2.0.0 ([ui-library #29](https://github.com/inzumer/ui-library/pull/29)).
-      Cuando se publique, migrar `ConsentBanner` y `AnalyticsPreference` del sitio.
-- [ ] **Librería de componentes**: `Carousel` accesible y `MediaCard` (card con imagen, degradado y
-      acciones flotantes) en `@inzumer/ui-library`.
+- [x] **Cookies en un solo componente** (28/09): `CookieConsent` (modos `banner`, `modal` e
+      `inline`) en `@inzumer/ui-library` 2.0; el sitio usa 2.0.1: `ConsentBanner` en modo `banner`
+      (mismos ids de seguimiento) y `AnalyticsPreference` en modo `inline` en la página de
+      privacidad, con las necesarias siempre activas.
+- [x] **Librería de componentes**: `Carousel` accesible y `MediaCard` (card con imagen, degradado y
+      acciones flotantes) en `@inzumer/ui-library` 2.0. `MediaCard` pasa a llamarse `Showcase`
+      (badge arriba del título, fotos por CDN en Storybook).
 - [ ] **`milimon-e2e`**: tests e2e con Playwright y la auditoría a11y (hoy
       `scripts/a11y-audit.mjs`) y las revisiones de SEO (title, description, canonical, hreflang,
       JSON-LD, sitemap, robots, imágenes para compartir) y rendimiento (Lighthouse) en su propio
