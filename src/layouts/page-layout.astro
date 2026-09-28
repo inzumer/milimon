@@ -22,6 +22,7 @@ interface Props {
   description?: string | undefined;
   noindex?: boolean;
   ogSection?: OgSection;
+  /** Parents between Home (added here) and the current page; omit for no breadcrumbs. */
   breadcrumbs?: BreadcrumbTrailItem[];
   structuredData?: StructuredData[];
   article?: { publishedTime: string; authorUrl: string };
@@ -43,9 +44,13 @@ const pathname = canonicalPath(Astro.url.pathname);
 const shareUrl = new URL(pathname, Astro.site ?? Astro.url).href;
 const shareTitle = title ? `${title} · ${common['app-name']}` : common['app-name'];
 const breadcrumbLabel = getTranslations(lang, 'formula-page').breadcrumbs.label;
+const trail = breadcrumbs && [
+  { label: common.nav.home, href: localizedPath(lang, 'home') },
+  ...breadcrumbs,
+];
 const schemas = [
-  ...(breadcrumbs && title && !noindex
-    ? [breadcrumbSchema(Astro.site ?? Astro.url, breadcrumbs, { label: title, url: shareUrl })]
+  ...(trail && title && !noindex
+    ? [breadcrumbSchema(Astro.site ?? Astro.url, trail, { label: title, url: shareUrl })]
     : []),
   ...structuredData,
 ];
@@ -73,10 +78,10 @@ const schemas = [
       tabindex="-1"
       class="mx-auto w-full max-w-layout flex-1 px-4 py-8 focus:outline-none"
     >
-      {breadcrumbs && title && (
+      {trail && title && (
         <Breadcrumbs
           aria-label={breadcrumbLabel}
-          items={breadcrumbs.map(({ label, href }) => ({ label, href }))}
+          items={trail.map(({ label, href }) => ({ label, href }))}
           current={title}
           className="mb-6"
         />

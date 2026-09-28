@@ -1,0 +1,24 @@
+---
+import { RichText } from '@inzumer/ui-library';
+
+interface Props {
+  title: string;
+  intro?: string | undefined;
+  class?: string;
+}
+
+/** Page title (h1) with an optional intro; extra content goes in the slot. */
+const { title, intro, class: className } = Astro.props;
+---
+
+<header class:list={['flex flex-col gap-3', className]}>
+  <RichText variant="h1" bold className="font-display text-5xl">
+    {title}
+  </RichText>
+  {intro && (
+    <RichText variant="p1" className="max-w-2xl text-[var(--text-secondary)]">
+      {intro}
+    </RichText>
+  )}
+  <slot />
+</header>

@@ -1,18 +1,15 @@
 ---
-import { RichText } from '@inzumer/ui-library';
 import { HistoryList } from '@components';
+import PageHeader from '@components/molecules/PageHeader/page-header.astro';
 import { getFormulaTranslation, getTranslations } from '@i18n';
 import PageLayout from '@layouts/page-layout.astro';
 import { readAccountConfig } from '@services';
-import { LOCALES, localizedPath, toLocale } from '@utils';
+import { localePaths, localizedPath, toLocale } from '@utils';
 import { FORMULA_IDS } from '@utils/formulas';
 
-export function getStaticPaths() {
-  return LOCALES.map((lang) => ({ params: { lang } }));
-}
+export const getStaticPaths = localePaths;
 
 const lang = toLocale(Astro.params.lang);
-const common = getTranslations(lang, 'common');
 const page = getTranslations(lang, 'history-page');
 const ui = getTranslations(lang, 'calculator');
 const formulas = Object.fromEntries(
@@ -30,16 +27,9 @@ const accountHref = readAccountConfig(import.meta.env) ? localizedPath(lang, 'lo
   title={page.title}
   description={page.description}
   noindex
-  breadcrumbs={[{ label: common.nav.home, href: localizedPath(lang, 'home') }]}
+  breadcrumbs={[]}
 >
-  <header class="mb-8 flex flex-col gap-3">
-    <RichText variant="h1" bold className="font-display text-5xl">
-      {page.title}
-    </RichText>
-    <RichText variant="p1" className="max-w-2xl text-[var(--text-secondary)]">
-      {page.description}
-    </RichText>
-  </header>
+  <PageHeader title={page.title} intro={page.description} class="mb-8" />
   <HistoryList
     client:load
     lang={lang}

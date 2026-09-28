@@ -1,5 +1,6 @@
 import { Button, RichText } from '@inzumer/ui-library';
 import { ButtonLink } from '@components/atoms/ButtonLink';
+import { Notice } from '@components/atoms/Notice';
 import type { AdminAccess } from '@hooks';
 import { trackingId } from '@utils';
 
@@ -59,9 +60,5 @@ export const AdminAccessNotice = ({
       </div>
     );
   }
-  return (
-    <RichText className="rounded-lg bg-[var(--surface-secondary)] p-4">
-      {access.kind === 'unavailable' ? labels.unavailable : labels.forbidden}
-    </RichText>
-  );
+  return <Notice>{access.kind === 'unavailable' ? labels.unavailable : labels.forbidden}</Notice>;
 };

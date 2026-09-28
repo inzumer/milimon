@@ -12,7 +12,6 @@ interface Props {
 }
 
 const { lang, section } = Astro.props;
-const common = getTranslations(lang, 'common');
 const page = getTranslations(lang, 'coming-soon');
 const text = page[section];
 ---
@@ -23,7 +22,7 @@ const text = page[section];
   title={text.title}
   description={text.description}
   noindex
-  breadcrumbs={[{ label: common.nav.home, href: localizedPath(lang, 'home') }]}
+  breadcrumbs={[]}
 >
   <section class="flex flex-col items-center gap-4 py-6 text-center">
     <BrandIllustration

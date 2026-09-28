@@ -1,9 +1,9 @@
 import rss from '@astrojs/rss';
 import type { APIRoute } from 'astro';
 import { blogFeedItems, getTranslations } from '@i18n';
-import { LOCALES, localizedPath, toLocale } from '@utils';
+import { localePaths, localizedPath, toLocale } from '@utils';
 
-export const getStaticPaths = () => LOCALES.map((lang) => ({ params: { lang } }));
+export const getStaticPaths = localePaths;
 
 export const GET: APIRoute = ({ params, site, url }) => {
   const lang = toLocale(params['lang']);

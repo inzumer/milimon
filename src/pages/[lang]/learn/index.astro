@@ -1,16 +1,13 @@
 ---
-import { RichText } from '@inzumer/ui-library';
 import { FeatureCard } from '@components';
+import PageHeader from '@components/molecules/PageHeader/page-header.astro';
 import { getLearnTopic, getTranslations, LEARN_TOPIC_IDS } from '@i18n';
 import PageLayout from '@layouts/page-layout.astro';
-import { LOCALES, localizedPath, toLocale, trackingId } from '@utils';
+import { localePaths, localizedPath, toLocale, trackingId } from '@utils';
 
-export function getStaticPaths() {
-  return LOCALES.map((lang) => ({ params: { lang } }));
-}
+export const getStaticPaths = localePaths;
 
 const lang = toLocale(Astro.params.lang);
-const common = getTranslations(lang, 'common');
 const page = getTranslations(lang, 'learn-page');
 ---
 
@@ -19,16 +16,9 @@ const page = getTranslations(lang, 'learn-page');
   lang={lang}
   title={page.index.title}
   description={page.index.intro}
-  breadcrumbs={[{ label: common.nav.home, href: localizedPath(lang, 'home') }]}
+  breadcrumbs={[]}
 >
-  <header class="mb-10 flex flex-col gap-3">
-    <RichText variant="h1" bold className="font-display text-5xl">
-      {page.index.title}
-    </RichText>
-    <RichText variant="p1" className="max-w-2xl text-[var(--text-secondary)]">
-      {page.index.intro}
-    </RichText>
-  </header>
+  <PageHeader title={page.index.title} intro={page.index.intro} class="mb-10" />
   <ol class="grid gap-5 lg:grid-cols-2">
     {LEARN_TOPIC_IDS.map((id) => {
       const topic = getLearnTopic(lang, id);

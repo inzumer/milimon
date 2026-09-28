@@ -4,11 +4,9 @@ import { ButtonLink, FeatureCard } from '@components';
 import BrandIllustration from '@components/atoms/BrandIllustration/brand-illustration.astro';
 import { BLOG_ARTICLE_IDS, getBlogArticle, getTranslations } from '@i18n';
 import PageLayout from '@layouts/page-layout.astro';
-import { LOCALES, localizedPath, toLocale, trackingId, websiteSchema } from '@utils';
+import { localePaths, localizedPath, toLocale, trackingId, websiteSchema } from '@utils';
 
-export function getStaticPaths() {
-  return LOCALES.map((lang) => ({ params: { lang } }));
-}
+export const getStaticPaths = localePaths;
 
 const lang = toLocale(Astro.params.lang);
 const common = getTranslations(lang, 'common');

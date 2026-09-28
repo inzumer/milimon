@@ -1,35 +1,15 @@
 ---
-import { RichText } from '@inzumer/ui-library';
 import { AdminPanel } from '@components';
 import { getTranslations } from '@i18n';
-import PageLayout from '@layouts/page-layout.astro';
-import { LOCALES, localizedPath, toLocale } from '@utils';
+import PanelPage from '@layouts/panel-page.astro';
+import { localePaths, localizedPath, toLocale } from '@utils';
 
-export function getStaticPaths() {
-  return LOCALES.map((lang) => ({ params: { lang } }));
-}
+export const getStaticPaths = localePaths;
 
 const lang = toLocale(Astro.params.lang);
-const common = getTranslations(lang, 'common');
 const page = getTranslations(lang, 'admin-page');
 ---
 
-<PageLayout
-  lang={lang}
-  title={page.title}
-  description={page.description}
-  noindex
-  breadcrumbs={[{ label: common.nav.home, href: localizedPath(lang, 'home') }]}
->
-  <div class="flex flex-col gap-8">
-    <header class="flex flex-col gap-3">
-      <RichText variant="h1" bold className="font-display text-5xl">
-        {page.title}
-      </RichText>
-      <RichText variant="p1" className="text-[var(--text-secondary)]">
-        {page.description}
-      </RichText>
-    </header>
-    <AdminPanel client:load lang={lang} labels={page} loginHref={localizedPath(lang, 'login')} />
-  </div>
-</PageLayout>
+<PanelPage lang={lang} title={page.title} description={page.description}>
+  <AdminPanel client:load lang={lang} labels={page} loginHref={localizedPath(lang, 'login')} />
+</PanelPage>

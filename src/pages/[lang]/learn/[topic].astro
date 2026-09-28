@@ -1,6 +1,7 @@
 ---
 import { RichText } from '@inzumer/ui-library';
 import { FeatureCard } from '@components';
+import PageHeader from '@components/molecules/PageHeader/page-header.astro';
 import {
   adjacentTopics,
   getFormulaTranslation,
@@ -11,11 +12,9 @@ import {
   type LearnTopicId,
 } from '@i18n';
 import PageLayout from '@layouts/page-layout.astro';
-import { LOCALES, localizedPath, toLocale, trackingId } from '@utils';
+import { localeIdPaths, localizedPath, toLocale, trackingId } from '@utils';
 
-export function getStaticPaths() {
-  return LOCALES.flatMap((lang) => LEARN_TOPIC_IDS.map((topic) => ({ params: { lang, topic } })));
-}
+export const getStaticPaths = localeIdPaths('topic', LEARN_TOPIC_IDS);
 
 const lang = toLocale(Astro.params.lang);
 const id = Astro.params.topic as LearnTopicId;
@@ -32,20 +31,10 @@ const { previous, next } = adjacentTopics(id);
   lang={lang}
   title={topic.title}
   description={topic.summary}
-  breadcrumbs={[
-    { label: common.nav.home, href: localizedPath(lang, 'home') },
-    { label: common.nav.learn, href: localizedPath(lang, 'learn') },
-  ]}
+  breadcrumbs={[{ label: common.nav.learn, href: localizedPath(lang, 'learn') }]}
 >
   <article class="flex flex-col gap-10">
-    <header class="flex flex-col gap-3">
-      <RichText variant="h1" bold className="font-display text-5xl">
-        {topic.title}
-      </RichText>
-      <RichText variant="p1" className="max-w-2xl text-[var(--text-secondary)]">
-        {topic.summary}
-      </RichText>
-    </header>
+    <PageHeader title={topic.title} intro={topic.summary} />
 
     {topic.sections.map((section, index) => (
       <section aria-labelledby={`section-${index}`} class="flex max-w-3xl flex-col gap-3">
