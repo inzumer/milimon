@@ -65,7 +65,23 @@ Contra el build (`astro preview`) y en mobile y escritorio:
 - Orden sugerido: `inzumer-ci` y las configs primero (no rompen nada), después tokens y la
   librería (cambia de dónde publica el release), y por último los repos de Milimon con el dominio.
 
-## Releases automáticos (a implementar)
+## Releases automáticos
+
+**Estado: implementado (2026-09-28)** en `milimon` y `api-milimon`: `.github/workflows/release.yml`,
+`release-finish.yml` y `.github/scripts/release-plan.mjs` (con tests en `node --test`). La API
+corre martes y viernes a las 07:00 UTC y el sitio a las 09:00 UTC. Se puede lanzar a mano desde
+**Actions → Release → Run workflow**, eligiendo el tipo de versión.
+
+**Configuración de cada repo** (una sola vez, en GitHub):
+
+- **Settings → Actions → General → Workflow permissions**: "Read and write permissions" y "Allow
+  GitHub Actions to create and approve pull requests".
+- **Settings → General**: "Automatically delete head branches".
+- Si `main` tiene reglas que piden revisiones o checks, dejar pasar al bot `github-actions` o crear
+  la variable del repo `RELEASE_AUTO_MERGE=false` (entonces el PR queda para fusionarlo a mano y
+  `release-finish.yml` hace el tag, el release y la vuelta a `dev`).
+
+**Diseño**
 
 Objetivo: que el release (`dev` → `main`, versión, tag y vuelta a `dev`) salga solo **una o dos
 veces por semana** (por ejemplo martes y viernes) y que **se cierre sin hacer nada si no hay

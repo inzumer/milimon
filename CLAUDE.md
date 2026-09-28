@@ -96,7 +96,10 @@ Suggested scopes: `formulas`, `calculators`, `ui`, `i18n`, `theme`, `pages`, `de
 - `main`: production. Only receives `release/*` (and `hotfix/*`) merges, tagged `vX.Y.Z`.
 - `dev`: integration branch. Every feature is merged here with `--no-ff`.
 - `feature/<kebab-name>` from `dev` → back into `dev`. One phase (or part of one) per feature branch.
-- `release/<version>` from `dev` → `main` (tag) and back into `dev`.
+- `release/<version>` from `dev` → `main` (tag) and back into `dev`. **Automatic**: `release.yml`
+  runs Tuesday and Friday (09:00 UTC), picks the version from Conventional Commits, validates,
+  merges, tags, publishes the GitHub Release, merges back into `dev` and deploys; with no changes it
+  closes stale release PRs. Run it by hand from Actions → Release.
 - `hotfix/<kebab-name>` from `main` → `main` (tag) and `dev`.
 - Releases so far: v1.0.0 (F0–F10, accounts and history) and v1.1.0 (F9: components moved to
   ui-library). New work keeps going through `feature/*` → `dev` → `release/*`.

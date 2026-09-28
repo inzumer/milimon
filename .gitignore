@@ -30,3 +30,4 @@ npm-debug.log*
 
 # Phase/task plans are local working notes (docs/PLAN.md is the versioned master plan).
 docs/plans/
+release-notes.md

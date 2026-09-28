@@ -1,0 +1,102 @@
+name: Release
+
+# Automatic release (gitflow): twice a week, if `dev` has changes since the last tag, cut
+# `release/X.Y.Z` (version from Conventional Commits), open the PR to `main`, run CI on it and,
+# unless the repository variable RELEASE_AUTO_MERGE is 'false', merge, tag, publish the GitHub
+# Release, merge back into `dev` and deploy. With no changes, stale release PRs are closed.
+on:
+  schedule:
+    # Tuesday and Friday, 09:00 UTC (two hours after the API, which the site may depend on).
+    - cron: '0 9 * * 2,5'
+  workflow_dispatch:
+    inputs:
+      bump:
+        description: Version bump (auto = from Conventional Commits)
+        type: choice
+        options: [auto, patch, minor, major]
+        default: auto
+
+permissions:
+  contents: write
+  pull-requests: write
+  actions: write
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+env:
+  GH_TOKEN: ${{ github.token }}
+
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    outputs:
+      release: ${{ steps.plan.outputs.release }}
+      version: ${{ steps.plan.outputs.version }}
+    steps:
+      - name: Checkout dev
+        uses: actions/checkout@v4
+        with:
+          ref: dev
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+
+      - name: Plan
+        id: plan
+        env:
+          RELEASE_REF: origin/dev
+          RELEASE_BUMP: ${{ inputs.bump || 'auto' }}
+        run: node .github/scripts/release-plan.mjs
+
+      - name: Close previous release PRs
+        run: |
+          gh pr list --state open --base main --json number,headRefName \
+            --jq '.[] | select(.headRefName | startswith("release/")) | .number' |
+          while read -r number; do
+            gh pr close "$number" --delete-branch \
+              --comment "${{ steps.plan.outputs.release == 'true' && 'Replaced by a newer automatic release.' || 'No changes since the last release: closed automatically.' }}"
+          done
+
+      - name: Cut the release branch
+        if: steps.plan.outputs.release == 'true'
+        env:
+          VERSION: ${{ steps.plan.outputs.version }}
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898283+github-actions[bot]@users.noreply.github.com'
+          git push origin --delete "release/$VERSION" 2>/dev/null || true
+          git checkout -b "release/$VERSION"
+          node -e "const fs=require('fs');const p=JSON.parse(fs.readFileSync('package.json','utf8'));p.version=process.env.VERSION;fs.writeFileSync('package.json',JSON.stringify(p,null,2)+'\n')"
+          git commit -am "chore(release): $VERSION"
+          git push -u origin "release/$VERSION"
+          gh pr create --base main --head "release/$VERSION" \
+            --title "chore(release): $VERSION" --body-file release-notes.md
+
+  validate:
+    needs: plan
+    if: needs.plan.outputs.release == 'true'
+    uses: ./.github/workflows/ci.yml
+    with:
+      ref: release/${{ needs.plan.outputs.version }}
+
+  merge:
+    needs: [plan, validate]
+    if: needs.plan.outputs.release == 'true' && vars.RELEASE_AUTO_MERGE != 'false'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Merge the release PR
+        run: |
+          gh pr merge "release/${{ needs.plan.outputs.version }}" --repo "$GITHUB_REPOSITORY" \
+            --merge --subject "Merge branch 'release/${{ needs.plan.outputs.version }}'"
+
+  finish:
+    needs: [plan, merge]
+    uses: ./.github/workflows/release-finish.yml
+    with:
+      version: ${{ needs.plan.outputs.version }}
+      deploy: true
