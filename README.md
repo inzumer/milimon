@@ -26,7 +26,7 @@ Detalle de versiones y excepciones: [docs/adr/0002-tooling-versions.md](./docs/a
 
 ```bash
 pnpm install
-pnpm dev          # http://localhost:4321 → redirige a /es
+pnpm dev          # http://127.0.0.1:4321 → redirige a /es; /keystatic para cargar recetas
 ```
 
 | Script               | Descripción                                                                            |

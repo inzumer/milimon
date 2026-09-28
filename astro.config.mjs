@@ -2,6 +2,7 @@
 import { createHash } from 'node:crypto';
 import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
+import keystatic from '@keystatic/astro';
 import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'astro/config';
 import { SETTINGS_STORAGE_KEY } from './src/constants/storage.ts';
@@ -20,6 +21,8 @@ try {
 
 const site = process.env.SITE_URL ?? 'https://inzumer.github.io';
 const base = process.env.BASE_PATH || '/';
+/** The Keystatic admin (/keystatic) runs only with `astro dev`; the build stays static. */
+const isDev = process.argv.includes('dev');
 
 /** @param {string | undefined} url */
 const origin = (url) => {
@@ -108,6 +111,7 @@ export default defineConfig({
   security: { csp },
   integrations: [
     react(),
+    ...(isDev ? [keystatic()] : []),
     sitemap({
       i18n: { defaultLocale: 'es', locales: { es: 'es', en: 'en' } },
       filter: (page) => {
@@ -122,14 +126,16 @@ export default defineConfig({
       },
     }),
   ],
-  i18n: {
-    locales: ['es', 'en'],
-    defaultLocale: 'es',
-    routing: {
-      prefixDefaultLocale: true,
-      redirectToDefaultLocale: false,
-    },
-  },
+  // Not in dev: its prefix check 404s /keystatic, and pages are [lang]/… routes anyway.
+  ...(isDev
+    ? {}
+    : {
+        i18n: {
+          locales: ['es', 'en'],
+          defaultLocale: 'es',
+          routing: { prefixDefaultLocale: true, redirectToDefaultLocale: false },
+        },
+      }),
   markdown: { syntaxHighlight: false },
   vite: {
     plugins: [tailwindcss()],

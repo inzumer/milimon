@@ -24,7 +24,7 @@ Key commands (Node from `.nvmrc`, pnpm from `packageManager`):
 
 | Command              | What it does                                                   |
 | -------------------- | -------------------------------------------------------------- |
-| `pnpm dev`           | Astro dev server                                               |
+| `pnpm dev`           | Astro dev server (+ Keystatic admin at `/keystatic`)           |
 | `pnpm typecheck`     | `astro check` (TS + `.astro`)                                  |
 | `pnpm lint`          | ESLint (TS, React, a11y, Astro, Vitest)                        |
 | `pnpm test:coverage` | Vitest with the **90%** coverage gate                          |

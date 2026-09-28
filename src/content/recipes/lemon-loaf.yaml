@@ -1,0 +1,60 @@
+title: Budín de limón
+titleEn: Lemon loaf
+summary:
+  es: El budín de la vitrina del café, húmedo y con glaseado de limón. Rinde un molde y sirve para calcular el costo por porción.
+  en: The café counter's loaf, moist and with a lemon glaze. Makes one tin and is handy to work out the cost per slice.
+category: sweet
+minutes: 70
+servings: 10
+photo: null
+photoAlt:
+  es: ''
+  en: ''
+ingredients:
+  - amount: 200 g
+    name:
+      es: Harina común
+      en: Plain flour
+  - amount: 180 g
+    name:
+      es: Azúcar
+      en: Sugar
+  - amount: '3'
+    name:
+      es: Huevos
+      en: Eggs
+  - amount: 120 ml
+    name:
+      es: Aceite neutro
+      en: Neutral oil
+  - amount: 120 g
+    name:
+      es: Yogur natural
+      en: Plain yogurt
+  - amount: '2'
+    name:
+      es: Limones (ralladura y jugo)
+      en: Lemons (zest and juice)
+  - amount: 10 g
+    name:
+      es: Polvo de hornear
+      en: Baking powder
+steps:
+  - text:
+      es: Precalentá el horno a 180 °C y enmantecá un molde de budín.
+      en: Heat the oven to 180 °C and grease a loaf tin.
+    photo: null
+  - text:
+      es: Batí los huevos con el azúcar y la ralladura hasta que estén espumosos; sumá el aceite, el yogur y el jugo de un limón.
+      en: Whisk the eggs with the sugar and zest until foamy; add the oil, the yogurt and the juice of one lemon.
+    photo: null
+  - text:
+      es: Incorporá la harina tamizada con el polvo de hornear, sin batir de más, y pasá la mezcla al molde.
+      en: Fold in the flour sifted with the baking powder, without overmixing, and pour into the tin.
+    photo: null
+  - text:
+      es: Horneá unos 45 minutos, hasta que un palillo salga seco. Dejá enfriar y glaseá con azúcar impalpable y el jugo del otro limón.
+      en: Bake for about 45 minutes, until a skewer comes out clean. Let it cool and glaze with icing sugar and the other lemon's juice.
+    photo: null
+featured: false
+draft: true
