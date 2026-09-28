@@ -1,9 +1,9 @@
 # Cuentas (login con Google y Facebook)
 
-Las cuentas las resuelve la API [`api-milimon`](https://github.com/inzumer/api-milimon)
+Las cuentas las resuelve la API [`milimon-backend-nest`](https://github.com/inzumer/milimon-backend-nest)
 (NestJS + PostgreSQL). La guía completa para crear la base de datos, desplegar la API y registrar
-las apps de Google y Meta está en su [`docs/DEPLOY.md`](https://github.com/inzumer/api-milimon/blob/main/docs/DEPLOY.md),
-y el modelo de seguridad en su [`docs/SECURITY.md`](https://github.com/inzumer/api-milimon/blob/main/docs/SECURITY.md).
+las apps de Google y Meta está en su [`docs/DEPLOY.md`](https://github.com/inzumer/milimon-backend-nest/blob/main/docs/DEPLOY.md),
+y el modelo de seguridad en su [`docs/SECURITY.md`](https://github.com/inzumer/milimon-backend-nest/blob/main/docs/SECURITY.md).
 
 ## Variables del front
 

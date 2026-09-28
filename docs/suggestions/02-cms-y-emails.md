@@ -52,7 +52,7 @@ deploy oficial.
 
 ### Acceso solo para admins
 
-1. **Rol en las cuentas** (`api-milimon`): columna `role` (`user` | `admin`) en el usuario, incluida
+1. **Rol en las cuentas** (`milimon-backend-nest`): columna `role` (`user` | `admin`) en el usuario, incluida
    en el token y en `/me`; los admins se asignan a mano (Milagros y el equipo técnico). Esto se
    puede adelantar ya.
 2. **Sesión en cookie**: en el dominio propio, la sesión pasa a una cookie `HttpOnly`, `Secure`,

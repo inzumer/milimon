@@ -70,7 +70,7 @@ export interface RemoteProfile {
 }
 
 /**
- * Everything the app needs from the accounts API (`api-milimon`). `api-backend.ts`
+ * Everything the app needs from the accounts API (`milimon-backend-nest`). `api-backend.ts`
  * implements it over HTTP; tests use an in-memory fake. Every data method acts on the signed-in
  * person only.
  */

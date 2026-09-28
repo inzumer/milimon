@@ -20,7 +20,7 @@ el título, una bajada, los milicitos (si es una reseña) y el botón para leerl
   (ver abajo), en es/en según el idioma de la suscripción.
 - **Para empezar, sin backend:** el sitio publica el RSS y MailerLite (o Brevo) envía una campaña
   automática por cada entrada nueva usando nuestra plantilla (exportada como HTML).
-- **Más adelante, desde la API:** al publicar en el CMS, un webhook avisa a `api-milimon`, que
+- **Más adelante, desde la API:** al publicar en el CMS, un webhook avisa a `milimon-backend-nest`, que
   envía a la lista de suscriptores (guardada con doble opt-in y baja en un clic) por el proveedor.
 - Frecuencia: como máximo un aviso por día; si hay varias publicaciones, un resumen.
 
@@ -41,9 +41,9 @@ tipografías, espacios) exportados en TypeScript.
   en HTML compatible con los clientes de correo. Así comparte versión, changesets, Storybook
   (vista previa de cada email) y diseño con el resto de la librería, y sirve para todos los sitios.
 - **Plantillas de Milimon** (bienvenida, cuenta eliminada, nueva receta, nuevo artículo…) en un **repositorio propio,
-  `emails-milimon`**, o dentro de `api-milimon` si prefieren menos repos: cada plantilla es un
+  `milimon-emails-react`**, o dentro de `milimon-backend-nest` si prefieren menos repos: cada plantilla es un
   componente con sus textos en es/en y se prueba con capturas.
-- **Envío desde la API** (`api-milimon`), que ya sabe cuándo alguien se registra o borra la
+- **Envío desde la API** (`milimon-backend-nest`), que ya sabe cuándo alguien se registra o borra la
   cuenta: un módulo `mail` con una cola simple y reintentos, que renderiza la plantilla y la envía
   por el proveedor.
 
