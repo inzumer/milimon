@@ -60,7 +60,7 @@ sugerencias, separado del sitio principal: **`docs.<dominio>`** (decidido 2026-0
 8. **Consentimiento y medición**: banner de cookies, Consent Mode v2, `track()` → GTM.
 9. **Borrado de cuenta** (y el callback de Meta).
 10. **Gitflow y releases**: `feature/*` → `dev` → release automático → `main` → deploy (ver
-    [08](./08-calidad-y-tests.md#releases-automáticos-a-implementar)).
+    [08](./08-calidad-y-tests.md#releases-automáticos)).
 11. **Publicar contenido con el CMS**, cuando exista (ver [02](./02-cms-y-emails.md)).
 
 ## Pasos
