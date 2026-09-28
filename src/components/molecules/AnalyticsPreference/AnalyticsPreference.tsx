@@ -1,25 +1,35 @@
-import { Switch } from '@inzumer/ui-library';
+import { CookieConsent } from '@inzumer/ui-library';
 import { useSettingsStore } from '@stores';
-import { trackingId } from '@utils';
+import {
+  choicesToConsent,
+  consentCategories,
+  consentLabels,
+  consentToChoices,
+  trackingId,
+  type ConsentLabels,
+} from '@utils';
 
 export interface AnalyticsPreferenceProps {
-  label: string;
+  labels: ConsentLabels;
 }
 
 /**
- * Lets people change their analytics answer at any time (privacy page). Off until they accept;
- * stays in sync with the consent banner through the settings store.
+ * Lets people change their cookie choices at any time (privacy page): ui-library `CookieConsent`
+ * in `inline` mode, saved on every change. Analytics is off until they accept; stays in sync
+ * with the consent banner through the settings store.
  */
-export const AnalyticsPreference = ({ label }: AnalyticsPreferenceProps) => {
-  const granted = useSettingsStore((state) => state.analyticsConsent === 'granted');
+export const AnalyticsPreference = ({ labels }: AnalyticsPreferenceProps) => {
+  const consent = useSettingsStore((state) => state.analyticsConsent);
   const update = useSettingsStore((state) => state.update);
 
   return (
-    <Switch
-      id={trackingId('privacy', 'switch', 'analytics')}
-      label={label}
-      checked={granted}
-      onCheckedChange={(checked) => update({ analyticsConsent: checked ? 'granted' : 'denied' })}
+    <CookieConsent
+      mode="inline"
+      categories={consentCategories(labels)}
+      value={consentToChoices(consent)}
+      onChange={(choices) => update({ analyticsConsent: choicesToConsent(choices) })}
+      getId={(kind, name) => trackingId('privacy', kind, name)}
+      labels={consentLabels(labels, labels.message)}
     />
   );
 };
