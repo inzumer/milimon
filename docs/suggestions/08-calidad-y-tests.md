@@ -74,7 +74,35 @@ que el repo.
   (el repo `ui-library` se renombra a `inzumer-ui-lib` y conserva su historia), `inzumer-ci` y por
   último los consumidores (Milimon y Zamuner) con los nombres nuevos.
 
-## Releases automáticos (a implementar)
+## Releases automáticos
+
+**Estado: implementado (2026-09-28)** en `milimon-frontend-web` y `milimon-backend-nest`, con horario de
+Madrid. Los workflows viven en [`inzumer-ci`](https://github.com/inzumer/inzumer-ci) (`@v1`) y cada repo
+los llama con una línea `uses:` (`release-prepare`, `release-find` + `release-merge` y
+`release-finish`); el CI de cada repo usa `node-ci` con sus propios comandos. Los mismos workflows
+sirven para los demás proyectos (Zamuner, Inzumer, los paquetes `inzumer-*`).
+
+- **Viernes 12:00** (`release-prepare.yml`): si `dev` tiene cambios desde el último tag, crea
+  `release/X.Y.Z` (versión por Conventional Commits), abre el PR a `main` y corre el CI. Si no hay
+  cambios, cierra los PRs de release que hayan quedado abiertos.
+- **Lunes 12:00 la API y 12:30 el sitio** (`release-publish.yml`): vuelve a correr el CI, fusiona el
+  PR y `release-finish.yml` crea el tag, el GitHub Release y el **backport a `dev`** (rama
+  `backport/vX.Y.Z` con su PR, fusionado solo; si hay conflicto queda abierto) y despliega.
+- Todo se puede lanzar a mano desde **Actions** (prepare permite elegir el tipo de versión).
+- GitHub solo acepta horarios en UTC: cada workflow tiene dos horarios (verano e invierno) y corre el
+  que cae al mediodía en Madrid.
+- **Dependabot**: los días 1 y 15 de cada mes a las 9:00 (Madrid), no cada semana.
+
+**Configuración de cada repo** (una sola vez, en GitHub; ya hecha en `milimon` y `api-milimon` el 2026-09-28):
+
+- **Settings → Actions → General → Workflow permissions**: "Read and write permissions" y "Allow
+  GitHub Actions to create and approve pull requests".
+- **Settings → General**: "Automatically delete head branches".
+- Si `main` tiene reglas que piden revisiones o checks, dejar pasar al bot `github-actions` o crear
+  la variable del repo `RELEASE_AUTO_MERGE=false` (entonces el PR queda para fusionarlo a mano y
+  `release-finish.yml` hace el tag, el release y la vuelta a `dev`).
+
+**Diseño inicial** (un solo workflow; después se separó en viernes y lunes, como se describe arriba)
 
 Objetivo: que el release (`dev` → `main`, versión, tag y vuelta a `dev`) salga solo **una o dos
 veces por semana** (por ejemplo martes y viernes) y que **se cierre sin hacer nada si no hay

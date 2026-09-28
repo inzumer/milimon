@@ -596,20 +596,26 @@ en **Gestión del sitio → Sugerencias**, solo para editores y admins).
       repo, llamados desde las Actions de cada proyecto; lo genérico, en `inzumer-ci`.
       `scripts/og-image.mjs` no es un test: queda en el front como herramienta del build. Ver
       [08](./suggestions/08-calidad-y-tests.md).
-- [ ] **Releases automáticos** una o dos veces por semana, cerrados solos si no hay cambios
-      (versión por Conventional Commits, tag, GitHub Release y vuelta a `dev`). Diseño en
-      [08](./suggestions/08-calidad-y-tests.md#releases-automáticos-a-implementar).
+- [x] **Releases automáticos**: el viernes al mediodía (Madrid) se arma el PR de release y el lunes
+      al mediodía se fusiona, con tag, GitHub Release, backport automático a `dev` y deploy; si no hay
+      cambios, se cierran solos. Los workflows son los reutilizables de
+      [`inzumer-ci`](https://github.com/inzumer/inzumer-ci) (`@v1`), compartidos con los demás repos.
+      Dependabot abre PRs los días 1 y 15. Ver
+      [08](./suggestions/08-calidad-y-tests.md#releases-automáticos).
 - [x] **Sitio de documentación**: [`inzumer/milimon-docs`](https://github.com/inzumer/milimon-docs),
       publicado en https://inzumer.github.io/milimon-docs/ (Starlight): arquitectura, 9 flujos con
       diagramas, guía de gestión, desarrollo, y el plan y las sugerencias sincronizados desde `docs/`.
 - [ ] Pasar la documentación a `docs.<dominio>` con el deploy oficial y enlazarla desde **Gestión del
       sitio**. Ver [12](./suggestions/12-sitio-de-documentacion.md).
 - [ ] **Un repo `inzumer-<nombre>` por paquete, publicado como `@inzumer/<nombre>`** (hoy todos
-      viven en el monorepo `ui-library`): `inzumer-ui-lib` (`@inzumer/ui-lib`), `inzumer-ui-tokens`
-      (`@inzumer/ui-tokens`), `inzumer-prettier`, `inzumer-eslint` e `inzumer-tsconfig` (hoy privados;
-      publicarlos permite dejar de copiarlos) e `inzumer-ci` con los workflows reutilizables. Las
-      carpetas locales se llaman igual que el repo. Orden y detalle en
-      [08](./suggestions/08-calidad-y-tests.md#repositorios-y-paquetes-decidido-2026-09-27).
+      viven en el monorepo `ui-library`):
+  - [x] `inzumer-tsconfig`, `inzumer-prettier` e `inzumer-eslint` creados (28/09, con su historia);
+        falta el secret `NPM_TOKEN` en cada uno para publicar la 1.0.0.
+  - [x] `inzumer-ci` con los workflows reutilizables (CI, release de paquetes y release semanal).
+  - [ ] `inzumer-ui-tokens` (`@inzumer/ui-tokens`) e `inzumer-ui-lib` (`@inzumer/ui-lib`), cuando
+        estén publicadas las configs; después, deprecar los nombres viejos en npm.
+  - Orden y detalle en
+    [08](./suggestions/08-calidad-y-tests.md#repositorios-y-paquetes-decidido-2026-09-27).
 
 ## 11. Fases
 
