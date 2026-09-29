@@ -508,13 +508,18 @@ en **Gestión del sitio → Sugerencias**, solo para editores y admins).
 
 **Para lanzar**
 
-- [ ] **Publicar la gestión del sitio**: commits listos en `feature/publishing-agenda` (API) y
-      `feature/admin-tools` (front), sin fusionar. Falta: `--no-ff` a `dev`, `release/1.2.0` (API)
-      y `release/1.17.0` (front) a `main` con tag, y push. Primero la API: la agenda del front la usa.
+- [x] **Publicar la gestión del sitio** (28/09): API 1.2.0 y front 1.17.0 en `main` con tag.
 
 - [ ] **Deploy oficial con dominio propio** (Cloudflare Pages o similar) y **auditoría de seguridad**:
       cabeceras HTTP, escaneos externos, revisión de la API y aviso legal (RGPD/LSSI). Ver
       [01](./suggestions/01-deploy-y-seguridad.md).
+- [ ] **Resend con el dominio propio** (cuando lo tengamos): cuenta en Resend, subdominio de envío
+      verificado (SPF, DKIM y DMARC), API key solo de envío y `RESEND_API_KEY` + `EMAIL_FROM` en
+      Render. Hasta entonces la API no manda mails (solo registra "Email skipped"). Pasos en
+      `docs/DEPLOY.md` §7 de la API. Sumar Resend como encargado del tratamiento en Privacidad.
+- [ ] **Login de staging**: el front de `dev` manda `locale` al iniciar sesión y la API de
+      producción lo rechaza hasta desplegar milimon-backend-nest #19 (mails). Llega a `main` con el
+      próximo release de la API.
 - [x] **API en Render** (28/09): servicio `milimon-backend-nest` desde el Blueprint
       `milimon-db-blueprint`, base Neon `milimon-db`, API 1.2.0. Keep-alive diurno a
       `/health/live` (API #17).
@@ -560,8 +565,12 @@ en **Gestión del sitio → Sugerencias**, solo para editores y admins).
 - [ ] Revisión del texto de "Sobre mí" por Milagros.
 - [ ] Comparar el texto explicativo con el material del curso (hace falta el PDF) para confirmar que
       no quedó ninguna frase igual.
-- [ ] **Emails transaccionales** (bienvenida al registrarse, confirmación al eliminar la cuenta) con
-      un paquete `@inzumer/email` (React Email + tokens) y envío desde la API. Ver
+- [x] **Emails transaccionales** (29/09): bienvenida al crear la cuenta y confirmación al borrarla,
+      en el idioma del perfil (la bienvenida usa el de la página mientras el perfil no tenga).
+      `@inzumer/email` 0.1.0 (componentes React Email + tokens, repo `inzumer-email`),
+      `@inzumer/milimon-emails` 0.1.0 (plantillas con textos en `src/i18n/<carpeta>/{es,en}.json`,
+      repo `milimon-emails-react`) y módulo `mail` de la API con Resend (API #19, front #31). Falta
+      el envío real: ver **Resend con el dominio propio**. Ver
       [10](./suggestions/10-emails-transaccionales.md).
 - [x] **Páginas públicas de recetas y blog** (28/09): `/recipes` con destacadas en `Carousel` y
       la grilla de `Showcase`, ficha `/recipes/<dirección>` con schema.org `Recipe`; el blog y su RSS
@@ -569,6 +578,8 @@ en **Gestión del sitio → Sugerencias**, solo para editores y admins).
 - [ ] **Recetas con UI de referencia** (Pinterest), lo que falta: chips de filtro por categoría,
       botones flotantes (guardar, compartir), modo "Empezar a cocinar" e isotipo nuevo. Ver
       [09](./suggestions/09-direccion-visual.md).
+- [ ] **Artículo de los milicitos a Keystatic**: hoy vive en `src/i18n/blog`; pasarlo a la colección
+      del blog para editarlo desde el CMS como los demás.
 - [ ] **Fotografía**: aplicar la [guía de fotografía](./suggestions/11-guia-de-fotografia.md) (luz,
       ángulos, distancia y foco, fondos, formatos, edición) y armar un preset de edición común.
 
@@ -599,10 +610,18 @@ en **Gestión del sitio → Sugerencias**, solo para editores y admins).
       [08](./suggestions/08-calidad-y-tests.md#repositorios-y-paquetes-decidido-2026-09-27)):
   - [x] `api-milimon` → **`milimon-backend-nest`** (28/09): repo, paquete, servicio de Render y
         emisor de los tokens.
-  - [ ] `milimon` → **`milimon-frontend-web`**: `BASE_PATH` ya sale del nombre del repo (hotfix #14);
-        falta fusionarlo a `main`, renombrar y lanzar el deploy de Pages.
+  - [x] `milimon` → **`milimon-frontend-web`**: repo renombrado; `BASE_PATH` sale del nombre
+        del repo (hotfix #14).
+  - [x] **`inzumer-email`** y **`milimon-emails-react`** (29/09): paquetes de mails.
   - [ ] Carpetas locales y remotes con los nombres nuevos.
 - [x] `.gitattributes` en `ui-library` (finales de línea).
+- [x] **Loaders de marca y botones ocupados** (29/09): `Loader` y `Button loading` en
+      `@inzumer/ui-library` 2.2.0; el sitio usa `BrandLoader` con el logo.
+- [x] **Anillo de foco interno** (29/09): inputs y textarea con `ring-inset` y el cuerpo del modal
+      con margen para que no se recorte (`@inzumer/ui-library` 2.2.1, front #32).
+- [ ] **TanStack Query** para los datos de la API (un `QueryClient` compartido entre islas; migrar
+      `useAdminAccess`, la agenda y la administración) y preparar la app para crecer.
+- [ ] **API sin repetición**: columnas comunes de las entidades `identity` y `role_change`.
 - [x] **Cookies en un solo componente** (28/09): `CookieConsent` (modos `banner`, `modal` e
       `inline`) en `@inzumer/ui-library` 2.0; el sitio usa 2.0.1: `ConsentBanner` en modo `banner`
       (mismos ids de seguimiento) y `AnalyticsPreference` en modo `inline` en la página de
@@ -632,8 +651,8 @@ en **Gestión del sitio → Sugerencias**, solo para editores y admins).
   - [x] `inzumer-tokens` separado de la lib (mantiene `@inzumer/tokens`) e `inzumer-ui-library`
         solo con los componentes (mantiene `@inzumer/ui-library`).
   - [x] `inzumer-ci` con los workflows reutilizables (CI, release de paquetes y release semanal).
-  - [ ] Publicación desde Actions con trusted publishing de npm (inzumer-ci #2 y configurar cada
-        paquete en npmjs.com).
+  - [x] Publicación desde Actions con trusted publishing de npm (inzumer-ci #2). Un paquete nuevo
+        se publica a mano la primera vez y después se configura su trusted publisher en npmjs.com.
   - Orden y detalle en
     [08](./suggestions/08-calidad-y-tests.md#repositorios-y-paquetes-decidido-2026-09-27).
 
