@@ -245,7 +245,7 @@ export const AccountPanel = ({
                 id={trackingId('account', 'button', 'delete')}
                 type="button"
                 variant="ghost"
-                className="min-h-11 self-start"
+                className="min-h-11 self-start border-[var(--border-error)]"
                 onClick={() => setConfirmingDelete(true)}
               >
                 {labels.delete}
