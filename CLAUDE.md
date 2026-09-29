@@ -67,7 +67,7 @@ Key commands (Node from `.nvmrc`, pnpm from `packageManager`):
   BreadcrumbList JSON-LD) and extra schema.org data with `structuredData` (builders in `@utils/seo`).
   Canonical, hreflang and share URLs go through `canonicalPath` (no `.html`), matching the sitemap.
 - **Static first**: no `client:*` directive unless the component is interactive.
-- **Persistence**: through the zustand stores in `src/stores` only (persisted to localStorage, synced to the account by `services/account`). **Analytics**: through `track()` only.
+- **Persistence**: through the zustand stores in `src/stores` only (persisted to localStorage, synced to the account by `services/account`). **API data**: TanStack Query with the shared client (`getQueryClient`, `queryKeys` in `@services/query`; wrap islands in `QueryProvider`), never `useEffect` fetching (ADR 0005). **Analytics**: through `track()` only.
 - **Dependencies**: latest compatible versions, `pnpm audit` clean. Exceptions documented in
   [docs/adr/0002-tooling-versions.md](./docs/adr/0002-tooling-versions.md).
 

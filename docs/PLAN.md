@@ -619,8 +619,9 @@ en **Gestión del sitio → Sugerencias**, solo para editores y admins).
       `@inzumer/ui-library` 2.2.0; el sitio usa `BrandLoader` con el logo.
 - [x] **Anillo de foco interno** (29/09): inputs y textarea con `ring-inset` y el cuerpo del modal
       con margen para que no se recorte (`@inzumer/ui-library` 2.2.1, front #32).
-- [ ] **TanStack Query** para los datos de la API (un `QueryClient` compartido entre islas; migrar
-      `useAdminAccess`, la agenda y la administración) y preparar la app para crecer.
+- [x] **TanStack Query** (29/09): un `QueryClient` compartido entre islas (`@services/query`,
+      átomo `QueryProvider`); `useAdminAccess`, la agenda y la administración migrados. Ver
+      [ADR 0005](./adr/0005-server-data-with-tanstack-query.md).
 - [ ] **API sin repetición**: columnas comunes de las entidades `identity` y `role_change`.
 - [x] **Cookies en un solo componente** (28/09): `CookieConsent` (modos `banner`, `modal` e
       `inline`) en `@inzumer/ui-library` 2.0; el sitio usa 2.0.1: `ConsentBanner` en modo `banner`
