@@ -1,0 +1,62 @@
+---
+import '@styles/global.css';
+import { RichText } from '@inzumer/ui-library';
+import { getTranslations } from '@i18n';
+import { toLocale } from '@utils';
+
+interface Props {
+  collection: 'recipes' | 'blog';
+  entry: { data: { draft: boolean } } | undefined;
+}
+
+const { collection, entry } = Astro.props;
+const { slug = '' } = Astro.params;
+const lang = toLocale(Astro.url.searchParams.get('lang') ?? 'es');
+const text = getTranslations(lang, 'recipe-page').preview;
+const title = slug;
+const versionUrl = `/keystatic-preview/version/${collection}/${slug}`;
+const draft = entry?.data.draft ?? false;
+---
+
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Preview · {title}</title>
+  </head>
+  <body class="min-h-dvh bg-[var(--surface-primary)] p-4 antialiased" data-version-url={versionUrl}>
+    <nav class="mb-4 flex items-center gap-3">
+      {['es', 'en'].map((code) => (
+        <a
+          href={`?lang=${code}`}
+          aria-current={code === lang ? 'page' : undefined}
+          class="rounded-full px-3 py-1 text-sm font-bold aria-[current=page]:bg-[var(--btn-primary-bg)]"
+        >
+          {code.toUpperCase()}
+        </a>
+      ))}
+      <RichText as="span" variant="s4" className="text-[var(--text-secondary)]">
+        {text.saved}
+      </RichText>
+    </nav>
+    {draft && (
+      <RichText variant="s3" bold className="mb-4 rounded-lg bg-[var(--surface-secondary)] p-2">
+        {text.draft}
+      </RichText>
+    )}
+    {entry ? <slot /> : <RichText>{text.pick}</RichText>}
+    <script>
+      const url = document.body.dataset.versionUrl ?? '';
+      let version = '';
+      setInterval(async () => {
+        const next = await fetch(url)
+          .then((res) => res.text())
+          .catch(() => version);
+        if (version && next !== version) {
+          location.reload();
+        }
+        version = next;
+      }, 1500);
+    </script>
+  </body>
+</html>

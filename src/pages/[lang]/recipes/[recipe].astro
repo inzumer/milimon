@@ -1,0 +1,65 @@
+---
+import { getImage } from 'astro:assets';
+import RecipeArticle from '@components/organisms/RecipeArticle/recipe-article.astro';
+import { getTranslations } from '@i18n';
+import PageLayout from '@layouts/page-layout.astro';
+import { getPublishedRecipes } from '@services/content';
+import {
+  localeIdPaths,
+  localize,
+  localizedPath,
+  recipeSchema,
+  recipeTitle,
+  toLocale,
+} from '@utils';
+
+export const getStaticPaths = async () =>
+  localeIdPaths(
+    'recipe',
+    (await getPublishedRecipes()).map(({ id }) => id),
+  )();
+
+const lang = toLocale(Astro.params.lang);
+const recipe = (await getPublishedRecipes()).find(({ id }) => id === Astro.params.recipe);
+if (!recipe) {
+  throw new Error(`Unknown recipe: ${Astro.params.recipe}`);
+}
+const { data } = recipe;
+const text = getTranslations(lang, 'recipe-page');
+const title = recipeTitle(data, lang);
+const description = localize(data.summary, lang);
+const site = Astro.site ?? Astro.url;
+const url = new URL(localizedPath(lang, 'recipes', recipe.id), site).href;
+const image = data.photo
+  ? new URL((await getImage({ src: data.photo, width: 1200, format: 'webp' })).src, site).href
+  : undefined;
+const schema = recipeSchema({
+  site,
+  url,
+  aboutHref: localizedPath(lang, 'about'),
+  name: title,
+  description,
+  image,
+  minutes: data.minutes,
+  servings: data.servings,
+  category: text.categories[data.category],
+  ingredients: data.ingredients.map(({ amount, name }) =>
+    `${amount} ${localize(name, lang)}`.trim(),
+  ),
+  steps: data.steps.map((step) => localize(step.text, lang)),
+  lang,
+});
+---
+
+<PageLayout
+  ogSection="recipes"
+  lang={lang}
+  title={title}
+  description={description}
+  structuredData={[schema]}
+  breadcrumbs={[{ label: text.index.title, href: localizedPath(lang, 'recipes') }]}
+>
+  <div class="max-w-3xl">
+    <RecipeArticle recipe={recipe} lang={lang} />
+  </div>
+</PageLayout>

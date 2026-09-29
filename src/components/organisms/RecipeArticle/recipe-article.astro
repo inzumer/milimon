@@ -1,0 +1,88 @@
+---
+import { getImage, Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import { RichText, Timeline } from '@inzumer/ui-library';
+import { getTranslations } from '@i18n';
+import { interpolate, localize, recipeTitle, type Locale } from '@utils';
+
+interface Props {
+  recipe: CollectionEntry<'recipes'>;
+  lang: Locale;
+}
+
+/** The recipe page: header, photo, ingredients and steps (with optional photos). */
+const { recipe, lang } = Astro.props;
+const { data } = recipe;
+const text = getTranslations(lang, 'recipe-page');
+const meta = [
+  text.categories[data.category],
+  data.minutes ? interpolate(text.minutes, { minutes: data.minutes }) : '',
+  data.servings ? interpolate(text.servings, { servings: data.servings }) : '',
+].filter(Boolean);
+const steps = await Promise.all(
+  data.steps.map(async (step, index) => {
+    const photo = step.photo
+      ? await getImage({ src: step.photo, width: 800, format: 'webp' })
+      : null;
+    return {
+      id: `step-${index + 1}`,
+      title: interpolate(text.step, { n: index + 1 }),
+      description: [localize(step.text, lang)],
+      ...(photo && { image: { src: photo.src, alt: localize(step.photoAlt, lang) } }),
+    };
+  }),
+);
+---
+
+<article class="flex flex-col gap-8">
+  <header class="flex flex-col gap-3">
+    <RichText variant="h1" bold className="font-display text-5xl">
+      {recipeTitle(data, lang)}
+    </RichText>
+    <RichText variant="p1" className="text-[var(--text-secondary)]">
+      {localize(data.summary, lang)}
+    </RichText>
+    <ul class="flex flex-wrap gap-2">
+      {meta.map((item) => (
+        <RichText
+          as="li"
+          variant="s3"
+          bold
+          className="rounded-full bg-[var(--surface-secondary)] px-3 py-1"
+        >
+          {item}
+        </RichText>
+      ))}
+    </ul>
+  </header>
+
+  {data.photo && (
+    <Image
+      src={data.photo}
+      alt={localize(data.photoAlt, lang)}
+      width={960}
+      class="aspect-[3/4] w-full max-w-md rounded-2xl object-cover"
+    />
+  )}
+
+  <section class="flex flex-col gap-3">
+    <RichText variant="h2" bold className="font-display text-3xl">
+      {text.ingredients}
+    </RichText>
+    <ul class="flex list-disc flex-col gap-1 ps-5">
+      {data.ingredients.map((ingredient) => (
+        <RichText as="li">
+          {ingredient.amount && <strong>{ingredient.amount}</strong>}{' '}
+          {localize(ingredient.name, lang)}
+        </RichText>
+      ))}
+    </ul>
+  </section>
+
+  <section class="flex flex-col gap-3">
+    <RichText variant="h2" bold className="font-display text-3xl">
+      {text.steps}
+    </RichText>
+    <Timeline items={steps} />
+  </section>
+</article>

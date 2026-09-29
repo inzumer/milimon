@@ -3,12 +3,7 @@ import type { Locale } from '@utils/locale';
 import type { CalculatorText } from './formula-text';
 import type { FormulaTranslation } from './formulas';
 
-/**
- * Lazy loaders for every formula translation: Vite emits one small chunk per file, so the general
- * calculator page only downloads the texts of the formula the person picks. Content is validated
- * at build time (i18n tests + static pages), so it isn't re-validated here to keep zod out of the
- * client bundle.
- */
+/** Lazy loaders, one chunk per formula text; validated at build time, so no zod on the client. */
 const loaders = import.meta.glob<FormulaTranslation>('./formulas/*/*.json', { import: 'default' });
 
 export type CalculatorTextLoader = (lang: Locale, id: FormulaId) => Promise<CalculatorText>;

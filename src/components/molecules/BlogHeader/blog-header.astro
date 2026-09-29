@@ -1,0 +1,32 @@
+---
+import { RichText } from '@inzumer/ui-library';
+import PageHeader from '@components/molecules/PageHeader/page-header.astro';
+import { getTranslations } from '@i18n';
+import { interpolate, type Locale } from '@utils';
+
+interface Props {
+  lang: Locale;
+  title: string;
+  description: string;
+  date: Date;
+}
+
+/** Article title, publishing date and description. */
+const { lang, title, description, date } = Astro.props;
+const blog = getTranslations(lang, 'blog');
+const format = new Intl.DateTimeFormat(lang === 'es' ? 'es-AR' : 'en-US', {
+  dateStyle: 'long',
+  timeZone: 'UTC',
+});
+---
+
+<PageHeader title={title}>
+  <RichText variant="p3" className="text-[var(--text-secondary)]">
+    <time datetime={date.toISOString().slice(0, 10)}>
+      {interpolate(blog.index.published, { date: format.format(date) })}
+    </time>
+  </RichText>
+  <RichText variant="p1" className="text-[var(--text-secondary)]">
+    {description}
+  </RichText>
+</PageHeader>

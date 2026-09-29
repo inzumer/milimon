@@ -28,10 +28,7 @@ export const resolveDocHref = (href: string, { pages, repoUrl, folder }: DocLink
   return `${repoUrl}/${path.join('/')}`;
 };
 
-/**
- * Adapts the rendered HTML of an internal document to its page: drops its own `h1` (the page
- * shows the title) and resolves its links with `resolveDocHref`.
- */
+/** Drops the document’s own `h1` and resolves its links with `resolveDocHref`. */
 export const adaptDocHtml = (html: string, options: DocLinksOptions): string =>
   html
     .replace(/<h1[^>]*>[\s\S]*?<\/h1>/, '')

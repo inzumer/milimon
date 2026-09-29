@@ -7,12 +7,7 @@ import logoFigure from '@assets/illustrations/logo-figure.webp';
 import StarBackground from '@assets/illustrations/star-background.svg';
 import starFigure from '@assets/illustrations/star-figure.webp';
 
-/**
- * A brand illustration (Milagros' logo, the milicitos star or the kitchen-fire error) in two
- * layers: the background shape is an SVG filled with `--illustration-bg` (the primary color by
- * default, override it on any parent) and the figure is an optimized image with a transparent
- * background. Generated from the PNG originals by `scripts/illustrations.mjs`.
- */
+/** Brand illustration: SVG background in `--illustration-bg` under an optimized figure. */
 interface Props {
   name: 'logo' | 'star' | 'error';
   /** Rendered width in CSS pixels (the image is square). */

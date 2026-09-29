@@ -37,10 +37,7 @@ const isSession = (value: unknown): value is StoredSession => {
   );
 };
 
-/**
- * The signed-in session in `localStorage` (a static site has no server of its own to keep an
- * httpOnly cookie). Changes are announced on `window`, also when another tab signs in or out.
- */
+/** Session in `localStorage` (no server for a cookie); changes are announced across tabs. */
 export const createSessionStore = (
   storage: KeyValueStorage | null = getBrowserStorage(),
 ): SessionStore => {

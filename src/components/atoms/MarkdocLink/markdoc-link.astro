@@ -1,0 +1,22 @@
+---
+import { articleLinkId } from '@utils';
+
+interface Props {
+  href: string;
+  title?: string;
+}
+
+/** Links inside CMS articles, with a stable tracking id from their target. */
+const { href, title } = Astro.props;
+const external = /^https?:\/\//.test(href);
+---
+
+<a
+  id={articleLinkId(href)}
+  href={href}
+  {...(title && { title })}
+  {...(external && { target: '_blank', rel: 'noopener noreferrer' })}
+  class="font-semibold text-[var(--text-link)] underline hover:text-[var(--text-link-hover)]"
+>
+  <slot />
+</a>

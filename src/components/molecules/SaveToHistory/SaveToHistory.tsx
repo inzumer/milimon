@@ -16,10 +16,7 @@ export interface SaveToHistoryProps {
   historyHref: string;
 }
 
-/**
- * Keeps the whole calculation (inputs, result and steps) in the history. Saving the same values
- * twice in a row is prevented: the button turns into a confirmation until something changes.
- */
+/** Saves the whole calculation to the history; the same values can’t be saved twice in a row. */
 export const SaveToHistory = ({
   formulaId,
   draft,

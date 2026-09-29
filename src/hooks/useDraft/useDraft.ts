@@ -1,10 +1,7 @@
 import { useCallback, useMemo, useRef } from 'react';
 import { useDraftsStore, type CalculatorDraft } from '@stores';
 
-/**
- * Raw form values of a calculator, persisted per formula. The server markup (and hydration) use
- * `initial`; the saved draft applies right after.
- */
+/** A calculator’s raw form values, persisted per formula (`initial` until hydration). */
 export const useDraft = (formulaId: string, initial: CalculatorDraft) => {
   const initialDraftRef = useRef(initial);
   const saved = useDraftsStore((state) => state.drafts[formulaId]);

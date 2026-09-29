@@ -3,6 +3,7 @@ import {
   breadcrumbSchema,
   personSchema,
   profilePageSchema,
+  recipeSchema,
   websiteSchema,
 } from '../seo';
 
@@ -93,5 +94,30 @@ describe('seo structured data', () => {
       mainEntityOfPage: 'https://inzumer.github.io/milimon/es/blog/milicitos',
       author: { '@type': 'Person', name: 'Milagros Tessey' },
     });
+  });
+
+  it('should describe a recipe with its time, servings, ingredients and steps', () => {
+    const recipe = recipeSchema({
+      site: SITE,
+      url: 'https://inzumer.github.io/milimon/es/recipes/lemon-loaf',
+      aboutHref: '/milimon/es/about',
+      name: 'Budín de limón',
+      description: 'El budín del café.',
+      minutes: 70,
+      servings: 10,
+      category: 'Dulce',
+      ingredients: ['200 g Harina'],
+      steps: ['Horno a 180 °C.'],
+      lang: 'es',
+    });
+    expect(recipe).toMatchObject({
+      '@type': 'Recipe',
+      name: 'Budín de limón',
+      totalTime: 'PT70M',
+      recipeYield: '10',
+      recipeIngredient: ['200 g Harina'],
+      recipeInstructions: [{ '@type': 'HowToStep', text: 'Horno a 180 °C.' }],
+    });
+    expect(recipe).not.toHaveProperty('image');
   });
 });

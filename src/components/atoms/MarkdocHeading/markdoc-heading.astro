@@ -1,0 +1,17 @@
+---
+import { RichText } from '@inzumer/ui-library';
+
+interface Props {
+  level: 2 | 3;
+  id?: string;
+}
+
+/** Article section titles from the CMS: h2 for sections, h3 for subsections. */
+const { level, id } = Astro.props;
+const variant = level === 2 ? 'h2' : 'h3';
+const size = level === 2 ? 'text-3xl' : 'text-2xl';
+---
+
+<RichText variant={variant} bold className={`mt-4 font-display ${size}`} {...(id && { id })}>
+  <slot />
+</RichText>

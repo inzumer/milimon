@@ -7,11 +7,7 @@ const kebab = (value: string | number): string =>
     .replace(/^-+|-+$/g, '')
     .toLowerCase();
 
-/**
- * Stable element id for analytics: `<scope>-<kind>-<name>` in kebab-case, e.g.
- * `waste-factor-input-waste-percentage` or `menu-button-open`. Unlike `useId()`, it's the same
- * on every page load, so Google Tag Manager triggers can target it. See docs/TRACKING.md.
- */
+/** Stable `<scope>-<kind>-<name>` element id for GTM triggers (see docs/TRACKING.md). */
 export const trackingId = (
   scope: string,
   kind: TrackingKind,
@@ -21,3 +17,7 @@ export const trackingId = (
     .map(kebab)
     .filter((part) => part.length > 0)
     .join('-');
+
+/** Tracking id of a link inside a CMS article, from its target (`article-link-<host-and-path>`). */
+export const articleLinkId = (href: string): string =>
+  trackingId('article', 'link', href.replace(/^[a-z]+:\/\//i, '') || 'link');

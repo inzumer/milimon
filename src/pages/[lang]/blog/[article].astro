@@ -1,37 +1,40 @@
 ---
 import { getImage } from 'astro:assets';
-import { RichText } from '@inzumer/ui-library';
-import star from '@assets/illustrations/star.webp';
-import { MilicitosRating } from '@components';
-import { BLOG_ARTICLE_IDS, getBlogArticle, getTranslations, type BlogArticleId } from '@i18n';
+import BlogPost from '@components/organisms/BlogPost/blog-post.astro';
+import MilicitosArticle from '@components/organisms/MilicitosArticle/milicitos-article.astro';
+import { getTranslations } from '@i18n';
 import PageLayout from '@layouts/page-layout.astro';
-import { blogPostingSchema, interpolate, LOCALES, localizedPath, toLocale, withBase } from '@utils';
+import { getBlogIndex, getPublishedPosts } from '@services/content';
+import { blogPostingSchema, localeIdPaths, localizedPath, toLocale, withBase } from '@utils';
 
-export function getStaticPaths() {
-  return LOCALES.flatMap((lang) =>
-    BLOG_ARTICLE_IDS.map((article) => ({ params: { lang, article } })),
-  );
-}
+export const getStaticPaths = async () =>
+  localeIdPaths(
+    'article',
+    (await getBlogIndex('es')).map(({ id }) => id),
+  )();
 
 const lang = toLocale(Astro.params.lang);
-const id = Astro.params.article as BlogArticleId;
-const article = getBlogArticle(lang, id);
-const common = getTranslations(lang, 'common');
+const id = Astro.params.article;
+const item = (await getBlogIndex(lang)).find((entry) => entry.id === id);
+if (!item) {
+  throw new Error(`Unknown article: ${id}`);
+}
+const post = (await getPublishedPosts()).find((entry) => entry.id === id);
 const blog = getTranslations(lang, 'blog');
-const dateFormat = new Intl.DateTimeFormat(lang === 'es' ? 'es-AR' : 'en-US', {
-  dateStyle: 'long',
-});
-const milicito = await getImage({ src: star, width: 64, height: 64, format: 'webp' });
 const site = Astro.site ?? Astro.url;
 const aboutHref = localizedPath(lang, 'about');
+const published = item.date.toISOString().slice(0, 10);
+const cover = post?.data.cover
+  ? (await getImage({ src: post.data.cover, width: 1200, format: 'webp' })).src
+  : withBase(`/og/og-blog-${lang}.png`);
 const posting = blogPostingSchema({
   site,
-  url: new URL(localizedPath(lang, 'blog', id), site).href,
+  url: new URL(localizedPath(lang, 'blog', item.id), site).href,
   aboutHref,
-  title: article.title,
-  description: article.description,
-  datePublished: article.date,
-  image: new URL(withBase(`/og/og-blog-${lang}.png`), site).href,
+  title: item.title,
+  description: item.description,
+  datePublished: published,
+  image: new URL(cover, site).href,
   lang,
 });
 ---
@@ -39,52 +42,13 @@ const posting = blogPostingSchema({
 <PageLayout
   ogSection="blog"
   lang={lang}
-  title={article.title}
+  title={item.title}
   structuredData={[posting]}
-  article={{ publishedTime: article.date, authorUrl: new URL(aboutHref, site).href }}
-  description={article.description}
-  breadcrumbs={[
-    { label: common.nav.home, href: localizedPath(lang, 'home') },
-    { label: blog.index.title, href: localizedPath(lang, 'blog') },
-  ]}
+  article={{ publishedTime: published, authorUrl: new URL(aboutHref, site).href }}
+  description={item.description}
+  breadcrumbs={[{ label: blog.index.title, href: localizedPath(lang, 'blog') }]}
 >
-  <article class="flex max-w-3xl flex-col gap-6">
-    <header class="flex flex-col gap-3">
-      <RichText variant="h1" bold className="font-display text-5xl">
-        {article.title}
-      </RichText>
-      <RichText variant="p3" className="text-[var(--text-secondary)]">
-        <time datetime={article.date}>
-          {interpolate(blog.index.published, {
-            date: dateFormat.format(new Date(`${article.date}T12:00:00`)),
-          })}
-        </time>
-      </RichText>
-      <RichText variant="p1" className="text-[var(--text-secondary)]">
-        {article.description}
-      </RichText>
-    </header>
-    {article.intro.map((paragraph) => (
-      <RichText>{paragraph}</RichText>
-    ))}
-    <section aria-labelledby="scale" class="flex flex-col gap-4">
-      <RichText variant="h2" bold id="scale" className="font-display text-3xl">
-        {article['scale-title']}
-      </RichText>
-      <ol class="flex flex-col gap-3">
-        {article.scale.map((meaning, index) => (
-          <li class="flex flex-col gap-2 rounded-xl border border-[var(--border-default)] p-4 sm:flex-row sm:items-center sm:gap-4">
-            <MilicitosRating
-              rating={index + 1}
-              label={interpolate(blog.rating, { count: String(index + 1) })}
-              imageSrc={milicito.src}
-              className="shrink-0"
-            />
-            <RichText>{meaning}</RichText>
-          </li>
-        ))}
-      </ol>
-    </section>
-    <RichText>{article.closing}</RichText>
-  </article>
+  <div class="max-w-3xl">
+    {post ? <BlogPost post={post} lang={lang} /> : <MilicitosArticle lang={lang} />}
+  </div>
 </PageLayout>

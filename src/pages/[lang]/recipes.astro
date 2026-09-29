@@ -1,12 +1,65 @@
 ---
+import { getImage } from 'astro:assets';
+import { RichText } from '@inzumer/ui-library';
+import { RecipeCarousel } from '@components';
+import PageHeader from '@components/molecules/PageHeader/page-header.astro';
+import RecipeCard from '@components/molecules/RecipeCard/recipe-card.astro';
+import { getTranslations } from '@i18n';
 import ComingSoon from '@layouts/coming-soon.astro';
-import { LOCALES, toLocale } from '@utils';
+import PageLayout from '@layouts/page-layout.astro';
+import { getPublishedRecipes } from '@services/content';
+import { localePaths, localizedPath, recipeCardText, toLocale } from '@utils';
 
-export function getStaticPaths() {
-  return LOCALES.map((lang) => ({ params: { lang } }));
-}
+export const getStaticPaths = localePaths;
 
 const lang = toLocale(Astro.params.lang);
+const text = getTranslations(lang, 'recipe-page');
+const recipes = await getPublishedRecipes();
+const href = (id: string) => localizedPath(lang, 'recipes', id);
+const featured = await Promise.all(
+  recipes
+    .filter(({ data }) => data.featured)
+    .map(async ({ id, data }) => ({
+      id,
+      href: href(id),
+      ...recipeCardText(data, lang, text),
+      ...(data.photo && {
+        src: (await getImage({ src: data.photo, width: 640, format: 'webp' })).src,
+      }),
+    })),
+);
 ---
 
-<ComingSoon lang={lang} section="recipes" />
+{recipes.length === 0 ? (
+  <ComingSoon lang={lang} section="recipes" />
+) : (
+  <PageLayout
+    ogSection="recipes"
+    lang={lang}
+    title={text.index.title}
+    description={text.index.description}
+    breadcrumbs={[]}
+  >
+    <PageHeader title={text.index.title} intro={text.index.intro} class="mb-8" />
+    {featured.length > 0 && (
+      <section class="mb-10 flex flex-col gap-4">
+        <RichText variant="h2" bold className="font-display text-3xl">
+          {text.index.featured}
+        </RichText>
+        <RecipeCarousel client:visible items={featured} labels={text.index} />
+      </section>
+    )}
+    <section class="flex flex-col gap-4">
+      <RichText variant="h2" bold className="font-display text-3xl">
+        {text.index.all}
+      </RichText>
+      <ul class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {recipes.map((recipe) => (
+          <li>
+            <RecipeCard recipe={recipe} lang={lang} href={href(recipe.id)} />
+          </li>
+        ))}
+      </ul>
+    </section>
+  </PageLayout>
+)}

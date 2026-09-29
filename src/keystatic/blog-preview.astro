@@ -1,0 +1,13 @@
+---
+import { getEntry } from 'astro:content';
+import BlogPost from '@components/organisms/BlogPost/blog-post.astro';
+import { toLocale } from '@utils';
+import PreviewLayout from './preview-layout.astro';
+
+const lang = toLocale(Astro.url.searchParams.get('lang') ?? 'es');
+const post = await getEntry('blog', Astro.params.slug ?? '');
+---
+
+<PreviewLayout collection="blog" entry={post}>
+  {post && <BlogPost post={post} lang={lang} />}
+</PreviewLayout>

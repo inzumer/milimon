@@ -62,10 +62,7 @@ const startChrome = async (chromePath, port) => {
   return undefined;
 };
 
-/**
- * Starts headless Chrome and connects to its first tab.
- * Returns `send(method, params)`, `evaluate(expression)` and `close()`.
- */
+/** Starts headless Chrome on its first tab; returns `send`, `evaluate` and `close`. */
 export const launchChrome = async (port) => {
   const chromePath = chromeCandidates.find((candidate) => existsSync(candidate));
   if (!chromePath) {

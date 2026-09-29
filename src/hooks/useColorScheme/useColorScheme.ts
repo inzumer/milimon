@@ -10,10 +10,7 @@ export const applyColorScheme = (scheme: ColorScheme): void => {
   document.documentElement.dataset['colorScheme'] = scheme;
 };
 
-/**
- * Reads and changes the color scheme. The initial state is always `light` so the server-rendered
- * markup and the first client render match; the real value is synced right after hydration.
- */
+/** Color scheme: starts `light` to match the server markup, synced after hydration. */
 export const useColorScheme = (): {
   scheme: ColorScheme;
   setScheme: (scheme: ColorScheme) => void;

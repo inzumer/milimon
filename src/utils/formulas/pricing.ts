@@ -10,19 +10,8 @@ import {
 } from '@utils/calculation';
 import type { CalculationResult } from '@utils/calculation';
 
-/**
- * Fijación de precios.
- *
- * Costos no relacionados con la materia prima = sueldos + cargas sociales + alquiler + servicios
- *   + gastos generales + amortizaciones (inversión / meses de amortización).
- * Ganancia deseada neta = inversión × % retorno anual / 12 + retiro mensual.
- * Ganancia deseada bruta = ganancia neta / (1 − impuesto a las ganancias).
- * Coeficiente = 1 + (costos no MP + ganancia bruta) / costo de mercaderías consumidas.
- * Precio neto = costo estándar unitario × coeficiente.
- * Precio bruto (carta) = precio neto × (1 + IVA + IIBB + tarjetas + Seguridad e Higiene).
- *
- * El total de impuestos sale siempre del desglose, y la comisión de tarjetas se puede activar o no.
- */
+// Fijación de precios: coeficiente (costos no MP + ganancia bruta) sobre el costo y precio de
+// carta con impuestos; el detalle de cada término está en src/i18n/formulas/pricing.
 export const DEFAULT_AMORTIZATION_MONTHS = 48;
 
 export interface SalesTaxRates {

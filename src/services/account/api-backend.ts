@@ -47,18 +47,13 @@ export interface ApiBackendOptions {
   now?: () => number;
 }
 
-/**
- * `AccountBackend` over the accounts API. Every call carries the client headers
- * (`request-app-id`, `x-api-key`, `request-id`); personal routes also carry the access token,
- * refreshed ahead of expiry (one refresh at a time) and once more on a 401. When the session
- * can't be refreshed it is cleared and `SessionExpiredError` is thrown.
- */
 /** The session user as the API sends it; accounts from before roles existed read as "user". */
 export const toAccountUser = (user: AccountUser): AccountUser => ({
   ...user,
   role: isAccountRole(user.role) ? user.role : 'user',
 });
 
+/** `AccountBackend` over HTTP: client headers, token refresh ahead of expiry and once on a 401. */
 export const createApiBackend = (
   config: AccountConfig,
   { store = createSessionStore(), request = {}, now = Date.now }: ApiBackendOptions = {},
@@ -145,8 +140,8 @@ export const createApiBackend = (
   return {
     getUser: async () => store.read()?.user ?? null,
     onUserChange: (listener) => store.subscribe((session) => listener(session?.user ?? null)),
-    signInWithGoogle: (credential) => signIn('/auth/google', { credential }),
-    signInWithFacebook: (accessToken) => signIn('/auth/facebook', { accessToken }),
+    signInWithGoogle: (credential, locale) => signIn('/auth/google', { credential, locale }),
+    signInWithFacebook: (accessToken, locale) => signIn('/auth/facebook', { accessToken, locale }),
     signOut: async () => {
       const session = store.read();
       store.clear();

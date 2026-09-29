@@ -1,7 +1,10 @@
 // @ts-check
 import { createHash } from 'node:crypto';
+import { existsSync, readdirSync, readFileSync } from 'node:fs';
+import markdoc from '@astrojs/markdoc';
 import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
+import keystatic from '@keystatic/astro';
 import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'astro/config';
 import { SETTINGS_STORAGE_KEY } from './src/constants/storage.ts';
@@ -20,6 +23,34 @@ try {
 
 const site = process.env.SITE_URL ?? 'https://inzumer.github.io';
 const base = process.env.BASE_PATH || '/';
+/** The Keystatic admin (/keystatic) runs only with `astro dev`; the build stays static. */
+const isDev = process.argv.includes('dev');
+/** Recipes stays "coming soon" (out of the sitemap) until one is published. */
+const RECIPES_DIR = 'src/content/recipes';
+const hasRecipes =
+  existsSync(RECIPES_DIR) &&
+  readdirSync(RECIPES_DIR).some((file) =>
+    /^draft: false$/m.test(readFileSync(`${RECIPES_DIR}/${file}`, 'utf8')),
+  );
+const privateRoute = hasRecipes
+  ? /\/(account|history|login|admin)$/
+  : /\/(account|history|login|recipes|admin)$/;
+
+/** Dev-only editor with a live preview next to Keystatic (/keystatic-editor). */
+const keystaticPreview = () => ({
+  name: 'keystatic-preview',
+  hooks: {
+    /** @param {{ injectRoute: (route: { pattern: string, entrypoint: string, prerender: boolean }) => void }} options */
+    'astro:config:setup': ({ injectRoute }) => {
+      /** @param {string} pattern @param {string} entrypoint */
+      const route = (pattern, entrypoint) => injectRoute({ pattern, entrypoint, prerender: false });
+      route('/keystatic-editor', './src/keystatic/editor.astro');
+      route('/keystatic-preview/recipes/[slug]', './src/keystatic/recipe-preview.astro');
+      route('/keystatic-preview/blog/[slug]', './src/keystatic/blog-preview.astro');
+      route('/keystatic-preview/version/[...file]', './src/keystatic/version.ts');
+    },
+  },
+});
 
 /** @param {string | undefined} url */
 const origin = (url) => {
@@ -57,7 +88,7 @@ const connectSrc = /** @type {`connect-src ${string}`} */ (
     'https://accounts.google.com',
     'https://graph.facebook.com',
     'https://*.facebook.com',
-    'https://www.googletagmanager.com',
+    'https://*.googletagmanager.com',
     'https://*.google-analytics.com',
     'https://*.analytics.google.com',
   ]
@@ -70,9 +101,10 @@ const csp = {
   directives: [
     "default-src 'self'",
     connectSrc,
-    "img-src 'self' data: https://*.googleusercontent.com https://*.fbcdn.net https://platform-lookaside.fbsbx.com https://www.googletagmanager.com https://*.google-analytics.com",
+    "img-src 'self' data: https://*.googleusercontent.com https://*.fbcdn.net https://platform-lookaside.fbsbx.com https://*.googletagmanager.com https://*.google-analytics.com https://ssl.gstatic.com https://www.gstatic.com",
     'frame-src https://accounts.google.com https://*.facebook.com https://www.googletagmanager.com',
-    "font-src 'self'",
+    // GTM preview mode (Tag Assistant) badge fonts.
+    "font-src 'self' https://fonts.gstatic.com data:",
     "object-src 'none'",
     "base-uri 'self'",
     "form-action 'self'",
@@ -83,6 +115,7 @@ const csp = {
       'https://accounts.google.com',
       'https://connect.facebook.net',
       'https://www.googletagmanager.com',
+      'https://tagmanager.google.com',
     ],
     hashes: inlineScriptHashes,
   },
@@ -90,9 +123,15 @@ const csp = {
     resources: [
       "'self'",
       'https://accounts.google.com',
+      'https://www.googletagmanager.com',
+      'https://tagmanager.google.com',
+      'https://fonts.googleapis.com',
       { resource: "'self'", kind: 'element' },
       { resource: "'unsafe-inline'", kind: 'element' },
       { resource: 'https://accounts.google.com', kind: 'element' },
+      { resource: 'https://www.googletagmanager.com', kind: 'element' },
+      { resource: 'https://tagmanager.google.com', kind: 'element' },
+      { resource: 'https://fonts.googleapis.com', kind: 'element' },
       { resource: "'unsafe-inline'", kind: 'attribute' },
     ],
   },
@@ -108,6 +147,8 @@ export default defineConfig({
   security: { csp },
   integrations: [
     react(),
+    markdoc(),
+    ...(isDev ? [keystatic(), keystaticPreview()] : []),
     sitemap({
       i18n: { defaultLocale: 'es', locales: { es: 'es', en: 'en' } },
       filter: (page) => {
@@ -116,20 +157,22 @@ export default defineConfig({
         return (
           route !== '/' &&
           !route.includes('404') &&
-          !/\/(account|history|login|recipes|admin)$/.test(route) &&
+          !privateRoute.test(route) &&
           !route.includes('/admin/')
         );
       },
     }),
   ],
-  i18n: {
-    locales: ['es', 'en'],
-    defaultLocale: 'es',
-    routing: {
-      prefixDefaultLocale: true,
-      redirectToDefaultLocale: false,
-    },
-  },
+  // Not in dev: its prefix check 404s /keystatic, and pages are [lang]/… routes anyway.
+  ...(isDev
+    ? {}
+    : {
+        i18n: {
+          locales: ['es', 'en'],
+          defaultLocale: 'es',
+          routing: { prefixDefaultLocale: true, redirectToDefaultLocale: false },
+        },
+      }),
   markdown: { syntaxHighlight: false },
   vite: {
     plugins: [tailwindcss()],

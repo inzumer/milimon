@@ -1,4 +1,10 @@
-import { CONSENT_WAIT_FOR_UPDATE_MS, GTM_CONTAINER_ID_PATTERN, GTM_SCRIPT_URL } from '@constants';
+import {
+  CONSENT_WAIT_FOR_UPDATE_MS,
+  GTM_AUTH_PATTERN,
+  GTM_CONTAINER_ID_PATTERN,
+  GTM_PREVIEW_PATTERN,
+  GTM_SCRIPT_URL,
+} from '@constants';
 import { useSettingsStore, type AnalyticsConsent } from '@stores';
 import { setAnalyticsSink } from '@utils';
 
@@ -14,11 +20,36 @@ declare global {
 export const isContainerId = (value: unknown): value is string =>
   typeof value === 'string' && GTM_CONTAINER_ID_PATTERN.test(value);
 
+/** A GTM environment (Admin → Environments), so staging loads its own container version. */
+export interface GtmEnvironment {
+  auth: string;
+  preview: string;
+}
+
+/** The environment when both values are valid, otherwise `undefined` (the live container). */
+export const gtmEnvironment = (auth: unknown, preview: unknown): GtmEnvironment | undefined =>
+  typeof auth === 'string' &&
+  typeof preview === 'string' &&
+  GTM_AUTH_PATTERN.test(auth) &&
+  GTM_PREVIEW_PATTERN.test(preview)
+    ? { auth, preview }
+    : undefined;
+
+const containerUrl = (containerId: string, environment?: GtmEnvironment) => {
+  const params = new URLSearchParams({ id: containerId });
+  if (environment) {
+    params.set('gtm_auth', environment.auth);
+    params.set('gtm_preview', environment.preview);
+    params.set('gtm_cookies_win', 'x');
+  }
+  return `${GTM_SCRIPT_URL}?${params.toString()}`;
+};
+
 export interface TagManager {
   applyConsent: (consent: AnalyticsConsent | null) => void;
 }
 
-export const createTagManager = (containerId: string): TagManager => {
+export const createTagManager = (containerId: string, environment?: GtmEnvironment): TagManager => {
   const dataLayer = (window.dataLayer = window.dataLayer ?? []);
   const gtag: Gtag = function gtag() {
     // eslint-disable-next-line prefer-rest-params -- the consent API requires `arguments`.
@@ -42,7 +73,7 @@ export const createTagManager = (containerId: string): TagManager => {
     dataLayer.push({ 'gtm.start': Date.now(), event: 'gtm.js' });
     const script = document.createElement('script');
     script.async = true;
-    script.src = `${GTM_SCRIPT_URL}?id=${encodeURIComponent(containerId)}`;
+    script.src = containerUrl(containerId, environment);
     document.head.append(script);
   };
 
@@ -64,15 +95,15 @@ export const createTagManager = (containerId: string): TagManager => {
   };
 };
 
-/**
- * Starts GTM on a page: applies the stored consent and follows later changes (banner or privacy
- * page). Does nothing without a valid container id. Returns the unsubscribe function.
- */
-export const startTagManager = (containerId: unknown): (() => void) => {
+/** Starts GTM with the stored consent and follows its changes; returns the unsubscribe. */
+export const startTagManager = (
+  containerId: unknown,
+  environment?: GtmEnvironment,
+): (() => void) => {
   if (!isContainerId(containerId)) {
     return () => undefined;
   }
-  const tagManager = createTagManager(containerId);
+  const tagManager = createTagManager(containerId, environment);
   tagManager.applyConsent(useSettingsStore.getState().analyticsConsent);
   return useSettingsStore.subscribe((next, previous) => {
     if (next.analyticsConsent !== previous.analyticsConsent) {

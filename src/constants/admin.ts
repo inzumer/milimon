@@ -1,7 +1,4 @@
-/**
- * Internal suggestion documents (`docs/suggestions`) shown in the administration section:
- * English route slug → source file. The order is the menu order.
- */
+/** Internal suggestion docs in menu order: English route slug → file in `docs/suggestions`. */
 export const ADMIN_DOCS = [
   { id: 'deploy-and-security', file: '01-deploy-y-seguridad' },
   { id: 'cms-and-emails', file: '02-cms-y-emails' },
@@ -31,3 +28,6 @@ export type AgendaStatus = (typeof AGENDA_STATUSES)[number];
 /** Agenda text limits (same as the API). */
 export const AGENDA_TITLE_MAX_LENGTH = 160;
 export const AGENDA_NOTES_MAX_LENGTH = 1000;
+
+/** Days of upcoming publications listed from today (the API allows up to 400). */
+export const AGENDA_UPCOMING_DAYS = 180;

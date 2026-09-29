@@ -1,28 +1,14 @@
-import { groupByDate, monthOf, monthRange, shiftMonth, toIsoDate } from '@utils/agenda';
+import { groupByDate, toIsoDate, upcomingRange } from '@utils/agenda';
 
 describe('agenda dates', () => {
   it('should format a local date as YYYY-MM-DD', () => {
     expect(toIsoDate(new Date(2026, 9, 6))).toBe('2026-10-06');
   });
 
-  it('should read the month of a date', () => {
-    expect(monthOf(new Date(2026, 0, 31))).toStrictEqual({ year: 2026, month: 0 });
-  });
-
-  it('should move across years in both directions', () => {
-    expect(shiftMonth({ year: 2026, month: 11 }, 1)).toStrictEqual({ year: 2027, month: 0 });
-    expect(shiftMonth({ year: 2026, month: 0 }, -1)).toStrictEqual({ year: 2025, month: 11 });
-    expect(shiftMonth({ year: 2026, month: 5 }, 0)).toStrictEqual({ year: 2026, month: 5 });
-  });
-
-  it('should span the whole month, leap years included', () => {
-    expect(monthRange({ year: 2026, month: 9 })).toStrictEqual({
-      from: '2026-10-01',
-      to: '2026-10-31',
-    });
-    expect(monthRange({ year: 2028, month: 1 })).toStrictEqual({
-      from: '2028-02-01',
-      to: '2028-02-29',
+  it('should span from today to the given days ahead, across months and years', () => {
+    expect(upcomingRange(new Date(2026, 11, 20), 30)).toEqual({
+      from: '2026-12-20',
+      to: '2027-01-19',
     });
   });
 

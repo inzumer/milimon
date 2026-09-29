@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useId, useRef, useState } from 'react';
 import { Button, RichText } from '@inzumer/ui-library';
+import { BrandLoader } from '@components/atoms/BrandLoader';
 import { ButtonLink } from '@components/atoms/ButtonLink';
+import { Notice } from '@components/atoms/Notice';
 import { MigrationPrompt } from '@components/molecules/MigrationPrompt';
 import type { Translations } from '@i18n/translations';
 import {
@@ -101,22 +103,14 @@ export const AccountPanel = ({
     }
   };
 
-  const status = (text: string) => (
-    <RichText role="status" className="rounded-lg bg-[var(--surface-secondary)] p-4">
-      {text}
-    </RichText>
-  );
+  const status = (text: string) => <Notice role="status">{text}</Notice>;
 
   switch (view.kind) {
     case 'loading':
-      return <RichText aria-busy="true">{labels.loading}</RichText>;
+      return <BrandLoader label={labels.loading} showLabel />;
 
     case 'unavailable':
-      return (
-        <RichText className="rounded-lg bg-[var(--surface-secondary)] p-4">
-          {unavailableLabel}
-        </RichText>
-      );
+      return <Notice>{unavailableLabel}</Notice>;
 
     case 'error':
       return (
@@ -190,7 +184,7 @@ export const AccountPanel = ({
             type="button"
             variant="secondary"
             className="min-h-11 self-start"
-            disabled={busy}
+            loading={busy}
             onClick={() =>
               void run(
                 async (session) => {
@@ -224,7 +218,7 @@ export const AccountPanel = ({
                     type="button"
                     variant="destructive"
                     className="min-h-11 flex-1"
-                    disabled={busy}
+                    loading={busy}
                     onClick={() =>
                       void run((session) => session.sync.deleteAccount(), {
                         kind: 'signed-out',
@@ -251,7 +245,7 @@ export const AccountPanel = ({
                 id={trackingId('account', 'button', 'delete')}
                 type="button"
                 variant="ghost"
-                className="min-h-11 self-start"
+                className="min-h-11 self-start border-[var(--border-error)]"
                 onClick={() => setConfirmingDelete(true)}
               >
                 {labels.delete}

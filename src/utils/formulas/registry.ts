@@ -22,11 +22,7 @@ import { calculateRentCheck } from '@utils/formulas/rent-check';
 import { calculateWasteFactor } from '@utils/formulas/waste-factor';
 import { calculateWastePercentage } from '@utils/formulas/waste-percentage';
 
-/**
- * Single source of truth for every formula: drives the hamburger menu, the formula pages, the
- * calculator dropdown and the i18n checks. The id is kebab-case English and equals the route slug
- * and the translation folder (`src/i18n/formulas/<id>/`).
- */
+/** Every formula: the id is the route slug and `src/i18n/formulas/<id>/`. */
 export const FORMULA_IDS = [
   'waste-percentage',
   'waste-factor',

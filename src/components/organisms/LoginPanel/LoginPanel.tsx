@@ -1,7 +1,9 @@
 import { useCallback, useEffect, useId, useRef, useState } from 'react';
 import { Button, Image, RichText } from '@inzumer/ui-library';
 import facebookIcon from '@assets/facebook.png';
+import { BrandLoader } from '@components/atoms/BrandLoader';
 import { ButtonLink } from '@components/atoms/ButtonLink';
+import { Notice } from '@components/atoms/Notice';
 import { MigrationPrompt } from '@components/molecules/MigrationPrompt';
 import { API_SLOW_REQUEST_MS, PROVIDER_BUTTON_WIDTH } from '@constants';
 import type { Translations } from '@i18n/translations';
@@ -42,11 +44,7 @@ type View =
 const colorScheme = (): 'light' | 'dark' =>
   document.documentElement.dataset['colorScheme'] === 'dark' ? 'dark' : 'light';
 
-/**
- * Sign-in page island: Google's own button, a Facebook button, a "waking up" hint while the
- * free API instance starts, and the first-sign-in choice about this device's data. On success it
- * goes to the account page.
- */
+/** Sign-in island: Google and Facebook, a "waking up" hint and the first-sign-in data choice. */
 export const LoginPanel = ({
   lang,
   labels,
@@ -139,7 +137,7 @@ export const LoginPanel = ({
         width: PROVIDER_BUTTON_WIDTH,
         theme: colorScheme(),
         onCredential: (credential) =>
-          void signIn('google', (session) => session.backend.signInWithGoogle(credential)),
+          void signIn('google', (session) => session.backend.signInWithGoogle(credential, lang)),
       })
       .catch(() => setNotice(labels['provider-error']));
   }, [showGoogle, googleClientId, lang, signIn, labels]);
@@ -161,22 +159,14 @@ export const LoginPanel = ({
     }
   };
 
-  const status = notice && (
-    <RichText role="alert" className="rounded-lg bg-[var(--surface-secondary)] p-4">
-      {notice}
-    </RichText>
-  );
+  const status = notice && <Notice role="alert">{notice}</Notice>;
 
   switch (view.kind) {
     case 'loading':
-      return <RichText aria-busy="true">{labels.loading}</RichText>;
+      return <BrandLoader label={labels.loading} showLabel />;
 
     case 'unavailable':
-      return (
-        <RichText className="rounded-lg bg-[var(--surface-secondary)] p-4">
-          {labels.unavailable}
-        </RichText>
-      );
+      return <Notice>{labels.unavailable}</Notice>;
 
     case 'signed-in':
       return (
@@ -228,13 +218,15 @@ export const LoginPanel = ({
               variant="secondary"
               className="relative min-h-10 max-w-full justify-center rounded-full px-12 text-sm font-medium"
               style={{ width: PROVIDER_BUTTON_WIDTH }}
-              disabled={signingIn || !facebookAppId}
+              loading={signingIn}
+              disabled={!facebookAppId}
               aria-describedby={facebookAppId ? undefined : `${id}-facebook-soon`}
               onClick={() => {
                 if (facebookAppId) {
                   void signIn('facebook', async (session) =>
                     session.backend.signInWithFacebook(
                       await depsRef.current.facebookLogin(facebookAppId, lang),
+                      lang,
                     ),
                   );
                 }

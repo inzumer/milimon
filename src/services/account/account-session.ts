@@ -12,10 +12,7 @@ export interface AccountSession {
 
 let current: AccountSession | null = null;
 
-/**
- * The single account session of the page, shared by the layout script and the account islands
- * (one API client, one sync). `null` when accounts aren't configured.
- */
+/** The page’s single account session (one client, one sync); `null` without accounts. */
 export const getAccountSession = (
   config: AccountConfig | null = readAccountConfig(import.meta.env),
   createBackend: (config: AccountConfig) => AccountBackend = createApiBackend,

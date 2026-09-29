@@ -8,13 +8,7 @@ import {
 } from '@utils/calculation';
 import type { CalculationResult } from '@utils/calculation';
 
-/**
- * Superficie del salón.
- * m² por cliente: entre 1,10 y 1,50, más 10–20 % de circulación.
- * m² necesarios = m² por cliente × (1 + % circulación) × cantidad de clientes.
- * Inversa: el salón ocupa ~60 % del local → cubiertos = superficie × % de salón / m² por cliente con circulación.
- * La calculadora muestra el valor exacto y redondea hacia arriba la superficie y hacia abajo los cubiertos.
- */
+/** Superficie del salón: m² por cliente (1,10–1,50) más circulación, y su inversa en cubiertos. */
 export const DEFAULT_DINING_SHARE = 60;
 
 export interface FloorAreaInput {

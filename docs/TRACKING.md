@@ -4,6 +4,23 @@ La analítica pasa por **Google Tag Manager** (`PUBLIC_GTM_ID`). GA4 y cualquier
 se configuran dentro del contenedor, no en el código. El contenedor se carga **solo después de que
 la persona acepta** el banner (Consent Mode v2, todo `denied` por defecto).
 
+## Contenedor y entornos
+
+| Variable del repo (Actions)             | Qué es                                                            |
+| --------------------------------------- | ----------------------------------------------------------------- |
+| `PUBLIC_GTM_ID`                         | Id del contenedor (`GTM-XXXXXXX`). Vacío: sin analítica ni banner |
+| `PUBLIC_GTM_AUTH`, `PUBLIC_GTM_PREVIEW` | Opcionales: entorno de GTM (`gtm_auth`, `gtm_preview=env-N`)      |
+
+**Staging** (GitHub Pages) usa el entorno **Staging** del contenedor: en GTM, **Administrar →
+Entornos → Nuevo** ("Staging", URL `https://inzumer.github.io/milimon-frontend-web/`), y de su
+fragmento se copian `gtm_auth` y `gtm_preview` a las dos variables. Así se publica y prueba en
+Staging sin tocar la versión **Live**, que será la de producción con el dominio oficial (ahí las dos
+variables quedan vacías).
+
+**Vista previa** (Tag Assistant): la CSP ya permite los orígenes que necesita
+(`tagmanager.google.com`, fuentes y estilos de Google). Hay que aceptar las cookies en el sitio:
+sin consentimiento el contenedor no se carga.
+
 ## Eventos (`dataLayer`)
 
 Cada llamada a `track()` se empuja como evento de GTM:

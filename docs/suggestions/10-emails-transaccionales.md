@@ -1,5 +1,10 @@
 # 10 · Emails transaccionales
 
+> **Estado (29/09/2026):** bienvenida y cuenta eliminada **hechas** (`@inzumer/email`,
+> `@inzumer/milimon-emails` y el módulo `mail` de la API). **Pendiente:** el dominio propio para
+> verificarlo en Resend y cargar `RESEND_API_KEY` y `EMAIL_FROM` en Render; hasta entonces no sale
+> ningún mail.
+
 Emails que manda el sistema por una acción de la persona (distintos del newsletter de
 [02](./02-cms-y-emails.md)):
 
@@ -35,7 +40,7 @@ tipografías, espacios) exportados en TypeScript.
 
 ## Propuesta
 
-- **Nuevo paquete `@inzumer/email`** dentro del monorepo de `ui-library`, hecho con
+- **Nuevo paquete `@inzumer/email`** (quedó en su propio repo, `inzumer-email`), hecho con
   **React Email** (gratis, open source): componentes para email (`EmailLayout`, `Heading`, `Text`,
   `Button`, `Card`, `Footer` con la baja) que leen los valores de `@inzumer/tokens` y se convierten
   en HTML compatible con los clientes de correo. Así comparte versión, changesets, Storybook
@@ -61,7 +66,7 @@ como encargado del tratamiento.
 
 ## Orden sugerido
 
-1. Dominio propio (ver [01](./01-deploy-y-seguridad.md)) y DNS del proveedor de email.
-2. `@inzumer/email` con el layout y los componentes básicos.
-3. Email de bienvenida y de cuenta eliminada desde la API.
-4. El resto cuando haya necesidad.
+1. [ ] Dominio propio (ver [01](./01-deploy-y-seguridad.md)) y DNS del proveedor de email.
+2. [x] `@inzumer/email` con el layout y los componentes básicos.
+3. [x] Email de bienvenida y de cuenta eliminada desde la API, en el idioma del perfil.
+4. [ ] El resto cuando haya necesidad.

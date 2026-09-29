@@ -31,15 +31,12 @@ import loginPageEn from './login-page/en.json';
 import loginPageEs from './login-page/es.json';
 import privacyPageEn from './privacy-page/en.json';
 import privacyPageEs from './privacy-page/es.json';
+import recipePageEn from './recipe-page/en.json';
+import recipePageEs from './recipe-page/es.json';
 import termsPageEn from './terms-page/en.json';
 import termsPageEs from './terms-page/es.json';
 
-/**
- * Translations live in kebab-case folders, one JSON file per language: `src/i18n/<folder>/{es,en}.json`.
- * Spanish is the source language: each English file must match its shape (checked here by the
- * type system and, in both directions, by `__tests__/translations.test.ts`).
- * Formula folders (`src/i18n/formulas/<id>/`) are loaded and validated by `formulas.ts`.
- */
+/** `src/i18n/<folder>/{es,en}.json`; Spanish is the source and English must match its shape. */
 const dictionaries = {
   'about-page': { es: aboutPageEs, en: aboutPageEn satisfies typeof aboutPageEs },
   'admin-docs': { es: adminDocsEs, en: adminDocsEn satisfies typeof adminDocsEs },
@@ -60,6 +57,7 @@ const dictionaries = {
   'history-page': { es: historyPageEs, en: historyPageEn satisfies typeof historyPageEs },
   'login-page': { es: loginPageEs, en: loginPageEn satisfies typeof loginPageEs },
   'privacy-page': { es: privacyPageEs, en: privacyPageEn satisfies typeof privacyPageEs },
+  'recipe-page': { es: recipePageEs, en: recipePageEn satisfies typeof recipePageEs },
   'terms-page': { es: termsPageEs, en: termsPageEn satisfies typeof termsPageEs },
 } as const;
 

@@ -1,10 +1,7 @@
 import { failure, nonNegative, percentage, positive, success, validate } from '@utils/calculation';
 import type { CalculationResult } from '@utils/calculation';
 
-/**
- * Alquiler vs facturación.
- * El alquiler no debería superar el 10 % de la facturación neta; 5 % es la situación óptima.
- */
+/** Alquiler vs facturación: hasta 10 % de la facturación neta; 5 % es lo óptimo. */
 export const OPTIMAL_RENT_SHARE = 5;
 export const MAX_RENT_SHARE = 10;
 

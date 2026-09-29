@@ -24,7 +24,7 @@ Key commands (Node from `.nvmrc`, pnpm from `packageManager`):
 
 | Command              | What it does                                                   |
 | -------------------- | -------------------------------------------------------------- |
-| `pnpm dev`           | Astro dev server                                               |
+| `pnpm dev`           | Astro dev server (+ Keystatic admin at `/keystatic`)           |
 | `pnpm typecheck`     | `astro check` (TS + `.astro`)                                  |
 | `pnpm lint`          | ESLint (TS, React, a11y, Astro, Vitest)                        |
 | `pnpm test:coverage` | Vitest with the **90%** coverage gate                          |
@@ -99,11 +99,12 @@ Suggested scopes: `formulas`, `calculators`, `ui`, `i18n`, `theme`, `pages`, `de
 ## Git workflow (gitflow)
 
 - `main`: production. Only receives `release/*` (and `hotfix/*`) merges, tagged `vX.Y.Z`.
-- `dev`: integration branch. Every feature is merged here with `--no-ff`.
+- `dev`: integration branch. Every feature is merged here with `--no-ff`. **Staging** (GitHub Pages)
+  deploys `dev` on every push, so changes can be checked a few minutes after merging.
 - `feature/<kebab-name>` from `dev` → back into `dev`. One phase (or part of one) per feature branch.
 - `release/<version>` from `dev` → `main` (tag) and back into `dev`. **Automatic** (Madrid time): `release-prepare.yml` cuts
   the release PR on Fridays at noon, `release-publish.yml` merges it on Mondays at 12:30 and
-  `release-finish.yml` tags, publishes the GitHub Release, backports to `dev` and deploys; with no
+  `release-finish.yml` tags, publishes the GitHub Release and backports to `dev`; with no
   changes the release PRs are closed. Dependabot opens PRs on the 1st and 15th.
 - `hotfix/<kebab-name>` from `main` → `main` (tag) and `dev`.
 - Releases so far: v1.0.0 (F0–F10, accounts and history) and v1.1.0 (F9: components moved to

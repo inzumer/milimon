@@ -13,11 +13,7 @@ export interface NumberFieldProps {
   onBlur?: () => void;
 }
 
-/**
- * Decimal number input (ui-library `Input`). Only digits and `,`/`.` can be typed (anything
- * else is dropped as it's typed); the raw text is kept so "2,4" and "2.4" both work, and parsing
- * happens outside. `inputMode="decimal"` opens the numeric keypad on mobile.
- */
+/** Decimal input: keeps digits and `,`/`.` as typed (parsed outside), numeric keypad on mobile. */
 export const NumberField = ({
   id,
   label,

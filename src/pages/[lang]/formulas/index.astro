@@ -1,17 +1,15 @@
 ---
 import { RichText } from '@inzumer/ui-library';
 import { FeatureCard } from '@components';
+import PageHeader from '@components/molecules/PageHeader/page-header.astro';
 import { getFormulaTranslation, getTranslations } from '@i18n';
 import PageLayout from '@layouts/page-layout.astro';
-import { LOCALES, localizedPath, toLocale, trackingId } from '@utils';
+import { localePaths, localizedPath, toLocale, trackingId } from '@utils';
 import { FORMULA_GROUPS, formulasByGroup } from '@utils/formulas';
 
-export function getStaticPaths() {
-  return LOCALES.map((lang) => ({ params: { lang } }));
-}
+export const getStaticPaths = localePaths;
 
 const lang = toLocale(Astro.params.lang);
-const common = getTranslations(lang, 'common');
 const page = getTranslations(lang, 'formula-page');
 const groups = formulasByGroup();
 ---
@@ -21,16 +19,9 @@ const groups = formulasByGroup();
   lang={lang}
   title={page.index.title}
   description={page.index.intro}
-  breadcrumbs={[{ label: common.nav.home, href: localizedPath(lang, 'home') }]}
+  breadcrumbs={[]}
 >
-  <header class="mb-10 flex flex-col gap-3">
-    <RichText variant="h1" bold className="font-display text-5xl">
-      {page.index.title}
-    </RichText>
-    <RichText variant="p1" className="max-w-2xl text-[var(--text-secondary)]">
-      {page.index.intro}
-    </RichText>
-  </header>
+  <PageHeader title={page.index.title} intro={page.index.intro} class="mb-10" />
 
   <div class="flex flex-col gap-12">
     {FORMULA_GROUPS.map((group) => (

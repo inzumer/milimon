@@ -2,11 +2,7 @@ import { z } from 'zod';
 import type { FormulaId } from '@utils/formulas';
 import type { Locale } from '@utils/locale';
 
-/**
- * "Learn" topics, in reading order: restaurant management content behind the calculators. The id
- * is the route slug and
- * the translation folder (`src/i18n/learn/<id>/`); `related` links each topic to its formulas.
- */
+/** "Learn" topics in reading order; the id is the route slug and `src/i18n/learn/<id>/`. */
 export const LEARN_TOPICS = [
   { id: 'purchasing-and-receiving', related: ['clean-price', 'waste-percentage'] },
   { id: 'storage', related: ['cost-of-goods'] },

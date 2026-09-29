@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { RichText, Select } from '@inzumer/ui-library';
+import { BrandLoader } from '@components/atoms/BrandLoader';
 import { ButtonLink } from '@components/atoms/ButtonLink';
 import { FormulaCalculator } from '@components/organisms/FormulaCalculator';
 import { OmnesCalculator } from '@components/organisms/OmnesCalculator';
@@ -120,9 +121,7 @@ export const CalculatorPicker = ({
         {state.status === 'idle' && (
           <RichText className="text-[var(--text-secondary)]">{page.empty}</RichText>
         )}
-        {state.status === 'loading' && (
-          <RichText className="text-[var(--text-secondary)]">{page.loading}</RichText>
-        )}
+        {state.status === 'loading' && <BrandLoader label={page.loading} showLabel />}
         {state.status === 'error' && (
           <RichText role="alert" className="text-[var(--border-error)]">
             {page['load-error']}
