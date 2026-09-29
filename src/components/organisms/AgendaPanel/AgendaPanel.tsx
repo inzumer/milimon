@@ -262,6 +262,10 @@ export const AgendaPanel = ({
           </Button>
         </div>
 
+        <RichText variant="p3" className="text-[var(--text-secondary)]">
+          {labels['cms-note']}
+        </RichText>
+
         <RichText role="status" variant="p3" className="min-h-6">
           {notice}
         </RichText>

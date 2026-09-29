@@ -16,7 +16,8 @@
     "next": "Próxima versión estable: entra lo aprobado hasta el {cutoff} y sale el {publish} (hora de Madrid)."
   },
   "upcoming": "Próximas publicaciones",
-  "add": "Nueva publicación",
+  "cms-note": "La agenda organiza qué sale y cuándo. El contenido (textos y fotos de recetas y artículos) se carga en el CMS.",
+  "add": "Planificar publicación",
   "empty": "No hay publicaciones planificadas.",
   "updated-by": "Último cambio: {author}",
   "edit": "Editar",
@@ -36,7 +37,7 @@
     "published": "Publicada"
   },
   "form": {
-    "create-title": "Nueva publicación",
+    "create-title": "Planificar publicación",
     "edit-title": "Editar publicación",
     "date": "Fecha",
     "date-placeholder": "Día de publicación (ej.: 06/10/2026)",

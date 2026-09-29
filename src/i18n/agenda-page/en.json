@@ -16,7 +16,8 @@
     "next": "Next stable release: what is approved by {cutoff} goes out on {publish} (Madrid time)."
   },
   "upcoming": "Upcoming publications",
-  "add": "New publication",
+  "cms-note": "The agenda organizes what goes out and when. The content (texts and photos of recipes and articles) is written in the CMS.",
+  "add": "Plan a publication",
   "empty": "Nothing planned yet.",
   "updated-by": "Last change: {author}",
   "edit": "Edit",
@@ -36,7 +37,7 @@
     "published": "Published"
   },
   "form": {
-    "create-title": "New publication",
+    "create-title": "Plan a publication",
     "edit-title": "Edit publication",
     "date": "Date",
     "date-placeholder": "Publishing day (e.g. 10/06/2026)",
