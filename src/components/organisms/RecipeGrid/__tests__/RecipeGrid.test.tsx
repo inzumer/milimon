@@ -32,7 +32,7 @@ describe('RecipeGrid', () => {
     expect(chips.map((chip) => chip.textContent)).toEqual(['All', 'Sweet', 'Bakery', 'Drinks']);
     expect(chips[0]).toHaveAttribute('aria-pressed', 'true');
     expect(chips[1]).toHaveAttribute('id', 'recipes-button-filter-sweet');
-    expect(chips[1]?.style.getPropertyValue('--badge-bg')).toBe('var(--category-sweet-bg)');
+    expect(chips[1]?.style.getPropertyValue('--badge-bg')).toBe('var(--filter-pill-bg)');
   });
 
   it('should filter the cards and keep the choice in the URL', async () => {

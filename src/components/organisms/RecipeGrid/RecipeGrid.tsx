@@ -35,7 +35,7 @@ export interface RecipeGridProps {
   };
 }
 
-/** Each category's Milimon icon; its colors are the `--category-<name>-*` tokens (theme.css). */
+/** Each category's Milimon icon; every pill shares the `--filter-pill-*` colors (theme.css). */
 const CATEGORY_ICONS: Record<Choice, (props: IconProps) => React.JSX.Element> = {
   all: SparkleIcon,
   sweet: CupcakeIcon,
@@ -46,7 +46,9 @@ const CATEGORY_ICONS: Record<Choice, (props: IconProps) => React.JSX.Element> = 
 
 const CHOICES = ['all', ...RECIPE_CATEGORIES] as const;
 
-/** Every recipe as photo cards, filtered by category with colored chips; the filter lives in `?category=`. */
+const PILL_COLORS = { background: 'var(--filter-pill-bg)', text: 'var(--filter-pill-text)' };
+
+/** Every recipe as photo cards, filtered by category with chips; the filter lives in `?category=`. */
 export const RecipeGrid = ({ items, labels }: RecipeGridProps) => {
   const [filter, setFilter] = useUrlFilter<Choice>(RECIPE_FILTER_PARAM, CHOICES, 'all');
   const present = CHOICES.filter(
@@ -60,10 +62,7 @@ export const RecipeGrid = ({ items, labels }: RecipeGridProps) => {
       id: trackingId('recipes', 'button', 'filter', choice),
       label: choice === 'all' ? labels['filter-all'] : labels.categories[choice],
       icon: <Icon className="size-5" />,
-      colors: {
-        background: `var(--category-${choice}-bg)`,
-        text: `var(--category-${choice}-text)`,
-      },
+      colors: PILL_COLORS,
     };
   });
 

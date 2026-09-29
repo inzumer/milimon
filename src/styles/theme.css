@@ -67,17 +67,9 @@
   --admin-bar-badge-bg: rgb(var(--color-neutral-50));
   --admin-bar-badge-text: rgb(var(--color-accent-800));
 
-  /* Recipe category pills: each category keeps its hue in both modes. */
-  --category-all-bg: rgb(var(--color-neutral-200));
-  --category-all-text: rgb(var(--color-neutral-950));
-  --category-sweet-bg: rgb(var(--color-primary-100));
-  --category-sweet-text: rgb(var(--color-primary-900));
-  --category-savory-bg: rgb(var(--color-accent-100));
-  --category-savory-text: rgb(var(--color-accent-900));
-  --category-bread-bg: rgb(var(--color-warning-100));
-  --category-bread-text: rgb(var(--color-warning-900));
-  --category-drinks-bg: rgb(var(--color-info-100));
-  --category-drinks-text: rgb(var(--color-info-900));
+  /* Filter pills: one shade darker than the page, with the main text color. */
+  --filter-pill-bg: rgb(var(--color-neutral-100));
+  --filter-pill-text: rgb(var(--color-neutral-950));
 
   --border-default: rgb(var(--color-neutral-200));
   --border-muted: rgb(var(--color-neutral-100));
@@ -132,16 +124,8 @@
   --admin-bar-badge-bg: rgb(var(--color-neutral-950));
   --admin-bar-badge-text: rgb(var(--color-accent-200));
 
-  --category-all-bg: rgb(var(--color-neutral-800));
-  --category-all-text: rgb(var(--color-neutral-50));
-  --category-sweet-bg: rgb(var(--color-primary-900));
-  --category-sweet-text: rgb(var(--color-primary-100));
-  --category-savory-bg: rgb(var(--color-accent-900));
-  --category-savory-text: rgb(var(--color-accent-100));
-  --category-bread-bg: rgb(var(--color-warning-900));
-  --category-bread-text: rgb(var(--color-warning-100));
-  --category-drinks-bg: rgb(var(--color-info-900));
-  --category-drinks-text: rgb(var(--color-info-100));
+  --filter-pill-bg: rgb(var(--color-neutral-900));
+  --filter-pill-text: rgb(var(--color-neutral-50));
 
   --border-default: rgb(var(--color-neutral-800));
   --border-muted: rgb(var(--color-neutral-900));

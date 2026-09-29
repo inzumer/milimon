@@ -576,7 +576,7 @@ en **Gestión del sitio → Sugerencias**, solo para editores y admins).
       la grilla de `Showcase`, ficha `/recipes/<dirección>` con schema.org `Recipe`; el blog y su RSS
       suman los artículos de Keystatic. Recetas sigue "Próximamente" hasta publicar la primera.
 - [x] **Filtros de recetas** (29/09): `Filter` de la ui-library (chips con scroll lateral) con los
-      íconos SVG de Milimon y colores por categoría (`--category-*`); el filtro queda en `?category=`
+      íconos SVG de Milimon y un mismo color para todas las pills (`--filter-pill-*`); el filtro queda en `?category=`
       (`useUrlFilter`).
 - [ ] **Recetas con UI de referencia** (Pinterest), lo que falta: botones flotantes (guardar,
       compartir), modo "Empezar a cocinar" e isotipo nuevo. Ver
