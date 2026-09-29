@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useId, useState, type SyntheticEvent } from 'react';
 import { Button, Dropdown, Input, Modal, RichText, Textarea } from '@inzumer/ui-library';
+import { BrandLoader } from '@components/atoms/BrandLoader';
 import { QueryProvider } from '@components/atoms/QueryProvider';
 import { SectionLabel } from '@components/atoms/SectionLabel';
 import {
@@ -209,6 +210,7 @@ const AgendaPanelView = ({
 
   return (
     <div className="flex flex-col gap-8">
+      {busy && <BrandLoader screen />}
       <section
         aria-labelledby={cadenceId}
         className="flex flex-col gap-3 rounded-xl border border-[var(--border-default)] p-5"

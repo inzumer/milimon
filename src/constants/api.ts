@@ -25,3 +25,6 @@ export const API_HEADERS = {
 
 /** API data stays fresh this long in the shared query cache (a page view rarely lasts more). */
 export const QUERY_STALE_TIME_MS = 60_000;
+
+/** How long each cooking one-liner of the screen loader stays before the next. */
+export const LOADER_MESSAGE_MS = 3500;

@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react';
+import { getTranslations } from '@i18n';
 import { BrandLoader } from '../BrandLoader';
 
 const mark = () => screen.getByRole('status').querySelector('[aria-hidden="true"]');
@@ -18,5 +19,28 @@ describe('BrandLoader', () => {
     unmount();
     render(<BrandLoader label="Loading" mark="star" effect="pulse" />);
     expect(mark()).toHaveClass('animate-pulse');
+  });
+
+  describe('screen', () => {
+    afterEach(() => {
+      document.documentElement.lang = '';
+    });
+
+    it('should cover the page with the logo and a cooking line in the page language', () => {
+      document.documentElement.lang = 'en';
+      const text = getTranslations('en', 'loader');
+      render(<BrandLoader screen />);
+      const dialog = screen.getByRole('dialog', { name: text.label });
+      expect(dialog).toHaveAttribute('aria-busy', 'true');
+      expect(mark()).toHaveClass('animate-pulse', 'size-24');
+      expect(text.messages.filter((message) => screen.queryByText(message))).toHaveLength(1);
+    });
+
+    it('should take its own label, in Spanish by default', () => {
+      const text = getTranslations('es', 'loader');
+      render(<BrandLoader screen label="Iniciando sesión" />);
+      expect(screen.getByRole('dialog', { name: 'Iniciando sesión' })).toBeInTheDocument();
+      expect(text.messages.some((message) => screen.queryByText(message))).toBe(true);
+    });
   });
 });
