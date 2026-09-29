@@ -53,7 +53,12 @@ export default config({
           directory: 'src/assets/blog',
           publicPath: '../../../assets/blog/',
         }),
-        coverAlt: localized('Descripción de la portada', { required: false }),
+        coverAlt: localized(
+          'Descripción de la portada (obligatoria en los dos idiomas si hay portada)',
+          {
+            required: false,
+          },
+        ),
         content: fields.object(
           { es: article('Texto en español'), en: article('Text in English') },
           { label: 'Artículo' },
@@ -101,7 +106,9 @@ export default config({
           directory: 'src/assets/recipes',
           publicPath: '../../assets/recipes/',
         }),
-        photoAlt: localized('Descripción de la foto', { required: false }),
+        photoAlt: localized('Descripción de la foto (obligatoria en los dos idiomas si hay foto)', {
+          required: false,
+        }),
         ingredients: fields.array(
           fields.object({
             amount: fields.text({ label: 'Cantidad (ej.: 200 g)' }),
@@ -117,6 +124,12 @@ export default config({
               directory: 'src/assets/recipes',
               publicPath: '../../assets/recipes/',
             }),
+            photoAlt: localized(
+              'Descripción de la foto del paso (si hay foto, en los dos idiomas)',
+              {
+                required: false,
+              },
+            ),
           }),
           { label: 'Pasos', itemLabel: (item) => item.fields.text.fields.es.value || '…' },
         ),

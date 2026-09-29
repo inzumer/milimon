@@ -9,6 +9,7 @@ export * from './locale';
 export * from './markdown';
 export * from './numbers';
 export * from './recipes';
+export * from './release';
 export * from './routes';
 export * from './seo';
 export * from './share';

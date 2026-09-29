@@ -1,4 +1,4 @@
-import { trackingId } from '../tracking';
+import { articleLinkId, trackingId } from '../tracking';
 
 describe('trackingId', () => {
   it('should build kebab-case ids from a scope, a kind and a name', () => {
@@ -15,5 +15,15 @@ describe('trackingId', () => {
     expect(trackingId('history', 'button', 'open', ' Entry #1 ')).toBe(
       'history-button-open-entry-1',
     );
+  });
+
+  it('should give CMS article links a stable id from their target', () => {
+    expect(articleLinkId('https://www.iag.com.ar/cursos')).toBe(
+      'article-link-www-iag-com-ar-cursos',
+    );
+    expect(articleLinkId('/es/formulas/waste-factor')).toBe(
+      'article-link-es-formulas-waste-factor',
+    );
+    expect(articleLinkId('')).toBe('article-link-link');
   });
 });

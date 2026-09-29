@@ -28,3 +28,6 @@ export type AgendaStatus = (typeof AGENDA_STATUSES)[number];
 /** Agenda text limits (same as the API). */
 export const AGENDA_TITLE_MAX_LENGTH = 160;
 export const AGENDA_NOTES_MAX_LENGTH = 1000;
+
+/** Days of upcoming publications listed from today (the API allows up to 400). */
+export const AGENDA_UPCOMING_DAYS = 180;

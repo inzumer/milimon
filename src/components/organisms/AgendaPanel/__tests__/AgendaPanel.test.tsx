@@ -21,7 +21,7 @@ const LOAF: AgendaEntry = {
   updatedAt: '2026-09-27T12:00:00.000Z',
 };
 
-const setup = (role: 'user' | 'editor' | null, agenda: AgendaEntry[] = []) => {
+const setup = (role: 'user' | 'editor' | null, agenda: AgendaEntry[] = [], today = TODAY) => {
   const backend = createFakeAccountBackend({
     user: role ? { ...TEST_USER, role } : null,
     agenda: agenda.map((entry) => ({ ...entry })),
@@ -34,7 +34,7 @@ const setup = (role: 'user' | 'editor' | null, agenda: AgendaEntry[] = []) => {
       accessLabels={accessLabels}
       loginHref="/en/login"
       loadSession={() => session}
-      today={TODAY}
+      today={today}
     />,
   );
   return { backend, user: userEvent.setup() };
@@ -55,32 +55,26 @@ describe('AgendaPanel', () => {
     );
   });
 
-  it("should list the month's publications by day, with the suggested pace", async () => {
+  it('should list the upcoming publications by day, with the suggested pace', async () => {
     const { backend } = setup('editor', [LOAF]);
 
     expect(await screen.findByText(LOAF.title)).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: 'October 2026' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: labels.upcoming })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Tuesday, October 6' })).toBeInTheDocument();
     expect(screen.getByText('Photos on Sunday')).toBeInTheDocument();
     expect(screen.getByText('Last change: ada@example.com')).toBeInTheDocument();
     expect(screen.getByText(labels.cadence.items[0] ?? '')).toBeInTheDocument();
-    expect(backend.listAgenda).toHaveBeenCalledWith('2026-10-01', '2026-10-31');
+    expect(backend.listAgenda).toHaveBeenCalledWith('2026-10-02', '2027-03-31');
+    expect(screen.queryByRole('button', { name: /month/i })).not.toBeInTheDocument();
   });
 
-  it('should move between months', async () => {
-    const { backend, user } = setup('editor', [LOAF]);
-    await screen.findByText(LOAF.title);
-
-    await user.click(screen.getByRole('button', { name: labels.month.next }));
-    expect(await screen.findByText(labels.empty)).toBeInTheDocument();
-    expect(backend.listAgenda).toHaveBeenLastCalledWith('2026-11-01', '2026-11-30');
-
-    await user.click(screen.getByRole('button', { name: labels.month.previous }));
-    await user.click(screen.getByRole('button', { name: labels.month.previous }));
-    expect(screen.getByRole('heading', { name: 'September 2026' })).toBeInTheDocument();
-
-    await user.click(screen.getByRole('button', { name: labels.month.today }));
-    expect(await screen.findByText(LOAF.title)).toBeInTheDocument();
+  it('should say when approved changes reach staging and the next stable release', async () => {
+    setup('editor', [], new Date('2026-09-29T08:00:00Z'));
+    await screen.findByText(labels.empty);
+    expect(screen.getByText(labels.release.staging)).toBeInTheDocument();
+    expect(
+      screen.getByText(/Friday, October 2 .*12:00.*Monday, October 5 .*12:30/),
+    ).toBeInTheDocument();
   });
 
   it('should plan a new publication, asking for a title first', async () => {

@@ -28,7 +28,7 @@ const steps = await Promise.all(
       id: `step-${index + 1}`,
       title: interpolate(text.step, { n: index + 1 }),
       description: [localize(step.text, lang)],
-      ...(photo && { image: { src: photo.src, alt: '' } }),
+      ...(photo && { image: { src: photo.src, alt: localize(step.photoAlt, lang) } }),
     };
   }),
 );

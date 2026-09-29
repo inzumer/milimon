@@ -10,6 +10,8 @@ import {
   AGENDA_NOTES_MAX_LENGTH,
   AGENDA_STATUSES,
   AGENDA_TITLE_MAX_LENGTH,
+  AGENDA_UPCOMING_DAYS,
+  RELEASE_TIME_ZONE,
   type AgendaKind,
   type AgendaStatus,
 } from '@constants';
@@ -25,12 +27,10 @@ import {
   groupByDate,
   HttpError,
   interpolate,
-  monthOf,
-  monthRange,
-  shiftMonth,
+  nextRelease,
   toIsoDate,
   trackingId,
-  type CalendarMonth,
+  upcomingRange,
   type Locale,
 } from '@utils';
 
@@ -58,7 +58,7 @@ const STATUS_STYLES: Record<AgendaStatus, string> = {
   published: 'bg-[rgb(var(--color-accent-100))] text-[rgb(var(--color-accent-900))]',
 };
 
-/** Shared monthly publishing agenda for editors and admins; the API checks every change. */
+/** Shared publishing agenda (upcoming entries) for editors and admins; the API checks every change. */
 export const AgendaPanel = ({
   lang,
   labels,
@@ -69,7 +69,6 @@ export const AgendaPanel = ({
 }: AgendaPanelProps) => {
   const [today] = useState(() => todayProp ?? new Date());
   const { access, retry } = useAdminAccess(loadSession);
-  const [month, setMonth] = useState<CalendarMonth>(() => monthOf(today));
   const [entries, setEntries] = useState<AgendaEntry[]>([]);
   const [reloads, setReloads] = useState(0);
   const [draft, setDraft] = useState<Draft | null>(null);
@@ -77,15 +76,21 @@ export const AgendaPanel = ({
   const [busy, setBusy] = useState(false);
   const [notice, setNotice] = useState('');
   const cadenceId = useId();
-  const monthId = useId();
+  const upcomingId = useId();
+  const releaseId = useId();
   const formId = useId();
   const locale = lang === 'es' ? 'es-AR' : 'en-US';
   const session = access.kind === 'ready' ? access.session : null;
 
-  const monthLabel = new Intl.DateTimeFormat(locale, {
+  const release = nextRelease(today);
+  const releaseDate = new Intl.DateTimeFormat(locale, {
+    weekday: 'long',
+    day: 'numeric',
     month: 'long',
-    year: 'numeric',
-  }).format(new Date(month.year, month.month, 1));
+    hour: '2-digit',
+    minute: '2-digit',
+    timeZone: RELEASE_TIME_ZONE,
+  });
   const dayLabel = (date: string) =>
     new Intl.DateTimeFormat(locale, {
       weekday: 'long',
@@ -99,7 +104,7 @@ export const AgendaPanel = ({
       return undefined;
     }
     let active = true;
-    const { from, to } = monthRange(month);
+    const { from, to } = upcomingRange(today, AGENDA_UPCOMING_DAYS);
     session.backend.listAgenda(from, to).then(
       (items) => {
         if (active) {
@@ -115,7 +120,7 @@ export const AgendaPanel = ({
     return () => {
       active = false;
     };
-  }, [session, month, reloads, labels.results.error]);
+  }, [session, today, reloads, labels.results.error]);
 
   const reload = () => setReloads((count) => count + 1);
 
@@ -168,12 +173,11 @@ export const AgendaPanel = ({
     setBusy(true);
     try {
       const input = { ...values, notes: values.notes?.trim() || null };
-      const saved = draft.id
-        ? await session.backend.updateAgendaEntry(draft.id, input)
-        : await session.backend.createAgendaEntry(input);
+      await (draft.id
+        ? session.backend.updateAgendaEntry(draft.id, input)
+        : session.backend.createAgendaEntry(input));
       setDraft(null);
       setNotice(labels.results.saved);
-      setMonth(monthOf(new Date(`${saved.date}T12:00:00`)));
       reload();
     } catch (error) {
       failWith(error);
@@ -229,47 +233,25 @@ export const AgendaPanel = ({
         </ul>
       </section>
 
-      <section aria-labelledby={monthId} className="flex flex-col gap-5">
+      <section
+        aria-labelledby={releaseId}
+        className="flex flex-col gap-2 rounded-xl bg-[var(--surface-secondary)] p-5"
+      >
+        <SectionLabel id={releaseId}>{labels.release.title}</SectionLabel>
+        <RichText variant="p3">{labels.release.staging}</RichText>
+        <RichText variant="p3">
+          {interpolate(labels.release.next, {
+            cutoff: releaseDate.format(release.cutoff),
+            publish: releaseDate.format(release.publish),
+          })}
+        </RichText>
+      </section>
+
+      <section aria-labelledby={upcomingId} className="flex flex-col gap-5">
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <div className="flex items-center gap-2">
-            <Button
-              id={trackingId('agenda', 'button', 'previous-month')}
-              type="button"
-              variant="secondary"
-              className="min-h-11"
-              aria-label={labels.month.previous}
-              onClick={() => setMonth((current) => shiftMonth(current, -1))}
-            >
-              ‹
-            </Button>
-            <RichText
-              id={monthId}
-              variant="h2"
-              aria-live="polite"
-              className="min-w-44 text-center text-2xl capitalize"
-            >
-              {monthLabel}
-            </RichText>
-            <Button
-              id={trackingId('agenda', 'button', 'next-month')}
-              type="button"
-              variant="secondary"
-              className="min-h-11"
-              aria-label={labels.month.next}
-              onClick={() => setMonth((current) => shiftMonth(current, 1))}
-            >
-              ›
-            </Button>
-            <Button
-              id={trackingId('agenda', 'button', 'today')}
-              type="button"
-              variant="ghost"
-              className="min-h-11"
-              onClick={() => setMonth(monthOf(today))}
-            >
-              {labels.month.today}
-            </Button>
-          </div>
+          <RichText id={upcomingId} variant="h2" className="text-2xl">
+            {labels.upcoming}
+          </RichText>
           <Button
             id={trackingId('agenda', 'button', 'add')}
             type="button"

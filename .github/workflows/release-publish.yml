@@ -1,7 +1,7 @@
 name: Release publish
 
 # Mondays at 12:30 (Madrid), half an hour after the API, through inzumer-ci: CI again on the
-# release PR, merge, tag, GitHub Release, backport to dev and the Pages deploy.
+# release PR, merge, tag, GitHub Release and backport to dev (Pages is staging, deployed from dev).
 # Set the repository variable RELEASE_AUTO_MERGE to 'false' to merge by hand instead.
 on:
   schedule:
@@ -35,4 +35,3 @@ jobs:
     with:
       version: ${{ needs.find.outputs.version }}
       development-branch: dev
-      deploy-workflow: pages.yml
