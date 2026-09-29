@@ -17,3 +17,7 @@ export const trackingId = (
     .map(kebab)
     .filter((part) => part.length > 0)
     .join('-');
+
+/** Tracking id of a link inside a CMS article, from its target (`article-link-<host-and-path>`). */
+export const articleLinkId = (href: string): string =>
+  trackingId('article', 'link', href.replace(/^[a-z]+:\/\//i, '') || 'link');

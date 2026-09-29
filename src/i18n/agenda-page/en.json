@@ -10,13 +10,14 @@
       "1 management article a month that uses one of the site's calculators."
     ]
   },
-  "month": {
-    "previous": "Previous month",
-    "next": "Next month",
-    "today": "Today"
+  "release": {
+    "title": "When each change goes live",
+    "staging": "Staging (this site) updates a few minutes after a change is approved: that is where to check it.",
+    "next": "Next stable release: what is approved by {cutoff} goes out on {publish} (Madrid time)."
   },
+  "upcoming": "Upcoming publications",
   "add": "New publication",
-  "empty": "Nothing planned for this month.",
+  "empty": "Nothing planned yet.",
   "updated-by": "Last change: {author}",
   "edit": "Edit",
   "delete": "Delete",

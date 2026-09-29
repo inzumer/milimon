@@ -10,13 +10,14 @@
       "1 artículo de administración por mes que use una calculadora del sitio."
     ]
   },
-  "month": {
-    "previous": "Mes anterior",
-    "next": "Mes siguiente",
-    "today": "Hoy"
+  "release": {
+    "title": "Cuándo sale cada cambio",
+    "staging": "Staging (este sitio) se actualiza unos minutos después de aprobar un cambio: ahí se valida.",
+    "next": "Próxima versión estable: entra lo aprobado hasta el {cutoff} y sale el {publish} (hora de Madrid)."
   },
+  "upcoming": "Próximas publicaciones",
   "add": "Nueva publicación",
-  "empty": "No hay publicaciones planificadas este mes.",
+  "empty": "No hay publicaciones planificadas.",
   "updated-by": "Último cambio: {author}",
   "edit": "Editar",
   "delete": "Borrar",

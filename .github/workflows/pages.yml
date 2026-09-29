@@ -1,9 +1,9 @@
 name: Deploy to GitHub Pages
 
-# Production = main (gitflow: only release/* and hotfix/* merges land there).
+# Staging = dev: every approved change is live in a few minutes. Production (own domain) will deploy main.
 on:
   push:
-    branches: [main]
+    branches: [dev]
   workflow_dispatch:
 
 permissions:

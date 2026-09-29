@@ -5,6 +5,7 @@ export * from './auth';
 export * from './currency';
 export * from './input';
 export * from './og';
+export * from './release';
 export * from './share';
 export * from './site';
 export * from './storage';

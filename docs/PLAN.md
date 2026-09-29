@@ -535,6 +535,11 @@ en **Gestión del sitio → Sugerencias**, solo para editores y admins).
 - [x] **Zócalo "Modo gestión"** debajo del header con el rol de quien navega; nadie más lo ve.
 - [x] **Agenda de publicaciones** editable y compartida (recetas, reseñas, guías, artículos y
       redes, con estado), guardada en la base (`/admin/agenda`, API 1.2.0).
+- [x] **Agenda sin meses y aviso de publicación** (29/09): la agenda lista las próximas
+      publicaciones (180 días) con el ritmo sugerido, y avisa que staging se actualiza con cada
+      cambio aprobado y cuándo sale la próxima versión estable (viernes 12:00 → lunes 12:30, Madrid).
+- [x] **Staging desde `dev`** (29/09): GitHub Pages despliega `dev` en cada push; producción
+      (dominio propio) va a desplegar `main` con los releases.
 - [ ] **Keystatic con vista previa y acceso solo admin**: falta sesión en cookie y middleware en
       `/keystatic` con el deploy en Cloudflare Pages; vista previa por rama de borrador. Ver
       [02](./suggestions/02-cms-y-emails.md#keystatic-vista-previa-y-acceso-solo-para-admins).

@@ -1,1 +1,1 @@
-export { trackingId } from './tracking';
+export { articleLinkId, trackingId } from './tracking';
