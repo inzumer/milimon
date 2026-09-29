@@ -116,7 +116,9 @@ describe('api backend', () => {
     const { role: _role, ...legacy } = USER;
     queue(reply(200, { ...sessionResponse(), user: legacy }));
 
-    await expect(backend.signInWithGoogle('credential', 'es')).resolves.toMatchObject({ role: 'user' });
+    await expect(backend.signInWithGoogle('credential', 'es')).resolves.toMatchObject({
+      role: 'user',
+    });
     expect(store.read()?.user.role).toBe('user');
   });
 

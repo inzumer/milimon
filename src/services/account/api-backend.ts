@@ -141,8 +141,7 @@ export const createApiBackend = (
     getUser: async () => store.read()?.user ?? null,
     onUserChange: (listener) => store.subscribe((session) => listener(session?.user ?? null)),
     signInWithGoogle: (credential, locale) => signIn('/auth/google', { credential, locale }),
-    signInWithFacebook: (accessToken, locale) =>
-      signIn('/auth/facebook', { accessToken, locale }),
+    signInWithFacebook: (accessToken, locale) => signIn('/auth/facebook', { accessToken, locale }),
     signOut: async () => {
       const session = store.read();
       store.clear();
