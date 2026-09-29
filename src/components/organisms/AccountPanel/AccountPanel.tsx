@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useId, useRef, useState } from 'react';
 import { Button, RichText } from '@inzumer/ui-library';
+import { BrandLoader } from '@components/atoms/BrandLoader';
 import { ButtonLink } from '@components/atoms/ButtonLink';
 import { Notice } from '@components/atoms/Notice';
 import { MigrationPrompt } from '@components/molecules/MigrationPrompt';
@@ -106,7 +107,7 @@ export const AccountPanel = ({
 
   switch (view.kind) {
     case 'loading':
-      return <RichText aria-busy="true">{labels.loading}</RichText>;
+      return <BrandLoader label={labels.loading} showLabel />;
 
     case 'unavailable':
       return <Notice>{unavailableLabel}</Notice>;
@@ -183,7 +184,7 @@ export const AccountPanel = ({
             type="button"
             variant="secondary"
             className="min-h-11 self-start"
-            disabled={busy}
+            loading={busy}
             onClick={() =>
               void run(
                 async (session) => {
@@ -217,7 +218,7 @@ export const AccountPanel = ({
                     type="button"
                     variant="destructive"
                     className="min-h-11 flex-1"
-                    disabled={busy}
+                    loading={busy}
                     onClick={() =>
                       void run((session) => session.sync.deleteAccount(), {
                         kind: 'signed-out',

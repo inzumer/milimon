@@ -1,5 +1,6 @@
 import { useId, useRef, useState } from 'react';
 import { Button, RichText } from '@inzumer/ui-library';
+import { BrandLoader } from '@components/atoms/BrandLoader';
 import { SavedCalculation } from '@components/organisms/SavedCalculation';
 import { HISTORY_LIMIT } from '@constants';
 import { useHydrated } from '@hooks';
@@ -102,7 +103,7 @@ export const HistoryList = ({
   };
 
   if (entries === null) {
-    return <RichText aria-busy="true">{labels.loading}</RichText>;
+    return <BrandLoader label={labels.loading} showLabel />;
   }
 
   return (
@@ -202,7 +203,7 @@ export const HistoryList = ({
                             />
                           </div>
                         ) : (
-                          <RichText aria-busy="true">{labels.loading}</RichText>
+                          <BrandLoader label={labels.loading} showLabel mark="star" size="sm" />
                         ))}
                     </div>
                   </article>

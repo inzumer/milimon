@@ -131,7 +131,7 @@ describe('AccountPanel', () => {
     const { backend, renderPanel } = setup({ user: TEST_USER });
     vi.mocked(backend.fetchProfile).mockRejectedValueOnce(new SessionExpiredError());
     renderPanel();
-    expect(await screen.findByRole('status')).toHaveTextContent(labels['session-expired']);
+    expect(await screen.findByText(labels['session-expired'])).toHaveAttribute('role', 'status');
   });
 
   it('should show an error when an action fails', async () => {
