@@ -15,4 +15,10 @@ export default defineMarkdocConfig({
       render: component('./src/components/atoms/MarkdocParagraph/markdoc-paragraph.astro'),
     },
   },
+  tags: {
+    milicitos: {
+      render: component('./src/components/molecules/MarkdocMilicitos/markdoc-milicitos.astro'),
+      attributes: { rating: { type: Number, required: true, matches: [1, 2, 3, 4, 5] } },
+    },
+  },
 });

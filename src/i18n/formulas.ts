@@ -10,7 +10,7 @@ const inputTextSchema = z.object({
   hint: text.optional(),
 });
 
-export const NOTE_TYPES = ['tip', 'common-mistake', 'rounding'] as const;
+const NOTE_TYPES = ['tip', 'common-mistake', 'rounding'] as const;
 
 const studySchema = z.object({
   what: z.array(text).min(1),
@@ -21,7 +21,7 @@ const studySchema = z.object({
   notes: z.array(z.object({ type: z.enum(NOTE_TYPES), text })).min(1),
 });
 
-export const formulaTranslationSchema = z.object({
+const formulaTranslationSchema = z.object({
   title: text,
   summary: text,
   study: studySchema,

@@ -1,6 +1,6 @@
 import { cn, Image } from '@inzumer/ui-library';
 
-export const MILICITOS_MAX = 5;
+const MILICITOS_MAX = 5;
 
 export interface MilicitosRatingProps {
   rating: number;

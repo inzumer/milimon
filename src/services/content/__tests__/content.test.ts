@@ -14,6 +14,7 @@ const entries = {
         titleEs: 'Viejo',
         description: { es: 'Bajada', en: '' },
         date: new Date('2026-01-10'),
+        featured: true,
         draft: false,
       },
     },
@@ -24,6 +25,7 @@ const entries = {
         titleEs: 'Nuevo',
         description: { es: 'Bajada nueva', en: 'New intro' },
         date: new Date('2026-12-01'),
+        featured: false,
         draft: false,
       },
     },
@@ -34,6 +36,7 @@ const entries = {
         titleEs: 'Wip',
         description: { es: '', en: '' },
         date: new Date(),
+        featured: false,
         draft: true,
       },
     },
@@ -54,14 +57,15 @@ describe('content', () => {
     expect((await getPublishedPosts()).map(({ id }) => id)).toEqual(['new', 'old']);
   });
 
-  it('should merge the site articles and the CMS posts by date in each language', async () => {
+  it('should list the published articles by date in each language', async () => {
     const es = await getBlogIndex('es');
-    expect(es.map(({ id }) => id)).toEqual(['new', 'milicitos', 'old']);
-    expect(es[0]).toMatchObject({ title: 'Nuevo', description: 'Bajada nueva' });
+    expect(es.map(({ id }) => id)).toEqual(['new', 'old']);
+    expect(es[0]).toMatchObject({ title: 'Nuevo', description: 'Bajada nueva', featured: false });
     const en = await getBlogIndex('en');
     expect(en.find(({ id }) => id === 'old')).toMatchObject({
       title: 'Old',
       description: 'Bajada',
+      featured: true,
     });
   });
 });

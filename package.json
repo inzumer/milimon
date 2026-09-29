@@ -55,7 +55,6 @@
     "@astrojs/check": "^0.9.10",
     "@cspell/dict-es-es": "^3.0.8",
     "@eslint-react/eslint-plugin": "^5.20.8",
-    "@eslint/js": "^10.0.1",
     "@ianvs/prettier-plugin-sort-imports": "^4.7.1",
     "@tailwindcss/vite": "^4.3.3",
     "@testing-library/dom": "^10.4.2",
