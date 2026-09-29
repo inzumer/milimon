@@ -543,6 +543,10 @@ en **Gestión del sitio → Sugerencias**, solo para editores y admins).
 - [ ] **Keystatic con vista previa y acceso solo admin**: falta sesión en cookie y middleware en
       `/keystatic` con el deploy en Cloudflare Pages; vista previa por rama de borrador. Ver
       [02](./suggestions/02-cms-y-emails.md#keystatic-vista-previa-y-acceso-solo-para-admins).
+- [ ] **Agenda ↔ CMS** (con la fase 2 del CMS): cada entrada de receta o artículo con un botón
+      "Escribirla en el CMS" (abre Keystatic en "nueva receta" o "nuevo artículo" con el título), y al
+      publicarse pasa sola a "publicada" con el enlace a la página. Más adelante, la agenda puede leer
+      los borradores y lo publicado del CMS y dejar la carga manual para redes.
 
 **Contenido**
 
