@@ -18,12 +18,6 @@ export const MenuIcon = (props: SvgIconProps) => (
   </svg>
 );
 
-export const CloseIcon = (props: SvgIconProps) => (
-  <svg {...base} {...props}>
-    <path d="M6 6l12 12M18 6L6 18" />
-  </svg>
-);
-
 export const ArrowRightIcon = (props: SvgIconProps) => (
   <svg {...base} {...props}>
     <path d="M5 12h14M13 6l6 6-6 6" />

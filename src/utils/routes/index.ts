@@ -2,7 +2,6 @@ export {
   canonicalPath,
   isActivePath,
   localizedPath,
-  ROUTES,
   SITE_BASE,
   stripBase,
   switchLocalePath,

@@ -2,7 +2,7 @@ import { NUMERIC_INPUT_DISALLOWED, PRICE_LIST_INPUT_DISALLOWED } from '@constant
 import type { Locale } from '@utils/locale';
 
 /** Number formatting locale per app language (Argentine Spanish uses `.` for thousands, `,` for decimals). */
-export const NUMBER_LOCALES: Record<Locale, string> = {
+const NUMBER_LOCALES: Record<Locale, string> = {
   es: 'es-AR',
   en: 'en-US',
 };

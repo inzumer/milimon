@@ -6,26 +6,5 @@
     "read-more": "Read the article",
     "published": "Published on {date}"
   },
-  "articles": {
-    "milicitos": {
-      "title": "Milicitos: how we rate what we taste",
-      "description": "From 1 to 5, with little stars: the scale was born at an alfajor tasting and now we use it to rate everything we try.",
-      "date": "2026-09-26",
-      "intro": [
-        "Milicitos are our way of rating food. They go from 1 to 5 and each one is a little Milimon star: the more milicitos, the more we liked it.",
-        "They started half as a joke, at an alfajor tasting. We had to pick the best one and, instead of serious scores, we started handing out little stars. The idea stuck.",
-        "It is a joke, but we use it for real: whenever we taste something, be it a dish, a recipe or a product, it will get its milicitos."
-      ],
-      "scale-title": "The scale",
-      "scale": [
-        "We would not have it again.",
-        "It has room for improvement.",
-        "Tasty, does the job.",
-        "Very good, we recommend it.",
-        "A classic: you have to try it."
-      ],
-      "closing": "Soon you will see milicitos on the recipes and in the upcoming reviews."
-    }
-  },
   "rating": "{count} out of 5 milicitos"
 }

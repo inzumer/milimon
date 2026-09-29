@@ -1,4 +1,5 @@
 import { collection, config, fields } from '@keystatic/core';
+import { wrapper } from '@keystatic/core/content-components';
 
 /** English is optional and falls back to Spanish on the site. */
 const localized = (label: string, { multiline = false, required = true } = {}) =>
@@ -23,6 +24,19 @@ const article = (label: string) =>
       codeBlock: false,
       table: false,
       image: { directory: 'src/assets/blog', publicPath: '../../../../assets/blog/' },
+    },
+    components: {
+      milicitos: wrapper({
+        label: 'Milicitos',
+        description: 'Una puntuación de 1 a 5 milicitos con su texto al lado.',
+        schema: {
+          rating: fields.integer({
+            label: 'Milicitos (1 a 5)',
+            defaultValue: 5,
+            validation: { isRequired: true, min: 1, max: 5 },
+          }),
+        },
+      }),
     },
   });
 
@@ -63,6 +77,11 @@ export default config({
           { es: article('Texto en español'), en: article('Text in English') },
           { label: 'Artículo' },
         ),
+        featured: fields.checkbox({
+          label: 'Destacado',
+          description: 'Aparece en la portada del sitio.',
+          defaultValue: false,
+        }),
         draft: fields.checkbox({
           label: 'Borrador',
           description: 'Los borradores no se publican.',

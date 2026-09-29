@@ -23,12 +23,9 @@ export type LearnTopicId = (typeof LEARN_TOPICS)[number]['id'];
 
 export const LEARN_TOPIC_IDS = LEARN_TOPICS.map((topic) => topic.id);
 
-export const isLearnTopicId = (value: unknown): value is LearnTopicId =>
-  typeof value === 'string' && (LEARN_TOPIC_IDS as readonly string[]).includes(value);
-
 const text = z.string().trim().min(1);
 
-export const learnTopicSchema = z.object({
+const learnTopicSchema = z.object({
   title: text,
   summary: text,
   sections: z
