@@ -73,8 +73,9 @@ export interface RemoteProfile {
 export interface AccountBackend {
   getUser: () => Promise<AccountUser | null>;
   onUserChange: (listener: (user: AccountUser | null) => void) => () => void;
-  signInWithGoogle: (credential: string) => Promise<AccountUser>;
-  signInWithFacebook: (accessToken: string) => Promise<AccountUser>;
+  /** `locale`: the page language, so the welcome email matches it while the profile has none. */
+  signInWithGoogle: (credential: string, locale: Locale) => Promise<AccountUser>;
+  signInWithFacebook: (accessToken: string, locale: Locale) => Promise<AccountUser>;
   signOut: () => Promise<void>;
   deleteAccount: () => Promise<void>;
   fetchProfile: () => Promise<RemoteProfile | null>;
