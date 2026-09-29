@@ -137,7 +137,7 @@ export const LoginPanel = ({
         width: PROVIDER_BUTTON_WIDTH,
         theme: colorScheme(),
         onCredential: (credential) =>
-          void signIn('google', (session) => session.backend.signInWithGoogle(credential)),
+          void signIn('google', (session) => session.backend.signInWithGoogle(credential, lang)),
       })
       .catch(() => setNotice(labels['provider-error']));
   }, [showGoogle, googleClientId, lang, signIn, labels]);
@@ -226,6 +226,7 @@ export const LoginPanel = ({
                   void signIn('facebook', async (session) =>
                     session.backend.signInWithFacebook(
                       await depsRef.current.facebookLogin(facebookAppId, lang),
+                      lang,
                     ),
                   );
                 }

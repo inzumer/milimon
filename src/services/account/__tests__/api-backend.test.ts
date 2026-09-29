@@ -71,12 +71,12 @@ describe('api backend', () => {
     const { backend, store, calls, queue } = setup();
     queue(reply(200, sessionResponse()));
 
-    await expect(backend.signInWithGoogle('google-credential')).resolves.toStrictEqual(USER);
+    await expect(backend.signInWithGoogle('google-credential', 'en')).resolves.toStrictEqual(USER);
 
     expect(calls[0]).toMatchObject({
       url: 'https://api.example.com/auth/google',
       method: 'POST',
-      body: { credential: 'google-credential' },
+      body: { credential: 'google-credential', locale: 'en' },
       headers: {
         'request-app-id': 'web',
         'x-api-key': 'web-key',
@@ -92,10 +92,10 @@ describe('api backend', () => {
   it('should sign in with Facebook', async () => {
     const { backend, calls, queue } = setup();
     queue(reply(200, sessionResponse()));
-    await backend.signInWithFacebook('fb-token');
+    await backend.signInWithFacebook('fb-token', 'es');
     expect(calls[0]).toMatchObject({
       url: expect.stringContaining('/auth/facebook'),
-      body: { accessToken: 'fb-token' },
+      body: { accessToken: 'fb-token', locale: 'es' },
     });
   });
 
@@ -116,7 +116,7 @@ describe('api backend', () => {
     const { role: _role, ...legacy } = USER;
     queue(reply(200, { ...sessionResponse(), user: legacy }));
 
-    await expect(backend.signInWithGoogle('credential')).resolves.toMatchObject({ role: 'user' });
+    await expect(backend.signInWithGoogle('credential', 'es')).resolves.toMatchObject({ role: 'user' });
     expect(store.read()?.user.role).toBe('user');
   });
 
@@ -310,7 +310,7 @@ describe('api backend', () => {
     const listener = vi.fn();
     const stop = backend.onUserChange(listener);
     queue(reply(200, sessionResponse()));
-    await backend.signInWithGoogle('c');
+    await backend.signInWithGoogle('c', 'es');
     store.clear();
     stop();
     expect(listener.mock.calls).toStrictEqual([[USER], [null]]);

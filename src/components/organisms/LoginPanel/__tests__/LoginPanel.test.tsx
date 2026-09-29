@@ -129,7 +129,7 @@ describe('LoginPanel', () => {
     (await google()).onCredential('id-token');
 
     await vi.waitFor(() => expect(navigate).toHaveBeenCalledWith('/en/account'));
-    expect(backend.signInWithGoogle).toHaveBeenCalledWith('id-token');
+    expect(backend.signInWithGoogle).toHaveBeenCalledWith('id-token', 'en');
     expect(sink).toHaveBeenCalledWith('sign_in', { provider: 'google' });
   });
 
@@ -138,7 +138,7 @@ describe('LoginPanel', () => {
     renderPanel();
     await user.click(await screen.findByRole('button', { name: labels['continue-with-facebook'] }));
     expect(facebookLogin).toHaveBeenCalledWith('fb-id', 'en');
-    expect(backend.signInWithFacebook).toHaveBeenCalledWith('fb-token');
+    expect(backend.signInWithFacebook).toHaveBeenCalledWith('fb-token', 'en');
     await vi.waitFor(() => expect(navigate).toHaveBeenCalledWith('/en/account'));
   });
 
