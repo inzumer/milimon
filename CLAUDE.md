@@ -55,6 +55,9 @@ Key commands (Node from `.nvmrc`, pnpm from `packageManager`):
 - **Text**: headings, paragraphs and inline text use the ui-library `RichText` (`variant` h1–h6,
   s1–s4, p1–p4; `as` for another element), in `.tsx` and `.astro` alike, never bare `<p>`/`<h*>`.
   Images use `astro:assets` in `.astro` and the ui-library `Image` in React.
+- **Icons**: Milimon's own family, line SVGs in `src/assets/icons` (24px, 1.5 stroke, round ends, no fill),
+  exposed as components by `@components/atoms/Icons` and painted with `currentColor`. Other projects keep their own
+  family; the ui-library takes icons as props (`Badge`, `Chip`, `Filter`).
 - **Naming**: React components in PascalCase folders; `.astro` files, content folders, slugs and
   i18n keys in kebab-case.
 - **Theming**: colors only via CSS variables (`src/styles/theme.css`); light and dark mode must both work.

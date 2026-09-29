@@ -575,8 +575,11 @@ en **Gestión del sitio → Sugerencias**, solo para editores y admins).
 - [x] **Páginas públicas de recetas y blog** (28/09): `/recipes` con destacadas en `Carousel` y
       la grilla de `Showcase`, ficha `/recipes/<dirección>` con schema.org `Recipe`; el blog y su RSS
       suman los artículos de Keystatic. Recetas sigue "Próximamente" hasta publicar la primera.
-- [ ] **Recetas con UI de referencia** (Pinterest), lo que falta: chips de filtro por categoría,
-      botones flotantes (guardar, compartir), modo "Empezar a cocinar" e isotipo nuevo. Ver
+- [x] **Filtros de recetas** (29/09): `Filter` de la ui-library (chips con scroll lateral) con los
+      íconos SVG de Milimon y colores por categoría (`--category-*`); el filtro queda en `?category=`
+      (`useUrlFilter`).
+- [ ] **Recetas con UI de referencia** (Pinterest), lo que falta: botones flotantes (guardar,
+      compartir), modo "Empezar a cocinar" e isotipo nuevo. Ver
       [09](./suggestions/09-direccion-visual.md).
 - [ ] **Artículo de los milicitos a Keystatic**: hoy vive en `src/i18n/blog`; pasarlo a la colección
       del blog para editarlo desde el CMS como los demás.

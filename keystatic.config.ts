@@ -1,4 +1,6 @@
 import { collection, config, fields } from '@keystatic/core';
+import { RECIPE_CATEGORIES } from './src/constants/recipes';
+import recipeText from './src/i18n/recipe-page/es.json';
 
 /** English is optional and falls back to Spanish on the site. */
 const localized = (label: string, { multiline = false, required = true } = {}) =>
@@ -90,12 +92,10 @@ export default config({
         summary: localized('Resumen (una o dos frases)', { multiline: true }),
         category: fields.select({
           label: 'Categoría',
-          options: [
-            { label: 'Dulce', value: 'sweet' },
-            { label: 'Salado', value: 'savory' },
-            { label: 'Panadería', value: 'bread' },
-            { label: 'Bebidas', value: 'drinks' },
-          ],
+          options: RECIPE_CATEGORIES.map((value) => ({
+            label: recipeText.categories[value],
+            value,
+          })),
           defaultValue: 'sweet',
         }),
         minutes: fields.integer({ label: 'Tiempo total (minutos)', validation: { min: 1 } }),
