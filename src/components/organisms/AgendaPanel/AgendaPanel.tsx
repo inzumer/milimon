@@ -381,7 +381,7 @@ export const AgendaPanel = ({
               type="submit"
               form={formId}
               className="min-h-11"
-              disabled={busy}
+              loading={busy}
             >
               {labels.form.save}
             </Button>
@@ -459,7 +459,7 @@ export const AgendaPanel = ({
               id={trackingId('agenda', 'button', 'confirm-delete')}
               type="button"
               className="min-h-11"
-              disabled={busy}
+              loading={busy}
               onClick={() => void confirmDelete()}
             >
               {labels.confirm.confirm}

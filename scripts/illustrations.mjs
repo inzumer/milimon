@@ -1,5 +1,5 @@
 // Splits each brand PNG into a figure (webp) and a recolorable SVG background, plus baked
-// orange composites and favicons. Run `pnpm illustrations` after changing an illustration.
+// orange composites, favicons and loader marks. Run `pnpm illustrations` after changing one.
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import sharp from 'sharp';
 
@@ -254,6 +254,17 @@ const FAVICONS = {
 /** Sizes embedded (as PNG) in favicon.ico. */
 const ICO_SIZES = [16, 32, 48];
 
+/** Small baked marks for loaders (logo and star), light enough to show while loading. */
+const MARK_SIZE = 192;
+const marks = async () => {
+  for (const name of ['logo', 'star']) {
+    await sharp(`${OUT}/${name}.webp`)
+      .resize(MARK_SIZE, MARK_SIZE)
+      .webp({ quality: 85 })
+      .toFile(`${OUT}/${name}-mark.webp`);
+  }
+};
+
 const favicons = async () => {
   const icon = (size) =>
     sharp(`${OUT}/logo.webp`)
@@ -287,3 +298,4 @@ for (const name of NAMES) {
   await split(name);
 }
 await favicons();
+await marks();

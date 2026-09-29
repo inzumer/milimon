@@ -15,7 +15,7 @@ export interface RecipeCarouselProps {
   labels: { featured: string; previous: string; next: string; choose: string; 'go-to': string };
 }
 
-/** Featured recipes as a carousel of photo cards (React island). */
+/** Featured recipes as a carousel of photo cards, scrolled or picked by indicator (React island). */
 export const RecipeCarousel = ({ items, labels }: RecipeCarouselProps) => (
   <Carousel
     label={labels.featured}
@@ -23,10 +23,7 @@ export const RecipeCarousel = ({ items, labels }: RecipeCarouselProps) => (
     nextLabel={labels.next}
     indicatorsLabel={labels.choose}
     goToLabel={(index, total) => interpolate(labels['go-to'], { n: index + 1, total })}
-    buttonIds={{
-      previous: trackingId('recipes', 'button', 'carousel-previous'),
-      next: trackingId('recipes', 'button', 'carousel-next'),
-    }}
+    buttons={false}
   >
     {items.map(({ id, src, ...card }) => (
       <Showcase

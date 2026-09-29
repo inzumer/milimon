@@ -19,7 +19,7 @@ describe('RecipeCarousel', () => {
     })) as unknown as typeof window.matchMedia;
   });
 
-  it('should show one linked card per recipe with stable tracking ids', () => {
+  it('should show one linked card per recipe, with indicators and no arrows', () => {
     render(
       <RecipeCarousel
         labels={labels}
@@ -46,9 +46,6 @@ describe('RecipeCarousel', () => {
     expect(link).toHaveAttribute('href', '/en/recipes/lemon-loaf');
     expect(link).toHaveAttribute('id', 'recipes-link-featured-lemon-loaf');
     expect(screen.getByRole('button', { name: 'Recipe 2 of 2' })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Next recipes' })).toHaveAttribute(
-      'id',
-      'recipes-button-carousel-next',
-    );
+    expect(screen.queryByRole('button', { name: 'Next recipes' })).not.toBeInTheDocument();
   });
 });

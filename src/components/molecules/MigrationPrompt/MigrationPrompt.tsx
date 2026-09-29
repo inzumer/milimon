@@ -31,7 +31,7 @@ export const MigrationPrompt = ({
           id={trackingId(scope, 'button', 'migration-import')}
           type="button"
           className="min-h-11 flex-1"
-          disabled={busy}
+          loading={busy}
           onClick={onImport}
         >
           {labels.import}
@@ -41,7 +41,7 @@ export const MigrationPrompt = ({
           type="button"
           variant="secondary"
           className="min-h-11 flex-1"
-          disabled={busy}
+          loading={busy}
           onClick={onStartFresh}
         >
           {labels.fresh}

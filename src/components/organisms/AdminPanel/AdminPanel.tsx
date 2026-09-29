@@ -307,7 +307,7 @@ export const AdminPanel = ({
               id={trackingId('admin', 'button', 'confirm-role')}
               type="button"
               className="min-h-11"
-              disabled={busy}
+              loading={busy}
               onClick={() => void confirmChange()}
             >
               {labels.confirm.confirm}

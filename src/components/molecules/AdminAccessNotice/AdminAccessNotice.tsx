@@ -1,4 +1,5 @@
 import { Button, RichText } from '@inzumer/ui-library';
+import { BrandLoader } from '@components/atoms/BrandLoader';
 import { ButtonLink } from '@components/atoms/ButtonLink';
 import { Notice } from '@components/atoms/Notice';
 import type { AdminAccess } from '@hooks';
@@ -32,7 +33,7 @@ export const AdminAccessNotice = ({
   scope,
 }: AdminAccessNoticeProps) => {
   if (access.kind === 'loading') {
-    return <RichText aria-busy="true">{labels.loading}</RichText>;
+    return <BrandLoader label={labels.loading} showLabel />;
   }
   if (access.kind === 'signed-out') {
     return (

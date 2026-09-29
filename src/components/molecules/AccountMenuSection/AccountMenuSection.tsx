@@ -84,7 +84,7 @@ export const AccountMenuSection = ({
               type="button"
               variant="ghost"
               className="min-h-11"
-              disabled={busy}
+              loading={busy}
               onClick={() => void signOut()}
             >
               {labels.signOut}

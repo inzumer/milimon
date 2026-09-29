@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useId, useRef, useState } from 'react';
 import { Button, Image, RichText } from '@inzumer/ui-library';
 import facebookIcon from '@assets/facebook.png';
+import { BrandLoader } from '@components/atoms/BrandLoader';
 import { ButtonLink } from '@components/atoms/ButtonLink';
 import { Notice } from '@components/atoms/Notice';
 import { MigrationPrompt } from '@components/molecules/MigrationPrompt';
@@ -162,7 +163,7 @@ export const LoginPanel = ({
 
   switch (view.kind) {
     case 'loading':
-      return <RichText aria-busy="true">{labels.loading}</RichText>;
+      return <BrandLoader label={labels.loading} showLabel />;
 
     case 'unavailable':
       return <Notice>{labels.unavailable}</Notice>;
@@ -217,7 +218,8 @@ export const LoginPanel = ({
               variant="secondary"
               className="relative min-h-10 max-w-full justify-center rounded-full px-12 text-sm font-medium"
               style={{ width: PROVIDER_BUTTON_WIDTH }}
-              disabled={signingIn || !facebookAppId}
+              loading={signingIn}
+              disabled={!facebookAppId}
               aria-describedby={facebookAppId ? undefined : `${id}-facebook-soon`}
               onClick={() => {
                 if (facebookAppId) {
