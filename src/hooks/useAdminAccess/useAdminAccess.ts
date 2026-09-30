@@ -1,4 +1,5 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { useCallback, useRef } from 'react';
 import {
   ADMIN_SECTION_ROLES,
   getAccountSession,
@@ -6,6 +7,7 @@ import {
   type AccountSession,
   type AccountUser,
 } from '@services/account';
+import { queryKeys } from '@services/query';
 
 export type AdminAccess =
   | { kind: 'loading' }
@@ -15,36 +17,33 @@ export type AdminAccess =
   | { kind: 'error' }
   | { kind: 'ready'; me: AccountUser; session: AccountSession };
 
-/** Whether the person can use the administration section, asked to the API; `retry` re-checks. */
+const checkAccess = async (session: AccountSession | null): Promise<AdminAccess> => {
+  if (!session) {
+    return { kind: 'unavailable' };
+  }
+  if (!(await session.backend.getUser())) {
+    return { kind: 'signed-out' };
+  }
+  try {
+    const me = await session.backend.fetchMe();
+    return ADMIN_SECTION_ROLES.includes(me.role)
+      ? { kind: 'ready', me, session }
+      : { kind: 'forbidden' };
+  } catch (error) {
+    return error instanceof SessionExpiredError ? { kind: 'signed-out' } : { kind: 'error' };
+  }
+};
+
+/** Whether the person can use the administration section, asked to the API once per page; `retry` re-checks. */
 export const useAdminAccess = (loadSession: () => AccountSession | null = getAccountSession) => {
   const loadRef = useRef(loadSession);
-  const [access, setAccess] = useState<AdminAccess>({ kind: 'loading' });
+  const { data, refetch } = useQuery({
+    queryKey: queryKeys.adminAccess,
+    queryFn: () => checkAccess(loadRef.current()),
+  });
+  const retry = useCallback(async () => {
+    await refetch();
+  }, [refetch]);
 
-  const check = useCallback(async () => {
-    const session = loadRef.current();
-    if (!session) {
-      setAccess({ kind: 'unavailable' });
-      return;
-    }
-    if (!(await session.backend.getUser())) {
-      setAccess({ kind: 'signed-out' });
-      return;
-    }
-    try {
-      const me = await session.backend.fetchMe();
-      setAccess(
-        ADMIN_SECTION_ROLES.includes(me.role)
-          ? { kind: 'ready', me, session }
-          : { kind: 'forbidden' },
-      );
-    } catch (error) {
-      setAccess(error instanceof SessionExpiredError ? { kind: 'signed-out' } : { kind: 'error' });
-    }
-  }, []);
-
-  useEffect(() => {
-    void check();
-  }, [check]);
-
-  return { access, retry: check };
+  return { access: data ?? ({ kind: 'loading' } as const), retry };
 };

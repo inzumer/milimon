@@ -1,5 +1,8 @@
-import { useEffect, useId, useState, type SyntheticEvent } from 'react';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useId, useState, type SyntheticEvent } from 'react';
 import { Button, Dropdown, Input, Modal, RichText, Textarea } from '@inzumer/ui-library';
+import { BrandLoader } from '@components/atoms/BrandLoader';
+import { QueryProvider } from '@components/atoms/QueryProvider';
 import { SectionLabel } from '@components/atoms/SectionLabel';
 import {
   AdminAccessNotice,
@@ -23,6 +26,7 @@ import {
   type AgendaEntry,
   type AgendaEntryInput,
 } from '@services/account';
+import { queryKeys } from '@services/query';
 import {
   groupByDate,
   HttpError,
@@ -58,8 +62,7 @@ const STATUS_STYLES: Record<AgendaStatus, string> = {
   published: 'bg-[rgb(var(--color-accent-100))] text-[rgb(var(--color-accent-900))]',
 };
 
-/** Shared publishing agenda (upcoming entries) for editors and admins; the API checks every change. */
-export const AgendaPanel = ({
+const AgendaPanelView = ({
   lang,
   labels,
   accessLabels,
@@ -69,11 +72,8 @@ export const AgendaPanel = ({
 }: AgendaPanelProps) => {
   const [today] = useState(() => todayProp ?? new Date());
   const { access, retry } = useAdminAccess(loadSession);
-  const [entries, setEntries] = useState<AgendaEntry[]>([]);
-  const [reloads, setReloads] = useState(0);
   const [draft, setDraft] = useState<Draft | null>(null);
   const [deleting, setDeleting] = useState<AgendaEntry | null>(null);
-  const [busy, setBusy] = useState(false);
   const [notice, setNotice] = useState('');
   const cadenceId = useId();
   const upcomingId = useId();
@@ -99,30 +99,32 @@ export const AgendaPanel = ({
       timeZone: 'UTC',
     }).format(new Date(`${date}T00:00:00Z`));
 
-  useEffect(() => {
+  const queryClient = useQueryClient();
+  const backend = () => {
     if (!session) {
-      return undefined;
+      throw new Error('No account session');
     }
-    let active = true;
-    const { from, to } = upcomingRange(today, AGENDA_UPCOMING_DAYS);
-    session.backend.listAgenda(from, to).then(
-      (items) => {
-        if (active) {
-          setEntries(items);
-        }
-      },
-      () => {
-        if (active) {
-          setNotice(labels.results.error);
-        }
-      },
-    );
-    return () => {
-      active = false;
-    };
-  }, [session, today, reloads, labels.results.error]);
-
-  const reload = () => setReloads((count) => count + 1);
+    return session.backend;
+  };
+  const range = upcomingRange(today, AGENDA_UPCOMING_DAYS);
+  const agenda = useQuery({
+    queryKey: queryKeys.agenda(range.from, range.to),
+    queryFn: () => backend().listAgenda(range.from, range.to),
+    enabled: session !== null,
+  });
+  const entries = agenda.data ?? [];
+  const onChanged = () => queryClient.invalidateQueries({ queryKey: queryKeys.agendaAll });
+  const saveEntry = useMutation({
+    mutationFn: ({ id, input }: { id: string | null; input: AgendaEntryInput }) =>
+      id ? backend().updateAgendaEntry(id, input) : backend().createAgendaEntry(input),
+    onSuccess: onChanged,
+  });
+  const removeEntry = useMutation({
+    mutationFn: (id: string) => backend().deleteAgendaEntry(id),
+    onSuccess: onChanged,
+  });
+  const busy = saveEntry.isPending || removeEntry.isPending;
+  const shownNotice = notice || (agenda.isError ? labels.results.error : '');
 
   const failWith = (error: unknown) =>
     setNotice(
@@ -170,19 +172,13 @@ export const AgendaPanel = ({
       setDraft({ ...draft, errors });
       return;
     }
-    setBusy(true);
     try {
       const input = { ...values, notes: values.notes?.trim() || null };
-      await (draft.id
-        ? session.backend.updateAgendaEntry(draft.id, input)
-        : session.backend.createAgendaEntry(input));
+      await saveEntry.mutateAsync({ id: draft.id, input });
       setDraft(null);
       setNotice(labels.results.saved);
-      reload();
     } catch (error) {
       failWith(error);
-    } finally {
-      setBusy(false);
     }
   };
 
@@ -190,15 +186,12 @@ export const AgendaPanel = ({
     if (!session || !deleting) {
       return;
     }
-    setBusy(true);
     try {
-      await session.backend.deleteAgendaEntry(deleting.id);
+      await removeEntry.mutateAsync(deleting.id);
       setNotice(labels.results.deleted);
-      reload();
     } catch (error) {
       failWith(error);
     } finally {
-      setBusy(false);
       setDeleting(null);
     }
   };
@@ -217,6 +210,7 @@ export const AgendaPanel = ({
 
   return (
     <div className="flex flex-col gap-8">
+      {busy && <BrandLoader screen />}
       <section
         aria-labelledby={cadenceId}
         className="flex flex-col gap-3 rounded-xl border border-[var(--border-default)] p-5"
@@ -267,7 +261,7 @@ export const AgendaPanel = ({
         </RichText>
 
         <RichText role="status" variant="p3" className="min-h-6">
-          {notice}
+          {shownNotice}
         </RichText>
 
         {entries.length === 0 ? (
@@ -460,3 +454,10 @@ export const AgendaPanel = ({
     </div>
   );
 };
+
+/** Shared publishing agenda (upcoming entries) for editors and admins; the API checks every change. */
+export const AgendaPanel = (props: AgendaPanelProps) => (
+  <QueryProvider>
+    <AgendaPanelView {...props} />
+  </QueryProvider>
+);

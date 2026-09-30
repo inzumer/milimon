@@ -496,8 +496,7 @@ idioma, tema), sus recetas y sus cálculos en un perfil propio.
 - Todas las páginas públicas terminan con "Compartí esta página" (hoja de compartir del dispositivo,
   WhatsApp, Facebook, X, LinkedIn, email y copiar enlace), con evento `page_shared`.
 - **Blog** (`/blog`, `/blog/{artículo}`): primer artículo, los _milicitos_ (escala de 1 a 5
-  estrellitas para puntuar lo que probamos). Hasta que exista el CMS, los artículos viven en
-  `src/i18n/blog/{es,en}.json` y se listan en `BLOG_ARTICLE_IDS`.
+  estrellitas para puntuar lo que probamos). Los artículos viven en `src/content/blog` (Keystatic).
 - **Recetas** (`/recipes`): página "Próximamente" con la imagen de la estrella.
 - Cada sección tiene su imagen para compartir (`og-{home,management,recipes,blog}-{es,en}.png`).
 
@@ -510,16 +509,15 @@ en **Gestión del sitio → Sugerencias**, solo para editores y admins).
 
 - [x] **Publicar la gestión del sitio** (28/09): API 1.2.0 y front 1.17.0 en `main` con tag.
 
-- [ ] **Deploy oficial con dominio propio** (Cloudflare Pages o similar) y **auditoría de seguridad**:
+- [ ] **Deploy oficial con dominio propio** (el Worker `milimon` de Cloudflare) y **auditoría de seguridad**:
       cabeceras HTTP, escaneos externos, revisión de la API y aviso legal (RGPD/LSSI). Ver
       [01](./suggestions/01-deploy-y-seguridad.md).
 - [ ] **Resend con el dominio propio** (cuando lo tengamos): cuenta en Resend, subdominio de envío
       verificado (SPF, DKIM y DMARC), API key solo de envío y `RESEND_API_KEY` + `EMAIL_FROM` en
       Render. Hasta entonces la API no manda mails (solo registra "Email skipped"). Pasos en
       `docs/DEPLOY.md` §7 de la API. Sumar Resend como encargado del tratamiento en Privacidad.
-- [ ] **Login de staging**: el front de `dev` manda `locale` al iniciar sesión y la API de
-      producción lo rechaza hasta desplegar milimon-backend-nest #19 (mails). Llega a `main` con el
-      próximo release de la API.
+- [x] **Login de staging** (30/09): resuelto con la API 1.4.0 en producción (`locale` y
+      `/me/saved-recipes`). Para que no vuelva a pasar: **Ambientes y seguridad**, abajo.
 - [x] **API en Render** (28/09): servicio `milimon-backend-nest` desde el Blueprint
       `milimon-db-blueprint`, base Neon `milimon-db`, API 1.2.0. Keep-alive diurno a
       `/health/live` (API #17).
@@ -530,6 +528,31 @@ en **Gestión del sitio → Sugerencias**, solo para editores y admins).
       [04](./suggestions/04-medicion-y-cuentas.md).
 - [ ] **Meta (Facebook Login)**: crear la app cuando Meta lo permita; hasta entonces el botón queda
       deshabilitado con el aviso "Próximamente".
+
+**Ambientes y seguridad** (ver [ADR 0006](./adr/0006-staging-and-production.md))
+
+Staging y producción separados en cada pieza (sitio, CMS, API, base), el contenido sale de staging a
+producción con el release, y la base de producción tiene backups propios.
+
+- [ ] **Base de staging**: rama `staging` de Neon **solo con el esquema** (sin datos personales).
+      _Lo hago yo (Neon MCP), con tu OK._
+- [ ] **Backups de producción**: `pg_dump` diario cifrado desde GitHub Actions (artifact 30 días),
+      rama `pre-release-<versión>` antes de cada release con migraciones y una prueba de restauración
+      por mes. _Yo el workflow; vos cargás `BACKUP_DATABASE_URL` y `BACKUP_PASSPHRASE` en GitHub._
+- [ ] **API de staging**: servicio `milimon-backend-nest-staging` en Render desde `dev`, con sus
+      propios secretos y `CORS_ORIGIN` del sitio de staging. _Yo el `render.yaml`; vos lo creás en
+      Render y cargás los secretos._
+- [ ] **Sitio en Cloudflare Workers**: un Worker por ambiente (`wrangler.jsonc`): `milimon-staging`
+      desde `dev` y `milimon` desde `main` (`*.workers.dev` hasta tener dominio), cada uno con sus
+      variables. Reemplaza a GitHub Pages. _Vos creás los Workers y cargás las variables; yo la
+      configuración de Wrangler._
+- [ ] **CMS online en staging**: Keystatic en modo GitHub solo en staging (cada "Guardar" es un
+      commit a `dev`); en producción `/keystatic` no existe. _Vos creás la GitHub App desde el
+      propio Keystatic; yo la configuración._
+- [ ] **Ramas protegidas**: `main` y `dev` solo por PR con el CI en verde, en el sitio y la API.
+      _Lo hago yo (`gh api`), con tu OK._
+- [ ] **Google, GTM y Search Console por ambiente**: orígenes de staging y producción en Google
+      Cloud, entornos "Staging" y "Live" en GTM, y Search Console solo en producción.
 
 **Gestión del sitio**
 
@@ -545,10 +568,10 @@ en **Gestión del sitio → Sugerencias**, solo para editores y admins).
       cambio aprobado y cuándo sale la próxima versión estable (viernes 12:00 → lunes 12:30, Madrid).
 - [x] **Staging desde `dev`** (29/09): GitHub Pages despliega `dev` en cada push; producción
       (dominio propio) va a desplegar `main` con los releases.
-- [ ] **Keystatic con vista previa y acceso solo admin**: falta sesión en cookie y middleware en
-      `/keystatic` con el deploy en Cloudflare Pages; vista previa por rama de borrador. Ver
+- [ ] **Keystatic con vista previa y acceso solo admin**: con el CMS online en staging (ver
+      **Ambientes y seguridad**); vista previa por rama de borrador. Ver
       [02](./suggestions/02-cms-y-emails.md#keystatic-vista-previa-y-acceso-solo-para-admins).
-- [ ] **Agenda ↔ CMS** (con la fase 2 del CMS): cada entrada de receta o artículo con un botón
+- [ ] **Agenda ↔ CMS** (después del CMS online en staging): cada entrada de receta o artículo con un botón
       "Escribirla en el CMS" (abre Keystatic en "nueva receta" o "nuevo artículo" con el título), y al
       publicarse pasa sola a "publicada" con el enlace a la página. Más adelante, la agenda puede leer
       los borradores y lo publicado del CMS y dejar la carga manual para redes.
@@ -575,11 +598,22 @@ en **Gestión del sitio → Sugerencias**, solo para editores y admins).
 - [x] **Páginas públicas de recetas y blog** (28/09): `/recipes` con destacadas en `Carousel` y
       la grilla de `Showcase`, ficha `/recipes/<dirección>` con schema.org `Recipe`; el blog y su RSS
       suman los artículos de Keystatic. Recetas sigue "Próximamente" hasta publicar la primera.
-- [ ] **Recetas con UI de referencia** (Pinterest), lo que falta: chips de filtro por categoría,
-      botones flotantes (guardar, compartir), modo "Empezar a cocinar" e isotipo nuevo. Ver
+- [x] **Filtros de recetas** (29/09): `Filter` de la ui-library (chips con scroll lateral) con los
+      íconos SVG de Milimon y un mismo color para todas las pills (`--filter-pill-*`); el filtro queda en `?category=`
+      (`useUrlFilter`).
+- [x] **Guardar y compartir recetas** (30/09): botones en la ficha y flotantes en cada tarjeta;
+      las guardadas quedan en el dispositivo (`useSavedRecipesStore`) y compartir usa el menú del
+      dispositivo o copia el enlace (`useShare`, compartido con "Compartí esta página").
+- [x] **Modo "Empezar a cocinar"** (30/09): un paso por vez en grande, progreso, flechas y teclado,
+      ingredientes para tildar y la pantalla encendida (`useWakeLock`).
+- [x] **Recetas guardadas en la cuenta** (30/09): `/me/saved-recipes` en la API (máx. 100),
+      sincronizadas como el historial (se restauran al iniciar sesión, se importan en la migración y se
+      limpian al cerrar sesión) y un filtro "Guardadas" en `/recipes`.
+- [ ] **Recetas con UI de referencia** (Pinterest), lo que falta: isotipo nuevo. Ver
       [09](./suggestions/09-direccion-visual.md).
-- [ ] **Artículo de los milicitos a Keystatic**: hoy vive en `src/i18n/blog`; pasarlo a la colección
-      del blog para editarlo desde el CMS como los demás.
+- [x] **Artículo de los milicitos a Keystatic** (29/09): es un artículo más del blog
+      (`src/content/blog/milicitos`), destacado en la portada; la escala usa el componente
+      `{% milicitos rating=N %}`, disponible en Keystatic para las reseñas.
 - [ ] **Fotografía**: aplicar la [guía de fotografía](./suggestions/11-guia-de-fotografia.md) (luz,
       ángulos, distancia y foco, fondos, formatos, edición) y armar un preset de edición común.
 
@@ -619,8 +653,9 @@ en **Gestión del sitio → Sugerencias**, solo para editores y admins).
       `@inzumer/ui-library` 2.2.0; el sitio usa `BrandLoader` con el logo.
 - [x] **Anillo de foco interno** (29/09): inputs y textarea con `ring-inset` y el cuerpo del modal
       con margen para que no se recorte (`@inzumer/ui-library` 2.2.1, front #32).
-- [ ] **TanStack Query** para los datos de la API (un `QueryClient` compartido entre islas; migrar
-      `useAdminAccess`, la agenda y la administración) y preparar la app para crecer.
+- [x] **TanStack Query** (29/09): un `QueryClient` compartido entre islas (`@services/query`,
+      átomo `QueryProvider`); `useAdminAccess`, la agenda y la administración migrados. Ver
+      [ADR 0005](./adr/0005-server-data-with-tanstack-query.md).
 - [ ] **API sin repetición**: columnas comunes de las entidades `identity` y `role_change`.
 - [x] **Cookies en un solo componente** (28/09): `CookieConsent` (modos `banner`, `modal` e
       `inline`) en `@inzumer/ui-library` 2.0; el sitio usa 2.0.1: `ConsentBanner` en modo `banner`

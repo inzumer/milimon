@@ -1,4 +1,5 @@
-import { useEffect, useId, useState, type SyntheticEvent } from 'react';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useId, useState, type SyntheticEvent } from 'react';
 import {
   Button,
   Dropdown,
@@ -12,6 +13,8 @@ import {
   TableHeaderCell,
   TableRow,
 } from '@inzumer/ui-library';
+import { BrandLoader } from '@components/atoms/BrandLoader';
+import { QueryProvider } from '@components/atoms/QueryProvider';
 import { SectionLabel } from '@components/atoms/SectionLabel';
 import { AdminAccessNotice } from '@components/molecules/AdminAccessNotice';
 import { useAdminAccess } from '@hooks';
@@ -22,9 +25,8 @@ import {
   type AccountRole,
   type AccountSession,
   type AdminUser,
-  type AdminUserPage,
-  type RoleChange,
 } from '@services/account';
+import { queryKeys } from '@services/query';
 import { HttpError, interpolate, trackingId, type Locale } from '@utils';
 
 export type AdminPanelLabels = Translations<'admin-page'>;
@@ -54,8 +56,7 @@ const resultFor = (error: unknown, labels: AdminPanelLabels['results']): string 
   return labels.error;
 };
 
-/** Administration: content and, for admins, accounts with role changes and the audit log. */
-export const AdminPanel = ({
+const AdminPanelView = ({
   lang,
   labels,
   loginHref,
@@ -65,12 +66,8 @@ export const AdminPanel = ({
   const [search, setSearch] = useState('');
   const [query, setQuery] = useState('');
   const [page, setPage] = useState(1);
-  const [users, setUsers] = useState<AdminUserPage | null>(null);
-  const [changes, setChanges] = useState<RoleChange[]>([]);
   const [pending, setPending] = useState<PendingChange | null>(null);
-  const [busy, setBusy] = useState(false);
   const [notice, setNotice] = useState('');
-  const [reloads, setReloads] = useState(0);
   const usersTitleId = useId();
   const logTitleId = useId();
   const dateFormat = new Intl.DateTimeFormat(lang === 'es' ? 'es-AR' : 'en-US', {
@@ -83,28 +80,33 @@ export const AdminPanel = ({
   const isAdmin = view.kind === 'ready' && view.me.role === 'admin';
   const session = view.kind === 'ready' ? view.session : null;
 
-  useEffect(() => {
-    if (!session || !isAdmin) {
-      return undefined;
+  const queryClient = useQueryClient();
+  const backend = () => {
+    if (!session) {
+      throw new Error('No account session');
     }
-    let active = true;
-    Promise.all([session.backend.listUsers(query, page), session.backend.listRoleChanges(1)]).then(
-      ([list, log]) => {
-        if (active) {
-          setUsers(list);
-          setChanges(log);
-        }
-      },
-      (error: unknown) => {
-        if (active) {
-          setNotice(resultFor(error, labels.results));
-        }
-      },
-    );
-    return () => {
-      active = false;
-    };
-  }, [session, isAdmin, query, page, reloads, labels.results]);
+    return session.backend;
+  };
+  const usersQuery = useQuery({
+    queryKey: queryKeys.adminUsers(query, page),
+    queryFn: () => backend().listUsers(query, page),
+    enabled: session !== null && isAdmin,
+  });
+  const changesQuery = useQuery({
+    queryKey: queryKeys.roleChanges(1),
+    queryFn: () => backend().listRoleChanges(1),
+    enabled: session !== null && isAdmin,
+  });
+  const setRole = useMutation({
+    mutationFn: ({ userId, role }: { userId: string; role: AccountRole }) =>
+      backend().setUserRole(userId, role),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: queryKeys.adminAll }),
+  });
+  const users = usersQuery.data ?? null;
+  const changes = changesQuery.data ?? [];
+  const busy = setRole.isPending;
+  const loadError = usersQuery.error ?? changesQuery.error;
+  const shownNotice = notice || (loadError ? resultFor(loadError, labels.results) : '');
 
   const submitSearch = (event: SyntheticEvent) => {
     event.preventDefault();
@@ -116,20 +118,17 @@ export const AdminPanel = ({
     if (!session || !pending) {
       return;
     }
-    setBusy(true);
     try {
-      const updated = await session.backend.setUserRole(pending.user.id, pending.role);
+      const updated = await setRole.mutateAsync({ userId: pending.user.id, role: pending.role });
       setNotice(
         interpolate(labels.results.changed, {
           name: displayName(updated),
           role: roleName(updated.role),
         }),
       );
-      setReloads((count) => count + 1);
     } catch (error) {
       setNotice(resultFor(error, labels.results));
     } finally {
-      setBusy(false);
       setPending(null);
     }
   };
@@ -150,6 +149,7 @@ export const AdminPanel = ({
 
   return (
     <div className="flex flex-col gap-10">
+      {busy && <BrandLoader screen />}
       <section className="flex flex-col gap-3 rounded-xl border border-[var(--border-default)] p-5">
         <SectionLabel>{labels.content.title}</SectionLabel>
         <RichText>{labels.content.description}</RichText>
@@ -254,7 +254,7 @@ export const AdminPanel = ({
           )}
 
           <RichText role="status" variant="p3" className="min-h-6">
-            {notice}
+            {shownNotice}
           </RichText>
         </section>
       )}
@@ -328,3 +328,10 @@ export const AdminPanel = ({
     </div>
   );
 };
+
+/** Administration: content and, for admins, accounts with role changes and the audit log. */
+export const AdminPanel = (props: AdminPanelProps) => (
+  <QueryProvider>
+    <AdminPanelView {...props} />
+  </QueryProvider>
+);

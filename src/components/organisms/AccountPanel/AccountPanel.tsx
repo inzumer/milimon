@@ -153,6 +153,7 @@ export const AccountPanel = ({
     case 'signed-in':
       return (
         <div className="flex flex-col gap-8">
+          {busy && <BrandLoader screen />}
           <div className="flex items-center gap-4">
             {view.user.avatarUrl && (
               <img

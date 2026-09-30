@@ -19,6 +19,8 @@ import comingSoonEn from './coming-soon/en.json';
 import comingSoonEs from './coming-soon/es.json';
 import commonEn from './common/en.json';
 import commonEs from './common/es.json';
+import cookingModeEn from './cooking-mode/en.json';
+import cookingModeEs from './cooking-mode/es.json';
 import formulaPageEn from './formula-page/en.json';
 import formulaPageEs from './formula-page/es.json';
 import historyPageEn from './history-page/en.json';
@@ -27,6 +29,8 @@ import homeEn from './home/en.json';
 import homeEs from './home/es.json';
 import learnPageEn from './learn-page/en.json';
 import learnPageEs from './learn-page/es.json';
+import loaderEn from './loader/en.json';
+import loaderEs from './loader/es.json';
 import loginPageEn from './login-page/en.json';
 import loginPageEs from './login-page/es.json';
 import privacyPageEn from './privacy-page/en.json';
@@ -44,6 +48,7 @@ const dictionaries = {
   'agenda-page': { es: agendaPageEs, en: agendaPageEn satisfies typeof agendaPageEs },
   blog: { es: blogEs, en: blogEn satisfies typeof blogEs },
   common: { es: commonEs, en: commonEn satisfies typeof commonEs },
+  'cooking-mode': { es: cookingModeEs, en: cookingModeEn satisfies typeof cookingModeEs },
   'coming-soon': { es: comingSoonEs, en: comingSoonEn satisfies typeof comingSoonEs },
   home: { es: homeEs, en: homeEn satisfies typeof homeEs },
   'learn-page': { es: learnPageEs, en: learnPageEn satisfies typeof learnPageEs },
@@ -55,6 +60,7 @@ const dictionaries = {
   'formula-page': { es: formulaPageEs, en: formulaPageEn satisfies typeof formulaPageEs },
   'account-page': { es: accountPageEs, en: accountPageEn satisfies typeof accountPageEs },
   'history-page': { es: historyPageEs, en: historyPageEn satisfies typeof historyPageEs },
+  loader: { es: loaderEs, en: loaderEn satisfies typeof loaderEs },
   'login-page': { es: loginPageEs, en: loginPageEn satisfies typeof loginPageEs },
   'privacy-page': { es: privacyPageEs, en: privacyPageEn satisfies typeof privacyPageEs },
   'recipe-page': { es: recipePageEs, en: recipePageEn satisfies typeof recipePageEs },

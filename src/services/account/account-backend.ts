@@ -4,8 +4,6 @@ import type { Locale } from '@utils';
 
 export type AuthProvider = 'google' | 'facebook';
 
-export const AUTH_PROVIDERS: readonly AuthProvider[] = ['google', 'facebook'];
-
 export const ACCOUNT_ROLES = ['user', 'editor', 'admin'] as const;
 
 export type AccountRole = (typeof ACCOUNT_ROLES)[number];
@@ -86,6 +84,9 @@ export interface AccountBackend {
   fetchHistory: () => Promise<HistoryEntry[]>;
   saveHistoryEntry: (entry: HistoryEntry) => Promise<void>;
   deleteHistoryEntry: (id: string) => Promise<void>;
+  fetchSavedRecipes: () => Promise<string[]>;
+  saveRecipe: (recipeId: string) => Promise<void>;
+  removeSavedRecipe: (recipeId: string) => Promise<void>;
   fetchMe: () => Promise<AccountUser>;
   listUsers: (search: string, page: number) => Promise<AdminUserPage>;
   setUserRole: (userId: string, role: AccountRole) => Promise<AdminUser>;

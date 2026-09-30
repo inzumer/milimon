@@ -26,6 +26,18 @@
     "previous": "Previous recipes",
     "next": "Next recipes",
     "choose": "Choose a recipe",
-    "go-to": "Recipe {n} of {total}"
+    "go-to": "Recipe {n} of {total}",
+    "filter-label": "Filter by category",
+    "filter-all": "All",
+    "filter-saved": "Saved",
+    "filter-empty": "There are no recipes in this category yet.",
+    "filter-previous": "Previous categories",
+    "filter-next": "More categories"
+  },
+  "actions": {
+    "save": "Save",
+    "saved": "Saved",
+    "share": "Share",
+    "copied": "Link copied"
   }
 }

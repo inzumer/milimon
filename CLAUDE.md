@@ -55,6 +55,9 @@ Key commands (Node from `.nvmrc`, pnpm from `packageManager`):
 - **Text**: headings, paragraphs and inline text use the ui-library `RichText` (`variant` h1–h6,
   s1–s4, p1–p4; `as` for another element), in `.tsx` and `.astro` alike, never bare `<p>`/`<h*>`.
   Images use `astro:assets` in `.astro` and the ui-library `Image` in React.
+- **Icons**: Milimon's own family, line SVGs in `src/assets/icons` (24px, 1.5 stroke, round ends, no fill),
+  exposed as components by `@components/atoms/Icons` and painted with `currentColor`. Other projects keep their own
+  family; the ui-library takes icons as props (`Badge`, `Chip`, `Filter`).
 - **Naming**: React components in PascalCase folders; `.astro` files, content folders, slugs and
   i18n keys in kebab-case.
 - **Theming**: colors only via CSS variables (`src/styles/theme.css`); light and dark mode must both work.
@@ -66,8 +69,11 @@ Key commands (Node from `.nvmrc`, pnpm from `packageManager`):
 - **SEO**: pages declare their breadcrumbs with PageLayout `breadcrumbs` (drawn and emitted as
   BreadcrumbList JSON-LD) and extra schema.org data with `structuredData` (builders in `@utils/seo`).
   Canonical, hreflang and share URLs go through `canonicalPath` (no `.html`), matching the sitemap.
+- **Waiting for the API**: actions that wait for a server answer show `{busy && <BrandLoader screen />}`
+  (logo pulsing over the blurred page, cooking one-liners from `src/i18n/loader` at random); content loading
+  in place uses `<BrandLoader label=… showLabel />`.
 - **Static first**: no `client:*` directive unless the component is interactive.
-- **Persistence**: through the zustand stores in `src/stores` only (persisted to localStorage, synced to the account by `services/account`). **Analytics**: through `track()` only.
+- **Persistence**: through the zustand stores in `src/stores` only (persisted to localStorage, synced to the account by `services/account`). **API data**: TanStack Query with the shared client (`getQueryClient`, `queryKeys` in `@services/query`; wrap islands in `QueryProvider`), never `useEffect` fetching (ADR 0005). **Analytics**: through `track()` only.
 - **Dependencies**: latest compatible versions, `pnpm audit` clean. Exceptions documented in
   [docs/adr/0002-tooling-versions.md](./docs/adr/0002-tooling-versions.md).
 

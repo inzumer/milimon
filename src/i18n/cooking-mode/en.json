@@ -1,0 +1,12 @@
+{
+  "start": "Start cooking",
+  "title": "Cooking mode",
+  "progress": "Step {n} of {total}",
+  "previous": "Previous",
+  "next": "Next",
+  "finish": "Done, enjoy!",
+  "ingredients": "Ingredients",
+  "steps": "Steps",
+  "screen-on": "The screen stays on while you cook.",
+  "close": "Leave cooking mode"
+}

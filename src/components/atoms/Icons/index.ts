@@ -1,1 +1,13 @@
-export { ArrowRightIcon, CloseIcon, MenuIcon } from './Icons';
+export {
+  ArrowRightIcon,
+  BookmarkFilledIcon,
+  BookmarkIcon,
+  BreadIcon,
+  CupcakeIcon,
+  CupIcon,
+  MenuIcon,
+  PotIcon,
+  ShareIcon,
+  SparkleIcon,
+  type IconProps,
+} from './Icons';

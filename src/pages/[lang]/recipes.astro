@@ -1,9 +1,8 @@
 ---
 import { getImage } from 'astro:assets';
 import { RichText } from '@inzumer/ui-library';
-import { RecipeCarousel } from '@components';
+import { RecipeCarousel, RecipeGrid } from '@components';
 import PageHeader from '@components/molecules/PageHeader/page-header.astro';
-import RecipeCard from '@components/molecules/RecipeCard/recipe-card.astro';
 import { getTranslations } from '@i18n';
 import ComingSoon from '@layouts/coming-soon.astro';
 import PageLayout from '@layouts/page-layout.astro';
@@ -16,18 +15,20 @@ const lang = toLocale(Astro.params.lang);
 const text = getTranslations(lang, 'recipe-page');
 const recipes = await getPublishedRecipes();
 const href = (id: string) => localizedPath(lang, 'recipes', id);
-const featured = await Promise.all(
-  recipes
-    .filter(({ data }) => data.featured)
-    .map(async ({ id, data }) => ({
-      id,
-      href: href(id),
-      ...recipeCardText(data, lang, text),
-      ...(data.photo && {
-        src: (await getImage({ src: data.photo, width: 640, format: 'webp' })).src,
-      }),
-    })),
+const cards = await Promise.all(
+  recipes.map(async ({ id, data }) => ({
+    id,
+    category: data.category,
+    featured: data.featured,
+    href: href(id),
+    ...recipeCardText(data, lang, text),
+    ...(data.photo && {
+      src: (await getImage({ src: data.photo, width: 640, format: 'webp' })).src,
+    }),
+  })),
 );
+const featured = cards.filter((card) => card.featured);
+const gridLabels = { ...text.index, categories: text.categories, actions: text.actions };
 ---
 
 {recipes.length === 0 ? (
@@ -53,13 +54,7 @@ const featured = await Promise.all(
       <RichText variant="h2" bold className="font-display text-3xl">
         {text.index.all}
       </RichText>
-      <ul class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {recipes.map((recipe) => (
-          <li>
-            <RecipeCard recipe={recipe} lang={lang} href={href(recipe.id)} />
-          </li>
-        ))}
-      </ul>
+      <RecipeGrid client:visible items={cards} labels={gridLabels} />
     </section>
   </PageLayout>
 )}

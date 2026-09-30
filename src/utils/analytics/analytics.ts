@@ -8,12 +8,16 @@ export interface AnalyticsEvents {
   calculation_completed: { formula: string };
   calculator_reset: { formula: string };
   calculation_saved: { formula: string };
+  cooking_started: { recipe: string };
+  cooking_finished: { recipe: string };
   sign_in: { provider: 'google' | 'facebook' };
   sign_in_failed: { provider: 'google' | 'facebook'; reason: 'cancelled' | 'error' };
   sign_out: Record<string, never>;
   history_opened: { formula: string };
   history_deleted: { formula: string };
   page_shared: { method: string; path: string };
+  recipe_saved: { recipe: string };
+  recipe_unsaved: { recipe: string };
 }
 
 export type AnalyticsEventName = keyof AnalyticsEvents;

@@ -1,7 +1,7 @@
-import { useEffect, useId, useState } from 'react';
+import { useId } from 'react';
 import { Button, RichText } from '@inzumer/ui-library';
-import { SHARE_COPIED_MS, SHARE_NETWORKS, type ShareNetwork } from '@constants';
-import { useHydrated } from '@hooks';
+import { SHARE_NETWORKS, type ShareNetwork } from '@constants';
+import { useShare } from '@hooks';
 import type { Translations } from '@i18n/translations';
 import { shareLinks, track, trackingId } from '@utils';
 
@@ -21,39 +21,8 @@ const linkClass =
 /** Share sheet when available, plus direct links and "Copy link"; every option is tracked. */
 export const SharePage = ({ url, title, labels }: SharePageProps) => {
   const titleId = useId();
-  const hydrated = useHydrated();
-  const [copied, setCopied] = useState(false);
-  const path = new URL(url).pathname;
+  const { path, canShare, canCopy, copied, shareNative, copy } = useShare(url, title);
   const links = shareLinks(url, title);
-  const canShare = hydrated && typeof navigator !== 'undefined' && 'share' in navigator;
-  const canCopy = hydrated && typeof navigator !== 'undefined' && 'clipboard' in navigator;
-
-  useEffect(() => {
-    if (!copied) {
-      return undefined;
-    }
-    const timer = setTimeout(() => setCopied(false), SHARE_COPIED_MS);
-    return () => clearTimeout(timer);
-  }, [copied]);
-
-  const shareNative = async () => {
-    try {
-      await navigator.share({ title, url });
-      track('page_shared', { method: 'native', path });
-    } catch {
-      // Dismissed by the person: nothing to do.
-    }
-  };
-
-  const copy = async () => {
-    try {
-      await navigator.clipboard.writeText(url);
-      setCopied(true);
-      track('page_shared', { method: 'copy', path });
-    } catch {
-      setCopied(false);
-    }
-  };
 
   return (
     <section

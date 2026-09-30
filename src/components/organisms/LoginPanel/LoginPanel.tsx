@@ -254,10 +254,8 @@ export const LoginPanel = ({
               </RichText>
             )}
           </div>
-          {signingIn && (
-            <RichText role="status">
-              {view.slow ? labels['waking-up'] : labels['signing-in']}
-            </RichText>
+          {view.kind === 'signing-in' && (
+            <BrandLoader screen label={view.slow ? labels['waking-up'] : labels['signing-in']} />
           )}
           <RichText variant="p3" className="text-[var(--text-secondary)]">
             {labels.legal.split(/(\{terms\}|\{privacy\})/).map((part) =>

@@ -26,6 +26,18 @@
     "previous": "Recetas anteriores",
     "next": "Recetas siguientes",
     "choose": "Elegí una receta",
-    "go-to": "Receta {n} de {total}"
+    "go-to": "Receta {n} de {total}",
+    "filter-label": "Filtrar por categoría",
+    "filter-all": "Todas",
+    "filter-saved": "Guardadas",
+    "filter-empty": "Todavía no hay recetas de esta categoría.",
+    "filter-previous": "Categorías anteriores",
+    "filter-next": "Más categorías"
+  },
+  "actions": {
+    "save": "Guardar",
+    "saved": "Guardada",
+    "share": "Compartir",
+    "copied": "Enlace copiado"
   }
 }

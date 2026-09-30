@@ -286,6 +286,24 @@ describe('api backend', () => {
     expect(calls[2]?.body).not.toHaveProperty('id');
   });
 
+  it('should read, save and remove saved recipes with JSON writes', async () => {
+    const { backend, calls, queue } = setup(fresh);
+    queue(reply(200, { ids: ['scones', 'scones', 7, 'lemon-loaf'] }));
+    await expect(backend.fetchSavedRecipes()).resolves.toStrictEqual(['scones', 'lemon-loaf']);
+    await backend.saveRecipe('carrot-cake');
+    await backend.removeSavedRecipe('carrot-cake');
+
+    expect(
+      calls.map((call) => `${call.method} ${call.url.replace(CONFIG.apiUrl, '')}`),
+    ).toStrictEqual([
+      'GET /me/saved-recipes',
+      'PUT /me/saved-recipes/carrot-cake',
+      'DELETE /me/saved-recipes/carrot-cake',
+    ]);
+    expect(calls[1]?.body).toStrictEqual({});
+    expect(calls[1]?.headers['content-type']).toBe('application/json');
+  });
+
   it('should sign out locally even if the API call fails', async () => {
     const { backend, store, calls, queue } = setup(fresh);
     queue(reply(400));

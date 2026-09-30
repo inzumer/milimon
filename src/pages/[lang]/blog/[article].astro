@@ -1,7 +1,6 @@
 ---
 import { getImage } from 'astro:assets';
 import BlogPost from '@components/organisms/BlogPost/blog-post.astro';
-import MilicitosArticle from '@components/organisms/MilicitosArticle/milicitos-article.astro';
 import { getTranslations } from '@i18n';
 import PageLayout from '@layouts/page-layout.astro';
 import { getBlogIndex, getPublishedPosts } from '@services/content';
@@ -16,15 +15,15 @@ export const getStaticPaths = async () =>
 const lang = toLocale(Astro.params.lang);
 const id = Astro.params.article;
 const item = (await getBlogIndex(lang)).find((entry) => entry.id === id);
-if (!item) {
+const post = (await getPublishedPosts()).find((entry) => entry.id === id);
+if (!item || !post) {
   throw new Error(`Unknown article: ${id}`);
 }
-const post = (await getPublishedPosts()).find((entry) => entry.id === id);
 const blog = getTranslations(lang, 'blog');
 const site = Astro.site ?? Astro.url;
 const aboutHref = localizedPath(lang, 'about');
 const published = item.date.toISOString().slice(0, 10);
-const cover = post?.data.cover
+const cover = post.data.cover
   ? (await getImage({ src: post.data.cover, width: 1200, format: 'webp' })).src
   : withBase(`/og/og-blog-${lang}.png`);
 const posting = blogPostingSchema({
@@ -49,6 +48,6 @@ const posting = blogPostingSchema({
   breadcrumbs={[{ label: blog.index.title, href: localizedPath(lang, 'blog') }]}
 >
   <div class="max-w-3xl">
-    {post ? <BlogPost post={post} lang={lang} /> : <MilicitosArticle lang={lang} />}
+    <BlogPost post={post} lang={lang} />
   </div>
 </PageLayout>

@@ -67,6 +67,10 @@
   --admin-bar-badge-bg: rgb(var(--color-neutral-50));
   --admin-bar-badge-text: rgb(var(--color-accent-800));
 
+  /* Filter pills: one shade darker than the page, with the main text color. */
+  --filter-pill-bg: rgb(var(--color-neutral-100));
+  --filter-pill-text: rgb(var(--color-neutral-950));
+
   --border-default: rgb(var(--color-neutral-200));
   --border-muted: rgb(var(--color-neutral-100));
   --border-strong: rgb(var(--color-neutral-500));
@@ -119,6 +123,9 @@
   --admin-bar-text: rgb(var(--color-neutral-950));
   --admin-bar-badge-bg: rgb(var(--color-neutral-950));
   --admin-bar-badge-text: rgb(var(--color-accent-200));
+
+  --filter-pill-bg: rgb(var(--color-neutral-900));
+  --filter-pill-text: rgb(var(--color-neutral-50));
 
   --border-default: rgb(var(--color-neutral-800));
   --border-muted: rgb(var(--color-neutral-900));
