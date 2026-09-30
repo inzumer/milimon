@@ -58,15 +58,13 @@ Cada Worker tiene su build command (`pnpm build`) y sus propias variables de bui
 Variables): `SITE_URL`, `BASE_PATH` (`/`), `PUBLIC_API_URL`, `PUBLIC_API_KEY` (el `WEB_API_KEY` de su
 API), `PUBLIC_API_APP_ID` (`web`), `PUBLIC_GOOGLE_CLIENT_ID` y `NODE_VERSION`.
 
-Mientras dure la transición, `.github/workflows/pages.yml` sigue publicando `dev` en GitHub Pages
-(<https://inzumer.github.io/milimon-frontend-web/>) con las variables del repositorio. La API de
-cuentas se despliega aparte, en Render (ver su repo).
+La API de cuentas se despliega aparte, en Render (ver su repo).
 
 Variables de entorno (ver `.env.example`):
 
 | Variable                                             | Para qué                                                                                                                           |
 | ---------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| `SITE_URL` / `BASE_PATH`                             | Origen y ruta base del sitio (`https://inzumer.github.io` + `/milimon`): canónicas, `hreflang`, sitemap y Open Graph               |
+| `SITE_URL` / `BASE_PATH`                             | Origen y ruta base del sitio (`https://milimon.inzumer.workers.dev` + `/`): canónicas, `hreflang`, sitemap y Open Graph            |
 | `PUBLIC_GTM_ID`                                      | Contenedor de Google Tag Manager (`GTM-…`). Vacío = sin analítica ni banner de cookies                                             |
 | `PUBLIC_API_URL`                                     | URL de la API de cuentas ([milimon-backend-nest](https://github.com/inzumer/milimon-backend-nest)). Vacío = cuentas no disponibles |
 | `PUBLIC_API_KEY` / `PUBLIC_API_APP_ID`               | Identificación del cliente ante la API (públicas por diseño)                                                                       |

@@ -1,6 +1,6 @@
 # ADR 0006 · Staging y producción separados, con CMS en staging y backups
 
-- **Estado:** propuesta
+- **Estado:** aceptada (sitio, API y base de staging en marcha desde el 30/09)
 - **Fecha:** 2026-09-30
 
 ## Contexto
@@ -63,7 +63,7 @@ Backups de producción:
 - Todo entra en los planes gratuitos: dos Workers de Cloudflare (ambientes de Wrangler en
   `wrangler.jsonc`, cada uno con sus variables), dos servicios de Render (staging duerme sin
   keep-alive; las 750 h/mes se comparten en el workspace) y ramas de Neon (hasta 10).
-- GitHub Pages deja de hacer falta cuando Cloudflare esté andando.
+- GitHub Pages quedó retirado al pasar los dos sitios a Cloudflare.
 - Hacen falta cuentas y accesos de la persona dueña: Cloudflare, el servicio de staging en Render, la
   GitHub App de Keystatic y los secretos (nunca pasan por el chat).
 - El sitio de producción puede salir en `*.workers.dev` antes del dominio y moverse después sin
