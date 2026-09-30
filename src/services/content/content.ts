@@ -1,13 +1,16 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
 import { publishedRecipes, type Locale } from '@utils';
 
-/** Published recipes (no drafts), featured first. */
-export const getPublishedRecipes = async (): Promise<CollectionEntry<'recipes'>[]> =>
-  publishedRecipes(await getCollection('recipes'));
+/** Staging (CMS online) also shows drafts, so what the CMS saves can be reviewed there. */
+const SHOW_DRAFTS = import.meta.env.PUBLIC_KEYSTATIC_STORAGE === 'github';
 
-/** Published CMS blog posts (no drafts), newest first. */
+/** Published recipes (no drafts outside staging), featured first. */
+export const getPublishedRecipes = async (): Promise<CollectionEntry<'recipes'>[]> =>
+  publishedRecipes(await getCollection('recipes'), SHOW_DRAFTS);
+
+/** Published CMS blog posts (no drafts outside staging), newest first. */
 export const getPublishedPosts = async (): Promise<CollectionEntry<'blog'>[]> =>
-  (await getCollection('blog', ({ data }) => !data.draft)).sort(
+  (await getCollection('blog', ({ data }) => SHOW_DRAFTS || !data.draft)).sort(
     (a, b) => b.data.date.getTime() - a.data.date.getTime(),
   );
 

@@ -43,7 +43,10 @@ const article = (label: string) =>
   });
 
 export default config({
-  storage: { kind: 'local' },
+  storage:
+    import.meta.env.PUBLIC_KEYSTATIC_STORAGE === 'github'
+      ? { kind: 'github', repo: { owner: 'inzumer', name: 'milimon-frontend-web' } }
+      : { kind: 'local' },
   ui: { brand: { name: 'Milimon' } },
   collections: {
     blog: collection({

@@ -45,7 +45,8 @@ Seguridad:
   y producción. Nunca se comparten.
 - **CORS y orígenes**: cada API acepta solo su sitio (staging o producción).
 - **CMS**: solo entra quien tiene acceso de escritura al repo en GitHub (la GitHub App de
-  Keystatic). En producción `/keystatic` no existe.
+  Keystatic). En producción `/keystatic` no existe; "Gestión del sitio" enlaza al de staging.
+  Como `dev` solo acepta PRs, la GitHub App es la única excepción para hacer commits directos.
 - **Staging sin datos personales**: su base se crea solo con el esquema y la llenan las pruebas.
 - **Ramas protegidas** en GitHub: `main` y `dev` solo por PR con el CI en verde.
 
