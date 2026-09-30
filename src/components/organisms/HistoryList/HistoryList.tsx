@@ -203,7 +203,7 @@ export const HistoryList = ({
                             />
                           </div>
                         ) : (
-                          <BrandLoader label={labels.loading} showLabel mark="star" size="sm" />
+                          <BrandLoader screen label={labels.loading} />
                         ))}
                     </div>
                   </article>
