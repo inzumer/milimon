@@ -509,7 +509,7 @@ en **Gestión del sitio → Sugerencias**, solo para editores y admins).
 
 - [x] **Publicar la gestión del sitio** (28/09): API 1.2.0 y front 1.17.0 en `main` con tag.
 
-- [ ] **Deploy oficial con dominio propio** (Cloudflare Pages o similar) y **auditoría de seguridad**:
+- [ ] **Deploy oficial con dominio propio** (el Worker `milimon` de Cloudflare) y **auditoría de seguridad**:
       cabeceras HTTP, escaneos externos, revisión de la API y aviso legal (RGPD/LSSI). Ver
       [01](./suggestions/01-deploy-y-seguridad.md).
 - [ ] **Resend con el dominio propio** (cuando lo tengamos): cuenta en Resend, subdominio de envío
@@ -542,9 +542,10 @@ producción con el release, y la base de producción tiene backups propios.
 - [ ] **API de staging**: servicio `milimon-backend-nest-staging` en Render desde `dev`, con sus
       propios secretos y `CORS_ORIGIN` del sitio de staging. _Yo el `render.yaml`; vos lo creás en
       Render y cargás los secretos._
-- [ ] **Sitio en Cloudflare Pages**: rama `dev` → staging y `main` → producción (`*.pages.dev`
-      hasta tener dominio), cada uno con su `PUBLIC_API_URL`. Reemplaza a GitHub Pages. _Vos creás
-      la cuenta y conectás el repo; yo el adapter y las variables._
+- [ ] **Sitio en Cloudflare Workers**: un Worker por ambiente (`wrangler.jsonc`): `milimon-staging`
+      desde `dev` y `milimon` desde `main` (`*.workers.dev` hasta tener dominio), cada uno con sus
+      variables. Reemplaza a GitHub Pages. _Vos creás los Workers y cargás las variables; yo la
+      configuración de Wrangler._
 - [ ] **CMS online en staging**: Keystatic en modo GitHub solo en staging (cada "Guardar" es un
       commit a `dev`); en producción `/keystatic` no existe. _Vos creás la GitHub App desde el
       propio Keystatic; yo la configuración._
