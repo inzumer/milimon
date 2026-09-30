@@ -1,8 +1,4 @@
 {
-  // Cloudflare Workers Builds, one Worker per environment (ADR 0006):
-  // main -> "milimon" (`npx wrangler deploy --env production`),
-  // dev  -> "milimon-staging" (`npx wrangler deploy --env staging`).
-  // Each Worker keeps its own build variables (SITE_URL, PUBLIC_API_URL, PUBLIC_API_KEY…).
   "$schema": "https://unpkg.com/wrangler/config-schema.json",
   "name": "milimon",
   "compatibility_date": "2026-09-30",
