@@ -34,7 +34,7 @@ mismo release que el código.
 Flujo de publicación:
 
 1. **Contenido**: Milagros edita en el CMS de staging → rama `cms/…` → el build valida y se abre el
-   PR a `dev` → al mergearlo, staging se actualiza en minutos → lo revisa ahí.
+   PR a `dev` → al aceptarlo, staging se actualiza en minutos → lo revisa ahí.
 2. **Código**: `feature/*` → PR a `dev` → staging (sitio y API).
 3. **Producción**: el release (viernes → lunes, o a mano hasta el lanzamiento) lleva `dev` a `main`
    en el front y en la API. Las migraciones corren primero en staging.
