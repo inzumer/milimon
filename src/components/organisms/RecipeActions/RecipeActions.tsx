@@ -42,10 +42,13 @@ export const RecipeActions = ({
     track(saved ? 'recipe_unsaved' : 'recipe_saved', { recipe: recipeId });
   };
 
-  const buttonClass = floating ? 'size-11 rounded-full p-0' : 'min-h-11 gap-2 rounded-full px-4';
+  const buttonClass = floating
+    ? 'size-11 rounded-full p-0 shadow-md'
+    : 'min-h-11 gap-2 rounded-full px-4';
 
   return (
-    <div className={cn('flex items-center gap-2', !floating && 'flex-wrap')}>
+    // Over a card: no box around both buttons (Showcase shades its actions); each one has its own shadow.
+    <div className={cn('flex items-center gap-2', floating ? 'shadow-none!' : 'flex-wrap')}>
       <Button
         id={trackingId(scope, 'button', 'save', recipeId)}
         type="button"
