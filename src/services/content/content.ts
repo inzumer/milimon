@@ -1,5 +1,4 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
-import { BLOG_ARTICLE_IDS, getBlogArticle } from '@i18n';
 import { publishedRecipes, type Locale } from '@utils';
 
 /** Published recipes (no drafts), featured first. */
@@ -17,24 +16,15 @@ export interface BlogIndexItem {
   title: string;
   description: string;
   date: Date;
+  featured: boolean;
 }
 
-/** Every blog article of `lang` (site texts and CMS posts), newest first. */
-export const getBlogIndex = async (lang: Locale): Promise<BlogIndexItem[]> => {
-  const site = BLOG_ARTICLE_IDS.map((id) => {
-    const article = getBlogArticle(lang, id);
-    return {
-      id,
-      title: article.title,
-      description: article.description,
-      date: new Date(`${article.date}T12:00:00Z`),
-    };
-  });
-  const cms = (await getPublishedPosts()).map(({ id, data }) => ({
+/** Every published article in `lang` (English falls back to Spanish), newest first. */
+export const getBlogIndex = async (lang: Locale): Promise<BlogIndexItem[]> =>
+  (await getPublishedPosts()).map(({ id, data }) => ({
     id,
     title: lang === 'en' ? data.title : data.titleEs,
     description: (lang === 'en' && data.description.en) || data.description.es,
     date: data.date,
+    featured: data.featured,
   }));
-  return [...site, ...cms].sort((a, b) => b.date.getTime() - a.date.getTime());
-};

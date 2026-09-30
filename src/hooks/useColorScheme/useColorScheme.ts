@@ -3,10 +3,10 @@ import { useSettingsStore, type ColorScheme } from '@stores';
 import { track } from '@utils';
 
 /** Scheme currently applied by the inline head script (or by a previous toggle). */
-export const readAppliedColorScheme = (): ColorScheme =>
+const readAppliedColorScheme = (): ColorScheme =>
   document.documentElement.dataset['colorScheme'] === 'dark' ? 'dark' : 'light';
 
-export const applyColorScheme = (scheme: ColorScheme): void => {
+const applyColorScheme = (scheme: ColorScheme): void => {
   document.documentElement.dataset['colorScheme'] = scheme;
 };
 

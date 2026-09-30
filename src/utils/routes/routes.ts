@@ -1,7 +1,7 @@
 import { isLocale, type Locale } from '@utils/locale';
 
 /** Route slugs are always English and identical in every locale. */
-export const ROUTES = {
+const ROUTES = {
   home: '',
   calculator: 'calculator',
   formulas: 'formulas',

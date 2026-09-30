@@ -6,26 +6,5 @@
     "read-more": "Leer el artículo",
     "published": "Publicado el {date}"
   },
-  "articles": {
-    "milicitos": {
-      "title": "Los milicitos: cómo puntuamos lo que probamos",
-      "description": "Del 1 al 5, con estrellitas: la escala nació en una degustación de alfajores y ahora la usamos para calificar todo lo que probamos.",
-      "date": "2026-09-26",
-      "intro": [
-        "Los milicitos son nuestra forma de puntuar comidas. Van del 1 al 5 y cada uno es una estrellita de Milimon: cuantos más milicitos, mejor nos pareció.",
-        "Nacieron medio en broma, en una degustación de alfajores. Había que decidir cuál era el mejor y, en lugar de poner puntajes serios, empezamos a repartir estrellitas. La idea quedó.",
-        "Es una broma, pero la usamos en serio: cada vez que probemos algo, sea un plato, una receta o un producto, le vamos a poner sus milicitos."
-      ],
-      "scale-title": "La escala",
-      "scale": [
-        "No lo repetiríamos.",
-        "Tiene cosas para mejorar.",
-        "Rico, cumple.",
-        "Muy bueno, lo recomendamos.",
-        "Un clásico: hay que probarlo."
-      ],
-      "closing": "Pronto vas a ver los milicitos en las recetas y en las próximas reseñas."
-    }
-  },
   "rating": "{count} de 5 milicitos"
 }

@@ -2,8 +2,9 @@
 import { RichText } from '@inzumer/ui-library';
 import { ButtonLink, FeatureCard } from '@components';
 import BrandIllustration from '@components/atoms/BrandIllustration/brand-illustration.astro';
-import { BLOG_ARTICLE_IDS, getBlogArticle, getTranslations } from '@i18n';
+import { getTranslations } from '@i18n';
 import PageLayout from '@layouts/page-layout.astro';
+import { getBlogIndex } from '@services/content';
 import { localePaths, localizedPath, toLocale, trackingId, websiteSchema } from '@utils';
 
 export const getStaticPaths = localePaths;
@@ -21,6 +22,7 @@ const website = websiteSchema({
   lang,
 });
 const blog = getTranslations(lang, 'blog');
+const featured = (await getBlogIndex(lang)).filter((article) => article.featured);
 ---
 
 <PageLayout lang={lang} structuredData={[website]}>
@@ -115,19 +117,16 @@ const blog = getTranslations(lang, 'blog');
       <RichText className="text-[var(--text-secondary)]">{home['blog-section'].intro}</RichText>
     </header>
     <div class="grid gap-6 lg:grid-cols-2">
-      {BLOG_ARTICLE_IDS.map((id) => {
-        const article = getBlogArticle(lang, id);
-        return (
-          <FeatureCard
-            badge={common.nav.featured}
-            title={article.title}
-            description={article.description}
-            cta={blog.index['read-more']}
-            href={localizedPath(lang, 'blog', id)}
-            ctaId={trackingId('home', 'link', 'blog', id)}
-          />
-        );
-      })}
+      {featured.map((article) => (
+        <FeatureCard
+          badge={common.nav.featured}
+          title={article.title}
+          description={article.description}
+          cta={blog.index['read-more']}
+          href={localizedPath(lang, 'blog', article.id)}
+          ctaId={trackingId('home', 'link', 'blog', article.id)}
+        />
+      ))}
     </div>
   </section>
 

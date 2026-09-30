@@ -64,6 +64,7 @@ const blog = defineCollection({
         date: z.coerce.date(),
         cover: image().nullable().optional(),
         coverAlt: optionalLocalized.default({ es: '', en: '' }),
+        featured: z.boolean().default(false),
         draft: z.boolean().default(true),
       })
       .refine(

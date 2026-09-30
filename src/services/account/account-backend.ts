@@ -4,8 +4,6 @@ import type { Locale } from '@utils';
 
 export type AuthProvider = 'google' | 'facebook';
 
-export const AUTH_PROVIDERS: readonly AuthProvider[] = ['google', 'facebook'];
-
 export const ACCOUNT_ROLES = ['user', 'editor', 'admin'] as const;
 
 export type AccountRole = (typeof ACCOUNT_ROLES)[number];

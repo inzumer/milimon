@@ -1,7 +1,6 @@
 export {
   ACCOUNT_ROLES,
   ADMIN_SECTION_ROLES,
-  AUTH_PROVIDERS,
   isAccountRole,
   type AccountBackend,
   type AccountRole,
