@@ -1,12 +1,13 @@
 // @ts-check
 import { createHash } from 'node:crypto';
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
+import cloudflare from '@astrojs/cloudflare';
 import markdoc from '@astrojs/markdoc';
 import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
 import keystatic from '@keystatic/astro';
 import tailwindcss from '@tailwindcss/vite';
-import { defineConfig } from 'astro/config';
+import { defineConfig, sessionDrivers } from 'astro/config';
 import { SETTINGS_STORAGE_KEY } from './src/constants/storage.ts';
 import {
   languageRedirectScript,
@@ -21,16 +22,21 @@ try {
   // No .env file.
 }
 
-const site = process.env.SITE_URL ?? 'https://inzumer.github.io';
+const site = process.env.SITE_URL ?? 'https://milimon.inzumer.workers.dev';
 const base = process.env.BASE_PATH || '/';
-/** The Keystatic admin (/keystatic) runs only with `astro dev`; the build stays static. */
 const isDev = process.argv.includes('dev');
+/** Staging build: Keystatic online (GitHub mode) on the Worker; the rest stays static. */
+const cmsOnline = process.env.PUBLIC_KEYSTATIC_STORAGE === 'github';
+if (cmsOnline) {
+  // The adapter builds the Worker for this wrangler environment.
+  process.env.CLOUDFLARE_ENV ??= 'staging';
+}
 /** Recipes stays "coming soon" (out of the sitemap) until one is published. */
 const RECIPES_DIR = 'src/content/recipes';
 const hasRecipes =
   existsSync(RECIPES_DIR) &&
-  readdirSync(RECIPES_DIR).some((file) =>
-    /^draft: false$/m.test(readFileSync(`${RECIPES_DIR}/${file}`, 'utf8')),
+  readdirSync(RECIPES_DIR).some(
+    (file) => cmsOnline || /^draft: false$/m.test(readFileSync(`${RECIPES_DIR}/${file}`, 'utf8')),
   );
 const privateRoute = hasRecipes
   ? /\/(account|history|login|admin)$/
@@ -91,6 +97,8 @@ const connectSrc = /** @type {`connect-src ${string}`} */ (
     'https://*.googletagmanager.com',
     'https://*.google-analytics.com',
     'https://*.analytics.google.com',
+    // Keystatic in GitHub mode reads and commits through the GitHub API.
+    cmsOnline && 'https://api.github.com',
   ]
     .filter(Boolean)
     .join(' ')
@@ -101,7 +109,7 @@ const csp = {
   directives: [
     "default-src 'self'",
     connectSrc,
-    "img-src 'self' data: https://*.googleusercontent.com https://*.fbcdn.net https://platform-lookaside.fbsbx.com https://*.googletagmanager.com https://*.google-analytics.com https://ssl.gstatic.com https://www.gstatic.com",
+    `img-src 'self' data: ${cmsOnline ? 'blob: https://avatars.githubusercontent.com ' : ''}https://*.googleusercontent.com https://*.fbcdn.net https://platform-lookaside.fbsbx.com https://*.googletagmanager.com https://*.google-analytics.com https://ssl.gstatic.com https://www.gstatic.com`,
     'frame-src https://accounts.google.com https://*.facebook.com https://www.googletagmanager.com',
     // GTM preview mode (Tag Assistant) badge fonts.
     "font-src 'self' https://fonts.gstatic.com data:",
@@ -145,10 +153,17 @@ export default defineConfig({
   build: { format: 'file' },
   prefetch: { prefetchAll: true, defaultStrategy: 'hover' },
   security: { csp },
+  // Not in dev: Keystatic's GitHub App setup writes the local .env from Node.
+  ...(cmsOnline &&
+    !isDev && {
+      adapter: cloudflare({ imageService: 'compile', prerenderEnvironment: 'node' }),
+      session: { driver: sessionDrivers.lruCache() },
+    }),
   integrations: [
     react(),
     markdoc(),
-    ...(isDev ? [keystatic(), keystaticPreview()] : []),
+    ...(isDev || cmsOnline ? [keystatic()] : []),
+    ...(isDev ? [keystaticPreview()] : []),
     sitemap({
       i18n: { defaultLocale: 'es', locales: { es: 'es', en: 'en' } },
       filter: (page) => {
@@ -163,8 +178,8 @@ export default defineConfig({
       },
     }),
   ],
-  // Not in dev: its prefix check 404s /keystatic, and pages are [lang]/… routes anyway.
-  ...(isDev
+  // Not with Keystatic: its prefix check 404s /keystatic, and pages are [lang]/… routes anyway.
+  ...(isDev || cmsOnline
     ? {}
     : {
         i18n: {

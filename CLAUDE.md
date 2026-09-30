@@ -62,7 +62,7 @@ Key commands (Node from `.nvmrc`, pnpm from `packageManager`):
   i18n keys in kebab-case.
 - **Theming**: colors only via CSS variables (`src/styles/theme.css`); light and dark mode must both work.
 - **Layout**: mobile-first; one layout up to 1024px, centered container above.
-- **Base path**: the site is served under `/milimon` on GitHub Pages. Build internal URLs
+- **Base path**: the site may be served under a sub-path (`BASE_PATH`). Build internal URLs
   with `localizedPath`/`withBase` (never hard-coded `/es/...` or `/favicon.ico`).
 - **Security**: a strict Content-Security-Policy (hash-only scripts) is generated at build time
   (`security.csp` in `astro.config.mjs`); a new external script or API origin must be added there.
@@ -105,7 +105,7 @@ Suggested scopes: `formulas`, `calculators`, `ui`, `i18n`, `theme`, `pages`, `de
 ## Git workflow (gitflow)
 
 - `main`: production. Only receives `release/*` (and `hotfix/*`) merges, tagged `vX.Y.Z`.
-- `dev`: integration branch. Every feature is merged here with `--no-ff`. **Staging** (GitHub Pages)
+- `dev`: integration branch. Every feature is merged here with `--no-ff`. **Staging** (Worker `milimon-staging`)
   deploys `dev` on every push, so changes can be checked a few minutes after merging.
 - `feature/<kebab-name>` from `dev` → back into `dev`. One phase (or part of one) per feature branch.
 - `release/<version>` from `dev` → `main` (tag) and back into `dev`. **Automatic** (Madrid time): `release-prepare.yml` cuts

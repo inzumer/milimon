@@ -534,25 +534,31 @@ en **Gestión del sitio → Sugerencias**, solo para editores y admins).
 Staging y producción separados en cada pieza (sitio, CMS, API, base), el contenido sale de staging a
 producción con el release, y la base de producción tiene backups propios.
 
-- [ ] **Base de staging**: rama `staging` de Neon **solo con el esquema** (sin datos personales).
-      _Lo hago yo (Neon MCP), con tu OK._
+- [x] **Base de staging** (30/09): rama `staging` de Neon vacía (solo esquema y migraciones) y
+      con su propia contraseña (la rama hereda la de producción; se cambió).
 - [ ] **Backups de producción**: `pg_dump` diario cifrado desde GitHub Actions (artifact 30 días),
       rama `pre-release-<versión>` antes de cada release con migraciones y una prueba de restauración
       por mes. _Yo el workflow; vos cargás `BACKUP_DATABASE_URL` y `BACKUP_PASSPHRASE` en GitHub._
-- [ ] **API de staging**: servicio `milimon-backend-nest-staging` en Render desde `dev`, con sus
-      propios secretos y `CORS_ORIGIN` del sitio de staging. _Yo el `render.yaml`; vos lo creás en
-      Render y cargás los secretos._
-- [ ] **Sitio en Cloudflare Workers**: un Worker por ambiente (`wrangler.jsonc`): `milimon-staging`
-      desde `dev` y `milimon` desde `main` (`*.workers.dev` hasta tener dominio), cada uno con sus
-      variables. Reemplaza a GitHub Pages. _Vos creás los Workers y cargás las variables; yo la
-      configuración de Wrangler._
-- [ ] **CMS online en staging**: Keystatic en modo GitHub solo en staging (cada "Guardar" es un
-      commit a `dev`); en producción `/keystatic` no existe. _Vos creás la GitHub App desde el
-      propio Keystatic; yo la configuración._
+- [x] **API de staging** (30/09): `milimon-backend-nest-staging` en Render desde `dev`, con sus
+      propias claves; cada API acepta solo el origen de su sitio.
+- [x] **Sitio en Cloudflare Workers** (30/09): `milimon` (`main`,
+      <https://milimon.inzumer.workers.dev>) y `milimon-staging` (`dev`,
+      <https://milimon-staging.inzumer.workers.dev>), cada uno con sus variables de build. GitHub
+      Pages retirado.
+- [ ] **CMS online en staging**: Keystatic en modo GitHub solo en staging, con los borradores
+      visibles ahí; en producción `/keystatic` no existe y "Gestión del sitio" enlaza al de
+      staging. Cada "Guardar" va a una rama `cms/…`; `cms-to-dev` valida el build y abre el PR a
+      `dev`. GitHub App `milimon-cms` y sus variables en el Worker listas (30/09). Pendiente:
+      decidir si esos PRs se aceptan solos (hoy los aceptás vos).
 - [ ] **Ramas protegidas**: `main` y `dev` solo por PR con el CI en verde, en el sitio y la API.
       _Lo hago yo (`gh api`), con tu OK._
 - [ ] **Google, GTM y Search Console por ambiente**: orígenes de staging y producción en Google
       Cloud, entornos "Staging" y "Live" en GTM, y Search Console solo en producción.
+- [ ] **Métricas y monitoreo**: panel "Métricas" en Gestión del sitio (solo admins, `/admin/metrics`:
+      registros y usuarios activos por día, cálculos y recetas guardadas), tráfico con GA4 vía GTM, y
+      errores y tiempos en Render y en Cloudflare (Observability).
+- [ ] **Limpieza final**: revisar en todos los repos archivos que sobran (configuraciones viejas,
+      credenciales locales, scripts sin uso) y comentarios de más.
 
 **Gestión del sitio**
 

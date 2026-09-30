@@ -103,7 +103,7 @@ export const HistoryList = ({
   };
 
   if (entries === null) {
-    return <BrandLoader label={labels.loading} showLabel />;
+    return <BrandLoader screen label={labels.loading} />;
   }
 
   return (
@@ -203,7 +203,7 @@ export const HistoryList = ({
                             />
                           </div>
                         ) : (
-                          <BrandLoader label={labels.loading} showLabel mark="star" size="sm" />
+                          <BrandLoader screen label={labels.loading} />
                         ))}
                     </div>
                   </article>

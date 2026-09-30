@@ -11,7 +11,8 @@
   "content": {
     "title": "Contenido",
     "description": "Recetas, blog, \"Sobre mí\" y las secciones del sitio.",
-    "soon": "El editor de contenido llega junto con el deploy oficial en el dominio propio."
+    "cms-note": "Se edita en el ambiente de pruebas: lo que guardes se ve ahí en unos minutos y llega a este sitio con la próxima versión.",
+    "open-cms": "Abrir el editor"
   },
   "users": {
     "title": "Usuarios y roles",

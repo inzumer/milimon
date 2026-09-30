@@ -14,9 +14,11 @@ import {
   TableRow,
 } from '@inzumer/ui-library';
 import { BrandLoader } from '@components/atoms/BrandLoader';
+import { ButtonLink } from '@components/atoms/ButtonLink';
 import { QueryProvider } from '@components/atoms/QueryProvider';
 import { SectionLabel } from '@components/atoms/SectionLabel';
 import { AdminAccessNotice } from '@components/molecules/AdminAccessNotice';
+import { CMS_URL } from '@constants';
 import { useAdminAccess } from '@hooks';
 import type { Translations } from '@i18n/translations';
 import {
@@ -149,13 +151,23 @@ const AdminPanelView = ({
 
   return (
     <div className="flex flex-col gap-10">
-      {busy && <BrandLoader screen />}
+      {(busy || usersQuery.isLoading || changesQuery.isLoading) && <BrandLoader screen />}
       <section className="flex flex-col gap-3 rounded-xl border border-[var(--border-default)] p-5">
         <SectionLabel>{labels.content.title}</SectionLabel>
         <RichText>{labels.content.description}</RichText>
         <RichText variant="p3" className="text-[var(--text-secondary)]">
-          {labels.content.soon}
+          {labels.content['cms-note']}
         </RichText>
+        <ButtonLink
+          id={trackingId('admin', 'link', 'open-cms')}
+          href={CMS_URL}
+          target="_blank"
+          rel="noopener"
+          variant="secondary"
+          className="self-start"
+        >
+          {labels.content['open-cms']}
+        </ButtonLink>
       </section>
 
       {isAdmin && (
@@ -262,7 +274,7 @@ const AdminPanelView = ({
       {isAdmin && (
         <section aria-labelledby={logTitleId} className="flex flex-col gap-3">
           <SectionLabel id={logTitleId}>{labels.log.title}</SectionLabel>
-          {changes.length === 0 ? (
+          {changesQuery.isLoading ? null : changes.length === 0 ? (
             <RichText className="text-[var(--text-secondary)]">{labels.log.empty}</RichText>
           ) : (
             <ul className="flex flex-col gap-2">

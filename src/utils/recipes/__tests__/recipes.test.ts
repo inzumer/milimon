@@ -28,6 +28,14 @@ describe('recipes', () => {
     expect(result.map(({ id }) => id)).toEqual(['quiche', 'lemon-loaf', 'scones']);
   });
 
+  it('should keep drafts when asked (staging)', () => {
+    const result = publishedRecipes(
+      [entry('scones', 'Scones'), entry('draft', 'Borrador', true)],
+      true,
+    );
+    expect(result.map(({ id }) => id)).toEqual(['draft', 'scones']);
+  });
+
   it('should build the card texts with category and time', () => {
     const recipe = {
       title: 'Lemon loaf',

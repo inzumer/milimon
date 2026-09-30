@@ -14,14 +14,15 @@ export const localize = (text: LocalizedText, lang: Locale): string =>
 export const recipeTitle = (recipe: { title: string; titleEs: string }, lang: Locale): string =>
   lang === 'en' ? recipe.title : recipe.titleEs;
 
-/** Published recipes (drafts left out), featured first, then by title. */
+/** Published recipes (drafts left out unless `includeDrafts`), featured first, then by title. */
 export const publishedRecipes = <
   T extends { id: string; data: { draft: boolean; featured: boolean; title: string } },
 >(
   entries: readonly T[],
+  includeDrafts = false,
 ): T[] =>
   entries
-    .filter((entry) => !entry.data.draft)
+    .filter((entry) => includeDrafts || !entry.data.draft)
     .sort(
       (a, b) =>
         Number(b.data.featured) - Number(a.data.featured) ||

@@ -1,0 +1,35 @@
+name: CMS to dev
+
+# Each CMS save lands on a cms/* branch: validate the content and open (or update) its PR to dev.
+on:
+  push:
+    branches: ['cms/**']
+
+permissions:
+  contents: read
+  pull-requests: write
+
+concurrency:
+  group: cms-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    uses: inzumer/inzumer-ci/.github/workflows/node-ci.yml@v1
+    with:
+      commands: pnpm build
+
+  pull-request:
+    needs: validate
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      BRANCH: ${{ github.ref_name }}
+    steps:
+      - name: Open the PR to dev
+        run: |
+          gh pr view "$BRANCH" --json state -q .state 2>/dev/null | grep -q OPEN ||
+            gh pr create --base dev --head "$BRANCH" \
+              --title "content: ${BRANCH#cms/}" \
+              --body "Cambio guardado desde el CMS (Keystatic). El build ya pasó."

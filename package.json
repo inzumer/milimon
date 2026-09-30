@@ -1,6 +1,6 @@
 {
   "name": "milimon",
-  "version": "1.19.0",
+  "version": "1.20.0",
   "private": true,
   "description": "Milimon — calculadora y manual de estudio de costos, desechos y mermas en gastronomía",
   "license": "UNLICENSED",
@@ -30,6 +30,7 @@
     "illustrations": "node scripts/illustrations.mjs"
   },
   "dependencies": {
+    "@astrojs/cloudflare": "^14.3.3",
     "@astrojs/markdoc": "^2.0.9",
     "@astrojs/react": "^7.0.0",
     "@astrojs/rss": "^4.0.19",
@@ -83,6 +84,7 @@
     "tailwindcss": "^4.3.3",
     "typescript": "6.0.3",
     "typescript-eslint": "^8.70.1",
-    "vitest": "^5.0.2"
+    "vitest": "^5.0.2",
+    "wrangler": "^4.145.0"
   }
 }
