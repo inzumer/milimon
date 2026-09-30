@@ -7,3 +7,4 @@ export * from './useFormulaCalculator';
 export * from './useHydrated';
 export * from './useOmnesCalculator';
 export * from './useRecipeCostingCalculator';
+export * from './useUrlFilter';

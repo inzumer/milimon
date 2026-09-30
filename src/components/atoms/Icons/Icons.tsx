@@ -1,25 +1,38 @@
-import type { SVGProps } from 'react';
+import type { CSSProperties } from 'react';
+import { cn } from '@inzumer/ui-library';
+import arrowRight from '@assets/icons/arrow-right.svg?url';
+import bread from '@assets/icons/bread.svg?url';
+import cup from '@assets/icons/cup.svg?url';
+import cupcake from '@assets/icons/cupcake.svg?url';
+import menu from '@assets/icons/menu.svg?url';
+import pot from '@assets/icons/pot.svg?url';
+import sparkle from '@assets/icons/sparkle.svg?url';
 
-type SvgIconProps = SVGProps<SVGSVGElement>;
+export interface IconProps {
+  className?: string;
+}
 
-const base = {
-  xmlns: 'http://www.w3.org/2000/svg',
-  viewBox: '0 0 24 24',
-  fill: 'none',
-  stroke: 'currentColor',
-  strokeWidth: 2,
-  strokeLinecap: 'round',
-  strokeLinejoin: 'round',
-} as const;
+/**
+ * Milimon's icon family: line SVGs in `src/assets/icons` (1.5 stroke, round ends, no fill), used
+ * as a mask and painted with `currentColor`, so they follow the text color in light and dark mode.
+ */
+const svgIcon = (src: string) => {
+  const mask = `url("${src}") center / contain no-repeat`;
+  const style: CSSProperties = { mask, WebkitMask: mask };
+  const SvgIcon = ({ className }: IconProps) => (
+    <span
+      aria-hidden
+      className={cn('inline-block size-6 shrink-0 bg-current', className)}
+      style={style}
+    />
+  );
+  return SvgIcon;
+};
 
-export const MenuIcon = (props: SvgIconProps) => (
-  <svg {...base} {...props}>
-    <path d="M4 7h16M4 12h16M4 17h16" />
-  </svg>
-);
-
-export const ArrowRightIcon = (props: SvgIconProps) => (
-  <svg {...base} {...props}>
-    <path d="M5 12h14M13 6l6 6-6 6" />
-  </svg>
-);
+export const ArrowRightIcon = svgIcon(arrowRight);
+export const BreadIcon = svgIcon(bread);
+export const CupIcon = svgIcon(cup);
+export const CupcakeIcon = svgIcon(cupcake);
+export const MenuIcon = svgIcon(menu);
+export const PotIcon = svgIcon(pot);
+export const SparkleIcon = svgIcon(sparkle);
