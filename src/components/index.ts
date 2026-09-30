@@ -27,6 +27,7 @@ export * from './organisms/AdminPanel';
 export * from './organisms/AgendaPanel';
 export * from './organisms/CalculatorPicker';
 export * from './organisms/ConsentBanner';
+export * from './organisms/CookingMode';
 export * from './organisms/FormulaCalculator';
 export * from './organisms/FormulaResult';
 export * from './organisms/HistoryList';

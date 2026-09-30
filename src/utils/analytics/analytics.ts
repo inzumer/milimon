@@ -8,6 +8,8 @@ export interface AnalyticsEvents {
   calculation_completed: { formula: string };
   calculator_reset: { formula: string };
   calculation_saved: { formula: string };
+  cooking_started: { recipe: string };
+  cooking_finished: { recipe: string };
   sign_in: { provider: 'google' | 'facebook' };
   sign_in_failed: { provider: 'google' | 'facebook'; reason: 'cancelled' | 'error' };
   sign_out: Record<string, never>;

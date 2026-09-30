@@ -2,7 +2,7 @@
 import { getImage, Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 import { RichText, Timeline } from '@inzumer/ui-library';
-import { RecipeActions } from '@components';
+import { CookingMode, RecipeActions } from '@components';
 import { getTranslations } from '@i18n';
 import { interpolate, localize, localizedPath, recipeTitle, type Locale } from '@utils';
 
@@ -15,6 +15,10 @@ interface Props {
 const { recipe, lang } = Astro.props;
 const { data } = recipe;
 const text = getTranslations(lang, 'recipe-page');
+const cooking = getTranslations(lang, 'cooking-mode');
+const ingredients = data.ingredients.map((ingredient) =>
+  [ingredient.amount, localize(ingredient.name, lang)].filter(Boolean).join(' '),
+);
 const meta = [
   text.categories[data.category],
   data.minutes ? interpolate(text.minutes, { minutes: data.minutes }) : '',
@@ -91,6 +95,17 @@ const steps = await Promise.all(
     <RichText variant="h2" bold className="font-display text-3xl">
       {text.steps}
     </RichText>
+    <CookingMode
+      client:visible
+      recipeId={recipe.id}
+      title={recipeTitle(data, lang)}
+      ingredients={ingredients}
+      steps={steps.map((step) => ({
+        text: step.description[0] ?? '',
+        ...(step.image && { image: step.image }),
+      }))}
+      labels={cooking}
+    />
     <Timeline items={steps} />
   </section>
 </article>

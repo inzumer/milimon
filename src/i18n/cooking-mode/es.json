@@ -1,0 +1,12 @@
+{
+  "start": "Empezar a cocinar",
+  "title": "Modo cocina",
+  "progress": "Paso {n} de {total}",
+  "previous": "Anterior",
+  "next": "Siguiente",
+  "finish": "¡Listo, a disfrutar!",
+  "ingredients": "Ingredientes",
+  "steps": "Pasos",
+  "screen-on": "La pantalla queda encendida mientras cocinás.",
+  "close": "Salir del modo cocina"
+}

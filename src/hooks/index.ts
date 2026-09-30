@@ -9,3 +9,4 @@ export * from './useOmnesCalculator';
 export * from './useRecipeCostingCalculator';
 export * from './useUrlFilter';
 export * from './useShare';
+export * from './useWakeLock';
