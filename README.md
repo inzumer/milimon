@@ -46,10 +46,23 @@ pnpm dev          # http://127.0.0.1:4321 → redirige a /es; /keystatic para ca
 
 ## Deploy
 
-El sitio es estático y se publica en **GitHub Pages**: <https://inzumer.github.io/milimon-frontend-web/>.
-El workflow `.github/workflows/pages.yml` compila y despliega cada push a `main` (es decir, cada
-release). Las variables `PUBLIC_*` se cargan como variables del repositorio (Settings → Secrets and
-variables → Actions → Variables). La API de cuentas se despliega aparte, en Render (ver su repo).
+El sitio es estático y se publica en **Cloudflare Workers** (Workers Builds, `wrangler.jsonc`), con
+dos ambientes ([ADR 0006](docs/adr/0006-staging-and-production.md)):
+
+| Rama   | Ambiente   | URL                                       | API                                         |
+| ------ | ---------- | ----------------------------------------- | ------------------------------------------- |
+| `main` | producción | <https://milimon.inzumer.workers.dev>     | `milimon-backend-nest.onrender.com`         |
+| `dev`  | staging    | <https://dev-milimon.inzumer.workers.dev> | `milimon-backend-nest-staging.onrender.com` |
+
+Cloudflare compila todas las ramas con las mismas variables, así que `deploy/environments.mjs` elige
+las URLs según la rama (`WORKERS_CI_BRANCH`). Variables de build en Cloudflare (Settings → Build →
+Variables): `PUBLIC_API_KEY_PRODUCTION`, `PUBLIC_API_KEY_STAGING` (el `WEB_API_KEY` de cada API) y
+`PUBLIC_GOOGLE_CLIENT_ID`. Build command `pnpm build`; deploy `npx wrangler deploy` (producción) y
+`npx wrangler versions upload` (otras ramas).
+
+Mientras dure la transición, `.github/workflows/pages.yml` sigue publicando `dev` en GitHub Pages
+(<https://inzumer.github.io/milimon-frontend-web/>) con las variables del repositorio. La API de
+cuentas se despliega aparte, en Render (ver su repo).
 
 Variables de entorno (ver `.env.example`):
 
