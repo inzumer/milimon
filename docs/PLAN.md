@@ -516,9 +516,8 @@ en **Gestión del sitio → Sugerencias**, solo para editores y admins).
       verificado (SPF, DKIM y DMARC), API key solo de envío y `RESEND_API_KEY` + `EMAIL_FROM` en
       Render. Hasta entonces la API no manda mails (solo registra "Email skipped"). Pasos en
       `docs/DEPLOY.md` §7 de la API. Sumar Resend como encargado del tratamiento en Privacidad.
-- [ ] **Login de staging**: el front de `dev` manda `locale` al iniciar sesión y la API de
-      producción lo rechaza hasta desplegar milimon-backend-nest #19 (mails). Llega a `main` con el
-      próximo release de la API.
+- [x] **Login de staging** (30/09): resuelto con la API 1.4.0 en producción (`locale` y
+      `/me/saved-recipes`). Para que no vuelva a pasar: **Ambientes y seguridad**, abajo.
 - [x] **API en Render** (28/09): servicio `milimon-backend-nest` desde el Blueprint
       `milimon-db-blueprint`, base Neon `milimon-db`, API 1.2.0. Keep-alive diurno a
       `/health/live` (API #17).
@@ -529,6 +528,30 @@ en **Gestión del sitio → Sugerencias**, solo para editores y admins).
       [04](./suggestions/04-medicion-y-cuentas.md).
 - [ ] **Meta (Facebook Login)**: crear la app cuando Meta lo permita; hasta entonces el botón queda
       deshabilitado con el aviso "Próximamente".
+
+**Ambientes y seguridad** (ver [ADR 0006](./adr/0006-staging-and-production.md))
+
+Staging y producción separados en cada pieza (sitio, CMS, API, base), el contenido sale de staging a
+producción con el release, y la base de producción tiene backups propios.
+
+- [ ] **Base de staging**: rama `staging` de Neon **solo con el esquema** (sin datos personales).
+      _Lo hago yo (Neon MCP), con tu OK._
+- [ ] **Backups de producción**: `pg_dump` diario cifrado desde GitHub Actions (artifact 30 días),
+      rama `pre-release-<versión>` antes de cada release con migraciones y una prueba de restauración
+      por mes. _Yo el workflow; vos cargás `BACKUP_DATABASE_URL` y `BACKUP_PASSPHRASE` en GitHub._
+- [ ] **API de staging**: servicio `milimon-backend-nest-staging` en Render desde `dev`, con sus
+      propios secretos y `CORS_ORIGIN` del sitio de staging. _Yo el `render.yaml`; vos lo creás en
+      Render y cargás los secretos._
+- [ ] **Sitio en Cloudflare Pages**: rama `dev` → staging y `main` → producción (`*.pages.dev`
+      hasta tener dominio), cada uno con su `PUBLIC_API_URL`. Reemplaza a GitHub Pages. _Vos creás
+      la cuenta y conectás el repo; yo el adapter y las variables._
+- [ ] **CMS online en staging**: Keystatic en modo GitHub solo en staging (cada "Guardar" es un
+      commit a `dev`); en producción `/keystatic` no existe. _Vos creás la GitHub App desde el
+      propio Keystatic; yo la configuración._
+- [ ] **Ramas protegidas**: `main` y `dev` solo por PR con el CI en verde, en el sitio y la API.
+      _Lo hago yo (`gh api`), con tu OK._
+- [ ] **Google, GTM y Search Console por ambiente**: orígenes de staging y producción en Google
+      Cloud, entornos "Staging" y "Live" en GTM, y Search Console solo en producción.
 
 **Gestión del sitio**
 
@@ -544,10 +567,10 @@ en **Gestión del sitio → Sugerencias**, solo para editores y admins).
       cambio aprobado y cuándo sale la próxima versión estable (viernes 12:00 → lunes 12:30, Madrid).
 - [x] **Staging desde `dev`** (29/09): GitHub Pages despliega `dev` en cada push; producción
       (dominio propio) va a desplegar `main` con los releases.
-- [ ] **Keystatic con vista previa y acceso solo admin**: falta sesión en cookie y middleware en
-      `/keystatic` con el deploy en Cloudflare Pages; vista previa por rama de borrador. Ver
+- [ ] **Keystatic con vista previa y acceso solo admin**: con el CMS online en staging (ver
+      **Ambientes y seguridad**); vista previa por rama de borrador. Ver
       [02](./suggestions/02-cms-y-emails.md#keystatic-vista-previa-y-acceso-solo-para-admins).
-- [ ] **Agenda ↔ CMS** (con la fase 2 del CMS): cada entrada de receta o artículo con un botón
+- [ ] **Agenda ↔ CMS** (después del CMS online en staging): cada entrada de receta o artículo con un botón
       "Escribirla en el CMS" (abre Keystatic en "nueva receta" o "nuevo artículo" con el título), y al
       publicarse pasa sola a "publicada" con el enlace a la página. Más adelante, la agenda puede leer
       los borradores y lo publicado del CMS y dejar la carga manual para redes.
