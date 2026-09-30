@@ -210,7 +210,7 @@ const AgendaPanelView = ({
 
   return (
     <div className="flex flex-col gap-8">
-      {busy && <BrandLoader screen />}
+      {(busy || agenda.isLoading) && <BrandLoader screen />}
       <section
         aria-labelledby={cadenceId}
         className="flex flex-col gap-3 rounded-xl border border-[var(--border-default)] p-5"
@@ -264,7 +264,7 @@ const AgendaPanelView = ({
           {shownNotice}
         </RichText>
 
-        {entries.length === 0 ? (
+        {agenda.isLoading ? null : entries.length === 0 ? (
           <RichText className="text-[var(--text-secondary)]">{labels.empty}</RichText>
         ) : (
           <ol className="flex flex-col gap-6">

@@ -121,7 +121,7 @@ export const CalculatorPicker = ({
         {state.status === 'idle' && (
           <RichText className="text-[var(--text-secondary)]">{page.empty}</RichText>
         )}
-        {state.status === 'loading' && <BrandLoader label={page.loading} showLabel />}
+        {state.status === 'loading' && <BrandLoader screen label={page.loading} />}
         {state.status === 'error' && (
           <RichText role="alert" className="text-[var(--border-error)]">
             {page['load-error']}

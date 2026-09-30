@@ -33,7 +33,7 @@ export const AdminAccessNotice = ({
   scope,
 }: AdminAccessNoticeProps) => {
   if (access.kind === 'loading') {
-    return <BrandLoader label={labels.loading} showLabel />;
+    return <BrandLoader screen label={labels.loading} />;
   }
   if (access.kind === 'signed-out') {
     return (
