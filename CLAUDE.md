@@ -69,6 +69,9 @@ Key commands (Node from `.nvmrc`, pnpm from `packageManager`):
 - **SEO**: pages declare their breadcrumbs with PageLayout `breadcrumbs` (drawn and emitted as
   BreadcrumbList JSON-LD) and extra schema.org data with `structuredData` (builders in `@utils/seo`).
   Canonical, hreflang and share URLs go through `canonicalPath` (no `.html`), matching the sitemap.
+- **Waiting for the API**: actions that wait for a server answer show `{busy && <BrandLoader screen />}`
+  (logo pulsing over the blurred page, cooking one-liners from `src/i18n/loader` at random); content loading
+  in place uses `<BrandLoader label=… showLabel />`.
 - **Static first**: no `client:*` directive unless the component is interactive.
 - **Persistence**: through the zustand stores in `src/stores` only (persisted to localStorage, synced to the account by `services/account`). **API data**: TanStack Query with the shared client (`getQueryClient`, `queryKeys` in `@services/query`; wrap islands in `QueryProvider`), never `useEffect` fetching (ADR 0005). **Analytics**: through `track()` only.
 - **Dependencies**: latest compatible versions, `pnpm audit` clean. Exceptions documented in

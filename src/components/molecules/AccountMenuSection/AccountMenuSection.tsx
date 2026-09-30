@@ -1,5 +1,6 @@
 import { useId, useRef, useState } from 'react';
 import { Button, RichText } from '@inzumer/ui-library';
+import { BrandLoader } from '@components/atoms/BrandLoader';
 import { ButtonLink } from '@components/atoms/ButtonLink';
 import { SectionLabel } from '@components/atoms/SectionLabel';
 import { useAccountUser } from '@hooks';
@@ -60,6 +61,7 @@ export const AccountMenuSection = ({
 
   return (
     <section aria-labelledby={titleId} className="flex flex-col gap-3">
+      {busy && <BrandLoader screen />}
       <SectionLabel id={titleId}>{labels.title}</SectionLabel>
       {user ? (
         <>

@@ -185,11 +185,11 @@ importers:
         specifier: ^5.3.0
         version: 5.3.0
       '@inzumer/tokens':
-        specifier: ^1.1.0
-        version: 1.1.0(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
+        specifier: ^1.2.0
+        version: 1.2.0(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       '@inzumer/ui-library':
-        specifier: ^2.3.0
-        version: 2.3.0(class-variance-authority@0.7.1)(clsx@2.1.1)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(tailwind-merge@3.7.0)
+        specifier: ^2.4.0
+        version: 2.4.0(class-variance-authority@0.7.1)(clsx@2.1.1)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(tailwind-merge@3.7.0)
       '@keystatic/astro':
         specifier: ^6.0.0
         version: 6.0.0(@keystatic/core@0.6.9(@keystar/ui@0.10.0(react-aria@3.50.0(react-dom@19.3.0(react@19.3.0))(react@19.3.0))(react-dom@19.3.0(react@19.3.0))(react-stately@3.48.0(react@19.3.0))(react@19.3.0))(react-aria@3.50.0(react-dom@19.3.0(react@19.3.0))(react@19.3.0))(react-dom@19.3.0(react@19.3.0))(react-stately@3.48.0(react@19.3.0))(react@19.3.0))(astro@7.3.5(@types/node@24.13.6)(idb-keyval@6.3.0)(jiti@2.7.0)(yaml@2.9.1))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
@@ -1533,21 +1533,15 @@ packages:
   '@internationalized/string@3.2.10':
     resolution: {integrity: sha512-PDx6//vHSpRnHfxqMqto11zQvhsaU74O3mKv2F/0eicGZcl9NLjQmGlbHz/LsJh5tLKp4A4L7ZVTzN1/MmMTvA==}
 
-  '@inzumer/tokens@1.1.0':
-    resolution: {integrity: sha512-aKd7KW3XouUegh3RfejEJW1hTypoHsP1RN9ry9VXHZlv8VtuqVnBd7JCWY7GIsHuONAdo8DZ5HX5Zc8DN+uKUQ==}
-    peerDependencies:
-      react: '>=18 || ^19'
-      react-dom: '>=18 || ^19'
-
-  '@inzumer/tokens@1.1.1':
-    resolution: {integrity: sha512-jB2LUAF8pONnuaXfSDVgWlFk7oZAExn3E7/SqGWONEc81iMKXZw9LhxppbxLzh0vFtsUg1n7tJJS4GrWssmbsw==}
+  '@inzumer/tokens@1.2.0':
+    resolution: {integrity: sha512-JK3Fs79JipkqTZUBsey3ZAtcBIkpp8tSLzV6kqy9GSNMNdxVN9xs/SCw/wGCWQoxwYRZ3ZoaB5ew7CLaLbbsIw==}
     engines: {node: '>=20'}
     peerDependencies:
       react: '>=18 || ^19'
       react-dom: '>=18 || ^19'
 
-  '@inzumer/ui-library@2.3.0':
-    resolution: {integrity: sha512-Z6u1IO6hSVytxRZT4KZZkQeAT/NjUNiGi0rT4EE2cGeT74RGHS1jvAUTEpILvD1pOQVPNCjeuh9gXRdPKZYTiA==}
+  '@inzumer/ui-library@2.4.0':
+    resolution: {integrity: sha512-tB2+JRTf3Gk2Bsvyf9lxib/iqjfLG/WPy5BH2iTSgKnH+txVylHtOPh8zyhIgs3eE3jGrKGVF8Cg2MMTlF/YMg==}
     peerDependencies:
       class-variance-authority: '>=0.7.0'
       clsx: '>=2.0.0'
@@ -5882,19 +5876,14 @@ snapshots:
     dependencies:
       '@swc/helpers': 0.5.23
 
-  '@inzumer/tokens@1.1.0(react-dom@19.3.0(react@19.3.0))(react@19.3.0)':
+  '@inzumer/tokens@1.2.0(react-dom@19.3.0(react@19.3.0))(react@19.3.0)':
     dependencies:
       react: 19.3.0
       react-dom: 19.3.0(react@19.3.0)
 
-  '@inzumer/tokens@1.1.1(react-dom@19.3.0(react@19.3.0))(react@19.3.0)':
+  '@inzumer/ui-library@2.4.0(class-variance-authority@0.7.1)(clsx@2.1.1)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(tailwind-merge@3.7.0)':
     dependencies:
-      react: 19.3.0
-      react-dom: 19.3.0(react@19.3.0)
-
-  '@inzumer/ui-library@2.3.0(class-variance-authority@0.7.1)(clsx@2.1.1)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(tailwind-merge@3.7.0)':
-    dependencies:
-      '@inzumer/tokens': 1.1.1(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
+      '@inzumer/tokens': 1.2.0(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       class-variance-authority: 0.7.1
       clsx: 2.1.1
       react: 19.3.0

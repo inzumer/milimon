@@ -13,6 +13,7 @@ import {
   TableHeaderCell,
   TableRow,
 } from '@inzumer/ui-library';
+import { BrandLoader } from '@components/atoms/BrandLoader';
 import { QueryProvider } from '@components/atoms/QueryProvider';
 import { SectionLabel } from '@components/atoms/SectionLabel';
 import { AdminAccessNotice } from '@components/molecules/AdminAccessNotice';
@@ -148,6 +149,7 @@ const AdminPanelView = ({
 
   return (
     <div className="flex flex-col gap-10">
+      {busy && <BrandLoader screen />}
       <section className="flex flex-col gap-3 rounded-xl border border-[var(--border-default)] p-5">
         <SectionLabel>{labels.content.title}</SectionLabel>
         <RichText>{labels.content.description}</RichText>

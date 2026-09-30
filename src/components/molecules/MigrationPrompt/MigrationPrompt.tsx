@@ -1,5 +1,6 @@
 import { useId } from 'react';
 import { Button, RichText } from '@inzumer/ui-library';
+import { BrandLoader } from '@components/atoms/BrandLoader';
 import type { Translations } from '@i18n/translations';
 import { trackingId } from '@utils';
 
@@ -22,6 +23,7 @@ export const MigrationPrompt = ({
   const titleId = useId();
   return (
     <section aria-labelledby={titleId} className="flex flex-col gap-3">
+      {busy && <BrandLoader screen />}
       <RichText variant="h2" bold id={titleId} className="font-display text-3xl">
         {labels.title}
       </RichText>
