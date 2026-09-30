@@ -19,6 +19,8 @@ import comingSoonEn from './coming-soon/en.json';
 import comingSoonEs from './coming-soon/es.json';
 import commonEn from './common/en.json';
 import commonEs from './common/es.json';
+import cookingModeEn from './cooking-mode/en.json';
+import cookingModeEs from './cooking-mode/es.json';
 import formulaPageEn from './formula-page/en.json';
 import formulaPageEs from './formula-page/es.json';
 import historyPageEn from './history-page/en.json';
@@ -46,6 +48,7 @@ const dictionaries = {
   'agenda-page': { es: agendaPageEs, en: agendaPageEn satisfies typeof agendaPageEs },
   blog: { es: blogEs, en: blogEn satisfies typeof blogEs },
   common: { es: commonEs, en: commonEn satisfies typeof commonEs },
+  'cooking-mode': { es: cookingModeEs, en: cookingModeEn satisfies typeof cookingModeEs },
   'coming-soon': { es: comingSoonEs, en: comingSoonEn satisfies typeof comingSoonEs },
   home: { es: homeEs, en: homeEn satisfies typeof homeEs },
   'learn-page': { es: learnPageEs, en: learnPageEn satisfies typeof learnPageEs },
