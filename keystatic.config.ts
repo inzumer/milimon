@@ -45,7 +45,12 @@ const article = (label: string) =>
 export default config({
   storage:
     import.meta.env.PUBLIC_KEYSTATIC_STORAGE === 'github'
-      ? { kind: 'github', repo: { owner: 'inzumer', name: 'milimon-frontend-web' } }
+      ? {
+          kind: 'github',
+          repo: { owner: 'inzumer', name: 'milimon-frontend-web' },
+          // Saves go to cms/* branches; the cms-to-dev workflow opens their PR to dev.
+          branchPrefix: 'cms/',
+        }
       : { kind: 'local' },
   ui: { brand: { name: 'Milimon' } },
   collections: {
