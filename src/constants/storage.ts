@@ -8,3 +8,8 @@ export const HISTORY_STORAGE_KEY = 'milimon:history';
 
 /** Oldest saved calculations are dropped beyond this many (the API enforces it too). */
 export const HISTORY_LIMIT = 15;
+
+export const SAVED_RECIPES_STORAGE_KEY = 'milimon:saved-recipes';
+
+/** Recipes kept per device; the oldest saved are dropped beyond this many. */
+export const SAVED_RECIPES_LIMIT = 100;

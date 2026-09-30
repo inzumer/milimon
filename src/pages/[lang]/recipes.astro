@@ -28,7 +28,7 @@ const cards = await Promise.all(
   })),
 );
 const featured = cards.filter((card) => card.featured);
-const gridLabels = { ...text.index, categories: text.categories };
+const gridLabels = { ...text.index, categories: text.categories, actions: text.actions };
 ---
 
 {recipes.length === 0 ? (

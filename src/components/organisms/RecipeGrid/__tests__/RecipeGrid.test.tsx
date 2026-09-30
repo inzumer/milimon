@@ -4,7 +4,7 @@ import { getTranslations } from '@i18n';
 import { RecipeGrid, type RecipeGridItem } from '../RecipeGrid';
 
 const text = getTranslations('en', 'recipe-page');
-const labels = { ...text.index, categories: text.categories };
+const labels = { ...text.index, categories: text.categories, actions: text.actions };
 
 const card = (id: string, category: RecipeGridItem['category']): RecipeGridItem => ({
   id,

@@ -33,6 +33,7 @@ export * from './organisms/HistoryList';
 export * from './organisms/LoginPanel';
 export * from './organisms/OmnesCalculator';
 export * from './organisms/OmnesResult';
+export * from './organisms/RecipeActions';
 export * from './organisms/RecipeCarousel';
 export * from './organisms/RecipeGrid';
 export * from './organisms/RecipeCostingCalculator';
