@@ -7,7 +7,6 @@ import sitemap from '@astrojs/sitemap';
 import keystatic from '@keystatic/astro';
 import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'astro/config';
-import { applyCloudflareEnvironment } from './deploy/environments.mjs';
 import { SETTINGS_STORAGE_KEY } from './src/constants/storage.ts';
 import {
   languageRedirectScript,
@@ -21,9 +20,6 @@ try {
 } catch {
   // No .env file.
 }
-
-// On Cloudflare, main builds production and dev builds staging.
-applyCloudflareEnvironment();
 
 const site = process.env.SITE_URL ?? 'https://inzumer.github.io';
 const base = process.env.BASE_PATH || '/';
