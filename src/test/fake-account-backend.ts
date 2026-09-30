@@ -15,6 +15,7 @@ export interface FakeAccountBackend extends AccountBackend {
     profile: RemoteProfile | null;
     drafts: CalculatorDrafts;
     history: HistoryEntry[];
+    savedRecipes: string[];
     users: AdminUser[];
     roleChanges: RoleChange[];
     agenda: AgendaEntry[];
@@ -39,6 +40,7 @@ export const createFakeAccountBackend = (
     profile: null,
     drafts: {},
     history: [],
+    savedRecipes: [],
     users: [],
     roleChanges: [],
     agenda: [],
@@ -72,6 +74,7 @@ export const createFakeAccountBackend = (
       remote.profile = null;
       remote.drafts = {};
       remote.history = [];
+      remote.savedRecipes = [];
       setUser(null);
     }),
     fetchProfile: vi.fn(async () => remote.profile),
@@ -92,6 +95,13 @@ export const createFakeAccountBackend = (
     }),
     deleteHistoryEntry: vi.fn(async (id: string) => {
       remote.history = remote.history.filter((item) => item.id !== id);
+    }),
+    fetchSavedRecipes: vi.fn(async () => remote.savedRecipes),
+    saveRecipe: vi.fn(async (recipeId: string) => {
+      remote.savedRecipes = [recipeId, ...remote.savedRecipes.filter((id) => id !== recipeId)];
+    }),
+    removeSavedRecipe: vi.fn(async (recipeId: string) => {
+      remote.savedRecipes = remote.savedRecipes.filter((id) => id !== recipeId);
     }),
     fetchMe: vi.fn(async () => {
       if (!remote.user) {

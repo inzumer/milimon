@@ -1,6 +1,7 @@
 import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { getTranslations } from '@i18n';
+import { useSavedRecipesStore } from '@stores';
 import { RecipeGrid, type RecipeGridItem } from '../RecipeGrid';
 
 const text = getTranslations('en', 'recipe-page');
@@ -54,5 +55,16 @@ describe('RecipeGrid', () => {
     render(<RecipeGrid items={ITEMS.slice(0, 1)} labels={labels} />);
     expect(screen.queryByRole('group')).not.toBeInTheDocument();
     expect(titles()).toHaveLength(1);
+  });
+
+  it('should offer the recipes saved on this device as a filter', async () => {
+    useSavedRecipesStore.getState().toggle('lemonade');
+    render(<RecipeGrid items={ITEMS} labels={labels} />);
+    const group = screen.getByRole('group', { name: labels['filter-label'] });
+    const saved = within(group).getByRole('button', { name: labels['filter-saved'] });
+    expect(saved).toHaveAttribute('id', 'recipes-button-filter-saved');
+    await userEvent.click(saved);
+    expect(titles()).toEqual([expect.stringContaining('lemonade')]);
+    expect(window.location.search).toBe('?category=saved');
   });
 });
