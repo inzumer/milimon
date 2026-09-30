@@ -97,8 +97,8 @@ const connectSrc = /** @type {`connect-src ${string}`} */ (
     'https://*.googletagmanager.com',
     'https://*.google-analytics.com',
     'https://*.analytics.google.com',
-    // Keystatic in GitHub mode reads and commits through the GitHub API.
-    cmsOnline && 'https://api.github.com',
+    // Keystatic in GitHub mode reads and commits through the GitHub API; file contents come from raw.
+    cmsOnline && 'https://api.github.com https://raw.githubusercontent.com',
   ]
     .filter(Boolean)
     .join(' ')
@@ -109,7 +109,7 @@ const csp = {
   directives: [
     "default-src 'self'",
     connectSrc,
-    `img-src 'self' data: ${cmsOnline ? 'blob: https://avatars.githubusercontent.com ' : ''}https://*.googleusercontent.com https://*.fbcdn.net https://platform-lookaside.fbsbx.com https://*.googletagmanager.com https://*.google-analytics.com https://ssl.gstatic.com https://www.gstatic.com`,
+    `img-src 'self' data: ${cmsOnline ? 'blob: https://avatars.githubusercontent.com https://raw.githubusercontent.com ' : ''}https://*.googleusercontent.com https://*.fbcdn.net https://platform-lookaside.fbsbx.com https://*.googletagmanager.com https://*.google-analytics.com https://ssl.gstatic.com https://www.gstatic.com`,
     'frame-src https://accounts.google.com https://*.facebook.com https://www.googletagmanager.com',
     // GTM preview mode (Tag Assistant) badge fonts.
     "font-src 'self' https://fonts.gstatic.com data:",
