@@ -21,7 +21,7 @@ try {
   // No .env file.
 }
 
-const site = process.env.SITE_URL ?? 'https://inzumer.github.io';
+const site = process.env.SITE_URL ?? 'https://milimon.inzumer.workers.dev';
 const base = process.env.BASE_PATH || '/';
 /** The Keystatic admin (/keystatic) runs only with `astro dev`; the build stays static. */
 const isDev = process.argv.includes('dev');
