@@ -7,6 +7,7 @@ import {
   SparkleIcon,
   type IconProps,
 } from '@components/atoms/Icons';
+import { RecipeActions, type RecipeActionsLabels } from '@components/organisms/RecipeActions';
 import { RECIPE_CATEGORIES, RECIPE_FILTER_PARAM, type RecipeCategory } from '@constants';
 import { useUrlFilter } from '@hooks';
 import { trackingId } from '@utils';
@@ -32,6 +33,7 @@ export interface RecipeGridProps {
     'filter-previous': string;
     'filter-next': string;
     categories: Record<RecipeCategory, string>;
+    actions: RecipeActionsLabels;
   };
 }
 
@@ -95,6 +97,15 @@ export const RecipeGrid = ({ items, labels }: RecipeGridProps) => {
                 subtitle={subtitle}
                 href={href}
                 linkId={trackingId('recipes', 'link', id)}
+                actions={
+                  <RecipeActions
+                    variant="floating"
+                    recipeId={id}
+                    title={title}
+                    href={href}
+                    labels={labels.actions}
+                  />
+                }
               />
             </li>
           ))}

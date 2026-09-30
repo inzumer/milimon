@@ -577,8 +577,12 @@ en **Gestión del sitio → Sugerencias**, solo para editores y admins).
 - [x] **Filtros de recetas** (29/09): `Filter` de la ui-library (chips con scroll lateral) con los
       íconos SVG de Milimon y un mismo color para todas las pills (`--filter-pill-*`); el filtro queda en `?category=`
       (`useUrlFilter`).
-- [ ] **Recetas con UI de referencia** (Pinterest), lo que falta: botones flotantes (guardar,
-      compartir), modo "Empezar a cocinar" e isotipo nuevo. Ver
+- [x] **Guardar y compartir recetas** (30/09): botones en la ficha y flotantes en cada tarjeta;
+      las guardadas quedan en el dispositivo (`useSavedRecipesStore`) y compartir usa el menú del
+      dispositivo o copia el enlace (`useShare`, compartido con "Compartí esta página").
+- [ ] **Recetas guardadas en la cuenta** (sincronizarlas con la API) y un filtro "Guardadas".
+- [ ] **Recetas con UI de referencia** (Pinterest), lo que falta: modo "Empezar a cocinar" e
+      isotipo nuevo. Ver
       [09](./suggestions/09-direccion-visual.md).
 - [x] **Artículo de los milicitos a Keystatic** (29/09): es un artículo más del blog
       (`src/content/blog/milicitos`), destacado en la portada; la escala usa el componente
