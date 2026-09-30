@@ -33,8 +33,9 @@ mismo release que el código.
 
 Flujo de publicación:
 
-1. **Contenido**: Milagros edita en el CMS de staging → rama `cms/…` → el build valida y se abre el
-   PR a `dev` → al aceptarlo, staging se actualiza en minutos → lo revisa ahí.
+1. **Contenido**: Milagros edita en el CMS de staging (rama `cms/draft`) → al guardar, cada entrada
+   pasa a `cms/<entrada>` con un solo commit, el build valida y se mergea con squash en `dev` →
+   staging se actualiza en minutos → lo revisa ahí.
 2. **Código**: `feature/*` → PR a `dev` → staging (sitio y API).
 3. **Producción**: el release (viernes → lunes, o a mano hasta el lanzamiento) lleva `dev` a `main`
    en el front y en la API. Las migraciones corren primero en staging.
@@ -46,7 +47,7 @@ Seguridad:
 - **CORS y orígenes**: cada API acepta solo su sitio (staging o producción).
 - **CMS**: solo entra quien tiene acceso de escritura al repo en GitHub (la GitHub App de
   Keystatic). En producción `/keystatic` no existe; "Gestión del sitio" enlaza al de staging.
-  `dev` sigue aceptando solo PRs: el CMS guarda en ramas `cms/…` y `cms-to-dev` abre el PR.
+  `dev` sigue aceptando solo PRs: el CMS guarda en `cms/draft` y `cms-to-dev` publica cada entrada por PR.
 - **Staging sin datos personales**: su base se crea solo con el esquema y la llenan las pruebas.
 - **Ramas protegidas** en GitHub: `main` y `dev` solo por PR con el CI en verde.
 

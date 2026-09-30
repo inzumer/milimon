@@ -59,7 +59,7 @@ Variables): `SITE_URL`, `BASE_PATH` (`/`), `PUBLIC_API_URL`, `PUBLIC_API_KEY` (e
 API), `PUBLIC_API_APP_ID` (`web`), `PUBLIC_GOOGLE_CLIENT_ID` y `NODE_VERSION`.
 
 **CMS en staging.** Con `PUBLIC_KEYSTATIC_STORAGE=github` el build suma el adaptador de Cloudflare:
-Keystatic queda online en `/keystatic` (modo GitHub: guarda en ramas `cms/…` y el workflow `cms-to-dev` valida el build y abre el PR a `dev`), staging muestra también los
+Keystatic queda online en `/keystatic` (modo GitHub, sobre la rama `cms/draft`: al guardar, el workflow `cms-to-dev` arma `cms/<entrada>` con un solo commit, valida el build y lo mergea con squash en `dev`), staging muestra también los
 borradores y el resto del sitio sigue estático. Producción no lleva esa variable. El Worker de
 staging necesita además:
 

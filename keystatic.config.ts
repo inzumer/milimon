@@ -48,7 +48,7 @@ export default config({
       ? {
           kind: 'github',
           repo: { owner: 'inzumer', name: 'milimon-frontend-web' },
-          // Saves go to cms/* branches; the cms-to-dev workflow opens their PR to dev.
+          // Edits go to cms/draft; cms-to-dev turns each entry into one squash-merged PR to dev.
           branchPrefix: 'cms/',
         }
       : { kind: 'local' },
