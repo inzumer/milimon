@@ -2,6 +2,7 @@ import {
   DEFAULT_SETTINGS,
   useDraftsStore,
   useHistoryStore,
+  useSavedRecipesStore,
   useSettingsStore,
   type Settings,
 } from '@stores';
@@ -102,10 +103,22 @@ export const createAccountSync = ({
           .forEach((entry) => backend.deleteHistoryEntry(entry.id).catch(report));
       }
     });
+    const stopSaved = useSavedRecipesStore.subscribe(({ ids }, previous) => {
+      if (applyingRemote) {
+        return;
+      }
+      const before = new Set(previous.ids);
+      const after = new Set(ids);
+      ids.filter((id) => !before.has(id)).forEach((id) => backend.saveRecipe(id).catch(report));
+      previous.ids
+        .filter((id) => !after.has(id))
+        .forEach((id) => backend.removeSavedRecipe(id).catch(report));
+    });
     unsubscribe = () => {
       stopSettings();
       stopDrafts();
       stopHistory();
+      stopSaved();
     };
   };
 
@@ -126,12 +139,17 @@ export const createAccountSync = ({
     for (const entry of [...useHistoryStore.getState().entries].reverse()) {
       await backend.saveHistoryEntry(entry);
     }
+    // Oldest first, so the account keeps the device's order (newest first).
+    for (const recipeId of [...useSavedRecipesStore.getState().ids].reverse()) {
+      await backend.saveRecipe(recipeId);
+    }
   };
 
   const hasLocalData = () =>
     useSettingsStore.getState().currency !== DEFAULT_SETTINGS.currency ||
     Object.keys(useDraftsStore.getState().drafts).length > 0 ||
-    useHistoryStore.getState().entries.length > 0;
+    useHistoryStore.getState().entries.length > 0 ||
+    useSavedRecipesStore.getState().ids.length > 0;
 
   const resolveSignIn = async (): Promise<SignInOutcome> => {
     if (readJson<boolean>(session, SYNCED_KEY) === true) {
@@ -139,12 +157,17 @@ export const createAccountSync = ({
     }
     const profile = await backend.fetchProfile();
     if (profile) {
-      const [drafts, entries] = await Promise.all([backend.fetchDrafts(), backend.fetchHistory()]);
+      const [drafts, entries, savedRecipes] = await Promise.all([
+        backend.fetchDrafts(),
+        backend.fetchHistory(),
+        backend.fetchSavedRecipes(),
+      ]);
       applyingRemote = true;
       try {
         useSettingsStore.getState().update(profile);
         useDraftsStore.getState().replaceAll(drafts);
         useHistoryStore.getState().replaceAll(entries);
+        useSavedRecipesStore.getState().replaceAll(savedRecipes);
       } finally {
         applyingRemote = false;
       }
@@ -168,6 +191,7 @@ export const createAccountSync = ({
       useSettingsStore.getState().update({ currency: DEFAULT_SETTINGS.currency });
       useDraftsStore.getState().replaceAll({});
       useHistoryStore.getState().replaceAll([]);
+      useSavedRecipesStore.getState().replaceAll([]);
     } finally {
       applyingRemote = false;
     }

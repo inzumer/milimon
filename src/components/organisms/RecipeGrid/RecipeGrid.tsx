@@ -1,5 +1,6 @@
 import { Filter, RichText, Showcase, type FilterOption } from '@inzumer/ui-library';
 import {
+  BookmarkIcon,
   BreadIcon,
   CupcakeIcon,
   CupIcon,
@@ -9,10 +10,11 @@ import {
 } from '@components/atoms/Icons';
 import { RecipeActions, type RecipeActionsLabels } from '@components/organisms/RecipeActions';
 import { RECIPE_CATEGORIES, RECIPE_FILTER_PARAM, type RecipeCategory } from '@constants';
-import { useUrlFilter } from '@hooks';
+import { useHydrated, useUrlFilter } from '@hooks';
+import { useSavedRecipesStore } from '@stores';
 import { trackingId } from '@utils';
 
-type Choice = RecipeCategory | 'all';
+type Choice = RecipeCategory | 'all' | 'saved';
 
 export interface RecipeGridItem {
   id: string;
@@ -29,6 +31,7 @@ export interface RecipeGridProps {
   labels: {
     'filter-label': string;
     'filter-all': string;
+    'filter-saved': string;
     'filter-empty': string;
     'filter-previous': string;
     'filter-next': string;
@@ -37,32 +40,47 @@ export interface RecipeGridProps {
   };
 }
 
-/** Each category's Milimon icon; every pill shares the `--filter-pill-*` colors (theme.css). */
+/** Each choice's Milimon icon; every pill shares the `--filter-pill-*` colors (theme.css). */
 const CATEGORY_ICONS: Record<Choice, (props: IconProps) => React.JSX.Element> = {
   all: SparkleIcon,
+  saved: BookmarkIcon,
   sweet: CupcakeIcon,
   savory: PotIcon,
   bread: BreadIcon,
   drinks: CupIcon,
 };
 
-const CHOICES = ['all', ...RECIPE_CATEGORIES] as const;
+const CHOICES = ['all', 'saved', ...RECIPE_CATEGORIES] as const;
 
 const PILL_COLORS = { background: 'var(--filter-pill-bg)', text: 'var(--filter-pill-text)' };
 
-/** Every recipe as photo cards, filtered by category with chips; the filter lives in `?category=`. */
+/**
+ * Every recipe as photo cards, filtered by category (or the ones saved on this device) with chips;
+ * the filter lives in `?category=`.
+ */
 export const RecipeGrid = ({ items, labels }: RecipeGridProps) => {
   const [filter, setFilter] = useUrlFilter<Choice>(RECIPE_FILTER_PARAM, CHOICES, 'all');
+  const hydrated = useHydrated();
+  const savedIds = useSavedRecipesStore((state) => state.ids);
+  const isSaved = (id: string) => hydrated && savedIds.includes(id);
+  const matches = (choice: Choice, item: RecipeGridItem) =>
+    choice === 'all' || (choice === 'saved' ? isSaved(item.id) : item.category === choice);
   const present = CHOICES.filter(
-    (choice) => choice === 'all' || items.some((item) => item.category === choice),
+    (choice) => choice === 'all' || items.some((item) => matches(choice, item)),
   );
-  const shown = filter === 'all' ? items : items.filter((item) => item.category === filter);
+  const shown = items.filter((item) => matches(filter, item));
+  const labelOf = (choice: Choice) =>
+    choice === 'all'
+      ? labels['filter-all']
+      : choice === 'saved'
+        ? labels['filter-saved']
+        : labels.categories[choice];
   const options: FilterOption<Choice>[] = present.map((choice) => {
     const Icon = CATEGORY_ICONS[choice];
     return {
       value: choice,
       id: trackingId('recipes', 'button', 'filter', choice),
-      label: choice === 'all' ? labels['filter-all'] : labels.categories[choice],
+      label: labelOf(choice),
       icon: <Icon className="size-5" />,
       colors: PILL_COLORS,
     };

@@ -582,7 +582,9 @@ en **Gestión del sitio → Sugerencias**, solo para editores y admins).
       dispositivo o copia el enlace (`useShare`, compartido con "Compartí esta página").
 - [x] **Modo "Empezar a cocinar"** (30/09): un paso por vez en grande, progreso, flechas y teclado,
       ingredientes para tildar y la pantalla encendida (`useWakeLock`).
-- [ ] **Recetas guardadas en la cuenta** (sincronizarlas con la API) y un filtro "Guardadas".
+- [x] **Recetas guardadas en la cuenta** (30/09): `/me/saved-recipes` en la API (máx. 100),
+      sincronizadas como el historial (se restauran al iniciar sesión, se importan en la migración y se
+      limpian al cerrar sesión) y un filtro "Guardadas" en `/recipes`.
 - [ ] **Recetas con UI de referencia** (Pinterest), lo que falta: isotipo nuevo. Ver
       [09](./suggestions/09-direccion-visual.md).
 - [x] **Artículo de los milicitos a Keystatic** (29/09): es un artículo más del blog

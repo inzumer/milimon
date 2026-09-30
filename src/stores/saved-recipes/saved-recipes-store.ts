@@ -6,6 +6,7 @@ import { plainJsonStorage } from '@stores/persist';
 export interface SavedRecipesState {
   ids: string[];
   toggle: (id: string) => void;
+  replaceAll: (ids: string[]) => void;
 }
 
 /** Unique recipe ids, newest first, at most `SAVED_RECIPES_LIMIT`. */
@@ -15,7 +16,7 @@ export const normalizeSavedRecipes = (raw: unknown): string[] =>
     SAVED_RECIPES_LIMIT,
   );
 
-/** Recipes saved on this device, newest first. */
+/** Recipes saved on this device, newest first (synced to the account). */
 export const useSavedRecipesStore = create<SavedRecipesState>()(
   persist(
     (set, get) => ({
@@ -28,6 +29,7 @@ export const useSavedRecipesStore = create<SavedRecipesState>()(
             : normalizeSavedRecipes([id, ...ids]),
         });
       },
+      replaceAll: (ids) => set({ ids: normalizeSavedRecipes(ids) }),
     }),
     {
       name: SAVED_RECIPES_STORAGE_KEY,

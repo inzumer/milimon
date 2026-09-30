@@ -1,6 +1,7 @@
 import {
   useDraftsStore,
   useHistoryStore,
+  useSavedRecipesStore,
   useSettingsStore,
   type HistoryEntry,
   type Settings,
@@ -253,5 +254,49 @@ describe('account sync', () => {
     await sync.start();
     await sync.signOut();
     expect(history.list()).toStrictEqual([]);
+  });
+
+  describe('saved recipes', () => {
+    const saved = () => useSavedRecipesStore.getState().ids;
+    const toggle = (id: string) => useSavedRecipesStore.getState().toggle(id);
+    const PROFILE = { currency: 'ARS', locale: null, colorScheme: null };
+
+    it('should copy the saved recipes of the account to this device', async () => {
+      const { sync } = setup({ user: TEST_USER, profile: PROFILE, savedRecipes: ['scones'] });
+      toggle('lemon-loaf');
+      await sync.start();
+      expect(saved()).toStrictEqual(['scones']);
+    });
+
+    it('should treat local saved recipes as data worth importing, oldest first', async () => {
+      const { sync, backend } = setup();
+      toggle('lemon-loaf');
+      toggle('scones');
+      await expect(sync.start()).resolves.toMatchObject({ outcome: 'needs-migration' });
+      await sync.importLocal();
+      expect(vi.mocked(backend.saveRecipe).mock.calls.map(([id]) => id)).toStrictEqual([
+        'lemon-loaf',
+        'scones',
+      ]);
+      expect(backend.remote.savedRecipes).toStrictEqual(['scones', 'lemon-loaf']);
+    });
+
+    it('should push saved and removed recipes while signed in', async () => {
+      const { sync, backend } = setup();
+      await sync.start();
+      toggle('lemon-loaf');
+      await vi.runAllTimersAsync();
+      expect(backend.remote.savedRecipes).toStrictEqual(['lemon-loaf']);
+      toggle('lemon-loaf');
+      await vi.runAllTimersAsync();
+      expect(backend.remote.savedRecipes).toStrictEqual([]);
+    });
+
+    it('should clear the saved recipes from this device on sign-out', async () => {
+      const { sync } = setup({ user: TEST_USER, profile: PROFILE, savedRecipes: ['scones'] });
+      await sync.start();
+      await sync.signOut();
+      expect(saved()).toStrictEqual([]);
+    });
   });
 });

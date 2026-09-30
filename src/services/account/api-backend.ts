@@ -1,5 +1,11 @@
 import { ACCESS_TOKEN_REFRESH_MARGIN_MS, API_HEADERS } from '@constants';
-import { isDraft, normalizeHistory, type CalculatorDrafts, type HistoryEntry } from '@stores';
+import {
+  isDraft,
+  normalizeHistory,
+  normalizeSavedRecipes,
+  type CalculatorDrafts,
+  type HistoryEntry,
+} from '@stores';
 import { HttpError, isLocale, requestJson, type RequestOptions } from '@utils';
 import {
   isAccountRole,
@@ -183,6 +189,18 @@ export const createApiBackend = (
     },
     deleteHistoryEntry: async (id) => {
       await authed(`/me/history/${encodeURIComponent(id)}`, { method: 'DELETE' });
+    },
+    fetchSavedRecipes: async () =>
+      normalizeSavedRecipes((await authed<{ ids: unknown }>('/me/saved-recipes')).ids),
+    // Every write is JSON (the API refuses others), so the save sends an empty object.
+    saveRecipe: async (recipeId) => {
+      await authed(`/me/saved-recipes/${encodeURIComponent(recipeId)}`, {
+        method: 'PUT',
+        body: {},
+      });
+    },
+    removeSavedRecipe: async (recipeId) => {
+      await authed(`/me/saved-recipes/${encodeURIComponent(recipeId)}`, { method: 'DELETE' });
     },
     fetchMe: async () => {
       const user = toAccountUser(await authed<AccountUser>('/me'));
