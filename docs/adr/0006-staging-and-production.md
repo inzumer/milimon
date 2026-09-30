@@ -22,19 +22,19 @@ Hoy hay un solo ambiente a medias:
 Dos ambientes completos, de punta a punta, y el contenido viaja de staging a producción con el
 mismo release que el código.
 
-| Pieza    | Staging                                                                      | Producción                                                                      |
-| -------- | ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
-| Sitio    | Worker `milimon-staging`, rama `dev` (`milimon-staging.inzumer.workers.dev`) | Worker `milimon`, rama `main` (`milimon.inzumer.workers.dev`, luego el dominio) |
-| CMS      | Keystatic online, modo GitHub: cada "Guardar" es un commit a `dev`           | Sin edición: el contenido llega con el release                                  |
-| API      | Render `milimon-backend-nest-staging`, desde `dev`                           | Render `milimon-backend-nest`, desde `main`                                     |
-| Base     | Neon rama `staging`, **solo esquema** (sin datos personales)                 | Neon rama `production`                                                          |
-| Mails    | Desactivados (sin `RESEND_API_KEY`)                                          | Resend con el dominio                                                           |
-| Medición | Entorno "Staging" de GTM                                                     | Entorno "Live" de GTM                                                           |
+| Pieza    | Staging                                                                            | Producción                                                                      |
+| -------- | ---------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| Sitio    | Worker `milimon-staging`, rama `dev` (`milimon-staging.inzumer.workers.dev`)       | Worker `milimon`, rama `main` (`milimon.inzumer.workers.dev`, luego el dominio) |
+| CMS      | Keystatic online, modo GitHub: cada "Guardar" va a una rama `cms/…` con PR a `dev` | Sin edición: el contenido llega con el release                                  |
+| API      | Render `milimon-backend-nest-staging`, desde `dev`                                 | Render `milimon-backend-nest`, desde `main`                                     |
+| Base     | Neon rama `staging`, **solo esquema** (sin datos personales)                       | Neon rama `production`                                                          |
+| Mails    | Desactivados (sin `RESEND_API_KEY`)                                                | Resend con el dominio                                                           |
+| Medición | Entorno "Staging" de GTM                                                           | Entorno "Live" de GTM                                                           |
 
 Flujo de publicación:
 
-1. **Contenido**: Milagros edita en el CMS de staging → commit en `dev` → staging se actualiza en
-   minutos → lo revisa ahí.
+1. **Contenido**: Milagros edita en el CMS de staging → rama `cms/…` → el build valida y se abre el
+   PR a `dev` → al aceptarlo, staging se actualiza en minutos → lo revisa ahí.
 2. **Código**: `feature/*` → PR a `dev` → staging (sitio y API).
 3. **Producción**: el release (viernes → lunes, o a mano hasta el lanzamiento) lleva `dev` a `main`
    en el front y en la API. Las migraciones corren primero en staging.
@@ -46,7 +46,7 @@ Seguridad:
 - **CORS y orígenes**: cada API acepta solo su sitio (staging o producción).
 - **CMS**: solo entra quien tiene acceso de escritura al repo en GitHub (la GitHub App de
   Keystatic). En producción `/keystatic` no existe; "Gestión del sitio" enlaza al de staging.
-  Como `dev` solo acepta PRs, la GitHub App es la única excepción para hacer commits directos.
+  `dev` sigue aceptando solo PRs: el CMS guarda en ramas `cms/…` y `cms-to-dev` abre el PR.
 - **Staging sin datos personales**: su base se crea solo con el esquema y la llenan las pruebas.
 - **Ramas protegidas** en GitHub: `main` y `dev` solo por PR con el CI en verde.
 

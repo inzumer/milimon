@@ -153,10 +153,12 @@ export default defineConfig({
   build: { format: 'file' },
   prefetch: { prefetchAll: true, defaultStrategy: 'hover' },
   security: { csp },
-  ...(cmsOnline && {
-    adapter: cloudflare({ imageService: 'compile', prerenderEnvironment: 'node' }),
-    session: { driver: sessionDrivers.lruCache() },
-  }),
+  // Not in dev: Keystatic's GitHub App setup writes the local .env from Node.
+  ...(cmsOnline &&
+    !isDev && {
+      adapter: cloudflare({ imageService: 'compile', prerenderEnvironment: 'node' }),
+      session: { driver: sessionDrivers.lruCache() },
+    }),
   integrations: [
     react(),
     markdoc(),

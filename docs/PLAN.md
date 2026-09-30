@@ -545,11 +545,11 @@ producción con el release, y la base de producción tiene backups propios.
       <https://milimon.inzumer.workers.dev>) y `milimon-staging` (`dev`,
       <https://milimon-staging.inzumer.workers.dev>), cada uno con sus variables de build. GitHub
       Pages retirado.
-- [ ] **CMS online en staging**: Keystatic en modo GitHub solo en staging (cada "Guardar" es un
-      commit a `dev`), con los borradores visibles en staging; en producción `/keystatic` no
-      existe y "Gestión del sitio" enlaza al de staging. Configuración lista (30/09); falta la
-      GitHub App (la creás desde el propio Keystatic), sus variables en el Worker y dejarla hacer
-      commits directos a `dev` (excepción en la regla de ramas).
+- [ ] **CMS online en staging**: Keystatic en modo GitHub solo en staging, con los borradores
+      visibles ahí; en producción `/keystatic` no existe y "Gestión del sitio" enlaza al de
+      staging. Cada "Guardar" va a una rama `cms/…`; `cms-to-dev` valida el build y abre el PR a
+      `dev`. GitHub App `milimon-cms` y sus variables en el Worker listas (30/09). Pendiente:
+      decidir si esos PRs se aceptan solos (hoy los aceptás vos).
 - [ ] **Ramas protegidas**: `main` y `dev` solo por PR con el CI en verde, en el sitio y la API.
       _Lo hago yo (`gh api`), con tu OK._
 - [ ] **Google, GTM y Search Console por ambiente**: orígenes de staging y producción en Google
