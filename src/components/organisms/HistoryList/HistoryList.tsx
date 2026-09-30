@@ -103,7 +103,7 @@ export const HistoryList = ({
   };
 
   if (entries === null) {
-    return <BrandLoader label={labels.loading} showLabel />;
+    return <BrandLoader screen label={labels.loading} />;
   }
 
   return (

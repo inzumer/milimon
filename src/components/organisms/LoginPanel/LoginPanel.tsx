@@ -163,7 +163,7 @@ export const LoginPanel = ({
 
   switch (view.kind) {
     case 'loading':
-      return <BrandLoader label={labels.loading} showLabel />;
+      return <BrandLoader screen label={labels.loading} />;
 
     case 'unavailable':
       return <Notice>{labels.unavailable}</Notice>;
