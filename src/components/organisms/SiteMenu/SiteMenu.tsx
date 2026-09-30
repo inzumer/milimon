@@ -75,7 +75,7 @@ export const SiteMenu = ({
         onClick={openMenu}
         className="size-11"
       >
-        <MenuIcon aria-hidden="true" className="size-7" />
+        <MenuIcon className="size-7" />
       </Button>
 
       <Drawer

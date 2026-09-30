@@ -65,7 +65,7 @@ export const FeatureCard = ({
     <CardFooter className="mt-auto">
       <ButtonLink id={ctaId} href={href} variant={highlighted ? 'secondary' : 'primary'}>
         {cta}
-        <ArrowRightIcon aria-hidden="true" className="size-5" />
+        <ArrowRightIcon className="size-5" />
       </ButtonLink>
     </CardFooter>
   </Card>

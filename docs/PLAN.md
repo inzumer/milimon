@@ -496,8 +496,7 @@ idioma, tema), sus recetas y sus cálculos en un perfil propio.
 - Todas las páginas públicas terminan con "Compartí esta página" (hoja de compartir del dispositivo,
   WhatsApp, Facebook, X, LinkedIn, email y copiar enlace), con evento `page_shared`.
 - **Blog** (`/blog`, `/blog/{artículo}`): primer artículo, los _milicitos_ (escala de 1 a 5
-  estrellitas para puntuar lo que probamos). Hasta que exista el CMS, los artículos viven en
-  `src/i18n/blog/{es,en}.json` y se listan en `BLOG_ARTICLE_IDS`.
+  estrellitas para puntuar lo que probamos). Los artículos viven en `src/content/blog` (Keystatic).
 - **Recetas** (`/recipes`): página "Próximamente" con la imagen de la estrella.
 - Cada sección tiene su imagen para compartir (`og-{home,management,recipes,blog}-{es,en}.png`).
 
@@ -575,11 +574,15 @@ en **Gestión del sitio → Sugerencias**, solo para editores y admins).
 - [x] **Páginas públicas de recetas y blog** (28/09): `/recipes` con destacadas en `Carousel` y
       la grilla de `Showcase`, ficha `/recipes/<dirección>` con schema.org `Recipe`; el blog y su RSS
       suman los artículos de Keystatic. Recetas sigue "Próximamente" hasta publicar la primera.
-- [ ] **Recetas con UI de referencia** (Pinterest), lo que falta: chips de filtro por categoría,
-      botones flotantes (guardar, compartir), modo "Empezar a cocinar" e isotipo nuevo. Ver
+- [x] **Filtros de recetas** (29/09): `Filter` de la ui-library (chips con scroll lateral) con los
+      íconos SVG de Milimon y un mismo color para todas las pills (`--filter-pill-*`); el filtro queda en `?category=`
+      (`useUrlFilter`).
+- [ ] **Recetas con UI de referencia** (Pinterest), lo que falta: botones flotantes (guardar,
+      compartir), modo "Empezar a cocinar" e isotipo nuevo. Ver
       [09](./suggestions/09-direccion-visual.md).
-- [ ] **Artículo de los milicitos a Keystatic**: hoy vive en `src/i18n/blog`; pasarlo a la colección
-      del blog para editarlo desde el CMS como los demás.
+- [x] **Artículo de los milicitos a Keystatic** (29/09): es un artículo más del blog
+      (`src/content/blog/milicitos`), destacado en la portada; la escala usa el componente
+      `{% milicitos rating=N %}`, disponible en Keystatic para las reseñas.
 - [ ] **Fotografía**: aplicar la [guía de fotografía](./suggestions/11-guia-de-fotografia.md) (luz,
       ángulos, distancia y foco, fondos, formatos, edición) y armar un preset de edición común.
 

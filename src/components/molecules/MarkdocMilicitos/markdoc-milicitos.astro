@@ -1,0 +1,24 @@
+---
+import { getImage } from 'astro:assets';
+import star from '@assets/illustrations/star.webp';
+import { MilicitosRating } from '@components/molecules/MilicitosRating';
+import { getTranslations } from '@i18n';
+import { interpolate, toLocale } from '@utils';
+
+interface Props {
+  rating: number;
+}
+
+/** `{% milicitos rating=N %}…{% /milicitos %}` in CMS articles: the rating next to its text. */
+const { rating } = Astro.props;
+const lang = toLocale(Astro.params.lang ?? Astro.url.searchParams.get('lang'));
+const label = interpolate(getTranslations(lang, 'blog').rating, { count: String(rating) });
+const milicito = await getImage({ src: star, width: 64, height: 64, format: 'webp' });
+---
+
+<div class="flex flex-col gap-2 rounded-xl border border-[var(--border-default)] p-4 sm:flex-row sm:items-center sm:gap-4 [&_p]:m-0">
+  <MilicitosRating rating={rating} label={label} imageSrc={milicito.src} className="shrink-0" />
+  <div>
+    <slot />
+  </div>
+</div>

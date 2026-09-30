@@ -188,8 +188,8 @@ importers:
         specifier: ^1.1.0
         version: 1.1.0(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       '@inzumer/ui-library':
-        specifier: ^2.2.1
-        version: 2.2.1(class-variance-authority@0.7.1)(clsx@2.1.1)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(tailwind-merge@3.7.0)
+        specifier: ^2.3.0
+        version: 2.3.0(class-variance-authority@0.7.1)(clsx@2.1.1)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(tailwind-merge@3.7.0)
       '@keystatic/astro':
         specifier: ^6.0.0
         version: 6.0.0(@keystatic/core@0.6.9(@keystar/ui@0.10.0(react-aria@3.50.0(react-dom@19.3.0(react@19.3.0))(react@19.3.0))(react-dom@19.3.0(react@19.3.0))(react-stately@3.48.0(react@19.3.0))(react@19.3.0))(react-aria@3.50.0(react-dom@19.3.0(react@19.3.0))(react@19.3.0))(react-dom@19.3.0(react@19.3.0))(react-stately@3.48.0(react@19.3.0))(react@19.3.0))(astro@7.3.5(@types/node@24.13.6)(idb-keyval@6.3.0)(jiti@2.7.0)(yaml@2.9.1))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
@@ -236,9 +236,6 @@ importers:
       '@eslint-react/eslint-plugin':
         specifier: ^5.20.8
         version: 5.20.8(eslint@10.11.0(jiti@2.7.0))(typescript@6.0.3)
-      '@eslint/js':
-        specifier: ^10.0.1
-        version: 10.0.1(eslint@10.11.0(jiti@2.7.0))
       '@ianvs/prettier-plugin-sort-imports':
         specifier: ^4.7.1
         version: 4.7.1(prettier@3.9.9)
@@ -1278,15 +1275,6 @@ packages:
     resolution: {integrity: sha512-MwcE1P+AZ4C6DWlpin/OmOA54mmIZ/+xZuJiQd4SyB29oAJjN30UW9wkKNptW2ctp4cEsvhlLY/CsQ1uoHDloQ==}
     engines: {node: ^20.19.0 || ^22.13.0 || >=24}
 
-  '@eslint/js@10.0.1':
-    resolution: {integrity: sha512-zeR9k5pd4gxjZ0abRoIaxdc7I3nDktoXZk2qOv9gCNWx3mVwEn32VRhyLaRsDiJjTs0xq/T8mfPtyuXu7GWBcA==}
-    engines: {node: ^20.19.0 || ^22.13.0 || >=24}
-    peerDependencies:
-      eslint: ^10.0.0
-    peerDependenciesMeta:
-      eslint:
-        optional: true
-
   '@eslint/object-schema@3.0.5':
     resolution: {integrity: sha512-vqTaUEgxzm+YDSdElad6PiRoX4t8VGDjCtt05zn4nU810UIx/uNEV7/lZJ6KwFThKZOzOxzXy48da+No7HZaMw==}
     engines: {node: ^20.19.0 || ^22.13.0 || >=24}
@@ -1558,8 +1546,8 @@ packages:
       react: '>=18 || ^19'
       react-dom: '>=18 || ^19'
 
-  '@inzumer/ui-library@2.2.1':
-    resolution: {integrity: sha512-PtdluB1haippt6NrAMwdQOJQ2Qg6RzW2k5yG4m+Js6a9o0J1K99J5WoLwBDnncH9Am/9ocIz2YeiFBX0f3/fdA==}
+  '@inzumer/ui-library@2.3.0':
+    resolution: {integrity: sha512-Z6u1IO6hSVytxRZT4KZZkQeAT/NjUNiGi0rT4EE2cGeT74RGHS1jvAUTEpILvD1pOQVPNCjeuh9gXRdPKZYTiA==}
     peerDependencies:
       class-variance-authority: '>=0.7.0'
       clsx: '>=2.0.0'
@@ -5707,10 +5695,6 @@ snapshots:
     dependencies:
       '@types/json-schema': 7.0.15
 
-  '@eslint/js@10.0.1(eslint@10.11.0(jiti@2.7.0))':
-    optionalDependencies:
-      eslint: 10.11.0(jiti@2.7.0)
-
   '@eslint/object-schema@3.0.5': {}
 
   '@eslint/plugin-kit@0.7.3':
@@ -5908,7 +5892,7 @@ snapshots:
       react: 19.3.0
       react-dom: 19.3.0(react@19.3.0)
 
-  '@inzumer/ui-library@2.2.1(class-variance-authority@0.7.1)(clsx@2.1.1)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(tailwind-merge@3.7.0)':
+  '@inzumer/ui-library@2.3.0(class-variance-authority@0.7.1)(clsx@2.1.1)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(tailwind-merge@3.7.0)':
     dependencies:
       '@inzumer/tokens': 1.1.1(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       class-variance-authority: 0.7.1

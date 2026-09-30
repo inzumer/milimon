@@ -1,1 +1,1 @@
-export { applyColorScheme, readAppliedColorScheme, useColorScheme } from './useColorScheme';
+export { useColorScheme } from './useColorScheme';

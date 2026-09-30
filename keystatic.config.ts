@@ -1,4 +1,7 @@
 import { collection, config, fields } from '@keystatic/core';
+import { wrapper } from '@keystatic/core/content-components';
+import { RECIPE_CATEGORIES } from './src/constants/recipes';
+import recipeText from './src/i18n/recipe-page/es.json';
 
 /** English is optional and falls back to Spanish on the site. */
 const localized = (label: string, { multiline = false, required = true } = {}) =>
@@ -23,6 +26,19 @@ const article = (label: string) =>
       codeBlock: false,
       table: false,
       image: { directory: 'src/assets/blog', publicPath: '../../../../assets/blog/' },
+    },
+    components: {
+      milicitos: wrapper({
+        label: 'Milicitos',
+        description: 'Una puntuación de 1 a 5 milicitos con su texto al lado.',
+        schema: {
+          rating: fields.integer({
+            label: 'Milicitos (1 a 5)',
+            defaultValue: 5,
+            validation: { isRequired: true, min: 1, max: 5 },
+          }),
+        },
+      }),
     },
   });
 
@@ -63,6 +79,11 @@ export default config({
           { es: article('Texto en español'), en: article('Text in English') },
           { label: 'Artículo' },
         ),
+        featured: fields.checkbox({
+          label: 'Destacado',
+          description: 'Aparece en la portada del sitio.',
+          defaultValue: false,
+        }),
         draft: fields.checkbox({
           label: 'Borrador',
           description: 'Los borradores no se publican.',
@@ -90,12 +111,10 @@ export default config({
         summary: localized('Resumen (una o dos frases)', { multiline: true }),
         category: fields.select({
           label: 'Categoría',
-          options: [
-            { label: 'Dulce', value: 'sweet' },
-            { label: 'Salado', value: 'savory' },
-            { label: 'Panadería', value: 'bread' },
-            { label: 'Bebidas', value: 'drinks' },
-          ],
+          options: RECIPE_CATEGORIES.map((value) => ({
+            label: recipeText.categories[value],
+            value,
+          })),
           defaultValue: 'sweet',
         }),
         minutes: fields.integer({ label: 'Tiempo total (minutos)', validation: { min: 1 } }),

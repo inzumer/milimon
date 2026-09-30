@@ -1,6 +1,7 @@
 import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
+import { RECIPE_CATEGORIES } from '@constants';
 
 /** Internal suggestion documents, shown to editors and admins (see `ADMIN_DOCS`). */
 const suggestions = defineCollection({
@@ -26,7 +27,7 @@ const recipes = defineCollection({
         title: z.string().min(1),
         titleEs: z.string().min(1),
         summary: localized,
-        category: z.enum(['sweet', 'savory', 'bread', 'drinks']),
+        category: z.enum(RECIPE_CATEGORIES),
         minutes: z.number().int().positive().nullable(),
         servings: z.number().int().positive().nullable(),
         photo: image().nullable().optional(),
@@ -63,6 +64,7 @@ const blog = defineCollection({
         date: z.coerce.date(),
         cover: image().nullable().optional(),
         coverAlt: optionalLocalized.default({ es: '', en: '' }),
+        featured: z.boolean().default(false),
         draft: z.boolean().default(true),
       })
       .refine(

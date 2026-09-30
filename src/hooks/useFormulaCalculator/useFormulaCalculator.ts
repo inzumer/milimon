@@ -14,10 +14,7 @@ export interface UseFormulaCalculatorOptions {
   lang: Locale;
 }
 
-export const toDraft = (
-  values: Record<string, number | boolean | null>,
-  lang: Locale,
-): CalculatorDraft =>
+const toDraft = (values: Record<string, number | boolean | null>, lang: Locale): CalculatorDraft =>
   Object.fromEntries(
     Object.entries(values).map(([key, value]) => [
       key,
