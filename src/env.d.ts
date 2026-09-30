@@ -7,6 +7,8 @@ interface ImportMetaEnv {
   readonly PUBLIC_API_APP_ID?: string;
   readonly PUBLIC_GOOGLE_CLIENT_ID?: string;
   readonly PUBLIC_FACEBOOK_APP_ID?: string;
+  /** `github` on staging: Keystatic online and drafts visible. */
+  readonly PUBLIC_KEYSTATIC_STORAGE?: string;
 }
 
 interface ImportMeta {

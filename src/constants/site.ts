@@ -1,3 +1,6 @@
+/** Content editor (Keystatic), online only on staging; it saves to the `dev` branch. */
+export const CMS_URL = 'https://milimon-staging.inzumer.workers.dev/keystatic/branch/dev';
+
 /** Author's site, linked from the footer's "@inzumer". */
 export const AUTHOR_URL = 'https://inzumer.com';
 

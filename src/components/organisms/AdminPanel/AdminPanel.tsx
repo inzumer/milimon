@@ -14,9 +14,11 @@ import {
   TableRow,
 } from '@inzumer/ui-library';
 import { BrandLoader } from '@components/atoms/BrandLoader';
+import { ButtonLink } from '@components/atoms/ButtonLink';
 import { QueryProvider } from '@components/atoms/QueryProvider';
 import { SectionLabel } from '@components/atoms/SectionLabel';
 import { AdminAccessNotice } from '@components/molecules/AdminAccessNotice';
+import { CMS_URL } from '@constants';
 import { useAdminAccess } from '@hooks';
 import type { Translations } from '@i18n/translations';
 import {
@@ -154,8 +156,18 @@ const AdminPanelView = ({
         <SectionLabel>{labels.content.title}</SectionLabel>
         <RichText>{labels.content.description}</RichText>
         <RichText variant="p3" className="text-[var(--text-secondary)]">
-          {labels.content.soon}
+          {labels.content['cms-note']}
         </RichText>
+        <ButtonLink
+          id={trackingId('admin', 'link', 'open-cms')}
+          href={CMS_URL}
+          target="_blank"
+          rel="noopener"
+          variant="secondary"
+          className="self-start"
+        >
+          {labels.content['open-cms']}
+        </ButtonLink>
       </section>
 
       {isAdmin && (

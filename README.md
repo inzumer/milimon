@@ -58,6 +58,19 @@ Cada Worker tiene su build command (`pnpm build`) y sus propias variables de bui
 Variables): `SITE_URL`, `BASE_PATH` (`/`), `PUBLIC_API_URL`, `PUBLIC_API_KEY` (el `WEB_API_KEY` de su
 API), `PUBLIC_API_APP_ID` (`web`), `PUBLIC_GOOGLE_CLIENT_ID` y `NODE_VERSION`.
 
+**CMS en staging.** Con `PUBLIC_KEYSTATIC_STORAGE=github` el build suma el adaptador de Cloudflare:
+Keystatic queda online en `/keystatic` (modo GitHub, guarda en `dev`), staging muestra también los
+borradores y el resto del sitio sigue estático. Producción no lleva esa variable. El Worker de
+staging necesita además:
+
+| Dónde                            | Variable                           | Qué es                               |
+| -------------------------------- | ---------------------------------- | ------------------------------------ |
+| Build → Variables                | `PUBLIC_KEYSTATIC_STORAGE`         | `github`                             |
+| Build → Variables                | `PUBLIC_KEYSTATIC_GITHUB_APP_SLUG` | Slug de la GitHub App de Keystatic   |
+| Settings → Variables and Secrets | `KEYSTATIC_GITHUB_CLIENT_ID`       | Client ID de la GitHub App           |
+| Settings → Variables and Secrets | `KEYSTATIC_GITHUB_CLIENT_SECRET`   | Client secret de la GitHub App       |
+| Settings → Variables and Secrets | `KEYSTATIC_SECRET`                 | Clave aleatoria para firmar sesiones |
+
 La API de cuentas se despliega aparte, en Render (ver su repo).
 
 Variables de entorno (ver `.env.example`):
