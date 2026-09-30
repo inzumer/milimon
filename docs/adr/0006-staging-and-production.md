@@ -22,14 +22,14 @@ Hoy hay un solo ambiente a medias:
 Dos ambientes completos, de punta a punta, y el contenido viaja de staging a producción con el
 mismo release que el código.
 
-| Pieza    | Staging                                                            | Producción                                       |
-| -------- | ------------------------------------------------------------------ | ------------------------------------------------ |
-| Sitio    | Cloudflare Pages, rama `dev` (`dev.<proyecto>.pages.dev`)          | Cloudflare Pages, rama `main` (luego el dominio) |
-| CMS      | Keystatic online, modo GitHub: cada "Guardar" es un commit a `dev` | Sin edición: el contenido llega con el release   |
-| API      | Render `milimon-backend-nest-staging`, desde `dev`                 | Render `milimon-backend-nest`, desde `main`      |
-| Base     | Neon rama `staging`, **solo esquema** (sin datos personales)       | Neon rama `production`                           |
-| Mails    | Desactivados (sin `RESEND_API_KEY`)                                | Resend con el dominio                            |
-| Medición | Entorno "Staging" de GTM                                           | Entorno "Live" de GTM                            |
+| Pieza    | Staging                                                                      | Producción                                                                      |
+| -------- | ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| Sitio    | Worker `milimon-staging`, rama `dev` (`milimon-staging.inzumer.workers.dev`) | Worker `milimon`, rama `main` (`milimon.inzumer.workers.dev`, luego el dominio) |
+| CMS      | Keystatic online, modo GitHub: cada "Guardar" es un commit a `dev`           | Sin edición: el contenido llega con el release                                  |
+| API      | Render `milimon-backend-nest-staging`, desde `dev`                           | Render `milimon-backend-nest`, desde `main`                                     |
+| Base     | Neon rama `staging`, **solo esquema** (sin datos personales)                 | Neon rama `production`                                                          |
+| Mails    | Desactivados (sin `RESEND_API_KEY`)                                          | Resend con el dominio                                                           |
+| Medición | Entorno "Staging" de GTM                                                     | Entorno "Live" de GTM                                                           |
 
 Flujo de publicación:
 
@@ -60,10 +60,11 @@ Backups de producción:
 
 ## Consecuencias
 
-- Todo entra en los planes gratuitos: Cloudflare Pages, dos servicios de Render (staging duerme sin
+- Todo entra en los planes gratuitos: dos Workers de Cloudflare (ambientes de Wrangler en
+  `wrangler.jsonc`, cada uno con sus variables), dos servicios de Render (staging duerme sin
   keep-alive; las 750 h/mes se comparten en el workspace) y ramas de Neon (hasta 10).
 - GitHub Pages deja de hacer falta cuando Cloudflare esté andando.
 - Hacen falta cuentas y accesos de la persona dueña: Cloudflare, el servicio de staging en Render, la
   GitHub App de Keystatic y los secretos (nunca pasan por el chat).
-- El sitio de producción puede salir en `*.pages.dev` antes del dominio y moverse después sin
+- El sitio de producción puede salir en `*.workers.dev` antes del dominio y moverse después sin
   cambios de fondo.
