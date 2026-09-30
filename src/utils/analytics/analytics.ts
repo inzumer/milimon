@@ -16,6 +16,8 @@ export interface AnalyticsEvents {
   history_opened: { formula: string };
   history_deleted: { formula: string };
   page_shared: { method: string; path: string };
+  recipe_saved: { recipe: string };
+  recipe_unsaved: { recipe: string };
 }
 
 export type AnalyticsEventName = keyof AnalyticsEvents;

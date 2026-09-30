@@ -2,9 +2,9 @@
 import { getImage, Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 import { RichText, Timeline } from '@inzumer/ui-library';
-import { CookingMode } from '@components';
+import { CookingMode, RecipeActions } from '@components';
 import { getTranslations } from '@i18n';
-import { interpolate, localize, recipeTitle, type Locale } from '@utils';
+import { interpolate, localize, localizedPath, recipeTitle, type Locale } from '@utils';
 
 interface Props {
   recipe: CollectionEntry<'recipes'>;
@@ -59,6 +59,13 @@ const steps = await Promise.all(
         </RichText>
       ))}
     </ul>
+    <RecipeActions
+      client:load
+      recipeId={recipe.id}
+      title={recipeTitle(data, lang)}
+      href={localizedPath(lang, 'recipes', recipe.id)}
+      labels={text.actions}
+    />
   </header>
 
   {data.photo && (

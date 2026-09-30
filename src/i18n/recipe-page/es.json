@@ -32,5 +32,11 @@
     "filter-empty": "Todavía no hay recetas de esta categoría.",
     "filter-previous": "Categorías anteriores",
     "filter-next": "Más categorías"
+  },
+  "actions": {
+    "save": "Guardar",
+    "saved": "Guardada",
+    "share": "Compartir",
+    "copied": "Enlace copiado"
   }
 }
