@@ -24,6 +24,7 @@ const recipe = (await getPublishedRecipes()).find(({ id }) => id === Astro.param
 if (!recipe) {
   throw new Error(`Unknown recipe: ${Astro.params.recipe}`);
 }
+
 const { data } = recipe;
 const text = getTranslations(lang, 'recipe-page');
 const title = recipeTitle(data, lang);

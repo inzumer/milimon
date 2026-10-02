@@ -12,6 +12,7 @@ const labels = getTranslations('es', 'history-page').list;
 const formulas = Object.fromEntries(
   FORMULA_IDS.map((id) => {
     const text = getFormulaTranslation('es', id);
+
     return [id, { title: text.title, outputs: text.outputs }];
   }),
 );
@@ -34,6 +35,7 @@ const setup = (entries = [wasteFactorEntry(), omnesEntry()], accountHref?: strin
       loadText={loadText}
     />,
   );
+
   return { user: userEvent.setup(), loadText, assign };
 };
 

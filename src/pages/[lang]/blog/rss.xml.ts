@@ -10,6 +10,7 @@ export const GET: APIRoute = async ({ params, site, url }) => {
   const lang = toLocale(params['lang']);
   const blog = getTranslations(lang, 'blog');
   const common = getTranslations(lang, 'common');
+
   return rss({
     title: `${blog.index.title} · ${common['app-name']}`,
     description: blog.index.description,

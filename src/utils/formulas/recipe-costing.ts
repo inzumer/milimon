@@ -51,6 +51,7 @@ export const ingredientCost = (
 ): { wasteFactor: number; grossQuantity: number; cost: number } => {
   const wasteFactor = wasteFactorFromPercentage(wastePercentage);
   const grossQuantity = netQuantity * wasteFactor;
+
   return { wasteFactor, grossQuantity, cost: grossQuantity * unitPrice };
 };
 
@@ -80,6 +81,7 @@ export const calculateRecipeCosting = (
     errors.push(
       ...check.errors.map(({ field, code }) => ({ field: `ingredients.${index}.${field}`, code })),
     );
+
     return { ingredient, values: check.values };
   });
 

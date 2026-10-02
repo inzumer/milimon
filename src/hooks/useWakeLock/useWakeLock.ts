@@ -6,6 +6,7 @@ export const useWakeLock = (active: boolean): void => {
     if (!active || typeof navigator === 'undefined' || !('wakeLock' in navigator)) {
       return undefined;
     }
+
     let lock: WakeLockSentinel | null = null;
     let released = false;
 
@@ -24,6 +25,7 @@ export const useWakeLock = (active: boolean): void => {
 
     void request();
     document.addEventListener('visibilitychange', onVisible);
+
     return () => {
       released = true;
       document.removeEventListener('visibilitychange', onVisible);

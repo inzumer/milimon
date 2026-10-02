@@ -36,6 +36,7 @@ export const LanguageSwitcher = ({
       if (!isLocale(next) || next === lang) {
         return;
       }
+
       useSettingsStore.getState().update({ locale: next });
       track('language_changed', { from: lang, to: next });
       navigate(`${switchLocalePath(pathname, next)}${window.location.hash}`);

@@ -15,6 +15,7 @@ export const useUrlFilter = <T extends string>(
 
   const fromUrl = (): T => {
     const value = new URLSearchParams(window.location.search).get(param);
+
     return allowed.find((option) => option === value) ?? fallback;
   };
 
@@ -26,6 +27,7 @@ export const useUrlFilter = <T extends string>(
     } else {
       url.searchParams.set(param, next);
     }
+
     window.history.replaceState(window.history.state, '', url);
   };
 

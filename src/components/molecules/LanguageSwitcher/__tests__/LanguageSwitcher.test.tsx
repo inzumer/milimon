@@ -7,6 +7,7 @@ import { LanguageSwitcher } from '../LanguageSwitcher';
 const setup = (pathname = '/es/formulas/cooking-loss') => {
   const navigate = vi.fn();
   render(<LanguageSwitcher lang="es" pathname={pathname} label="Idioma" navigate={navigate} />);
+
   return { navigate, user: userEvent.setup() };
 };
 

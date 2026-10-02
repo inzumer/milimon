@@ -13,6 +13,8 @@ export const loadCalculatorText: CalculatorTextLoader = async (lang, id) => {
   if (!load) {
     throw new Error(`Missing translation src/i18n/formulas/${id}/${lang}.json`);
   }
+
   const { study: _study, ...text } = await load();
+
   return text;
 };

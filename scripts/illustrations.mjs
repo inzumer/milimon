@@ -13,6 +13,7 @@ const primary = () => {
   if (!match) {
     throw new Error('--color-primary-500 not found in theme.css');
   }
+
   return `rgb(${match[1]}, ${match[2]}, ${match[3]})`;
 };
 /** The flat yellow of the original backgrounds. */
@@ -39,6 +40,7 @@ const components = (width, height, test, measure) => {
     if (label[start] !== -1 || !test(start)) {
       continue;
     }
+
     const id = sizes.length;
     let size = 0;
     let sum = 0;
@@ -65,6 +67,7 @@ const components = (width, height, test, measure) => {
     sizes.push(size);
     sums.push(sum);
   }
+
   return { label, sizes, means: sums.map((total, i) => total / sizes[i]) };
 };
 
@@ -106,8 +109,10 @@ const outerContour = (width, height, mask) => {
     if (!moved || (x === sx && y === sy)) {
       break;
     }
+
     points.push([x, y]);
   }
+
   return points;
 };
 
@@ -117,6 +122,7 @@ const simplify = (points, epsilon) => {
     if (pts.length < 3) {
       return pts;
     }
+
     const [a, b] = [pts[0], pts[pts.length - 1]];
     const len = Math.hypot(b[0] - a[0], b[1] - a[1]) || 1;
     let [index, max] = [0, 0];
@@ -129,11 +135,13 @@ const simplify = (points, epsilon) => {
         [index, max] = [i, d];
       }
     }
+
     return max > epsilon
       ? [...rdp(pts.slice(0, index + 1)).slice(0, -1), ...rdp(pts.slice(index))]
       : [a, b];
   };
   const half = Math.floor(points.length / 2);
+
   return [...rdp(points.slice(0, half + 1)).slice(0, -1), ...rdp(points.slice(half))];
 };
 
@@ -165,6 +173,7 @@ const split = async (name) => {
       figure[i + 3] = 0;
       continue;
     }
+
     const x = p % width;
     const y = (p - x) / width;
     let nearBackground = false;
@@ -179,6 +188,7 @@ const split = async (name) => {
     if (!nearBackground) {
       continue;
     }
+
     const toBackground = distance(data, i, BACKGROUND);
     const span = Math.hypot(
       OUTLINE[0] - BACKGROUND[0],
@@ -206,6 +216,7 @@ const split = async (name) => {
     if (!opaque(p)) {
       continue;
     }
+
     const x = p % width;
     const y = (p - x) / width;
     let inside = true;

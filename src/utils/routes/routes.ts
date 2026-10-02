@@ -53,6 +53,7 @@ export const switchLocalePath = (
     .split('/')
     .filter((segment) => segment.length > 0);
   const rest = isLocale(segments[0]) ? segments.slice(1) : segments;
+
   return withBase(join(lang, ...rest), base);
 };
 
@@ -66,5 +67,6 @@ export const isActivePath = (pathname: string, href: string, base: string = SITE
   if (isLocaleRoot) {
     return current === target;
   }
+
   return current === target || current.startsWith(`${target}/`);
 };

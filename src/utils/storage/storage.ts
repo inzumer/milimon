@@ -10,6 +10,7 @@ export const getBrowserStorage = (kind: 'local' | 'session' = 'local'): KeyValue
     if (typeof window === 'undefined') {
       return null;
     }
+
     return kind === 'session' ? window.sessionStorage : window.localStorage;
   } catch {
     return null;
@@ -20,8 +21,10 @@ export const readJson = <T>(storage: KeyValueStorage | null, key: string): T | n
   if (!storage) {
     return null;
   }
+
   try {
     const raw = storage.getItem(key);
+
     return raw === null ? null : (JSON.parse(raw) as T);
   } catch {
     return null;
@@ -32,6 +35,7 @@ export const writeJson = (storage: KeyValueStorage | null, key: string, value: u
   if (!storage) {
     return;
   }
+
   try {
     storage.setItem(key, JSON.stringify(value));
   } catch {

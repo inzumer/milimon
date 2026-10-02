@@ -45,6 +45,7 @@ export const CookingMode = ({ recipeId, title, ingredients, steps, labels }: Coo
     if (!open) {
       return undefined;
     }
+
     const onKey = (event: KeyboardEvent) => {
       if (event.key === 'ArrowRight') {
         setIndex((current) => Math.min(current + 1, steps.length - 1));
@@ -53,6 +54,7 @@ export const CookingMode = ({ recipeId, title, ingredients, steps, labels }: Coo
       }
     };
     window.addEventListener('keydown', onKey);
+
     return () => window.removeEventListener('keydown', onKey);
   }, [open, steps.length]);
 
@@ -62,6 +64,7 @@ export const CookingMode = ({ recipeId, title, ingredients, steps, labels }: Coo
       if (!next.delete(item)) {
         next.add(item);
       }
+
       return next;
     });
 

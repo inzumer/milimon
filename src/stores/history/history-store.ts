@@ -41,6 +41,7 @@ export interface HistoryState {
 
 const isHeadline = (value: unknown): value is HistoryHeadline => {
   const data = value as Partial<HistoryHeadline> | null;
+
   return (
     typeof data === 'object' &&
     data !== null &&
@@ -68,6 +69,7 @@ const isSavedResult = (value: unknown): value is SavedResult =>
 
 export const isHistoryEntry = (value: unknown): value is HistoryEntry => {
   const data = value as Partial<HistoryEntry> | null;
+
   return (
     typeof data === 'object' &&
     data !== null &&
@@ -101,6 +103,7 @@ export const useHistoryStore = create<HistoryState>()(
       add: (input) => {
         const entry: HistoryEntry = { ...input, id: newId(), savedAt: new Date().toISOString() };
         set({ entries: normalizeHistory([entry, ...get().entries]) });
+
         return entry;
       },
       remove: (id) => set({ entries: get().entries.filter((entry) => entry.id !== id) }),

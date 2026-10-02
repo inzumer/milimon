@@ -33,6 +33,7 @@ if (cmsOnline) {
   // The adapter builds the Worker for this wrangler environment.
   process.env.CLOUDFLARE_ENV ??= 'staging';
 }
+
 /** Recipes stays "coming soon" (out of the sitemap) until one is published. */
 const RECIPES_DIR = 'src/content/recipes';
 const hasRecipes =
@@ -172,6 +173,7 @@ export default defineConfig({
       filter: (page) => {
         const { pathname } = new URL(page);
         const route = pathname.slice(base.replace(/\/+$/, '').length) || '/';
+
         return (
           route !== '/' &&
           !route.includes('404') &&

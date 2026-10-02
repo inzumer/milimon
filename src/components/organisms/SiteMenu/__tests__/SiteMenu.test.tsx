@@ -57,6 +57,7 @@ const openMenu = async (overrides: Partial<SiteMenuProps> = {}) => {
   const user = userEvent.setup();
   render(<SiteMenu store={storeWith(null)} {...props} {...overrides} />);
   await user.click(screen.getByRole('button', { name: 'Abrir menú' }));
+
   return user;
 };
 

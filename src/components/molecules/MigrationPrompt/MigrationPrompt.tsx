@@ -21,6 +21,7 @@ export const MigrationPrompt = ({
   onStartFresh,
 }: MigrationPromptProps) => {
   const titleId = useId();
+
   return (
     <section aria-labelledby={titleId} className="flex flex-col gap-3">
       {busy && <BrandLoader screen />}

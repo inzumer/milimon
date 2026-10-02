@@ -104,6 +104,7 @@ const AgendaPanelView = ({
     if (!session) {
       throw new Error('No account session');
     }
+
     return session.backend;
   };
   const range = upcomingRange(today, AGENDA_UPCOMING_DAYS);
@@ -163,6 +164,7 @@ const AgendaPanelView = ({
     if (!session || !draft) {
       return;
     }
+
     const values = { ...draft.values, title: draft.values.title.trim() };
     const errors = {
       ...(values.date ? {} : { date: labels.form['date-required'] }),
@@ -170,8 +172,10 @@ const AgendaPanelView = ({
     };
     if (errors.date || errors.title) {
       setDraft({ ...draft, errors });
+
       return;
     }
+
     try {
       const input = { ...values, notes: values.notes?.trim() || null };
       await saveEntry.mutateAsync({ id: draft.id, input });
@@ -186,6 +190,7 @@ const AgendaPanelView = ({
     if (!session || !deleting) {
       return;
     }
+
     try {
       await removeEntry.mutateAsync(deleting.id);
       setNotice(labels.results.deleted);

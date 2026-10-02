@@ -27,6 +27,7 @@ describe('recipe-costing', () => {
     if (!result.ok) {
       return;
     }
+
     const [lomo, papas, manteca] = result.value.ingredients;
     expect(lomo?.grossQuantity).toBeCloseTo(2.571429, 6);
     expect(lomo?.cost).toBeCloseTo(25_714.29, 2);
@@ -126,6 +127,7 @@ describe('pricing (the café example)', () => {
     if (!result.ok) {
       return;
     }
+
     expect(result.value.socialCharges).toBe(42_750);
     expect(result.value.amortization).toBe(100_000);
     expect(result.value.nonRawMaterialCosts).toBe(389_750);

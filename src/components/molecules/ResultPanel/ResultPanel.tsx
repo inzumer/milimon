@@ -22,11 +22,13 @@ const display = (
   if (typeof value !== 'number') {
     return formulaText(text).choice(String(value));
   }
+
   const unit =
     output.kind === 'weight' || output.kind === 'area' || output.kind === 'months'
       ? units?.[output.kind]
       : undefined;
   const formatted = formatValue(value, output.kind, context);
+
   return unit ? `${formatted} ${unit}` : formatted;
 };
 

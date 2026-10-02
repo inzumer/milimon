@@ -51,22 +51,26 @@ export const createFakeAccountBackend = (
     remote.user = user;
     listeners.forEach((listener) => listener(user));
   };
+
   return {
     remote,
     setUser,
     getUser: vi.fn(async () => remote.user),
     onUserChange: vi.fn((listener: (user: AccountUser | null) => void) => {
       listeners.add(listener);
+
       return () => {
         listeners.delete(listener);
       };
     }),
     signInWithGoogle: vi.fn(async () => {
       setUser(TEST_USER);
+
       return TEST_USER;
     }),
     signInWithFacebook: vi.fn(async () => {
       setUser(TEST_USER);
+
       return TEST_USER;
     }),
     signOut: vi.fn(async () => setUser(null)),
@@ -107,12 +111,14 @@ export const createFakeAccountBackend = (
       if (!remote.user) {
         throw new Error('signed out');
       }
+
       return remote.user;
     }),
     listUsers: vi.fn(async (search: string, page: number) => {
       const items = remote.users.filter((user) =>
         `${user.name ?? ''} ${user.email ?? ''}`.toLowerCase().includes(search.toLowerCase()),
       );
+
       return { items, total: items.length, page, pageSize: 20 };
     }),
     setUserRole: vi.fn(async (userId: string, role: AdminUser['role']) => {
@@ -120,7 +126,9 @@ export const createFakeAccountBackend = (
       if (!user) {
         throw new Error('not found');
       }
+
       user.role = role;
+
       return { ...user };
     }),
     listRoleChanges: vi.fn(async () => remote.roleChanges),
@@ -137,6 +145,7 @@ export const createFakeAccountBackend = (
         updatedAt: '2026-09-27T12:00:00.000Z',
       };
       remote.agenda.push(entry);
+
       return { ...entry };
     }),
     updateAgendaEntry: vi.fn(async (id: string, input: AgendaEntryInput) => {
@@ -144,7 +153,9 @@ export const createFakeAccountBackend = (
       if (!entry) {
         throw new Error('not found');
       }
+
       Object.assign(entry, input);
+
       return { ...entry };
     }),
     deleteAgendaEntry: vi.fn(async (id: string) => {

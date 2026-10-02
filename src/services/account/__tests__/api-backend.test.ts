@@ -40,6 +40,7 @@ const setup = (session: StoredSession | null = null) => {
   if (session) {
     store.write(session);
   }
+
   const replies: Response[] = [];
   const calls: Call[] = [];
   const fetchImpl = vi.fn(async (url: string, init: RequestInit) => {
@@ -49,6 +50,7 @@ const setup = (session: StoredSession | null = null) => {
       headers: init.headers as Record<string, string>,
       body: init.body ? JSON.parse(init.body as string) : undefined,
     });
+
     return replies.shift() ?? reply(204);
   }) as unknown as typeof fetch;
   const backend = createApiBackend(CONFIG, {
@@ -56,6 +58,7 @@ const setup = (session: StoredSession | null = null) => {
     now: () => NOW,
     request: { fetchImpl, sleep: async () => undefined },
   });
+
   return { backend, store, calls, queue: (...next: Response[]) => replies.push(...next) };
 };
 

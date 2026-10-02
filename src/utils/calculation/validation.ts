@@ -28,10 +28,12 @@ export const validate = <K extends string>(
       errors.push({ field, code: 'required' });
       continue;
     }
+
     const code = rules[field].map((rule) => rule(value)).find((result) => result !== null);
     if (code) {
       errors.push({ field, code });
     }
   }
+
   return { errors, values: input as Record<K, number> };
 };

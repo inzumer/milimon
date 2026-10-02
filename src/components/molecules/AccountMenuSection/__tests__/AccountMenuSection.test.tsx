@@ -28,6 +28,7 @@ const setup = (signedIn: boolean, loadSession: () => AccountSession | null = () 
   if (signedIn) {
     store.write(SESSION);
   }
+
   render(
     <AccountMenuSection
       labels={labels}
@@ -37,6 +38,7 @@ const setup = (signedIn: boolean, loadSession: () => AccountSession | null = () 
       loadSession={loadSession}
     />,
   );
+
   return { store, user: userEvent.setup() };
 };
 

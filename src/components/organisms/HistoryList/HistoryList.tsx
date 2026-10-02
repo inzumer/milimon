@@ -64,6 +64,7 @@ export const HistoryList = ({
           .catch(() => setTexts((current) => ({ ...current, [formulaId]: 'error' })));
       }
     }
+
     setExpanded(next);
   };
 
@@ -84,10 +85,12 @@ export const HistoryList = ({
     if (!main) {
       return null;
     }
+
     const kind = main.kind as ValueKind;
     const unit = UNITS.find((item) => item === kind);
     const formatted = formatValue(main.value, kind, { lang, currency: entry.currency });
     const label = formulas[entry.formulaId]?.outputs[main.output];
+
     return (
       <RichText className="flex flex-wrap items-baseline gap-x-2">
         {label && (
@@ -138,6 +141,7 @@ export const HistoryList = ({
               const detailId = `${id}-${entry.id}`;
               const isOpen = expanded.has(entry.id);
               const text = texts[entry.formulaId];
+
               return (
                 <li key={entry.id}>
                   <article

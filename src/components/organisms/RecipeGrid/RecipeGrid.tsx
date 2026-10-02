@@ -77,6 +77,7 @@ export const RecipeGrid = ({ items, labels }: RecipeGridProps) => {
         : labels.categories[choice];
   const options: FilterOption<Choice>[] = present.map((choice) => {
     const Icon = CATEGORY_ICONS[choice];
+
     return {
       value: choice,
       id: trackingId('recipes', 'button', 'filter', choice),

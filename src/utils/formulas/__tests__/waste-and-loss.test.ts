@@ -15,6 +15,7 @@ describe('waste-percentage (pumpkin: 2,800 kg bruto → 1,960 kg neto)', () => {
     if (!result.ok) {
       return;
     }
+
     expect(result.value.wasteWeight).toBeCloseTo(0.84, 10);
     expect(result.value.wastePercentage).toBeCloseTo(30, 10);
     expect(result.steps.map((step) => step.id)).toStrictEqual(['waste-weight', 'waste-percentage']);
@@ -71,6 +72,7 @@ describe('gross-quantity (salmon for 120 covers, 0,160 kg, 25 %)', () => {
     if (!result.ok) {
       return;
     }
+
     expect(result.value.netRequired).toBeCloseTo(19.2, 10);
     expect(result.value.grossQuantity).toBeCloseTo(25.6, 10);
     expect(result.value.purchaseQuantity).toBe(26);
@@ -150,6 +152,7 @@ describe('cooking-loss', () => {
     if (!result.ok) {
       return;
     }
+
     expect(result.value.weightBeforeCooking).toBeCloseTo(1.5, 10);
     expect(result.value.lossWeight).toBeCloseTo(0.45, 10);
     expect(result.value.lossPercentage).toBeCloseTo(30, 10);

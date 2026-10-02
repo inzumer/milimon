@@ -6,6 +6,7 @@ export const loadScript = (src: string): Promise<void> => {
   if (existing) {
     return existing;
   }
+
   const promise = new Promise<void>((resolve, reject) => {
     const script = document.createElement('script');
     script.src = src;
@@ -20,5 +21,6 @@ export const loadScript = (src: string): Promise<void> => {
     document.head.append(script);
   });
   pending.set(src, promise);
+
   return promise;
 };

@@ -26,6 +26,7 @@ const wallTime = (date: Date, timeZone: string) => {
       .map(({ type, value }) => [type, value]),
   );
   const weekday = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].indexOf(parts['weekday'] ?? '');
+
   return { weekday, hour: Number(parts['hour']), minute: Number(parts['minute']) };
 };
 
@@ -38,6 +39,7 @@ const nextAt = (now: Date, target: WallTime, timeZone: string): Date => {
   const guess = new Date(Math.floor(now.getTime() / MINUTE) * MINUTE + ahead * MINUTE);
   // A daylight saving change in between moves the wall time by an hour: correct it.
   const drift = wallTime(guess, timeZone).hour - target.hour;
+
   return new Date(guess.getTime() - (((((drift + 36) % 24) - 12) * 60 * MINUTE) % DAY));
 };
 
@@ -45,5 +47,6 @@ const nextAt = (now: Date, target: WallTime, timeZone: string): Date => {
 export const nextRelease = (now: Date, timeZone: string = RELEASE_TIME_ZONE) => {
   const cutoff = nextAt(now, RELEASE_CUTOFF, timeZone);
   const publish = nextAt(cutoff, RELEASE_PUBLISH, timeZone);
+
   return { cutoff, publish };
 };

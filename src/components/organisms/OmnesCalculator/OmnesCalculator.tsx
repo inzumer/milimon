@@ -33,6 +33,7 @@ export const OmnesCalculator = ({ lang, text, ui }: OmnesCalculatorProps) => {
   const optional = (key: OptionalField, copyKey: string) => {
     const copy = t.input(copyKey);
     const code = calculator.optionalError(key);
+
     return (
       <NumberField
         id={trackingId(SCOPE, 'input', key)}

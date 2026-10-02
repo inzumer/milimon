@@ -20,6 +20,7 @@ export const getAccountSession = (
   if (!config) {
     return null;
   }
+
   if (!current) {
     const backend = createBackend(config);
     current = {
@@ -31,6 +32,7 @@ export const getAccountSession = (
       }),
     };
   }
+
   return current;
 };
 

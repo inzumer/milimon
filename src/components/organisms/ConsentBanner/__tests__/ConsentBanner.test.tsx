@@ -11,7 +11,9 @@ const renderBanner = (consent?: 'granted' | 'denied') => {
   if (consent) {
     useSettingsStore.getState().update({ analyticsConsent: consent });
   }
+
   render(<ConsentBanner labels={labels} privacyHref="/en/privacy" />);
+
   return { user: userEvent.setup() };
 };
 

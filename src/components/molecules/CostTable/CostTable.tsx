@@ -20,6 +20,7 @@ export interface CostTableProps {
 /** Cost per ingredient: gross quantity to buy, cost and share of the recipe (scrolls on small screens). */
 export const CostTable = ({ value, ids, text, context }: CostTableProps) => {
   const t = formulaText(text);
+
   return (
     <Table caption={t.label('table-caption')} captionHidden>
       <TableHead>

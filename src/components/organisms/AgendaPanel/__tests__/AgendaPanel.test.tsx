@@ -37,6 +37,7 @@ const setup = (role: 'user' | 'editor' | null, agenda: AgendaEntry[] = [], today
       today={today}
     />,
   );
+
   return { backend, user: userEvent.setup() };
 };
 

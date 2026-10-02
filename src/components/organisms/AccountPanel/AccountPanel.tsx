@@ -52,12 +52,15 @@ export const AccountPanel = ({
     if (!session) {
       return;
     }
+
     try {
       const started = await session.sync.start();
       if (!started) {
         setView((current) => (current.kind === 'signed-out' ? current : { kind: 'signed-out' }));
+
         return;
       }
+
       setView({
         kind: started.outcome === 'needs-migration' ? 'migration' : 'signed-in',
         user: started.user,
@@ -76,9 +79,12 @@ export const AccountPanel = ({
     sessionRef.current = session;
     if (!session) {
       setView({ kind: 'unavailable' });
+
       return;
     }
+
     void refresh();
+
     return session.backend.onUserChange(() => void refresh());
   }, [refresh]);
 
@@ -87,6 +93,7 @@ export const AccountPanel = ({
     if (!session) {
       return;
     }
+
     setBusy(true);
     try {
       await task(session);

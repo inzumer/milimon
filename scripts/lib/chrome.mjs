@@ -25,6 +25,7 @@ const findPage = async (port) => {
     if (page) {
       return page;
     }
+
     return await (
       await fetch(`http://127.0.0.1:${port}/json/new?about:blank`, { method: 'PUT' })
     ).json();
@@ -59,6 +60,7 @@ const startChrome = async (chromePath, port) => {
     }
   }
   chrome.kill();
+
   return undefined;
 };
 
@@ -68,6 +70,7 @@ export const launchChrome = async (port) => {
   if (!chromePath) {
     throw new Error('Chrome not found. Set CHROME_PATH.');
   }
+
   let started;
   for (let attempt = 1; attempt <= STARTUP_ATTEMPTS && !started; attempt += 1) {
     started = await startChrome(chromePath, port);
@@ -77,6 +80,7 @@ export const launchChrome = async (port) => {
       `Chrome did not expose a page on port ${port} after ${STARTUP_ATTEMPTS} attempts`,
     );
   }
+
   const { chrome, page } = started;
   try {
     const ws = new WebSocket(page.webSocketDebuggerUrl);
@@ -104,6 +108,7 @@ export const launchChrome = async (port) => {
       ws.close();
       chrome.kill();
     };
+
     return { send, evaluate, close };
   } catch (error) {
     chrome.kill();

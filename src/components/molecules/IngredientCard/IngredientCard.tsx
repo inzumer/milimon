@@ -44,6 +44,7 @@ export const IngredientCard = ({
   const title = interpolate(t.label('ingredient-number'), { number: index + 1 });
   const errorFor = (field: string) => {
     const code = errors[`ingredients.${index}.${field}`];
+
     return code ? ui.errors[code as keyof typeof ui.errors] : undefined;
   };
   const input = (copyKey: string) => t.input(copyKey);

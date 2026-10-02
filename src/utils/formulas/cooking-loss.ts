@@ -27,6 +27,7 @@ export const calculateCookingLoss = (
   if (errors.length === 0 && values.cookedWeight > values.netWeight + values.additionsWeight) {
     errors.push({ field: 'cookedWeight', code: 'must-not-exceed-gross' });
   }
+
   if (errors.length > 0) {
     return failure(errors);
   }

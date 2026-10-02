@@ -49,12 +49,15 @@ const resultFor = (error: unknown, labels: AdminPanelLabels['results']): string 
   if (error instanceof HttpError && error.status === 409) {
     return labels['last-admin'];
   }
+
   if (error instanceof HttpError && error.status === 400) {
     return labels.self;
   }
+
   if (error instanceof HttpError && error.status === 403) {
     return labels.forbidden;
   }
+
   return labels.error;
 };
 
@@ -87,6 +90,7 @@ const AdminPanelView = ({
     if (!session) {
       throw new Error('No account session');
     }
+
     return session.backend;
   };
   const usersQuery = useQuery({
@@ -120,6 +124,7 @@ const AdminPanelView = ({
     if (!session || !pending) {
       return;
     }
+
     try {
       const updated = await setRole.mutateAsync({ userId: pending.user.id, role: pending.role });
       setNotice(
@@ -208,6 +213,7 @@ const AdminPanelView = ({
               <TableBody>
                 {users.items.map((user) => {
                   const self = user.id === view.me.id;
+
                   return (
                     <TableRow key={user.id}>
                       <TableCell>
