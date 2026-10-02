@@ -52,6 +52,7 @@ export const AccountMenuSection = ({
       } else {
         depsRef.current.store.clear();
       }
+
       disableGoogleAutoSelect();
       track('sign_out', {});
     } finally {

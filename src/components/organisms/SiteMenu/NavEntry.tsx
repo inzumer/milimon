@@ -21,6 +21,7 @@ const normalize = (path: string) => path.replace(/\/+$/, '') || '/';
 /** `/es/formulas/cooking-loss` → `menu-link-formulas-cooking-loss` (the language is left out). */
 const linkId = (href: string) => {
   const route = stripBase(href).split('/').filter(Boolean).slice(1);
+
   return trackingId('menu', 'link', ...(route.length > 0 ? route : ['home']));
 };
 
@@ -63,6 +64,7 @@ export const NavEntry = ({ item, pathname }: { item: SiteMenuItem; pathname: str
       <ul className="mt-1 flex flex-col gap-1 border-l-2 border-[var(--border-default)] pl-3">
         {item.children.map((child) => {
           const childCurrent = normalize(pathname) === normalize(child.href);
+
           return (
             <li key={child.href}>
               <a

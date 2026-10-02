@@ -73,6 +73,7 @@ export const LoginPanel = ({
       if (!session) {
         return;
       }
+
       setNotice(null);
       setView({ kind: 'signing-in', slow: false });
       const slowTimer = setTimeout(
@@ -88,8 +89,10 @@ export const LoginPanel = ({
         const started = await session.sync.start();
         if (started?.outcome === 'needs-migration') {
           setView({ kind: 'migration' });
+
           return;
         }
+
         depsRef.current.navigate(accountHref);
       } catch (error) {
         const cancelled = error instanceof FacebookLoginCancelledError;
@@ -108,8 +111,10 @@ export const LoginPanel = ({
     sessionRef.current = session;
     if (!session) {
       setView({ kind: 'unavailable' });
+
       return;
     }
+
     setConfig(session.config);
     let active = true;
     void session.backend.getUser().then((user) => {
@@ -117,6 +122,7 @@ export const LoginPanel = ({
         setView(user ? { kind: 'signed-in', user } : { kind: 'signed-out' });
       }
     });
+
     return () => {
       active = false;
     };
@@ -130,6 +136,7 @@ export const LoginPanel = ({
     if (!showGoogle || !googleClientId || !container || container.childElementCount > 0) {
       return;
     }
+
     depsRef.current
       .renderGoogle(container, {
         clientId: googleClientId,
@@ -149,6 +156,7 @@ export const LoginPanel = ({
     if (!session) {
       return;
     }
+
     setBusy(true);
     try {
       await task(session);
@@ -199,6 +207,7 @@ export const LoginPanel = ({
     case 'signed-out':
     case 'signing-in': {
       const signingIn = view.kind === 'signing-in';
+
       return (
         <div className="flex flex-col gap-5">
           {status}

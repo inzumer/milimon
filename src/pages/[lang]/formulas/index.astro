@@ -32,6 +32,7 @@ const groups = formulasByGroup();
         <ul class="grid gap-5 lg:grid-cols-2">
           {groups[group].map((formula) => {
             const text = getFormulaTranslation(lang, formula.id);
+
             return (
               <li>
                 <FeatureCard

@@ -39,6 +39,7 @@ const defaultSleep = (ms: number) => new Promise<void>((resolve) => setTimeout(r
 export const retryDelay = (retry: number, retryAfter: string | null = null): number => {
   const seconds = retryAfter === null ? Number.NaN : Number(retryAfter);
   const delay = Number.isFinite(seconds) ? seconds * 1000 : API_RETRY_BASE_DELAY_MS * 2 ** retry;
+
   return Math.min(Math.max(delay, 0), API_RETRY_MAX_DELAY_MS);
 };
 
@@ -48,10 +49,12 @@ const parseBody = async (response: Response): Promise<unknown> => {
   if (response.status === 204) {
     return null;
   }
+
   const text = await response.text();
   if (text === '') {
     return null;
   }
+
   try {
     return JSON.parse(text) as unknown;
   } catch {
@@ -84,6 +87,7 @@ export const requestJson = async <T>(
         await sleep(retryDelay(attempt));
         continue;
       }
+
       throw new NetworkError(error);
     }
     clearTimeout(timer);
@@ -99,6 +103,7 @@ export const requestJson = async <T>(
       await sleep(retryDelay(attempt, response.headers.get('retry-after')));
       continue;
     }
+
     throw new HttpError(response.status, await parseBody(response));
   }
 };

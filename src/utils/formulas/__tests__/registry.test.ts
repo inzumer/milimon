@@ -17,6 +17,7 @@ const expectSuccess = <R>(result: CalculationResult<R>): R => {
   if (!result.ok) {
     throw new Error(`Expected success, got errors: ${JSON.stringify(result.errors)}`);
   }
+
   return result.value;
 };
 

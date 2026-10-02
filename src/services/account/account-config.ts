@@ -19,6 +19,7 @@ export interface AccountEnv {
 
 const clean = (value: string | undefined): string | null => {
   const trimmed = value?.trim();
+
   return trimmed ? trimmed : null;
 };
 
@@ -29,6 +30,7 @@ export const readAccountConfig = (env: AccountEnv): AccountConfig | null => {
   if (!apiUrl || !apiKey || !/^https?:\/\/\S+$/.test(apiUrl)) {
     return null;
   }
+
   return {
     apiUrl,
     apiKey,

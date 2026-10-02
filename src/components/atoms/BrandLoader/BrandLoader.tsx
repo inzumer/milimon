@@ -26,6 +26,7 @@ export const BrandLoader = ({
   ...props
 }: BrandLoaderProps) => {
   const wait = screen ? getTranslations(pageLocale(), 'loader') : null;
+
   return (
     <Loader
       mark={<img src={MARKS[mark].src} alt="" className="rounded-full" />}

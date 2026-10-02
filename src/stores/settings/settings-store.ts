@@ -38,6 +38,7 @@ const isCurrency = (value: unknown): value is string =>
 /** Keeps only valid, known fields. */
 export const sanitizeSettings = (raw: unknown): Settings => {
   const data = typeof raw === 'object' && raw !== null ? (raw as Record<string, unknown>) : {};
+
   return {
     colorScheme: isColorScheme(data['colorScheme']) ? data['colorScheme'] : null,
     locale: isLocale(data['locale']) ? data['locale'] : null,

@@ -28,6 +28,7 @@ export const calculateCostOfGoods = (
   if (errors.length === 0 && values.closingInventory > values.openingInventory + values.purchases) {
     errors.push({ field: 'closingInventory', code: 'must-not-exceed-gross' });
   }
+
   if (errors.length > 0) {
     return failure(errors);
   }

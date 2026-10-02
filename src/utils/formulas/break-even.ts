@@ -46,9 +46,11 @@ export const calculateBreakEven = (
   if (errors.length === 0 && v.taxes >= v.grossSales) {
     errors.push({ field: 'taxes', code: 'must-not-exceed-gross' });
   }
+
   if (errors.length === 0 && v.variableCosts >= v.grossSales - v.taxes) {
     errors.push({ field: 'variableCosts', code: 'must-not-exceed-gross' });
   }
+
   if (errors.length > 0) {
     return failure(errors);
   }

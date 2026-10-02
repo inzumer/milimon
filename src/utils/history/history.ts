@@ -22,5 +22,6 @@ export const headlineFor = (
   if (!main || typeof result !== 'number') {
     return null;
   }
+
   return { output: toKebabCase(main.key), value: result, kind: main.kind };
 };

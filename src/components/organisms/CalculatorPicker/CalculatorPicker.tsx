@@ -33,6 +33,7 @@ type LoadState =
 
 const readToolFromUrl = (): FormulaId | null => {
   const tool = new URLSearchParams(window.location.search).get('tool');
+
   return isFormulaId(tool) ? tool : null;
 };
 
@@ -57,6 +58,7 @@ export const CalculatorPicker = ({
   const load = useCallback(
     (id: FormulaId) => {
       requestedRef.current = id;
+
       return loadText(lang, id).then(
         (text) => {
           if (requestedRef.current === id) {

@@ -16,9 +16,11 @@ const pages = (function collect(dir) {
     if (statSync(path).isDirectory()) {
       return entry === '_astro' ? [] : collect(path);
     }
+
     if (!entry.endsWith('.html') || entry === '404.html' || path === join('dist', 'index.html')) {
       return [];
     }
+
     return [
       `/${relative('dist', path)
         .split(sep)
@@ -57,6 +59,7 @@ try {
         : `The preview server did not start on ${BASE}`,
     );
   }
+
   browser = await launchChrome(PORT + 1);
   const { send, evaluate } = browser;
   await send('Page.enable');
@@ -77,12 +80,14 @@ try {
       if (navigation.result?.errorText) {
         throw new Error(`Could not load ${page}: ${navigation.result.errorText}`);
       }
+
       await sleep(700);
       const withMenu = index < 2;
       if (withMenu) {
         await evaluate(`document.querySelector('button[aria-controls]')?.click()`);
         await sleep(400);
       }
+
       await evaluate(axeSource);
       const violations = await evaluate(
         `axe.run(document, { runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'] } })

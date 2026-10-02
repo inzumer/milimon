@@ -55,6 +55,7 @@ const Summary = ({
       value.dailySpecialZone ? t.choice(value.dailySpecialZone) : t.label('daily-special-missing'),
     ],
   ];
+
   return (
     <dl className="grid gap-3">
       {rows.map(([term, main, detail]) => (

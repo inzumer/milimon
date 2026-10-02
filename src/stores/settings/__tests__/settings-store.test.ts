@@ -6,6 +6,7 @@ const stored = () => JSON.parse(window.localStorage.getItem(SETTINGS_STORAGE_KEY
 const hydrateFrom = async (raw: string) => {
   window.localStorage.setItem(SETTINGS_STORAGE_KEY, raw);
   await useSettingsStore.persist.rehydrate();
+
   return useSettingsStore.getState();
 };
 

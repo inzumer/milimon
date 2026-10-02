@@ -35,6 +35,7 @@ export const AdminAccessNotice = ({
   if (access.kind === 'loading') {
     return <BrandLoader screen label={labels.loading} />;
   }
+
   if (access.kind === 'signed-out') {
     return (
       <div className="flex flex-col items-start gap-4">
@@ -45,6 +46,7 @@ export const AdminAccessNotice = ({
       </div>
     );
   }
+
   if (access.kind === 'error') {
     return (
       <div className="flex flex-col items-start gap-4">
@@ -61,5 +63,6 @@ export const AdminAccessNotice = ({
       </div>
     );
   }
+
   return <Notice>{access.kind === 'unavailable' ? labels.unavailable : labels.forbidden}</Notice>;
 };

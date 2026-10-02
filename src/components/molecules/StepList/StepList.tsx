@@ -20,6 +20,7 @@ export const StepList = ({ steps, templates, kinds, context }: StepListProps) =>
           formatValue(value, kinds[key], context),
         ]),
       );
+
       return (
         <li key={step.id} className="pl-1 leading-relaxed tabular-nums">
           {interpolate(templates[step.id] ?? step.id, values)}

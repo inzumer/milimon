@@ -46,6 +46,7 @@ const setup = (me: typeof ADMIN | null, users: AdminUser[] = []) => {
   render(
     <AdminPanel lang="en" labels={labels} loginHref="/en/login" loadSession={() => session} />,
   );
+
   return { backend, user: userEvent.setup() };
 };
 

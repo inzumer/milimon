@@ -37,6 +37,7 @@ export const priceZone = (price: number, lowZoneMax: number, mediumZoneMax: numb
   if (price <= lowZoneMax) {
     return 'low';
   }
+
   return price <= mediumZoneMax ? 'medium' : 'high';
 };
 
@@ -44,9 +45,11 @@ export const ticketStatus = (averageTicket: number, averagePrice: number): Ticke
   if (averageTicket < averagePrice * (1 - TICKET_TOLERANCE)) {
     return 'too-expensive';
   }
+
   if (averageTicket > averagePrice * (1 + TICKET_TOLERANCE)) {
     return 'too-cheap';
   }
+
   return 'balanced';
 };
 
@@ -59,13 +62,16 @@ export const calculateOmnesRules = (
   } else if (input.prices.some((price) => positive(price) !== null)) {
     errors.push({ field: 'prices', code: 'must-be-positive' });
   }
+
   const { averageTicket, dailySpecialPrice } = input;
   if (averageTicket !== null && averageTicket !== undefined && !(averageTicket > 0)) {
     errors.push({ field: 'averageTicket', code: 'must-be-positive' });
   }
+
   if (dailySpecialPrice !== null && dailySpecialPrice !== undefined && !(dailySpecialPrice > 0)) {
     errors.push({ field: 'dailySpecialPrice', code: 'must-be-positive' });
   }
+
   if (errors.length > 0) {
     return failure(errors);
   }

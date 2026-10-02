@@ -13,6 +13,7 @@ const entry = (
   savedAt: string,
 ): HistoryEntry => {
   const value = { ...(result.value as Record<string, unknown>) };
+
   return {
     id,
     formulaId,
@@ -30,11 +31,13 @@ const ok = <T>(
   if (!result.ok) {
     throw new Error('Fixture calculation failed');
   }
+
   return result;
 };
 
 export const wasteFactorEntry = (id = 'waste', savedAt = '2026-09-26T12:00:00.000Z') => {
   const formula = getFormula('waste-factor') as StandardFormulaDefinition;
+
   return entry(
     'waste-factor',
     { wastePercentage: '30' },
@@ -50,12 +53,14 @@ export const pricingEntry = (id = 'pricing', savedAt = '2026-09-25T12:00:00.000Z
   if (!example) {
     throw new Error('Pricing has no example');
   }
+
   const draft = Object.fromEntries(
     Object.entries(example.values).map(([key, value]) => [
       key,
       typeof value === 'boolean' ? value : String(value),
     ]),
   );
+
   return entry('pricing', draft, ok(formula.calculate(example.values)), id, savedAt);
 };
 

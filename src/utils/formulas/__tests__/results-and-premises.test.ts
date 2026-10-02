@@ -33,6 +33,7 @@ describe('income-statement (the café example)', () => {
     if (!result.ok) {
       return;
     }
+
     expect(result.value.totalSales).toBe(1_570_000);
     expect(result.value.costOfSales).toBe(440_000);
     expect(result.value.operatingCosts).toBe(706_850);
@@ -68,6 +69,7 @@ describe('break-even (the café example)', () => {
     if (!result.ok) {
       return;
     }
+
     expect(result.value.netSales).toBeCloseTo(1_107_897.5, 2);
     expect(result.value.taxRate).toBeCloseTo(1.4171, 4);
     expect(result.value.variableCostRate).toBeCloseTo(0.3971, 4);
@@ -79,6 +81,7 @@ describe('break-even (the café example)', () => {
     if (!result.ok) {
       throw new Error('expected success');
     }
+
     expect(result.value.breakEvenNetSales).toBeCloseTo(651_653.18, 1);
     expect(result.value.targetNetSales).toBeCloseTo(1_162_048.18, 1);
     expect(result.value.targetGrossSales).toBeCloseTo(1_646_736.85, 1);
@@ -122,6 +125,7 @@ describe('omnes-rules (16 cakes between $ 40 and $ 115)', () => {
     if (!result.ok) {
       return;
     }
+
     expect(result.value.zoneWidth).toBe(25);
     expect(result.value.lowZoneMax).toBe(65);
     expect(result.value.mediumZoneMax).toBe(90);

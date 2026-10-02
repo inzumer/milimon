@@ -22,6 +22,7 @@ export const parseDecimal = (raw: string, lang: Locale): number | null => {
   if (cleaned === '' || cleaned === '-') {
     return null;
   }
+
   const sign = cleaned.startsWith('-') ? '-' : '';
   const body = sign ? cleaned.slice(1) : cleaned;
 
@@ -36,6 +37,7 @@ export const parseDecimal = (raw: string, lang: Locale): number | null => {
     if (!isValidGrouping(integerPart, grouping) || fraction.includes(grouping)) {
       return null;
     }
+
     normalized = `${integerPart.split(grouping).join('')}.${fraction}`;
   } else {
     const separator = lastDot !== -1 ? '.' : lastComma !== -1 ? ',' : null;
@@ -46,6 +48,7 @@ export const parseDecimal = (raw: string, lang: Locale): number | null => {
       if (!isValidGrouping(body, separator)) {
         return null;
       }
+
       normalized = body.split(separator).join('');
     } else if (separator !== DECIMAL_SEPARATOR[lang] && LOOKS_LIKE_GROUPING.test(body)) {
       normalized = body.replace(separator, '');
@@ -57,6 +60,7 @@ export const parseDecimal = (raw: string, lang: Locale): number | null => {
   if (!/^(\d+(\.\d*)?|\.\d+)$/.test(normalized)) {
     return null;
   }
+
   return Number(`${sign}${normalized}`);
 };
 

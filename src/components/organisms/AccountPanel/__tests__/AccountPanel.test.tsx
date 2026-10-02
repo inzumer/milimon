@@ -40,6 +40,7 @@ const setup = (remote: Parameters<typeof createFakeAccountBackend>[0] = {}) => {
         loadSession={loadSession}
       />,
     );
+
   return { backend, session, user: userEvent.setup(), renderPanel };
 };
 

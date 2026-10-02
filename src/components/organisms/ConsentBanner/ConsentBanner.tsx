@@ -28,6 +28,7 @@ export const ConsentBanner = ({ labels, privacyHref }: ConsentBannerProps) => {
   useEffect(() => {
     const openPreferences = () => setPreferencesOpen(true);
     window.addEventListener(OPEN_COOKIE_PREFERENCES_EVENT, openPreferences);
+
     return () => window.removeEventListener(OPEN_COOKIE_PREFERENCES_EVENT, openPreferences);
   }, []);
 

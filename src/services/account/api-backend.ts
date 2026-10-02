@@ -39,6 +39,7 @@ const toProfile = (raw: unknown): RemoteProfile | null => {
   if (typeof data !== 'object' || data === null || typeof data.currency !== 'string') {
     return null;
   }
+
   return {
     currency: data.currency,
     locale: isLocale(data.locale) ? data.locale : null,
@@ -96,6 +97,7 @@ export const createApiBackend = (
       user,
     };
     store.write(session);
+
     return session;
   };
 
@@ -111,11 +113,13 @@ export const createApiBackend = (
           store.clear();
           throw new SessionExpiredError();
         }
+
         throw error;
       })
       .finally(() => {
         refreshing = null;
       });
+
     return refreshing;
   };
 
@@ -124,6 +128,7 @@ export const createApiBackend = (
     if (!session) {
       throw new SessionExpiredError();
     }
+
     return session.expiresAt - now() < ACCESS_TOKEN_REFRESH_MARGIN_MS ? refresh(session) : session;
   };
 
@@ -135,7 +140,9 @@ export const createApiBackend = (
       if (!(error instanceof HttpError) || error.status !== 401) {
         throw error;
       }
+
       const renewed = await refresh(session);
+
       return call<T>(path, { ...init, token: renewed.accessToken });
     }
   };
@@ -169,6 +176,7 @@ export const createApiBackend = (
     },
     fetchDrafts: async () => {
       const { drafts } = await authed<{ drafts: Record<string, unknown> }>('/me/drafts');
+
       return Object.fromEntries(
         Object.entries(drafts ?? {}).filter(([, draft]) => isDraft(draft)),
       ) as CalculatorDrafts;
@@ -208,6 +216,7 @@ export const createApiBackend = (
       if (session) {
         store.write({ ...session, user });
       }
+
       return user;
     },
     listUsers: async (search, page) => {
@@ -215,6 +224,7 @@ export const createApiBackend = (
       if (search.trim()) {
         query.set('search', search.trim());
       }
+
       return authed<AdminUserPage>(`/admin/users?${query.toString()}`);
     },
     setUserRole: async (userId, role) =>

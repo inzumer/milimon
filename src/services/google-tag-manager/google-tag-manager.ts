@@ -42,6 +42,7 @@ const containerUrl = (containerId: string, environment?: GtmEnvironment) => {
     params.set('gtm_preview', environment.preview);
     params.set('gtm_cookies_win', 'x');
   }
+
   return `${GTM_SCRIPT_URL}?${params.toString()}`;
 };
 
@@ -69,6 +70,7 @@ export const createTagManager = (containerId: string, environment?: GtmEnvironme
     if (loaded) {
       return;
     }
+
     loaded = true;
     dataLayer.push({ 'gtm.start': Date.now(), event: 'gtm.js' });
     const script = document.createElement('script');
@@ -85,11 +87,14 @@ export const createTagManager = (containerId: string, environment?: GtmEnvironme
         setAnalyticsSink((event, props) => {
           dataLayer.push({ event, ...props });
         });
+
         return;
       }
+
       if (loaded) {
         gtag('consent', 'update', { analytics_storage: 'denied' });
       }
+
       setAnalyticsSink(null);
     },
   };
@@ -103,8 +108,10 @@ export const startTagManager = (
   if (!isContainerId(containerId)) {
     return () => undefined;
   }
+
   const tagManager = createTagManager(containerId, environment);
   tagManager.applyConsent(useSettingsStore.getState().analyticsConsent);
+
   return useSettingsStore.subscribe((next, previous) => {
     if (next.analyticsConsent !== previous.analyticsConsent) {
       tagManager.applyConsent(next.analyticsConsent);

@@ -25,6 +25,7 @@ export const rentStatus = (rentShare: number): RentStatus => {
   if (rentShare <= OPTIMAL_RENT_SHARE) {
     return 'optimal';
   }
+
   return rentShare <= MAX_RENT_SHARE ? 'acceptable' : 'too-high';
 };
 

@@ -35,6 +35,7 @@ const setup = (
       loadText={loadText}
     />,
   );
+
   return { user: userEvent.setup(), loadText };
 };
 

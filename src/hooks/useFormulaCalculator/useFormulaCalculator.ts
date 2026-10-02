@@ -43,6 +43,7 @@ export const useFormulaCalculator = ({ formula, lang }: UseFormulaCalculatorOpti
     if (!example) {
       return;
     }
+
     setDraft({ ...defaultDraft(formula, lang), ...toDraft(example.values, lang) });
     setTouched(new Set(formula.inputs.map((input) => input.key)));
     track('example_loaded', { formula: formula.id, example: exampleId });
@@ -63,6 +64,7 @@ export const useFormulaCalculator = ({ formula, lang }: UseFormulaCalculatorOpti
         values[input.key] = raw;
         continue;
       }
+
       const parsed = parseDecimal(raw ?? '', lang);
       values[input.key] = parsed;
       if (parsed === null && (raw ?? '').trim() !== '') {
@@ -73,6 +75,7 @@ export const useFormulaCalculator = ({ formula, lang }: UseFormulaCalculatorOpti
     const fieldErrors: Record<string, FieldErrorCode> = calculation.ok
       ? {}
       : Object.fromEntries(calculation.errors.map((error) => [error.field, error.code]));
+
     return { result: calculation, errors: { ...fieldErrors, ...invalid } };
   }, [draft, formula, lang]);
 

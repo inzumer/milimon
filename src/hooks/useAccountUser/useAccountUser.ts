@@ -9,5 +9,6 @@ export const useAccountUser = (store: SessionStore = createSessionStore()): Acco
     () => JSON.stringify(storeRef.current.read()?.user ?? null),
     () => 'null',
   );
+
   return useMemo(() => JSON.parse(snapshot) as AccountUser | null, [snapshot]);
 };

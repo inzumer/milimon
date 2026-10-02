@@ -16,7 +16,9 @@ export const useShare = (url: string, title: string) => {
     if (!copied) {
       return undefined;
     }
+
     const timer = setTimeout(() => setCopied(false), SHARE_COPIED_MS);
+
     return () => clearTimeout(timer);
   }, [copied]);
 

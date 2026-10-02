@@ -50,8 +50,10 @@ export const FormulaFields = ({
           />
         );
       }
+
       const unitKind = UNIT_KINDS.find((kind) => kind === input.kind);
       const code = errors[input.key];
+
       return (
         <NumberField
           key={input.key}
