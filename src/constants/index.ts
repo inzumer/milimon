@@ -2,6 +2,7 @@ export * from './admin';
 export * from './analytics';
 export * from './api';
 export * from './auth';
+export * from './cms';
 export * from './currency';
 export * from './input';
 export * from './og';
