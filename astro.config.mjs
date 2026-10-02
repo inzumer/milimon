@@ -8,8 +8,10 @@ import sitemap from '@astrojs/sitemap';
 import keystatic from '@keystatic/astro';
 import tailwindcss from '@tailwindcss/vite';
 import { defineConfig, sessionDrivers } from 'astro/config';
+import { CMS_TITLES } from './src/constants/cms.ts';
 import { SETTINGS_STORAGE_KEY } from './src/constants/storage.ts';
 import {
+  cmsTitleScript,
   languageRedirectScript,
   notFoundLanguageScript,
   themeScript,
@@ -84,6 +86,7 @@ const inlineScriptHashes = [
     }),
   ),
   sha256(notFoundLanguageScript({ locales: LOCALES, base: base.replace(/\/+$/, '') })),
+  sha256(cmsTitleScript(CMS_TITLES)),
 ];
 
 /** @type {`connect-src ${string}`} */
