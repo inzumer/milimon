@@ -19,6 +19,7 @@ let minute = 0;
 /** Adds an entry one minute after the previous one, so dates are distinct. */
 const add = (input: NewHistoryEntry = ENTRY) => {
   vi.setSystemTime(new Date(Date.UTC(2026, 8, 26, 12, minute++)));
+
   return useHistoryStore.getState().add(input);
 };
 

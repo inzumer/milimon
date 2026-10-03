@@ -25,6 +25,7 @@ export const sanitizeDrafts = (raw: unknown): CalculatorDrafts => {
   if (typeof raw !== 'object' || raw === null) {
     return {};
   }
+
   return Object.fromEntries(Object.entries(raw).filter(([, draft]) => isDraft(draft)));
 };
 
@@ -38,6 +39,7 @@ export const useDraftsStore = create<DraftsState>()(
       clearDraft: (formulaId) =>
         set((state) => {
           const { [formulaId]: _removed, ...rest } = state.drafts;
+
           return { drafts: rest };
         }),
       replaceAll: (drafts) => set({ drafts: sanitizeDrafts(drafts) }),

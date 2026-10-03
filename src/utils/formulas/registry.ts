@@ -97,6 +97,7 @@ export type FormulaDefinition = StandardFormulaDefinition | CustomFormulaDefinit
 
 const num = (values: FormulaValues, key: string): number | null => {
   const value = values[key];
+
   return typeof value === 'number' ? value : null;
 };
 

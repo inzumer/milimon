@@ -40,10 +40,12 @@ export const loginWithFacebook = async (appId: string, lang: Locale): Promise<st
   if (!sdk) {
     throw new Error('Facebook SDK is not available');
   }
+
   if (!initialized.has(appId)) {
     sdk.init({ appId, version: FACEBOOK_API_VERSION, xfbml: false, cookie: false });
     initialized.add(appId);
   }
+
   return new Promise<string>((resolve, reject) => {
     sdk.login(
       (response) => {

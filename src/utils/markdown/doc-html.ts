@@ -16,15 +16,19 @@ export const resolveDocHref = (href: string, { pages, repoUrl, folder }: DocLink
   if (page) {
     return `${page}${sibling?.[2] ?? ''}`;
   }
+
   if (!href.startsWith('.')) {
     return href;
   }
+
   const path = [folder, ...href.split('/')].reduce<string[]>((parts, part) => {
     if (part === '..') {
       return parts.slice(0, -1);
     }
+
     return part === '.' || part === '' ? parts : [...parts, part];
   }, []);
+
   return `${repoUrl}/${path.join('/')}`;
 };
 

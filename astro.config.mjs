@@ -8,8 +8,10 @@ import sitemap from '@astrojs/sitemap';
 import keystatic from '@keystatic/astro';
 import tailwindcss from '@tailwindcss/vite';
 import { defineConfig, sessionDrivers } from 'astro/config';
+import { CMS_TITLES } from './src/constants/cms.ts';
 import { SETTINGS_STORAGE_KEY } from './src/constants/storage.ts';
 import {
+  cmsTitleScript,
   languageRedirectScript,
   notFoundLanguageScript,
   themeScript,
@@ -31,6 +33,7 @@ if (cmsOnline) {
   // The adapter builds the Worker for this wrangler environment.
   process.env.CLOUDFLARE_ENV ??= 'staging';
 }
+
 /** Recipes stays "coming soon" (out of the sitemap) until one is published. */
 const RECIPES_DIR = 'src/content/recipes';
 const hasRecipes =
@@ -84,6 +87,7 @@ const inlineScriptHashes = [
     }),
   ),
   sha256(notFoundLanguageScript({ locales: LOCALES, base: base.replace(/\/+$/, '') })),
+  sha256(cmsTitleScript(CMS_TITLES)),
 ];
 
 /** @type {`connect-src ${string}`} */
@@ -97,8 +101,8 @@ const connectSrc = /** @type {`connect-src ${string}`} */ (
     'https://*.googletagmanager.com',
     'https://*.google-analytics.com',
     'https://*.analytics.google.com',
-    // Keystatic in GitHub mode reads and commits through the GitHub API.
-    cmsOnline && 'https://api.github.com',
+    // Keystatic in GitHub mode reads and commits through the GitHub API; file contents come from raw.
+    cmsOnline && 'https://api.github.com https://raw.githubusercontent.com',
   ]
     .filter(Boolean)
     .join(' ')
@@ -109,7 +113,7 @@ const csp = {
   directives: [
     "default-src 'self'",
     connectSrc,
-    `img-src 'self' data: ${cmsOnline ? 'blob: https://avatars.githubusercontent.com ' : ''}https://*.googleusercontent.com https://*.fbcdn.net https://platform-lookaside.fbsbx.com https://*.googletagmanager.com https://*.google-analytics.com https://ssl.gstatic.com https://www.gstatic.com`,
+    `img-src 'self' data: ${cmsOnline ? 'blob: https://avatars.githubusercontent.com https://raw.githubusercontent.com ' : ''}https://*.googleusercontent.com https://*.fbcdn.net https://platform-lookaside.fbsbx.com https://*.googletagmanager.com https://*.google-analytics.com https://ssl.gstatic.com https://www.gstatic.com`,
     'frame-src https://accounts.google.com https://*.facebook.com https://www.googletagmanager.com',
     // GTM preview mode (Tag Assistant) badge fonts.
     "font-src 'self' https://fonts.gstatic.com data:",
@@ -169,6 +173,7 @@ export default defineConfig({
       filter: (page) => {
         const { pathname } = new URL(page);
         const route = pathname.slice(base.replace(/\/+$/, '').length) || '/';
+
         return (
           route !== '/' &&
           !route.includes('404') &&

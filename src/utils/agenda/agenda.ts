@@ -16,5 +16,6 @@ export const groupByDate = <T extends { date: string }>(items: T[]): [string, T[
   for (const item of items) {
     groups.set(item.date, [...(groups.get(item.date) ?? []), item]);
   }
+
   return [...groups.entries()];
 };

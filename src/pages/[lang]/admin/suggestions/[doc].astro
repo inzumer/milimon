@@ -10,17 +10,20 @@ import { adaptDocHtml, LOCALES, localizedPath, toLocale, trackingId } from '@uti
 export const getStaticPaths = async () => {
   const entries = await getCollection('suggestions');
   const pages = Object.fromEntries(ADMIN_DOCS.map(({ id, file }) => [file, id]));
+
   return LOCALES.flatMap((lang) =>
     ADMIN_DOCS.map(({ id, file }) => {
       const entry = entries.find((item) => item.id === file);
       if (!entry?.rendered) {
         throw new Error(`Missing suggestion document: docs/suggestions/${file}.md`);
       }
+
       const html = adaptDocHtml(entry.rendered.html, {
         pages,
         repoUrl: DOCS_REPO_URL,
         folder: 'suggestions',
       });
+
       return { params: { lang, doc: id }, props: { id, html } };
     }),
   );

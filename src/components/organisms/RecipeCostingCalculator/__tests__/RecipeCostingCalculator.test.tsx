@@ -15,6 +15,7 @@ const setup = (lang: Locale = 'es') => {
       ui={getTranslations(lang, 'calculator')}
     />,
   );
+
   return { user: userEvent.setup() };
 };
 

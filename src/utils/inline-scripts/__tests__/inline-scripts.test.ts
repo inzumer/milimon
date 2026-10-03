@@ -1,4 +1,9 @@
-import { languageRedirectScript, notFoundLanguageScript, themeScript } from '../inline-scripts';
+import {
+  cmsTitleScript,
+  languageRedirectScript,
+  notFoundLanguageScript,
+  themeScript,
+} from '../inline-scripts';
 
 const run = (script: string) => new Function(script)();
 
@@ -78,5 +83,25 @@ describe('inline scripts', () => {
     expect(document.documentElement.lang).toBe('es');
     window.history.replaceState(null, '', '/');
     document.body.innerHTML = '';
+  });
+
+  it('should name each CMS screen from its URL, also after client navigation', () => {
+    window.history.replaceState(null, '', '/keystatic/branch/dev');
+    run(
+      cmsTitleScript({
+        collections: { recipes: { list: 'Recetas', create: 'Nueva receta' } },
+        home: 'Inicio',
+        suffix: 'Editor',
+      }),
+    );
+    expect(document.title).toBe('Inicio · Editor');
+
+    window.history.pushState(null, '', '/keystatic/branch/dev/collection/recipes');
+    expect(document.title).toBe('Recetas · Editor');
+    window.history.pushState(null, '', '/keystatic/branch/dev/collection/recipes/create');
+    expect(document.title).toBe('Nueva receta · Editor');
+    window.history.pushState(null, '', '/keystatic/branch/dev/collection/recipes/item/lemon-loaf');
+    expect(document.title).toBe('lemon-loaf · Recetas · Editor');
+    window.history.replaceState(null, '', '/');
   });
 });

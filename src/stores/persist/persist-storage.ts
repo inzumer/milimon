@@ -8,6 +8,7 @@ export const plainJsonStorage = <S>(
 ): PersistStorage<S> => ({
   getItem: (name) => {
     const raw = readJson<unknown>(getBrowserStorage(), name);
+
     return raw === null ? null : { state: fromStored(raw), version: 0 };
   },
   setItem: (name, { state }) => {

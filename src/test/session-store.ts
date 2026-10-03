@@ -13,5 +13,6 @@ export const sessionStoreWith = (role: AccountRole | null) => {
       user: { ...TEST_USER, role },
     });
   }
+
   return store;
 };

@@ -29,6 +29,7 @@ export const calculateWastePercentage = (
   if (errors.length === 0 && values.netWeight > values.grossWeight) {
     errors.push({ field: 'netWeight', code: 'must-not-exceed-gross' });
   }
+
   if (errors.length > 0) {
     return failure(errors);
   }

@@ -15,6 +15,7 @@ const ui = getTranslations(lang, 'calculator');
 const formulas = Object.fromEntries(
   FORMULA_IDS.map((id) => {
     const text = getFormulaTranslation(lang, id);
+
     return [id, { title: text.title, outputs: text.outputs }];
   }),
 );

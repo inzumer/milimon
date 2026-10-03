@@ -29,6 +29,7 @@ const steps = await Promise.all(
     const photo = step.photo
       ? await getImage({ src: step.photo, width: 800, format: 'webp' })
       : null;
+
     return {
       id: `step-${index + 1}`,
       title: interpolate(text.step, { n: index + 1 }),

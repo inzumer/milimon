@@ -1,7 +1,12 @@
 import { collection, config, fields } from '@keystatic/core';
 import { wrapper } from '@keystatic/core/content-components';
+import { CMS_PREVIEW_PATHS } from './src/constants/cms';
 import { RECIPE_CATEGORIES } from './src/constants/recipes';
 import recipeText from './src/i18n/recipe-page/es.json';
+
+/** Tells where a saved entry shows up. */
+const publishHint = (example: string) =>
+  `Se completa sola; ej.: ${example}. Al guardar, en unos 5 minutos se ve en el sitio de prueba: botón «Preview» de arriba.`;
 
 /** English is optional and falls back to Spanish on the site. */
 const localized = (label: string, { multiline = false, required = true } = {}) =>
@@ -48,7 +53,7 @@ export default config({
       ? {
           kind: 'github',
           repo: { owner: 'inzumer', name: 'milimon-frontend-web' },
-          // Saves go to cms/* branches; the cms-to-dev workflow opens their PR to dev.
+          // Edits go to cms/draft; cms-to-dev turns each entry into one squash-merged PR to dev.
           branchPrefix: 'cms/',
         }
       : { kind: 'local' },
@@ -57,6 +62,7 @@ export default config({
     blog: collection({
       label: 'Blog',
       slugField: 'title',
+      previewUrl: CMS_PREVIEW_PATHS.blog,
       path: 'src/content/blog/*/',
       format: { data: 'yaml' },
       columns: ['titleEs', 'date', 'draft'],
@@ -67,7 +73,7 @@ export default config({
             description: 'Arma la dirección del artículo (igual en los dos idiomas).',
             validation: { isRequired: true },
           },
-          slug: { label: 'Dirección', description: 'Se completa sola; ej.: first-review.' },
+          slug: { label: 'Dirección', description: publishHint('first-review') },
         }),
         titleEs: fields.text({ label: 'Título en español', validation: { isRequired: true } }),
         description: localized('Bajada (para la lista y los buscadores)', { multiline: true }),
@@ -102,6 +108,7 @@ export default config({
     recipes: collection({
       label: 'Recetas',
       slugField: 'title',
+      previewUrl: CMS_PREVIEW_PATHS.recipes,
       path: 'src/content/recipes/*',
       format: { data: 'yaml' },
       columns: ['titleEs', 'category', 'draft'],
@@ -113,7 +120,7 @@ export default config({
             description: 'Arma la dirección de la receta (igual en los dos idiomas).',
             validation: { isRequired: true },
           },
-          slug: { label: 'Dirección', description: 'Se completa sola; ej.: lemon-loaf.' },
+          slug: { label: 'Dirección', description: publishHint('lemon-loaf') },
         }),
         titleEs: fields.text({ label: 'Título en español', validation: { isRequired: true } }),
         summary: localized('Resumen (una o dos frases)', { multiline: true }),

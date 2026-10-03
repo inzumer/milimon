@@ -58,6 +58,8 @@ Key commands (Node from `.nvmrc`, pnpm from `packageManager`):
 - **Icons**: Milimon's own family, line SVGs in `src/assets/icons` (24px, 1.5 stroke, round ends, no fill),
   exposed as components by `@components/atoms/Icons` and painted with `currentColor`. Other projects keep their own
   family; the ui-library takes icons as props (`Badge`, `Chip`, `Filter`).
+- **Readability**: a blank line after every `if` and before every `return` (ESLint
+  `@stylistic/padding-line-between-statements`, fixed by `pnpm lint --fix`).
 - **Naming**: React components in PascalCase folders; `.astro` files, content folders, slugs and
   i18n keys in kebab-case.
 - **Theming**: colors only via CSS variables (`src/styles/theme.css`); light and dark mode must both work.

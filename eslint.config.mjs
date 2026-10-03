@@ -1,5 +1,6 @@
 // @ts-check
 import eslintReact from '@eslint-react/eslint-plugin';
+import stylistic from '@stylistic/eslint-plugin';
 import vitest from '@vitest/eslint-plugin';
 import astro from 'eslint-plugin-astro';
 import importX from 'eslint-plugin-import-x';
@@ -17,6 +18,7 @@ export default defineConfig([
     files: ['**/*.{js,mjs,cjs,ts,tsx,astro}'],
     extends: [tseslint.configs.recommended],
     plugins: {
+      '@stylistic': stylistic,
       'import-x': importX,
       'unused-imports': unusedImports,
     },
@@ -39,6 +41,12 @@ export default defineConfig([
         { vars: 'all', varsIgnorePattern: '^_', args: 'after-used', argsIgnorePattern: '^_' },
       ],
       'import-x/no-duplicates': 'error',
+      // Blank lines after every `if` and before every `return`, for readability.
+      '@stylistic/padding-line-between-statements': [
+        'error',
+        { blankLine: 'always', prev: 'if', next: '*' },
+        { blankLine: 'always', prev: '*', next: 'return' },
+      ],
       'no-restricted-imports': [
         'error',
         {

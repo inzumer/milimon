@@ -34,6 +34,7 @@ type Line = [label: string, value: string];
 
 const text = (draft: CalculatorDraft, key: string): string => {
   const value = draft[key];
+
   return typeof value === 'string' ? value.trim() : '';
 };
 
@@ -72,6 +73,7 @@ interface SavedIngredient {
 const readIngredients = (raw: unknown): (SavedIngredient & { key: string })[] => {
   try {
     const rows: unknown = JSON.parse(typeof raw === 'string' ? raw : '[]');
+
     return Array.isArray(rows)
       ? (rows as SavedIngredient[]).map((row, index) => ({
           ...row,
@@ -106,6 +108,7 @@ const SavedInputs = ({ entry, text: copy, ui, labels }: Omit<SavedCalculationPro
 
   if (entry.formulaId === 'recipe-costing') {
     const ingredients = readIngredients(draft['ingredients']);
+
     return (
       <>
         <Lines lines={[[t.input('servings').label, text(draft, 'servings')]]} />
@@ -153,6 +156,7 @@ const SavedInputs = ({ entry, text: copy, ui, labels }: Omit<SavedCalculationPro
         lines.push([t.input(copyKey).label, withUnit(text(draft, key), currency)]);
       }
     }
+
     return <Lines lines={lines} />;
   }
 
@@ -160,15 +164,19 @@ const SavedInputs = ({ entry, text: copy, ui, labels }: Omit<SavedCalculationPro
   if (!formula || formula.layout !== 'standard') {
     throw new Error(`Unknown saved formula ${entry.formulaId}`);
   }
+
   const lines = formula.inputs.flatMap((input): Line[] => {
     const label = t.input(toKebabCase(input.key)).label;
     const value = draft[input.key];
     if (typeof value === 'boolean') {
       return [[label, value ? labels.yes : labels.no]];
     }
+
     const typed = text(draft, input.key);
+
     return typed ? [[label, withUnit(typed, unitFor(input.kind, currency, ui.units))]] : [];
   });
+
   return <Lines lines={lines} />;
 };
 
@@ -178,6 +186,7 @@ const SavedResult = ({ entry, lang, text: copy, ui }: Omit<SavedCalculationProps
   const { value, steps } = entry.result;
   if (entry.formulaId === 'recipe-costing') {
     const recipe = value as unknown as RecipeCostingOutput;
+
     return (
       <RecipeCostingResult
         value={recipe}
@@ -189,6 +198,7 @@ const SavedResult = ({ entry, lang, text: copy, ui }: Omit<SavedCalculationProps
       />
     );
   }
+
   if (entry.formulaId === 'omnes-rules') {
     return (
       <OmnesResult
@@ -200,10 +210,12 @@ const SavedResult = ({ entry, lang, text: copy, ui }: Omit<SavedCalculationProps
       />
     );
   }
+
   const formula = isFormulaId(entry.formulaId) ? getFormula(entry.formulaId) : null;
   if (!formula || formula.layout !== 'standard') {
     throw new Error(`Unknown saved formula ${entry.formulaId}`);
   }
+
   return (
     <FormulaResult
       formula={formula}
@@ -236,6 +248,7 @@ class Fallback extends Component<{ message: string; children: ReactNode }, { fai
 /** A whole saved calculation: what was entered, the result and the worked steps. */
 export const SavedCalculation = (props: SavedCalculationProps) => {
   const { labels, entry } = props;
+
   return (
     <Fallback message={labels.unavailable}>
       <div className="flex flex-col gap-4">

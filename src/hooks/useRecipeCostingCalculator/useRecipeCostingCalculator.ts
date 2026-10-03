@@ -31,6 +31,7 @@ export const RECIPE_EXAMPLE = {
 let nextId = 0;
 const newRow = (values: Partial<IngredientRow> = {}): IngredientRow => {
   nextId += 1;
+
   return {
     id: `ingredient-${nextId}`,
     name: '',
@@ -51,6 +52,7 @@ const INITIAL = {
 const readRows = (raw: unknown): IngredientRow[] => {
   try {
     const rows = JSON.parse(typeof raw === 'string' ? raw : '[]') as IngredientRow[];
+
     return Array.isArray(rows) && rows.length > 0 ? rows : [newRow()];
   } catch {
     return [newRow()];
@@ -82,6 +84,7 @@ export const useRecipeCostingCalculator = ({
       if (value === null && raw.trim() !== '') {
         invalid[field] = 'invalid-number';
       }
+
       return value;
     };
     const calculation = calculateRecipeCosting({
@@ -97,6 +100,7 @@ export const useRecipeCostingCalculator = ({
     const fieldErrors = calculation.ok
       ? {}
       : Object.fromEntries(calculation.errors.map((error) => [error.field, error.code]));
+
     return { result: calculation, errors: { ...fieldErrors, ...invalid } };
   }, [servings, rows, lang]);
 

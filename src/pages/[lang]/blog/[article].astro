@@ -19,6 +19,7 @@ const post = (await getPublishedPosts()).find((entry) => entry.id === id);
 if (!item || !post) {
   throw new Error(`Unknown article: ${id}`);
 }
+
 const blog = getTranslations(lang, 'blog');
 const site = Astro.site ?? Astro.url;
 const aboutHref = localizedPath(lang, 'about');

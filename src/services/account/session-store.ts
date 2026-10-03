@@ -22,6 +22,7 @@ const isNullableText = (value: unknown) => value === null || typeof value === 's
 const isSession = (value: unknown): value is StoredSession => {
   const data = value as Partial<StoredSession> | null;
   const user = data?.user as Partial<AccountUser> | undefined;
+
   return (
     typeof data === 'object' &&
     data !== null &&
@@ -46,6 +47,7 @@ export const createSessionStore = (
     if (!isSession(raw)) {
       return null;
     }
+
     return {
       ...raw,
       user: { ...raw.user, role: isAccountRole(raw.user.role) ? raw.user.role : 'user' },
@@ -54,6 +56,7 @@ export const createSessionStore = (
   const notify = () => {
     window.dispatchEvent(new CustomEvent(SESSION_CHANGED_EVENT));
   };
+
   return {
     read,
     write: (session) => {
@@ -77,6 +80,7 @@ export const createSessionStore = (
       };
       window.addEventListener(SESSION_CHANGED_EVENT, onChange);
       window.addEventListener('storage', onStorage);
+
       return () => {
         window.removeEventListener(SESSION_CHANGED_EVENT, onChange);
         window.removeEventListener('storage', onStorage);

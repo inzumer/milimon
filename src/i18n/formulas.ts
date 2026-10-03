@@ -43,6 +43,7 @@ export const getFormulaTranslation = (lang: Locale, id: FormulaId): FormulaTrans
   if (raw === undefined) {
     throw new Error(`Missing translation src/i18n/formulas/${id}/${lang}.json`);
   }
+
   return formulaTranslationSchema.parse(raw);
 };
 

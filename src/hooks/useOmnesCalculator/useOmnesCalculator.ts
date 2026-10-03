@@ -29,6 +29,7 @@ export const parsePriceList = (
       prices.push(value);
     }
   }
+
   return { prices, invalid };
 };
 
@@ -46,6 +47,7 @@ export const useOmnesCalculator = ({ lang }: { lang: Locale }) => {
 
   const text = (key: keyof typeof EMPTY) => {
     const value = draft[key];
+
     return typeof value === 'string' ? value : '';
   };
   const prices = text('prices');
@@ -59,6 +61,7 @@ export const useOmnesCalculator = ({ lang }: { lang: Locale }) => {
       averageTicket: parseDecimal(averageTicket, lang),
       dailySpecialPrice: parseDecimal(dailySpecialPrice, lang),
     });
+
     return { list: parsed, result: calculation };
   }, [prices, averageTicket, dailySpecialPrice, lang]);
 
@@ -78,10 +81,12 @@ export const useOmnesCalculator = ({ lang }: { lang: Locale }) => {
       if (!touchedOptional.has(key)) {
         return undefined;
       }
+
       const raw = text(key).trim();
       if (raw !== '' && parseDecimal(raw, lang) === null) {
         return 'invalid-number';
       }
+
       return result.ok ? undefined : result.errors.find((error) => error.field === key)?.code;
     },
     touchOptional: (key: OptionalField) =>

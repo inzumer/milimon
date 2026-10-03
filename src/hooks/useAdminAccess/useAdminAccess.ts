@@ -21,11 +21,14 @@ const checkAccess = async (session: AccountSession | null): Promise<AdminAccess>
   if (!session) {
     return { kind: 'unavailable' };
   }
+
   if (!(await session.backend.getUser())) {
     return { kind: 'signed-out' };
   }
+
   try {
     const me = await session.backend.fetchMe();
+
     return ADMIN_SECTION_ROLES.includes(me.role)
       ? { kind: 'ready', me, session }
       : { kind: 'forbidden' };

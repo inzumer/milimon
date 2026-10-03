@@ -29,6 +29,7 @@ const svgIcon = (src: string) => {
       style={style}
     />
   );
+
   return SvgIcon;
 };
 

@@ -17,6 +17,7 @@ const setup = (formulaId: FormulaId = 'waste-percentage', lang: Locale = 'es') =
       ui={getTranslations(lang, 'calculator')}
     />,
   );
+
   return { ...utils, user: userEvent.setup() };
 };
 

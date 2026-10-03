@@ -70,6 +70,7 @@ export const createAccountSync = ({
     if (unsubscribe) {
       return;
     }
+
     const stopSettings = useSettingsStore.subscribe((next, previous) => {
       if (!applyingRemote && profileChanged(next, previous)) {
         later('profile', () => backend.saveProfile(toRemoteProfile(next)));
@@ -79,11 +80,13 @@ export const createAccountSync = ({
       if (applyingRemote) {
         return;
       }
+
       const ids = new Set([...Object.keys(drafts), ...Object.keys(previous.drafts)]);
       for (const formulaId of ids) {
         if (drafts[formulaId] !== previous.drafts[formulaId]) {
           later(`draft:${formulaId}`, () => {
             const draft = useDraftsStore.getState().drafts[formulaId];
+
             return draft ? backend.saveDraft(formulaId, draft) : backend.deleteDraft(formulaId);
           });
         }
@@ -93,6 +96,7 @@ export const createAccountSync = ({
       if (applyingRemote) {
         return;
       }
+
       const before = new Set(previous.entries.map((entry) => entry.id));
       const added = entries.filter((entry) => !before.has(entry.id));
       added.forEach((entry) => backend.saveHistoryEntry(entry).catch(report));
@@ -107,6 +111,7 @@ export const createAccountSync = ({
       if (applyingRemote) {
         return;
       }
+
       const before = new Set(previous.ids);
       const after = new Set(ids);
       ids.filter((id) => !before.has(id)).forEach((id) => backend.saveRecipe(id).catch(report));
@@ -155,6 +160,7 @@ export const createAccountSync = ({
     if (readJson<boolean>(session, SYNCED_KEY) === true) {
       return 'restored';
     }
+
     const profile = await backend.fetchProfile();
     if (profile) {
       const [drafts, entries, savedRecipes] = await Promise.all([
@@ -172,13 +178,17 @@ export const createAccountSync = ({
         applyingRemote = false;
       }
       writeJson(session, SYNCED_KEY, true);
+
       return 'restored';
     }
+
     if (hasLocalData()) {
       return 'needs-migration';
     }
+
     await uploadLocal();
     writeJson(session, SYNCED_KEY, true);
+
     return 'created';
   };
 
@@ -209,6 +219,7 @@ export const createAccountSync = ({
       if (!user) {
         return null;
       }
+
       pending ??= resolveSignIn();
       let outcome: SignInOutcome;
       try {
@@ -220,6 +231,7 @@ export const createAccountSync = ({
       if (outcome !== 'needs-migration') {
         watch();
       }
+
       return { user, outcome };
     },
     importLocal: async () => {

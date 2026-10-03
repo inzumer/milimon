@@ -50,6 +50,7 @@ export const getLearnTopic = (lang: Locale, id: LearnTopicId): LearnTopic => {
   if (raw === undefined) {
     throw new Error(`Missing translation src/i18n/learn/${id}/${lang}.json`);
   }
+
   return learnTopicSchema.parse(raw);
 };
 
@@ -58,6 +59,7 @@ export const adjacentTopics = (
   id: LearnTopicId,
 ): { previous: LearnTopicId | null; next: LearnTopicId | null } => {
   const index = LEARN_TOPIC_IDS.indexOf(id);
+
   return {
     previous: LEARN_TOPIC_IDS[index - 1] ?? null,
     next: LEARN_TOPIC_IDS[index + 1] ?? null,

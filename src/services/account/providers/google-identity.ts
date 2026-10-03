@@ -41,6 +41,7 @@ export const renderGoogleButton = async (
   if (!identity) {
     throw new Error('Google Identity Services is not available');
   }
+
   identity.initialize({
     client_id: clientId,
     ux_mode: 'popup',

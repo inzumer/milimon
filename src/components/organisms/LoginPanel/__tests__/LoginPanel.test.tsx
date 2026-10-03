@@ -58,6 +58,7 @@ const setup = (
         slowAfterMs={50}
       />,
     );
+
   return {
     backend,
     renderGoogle,
@@ -65,6 +66,7 @@ const setup = (
     navigate,
     google: async () => {
       await vi.waitFor(() => expect(googleOptions).toBeDefined());
+
       return googleOptions as GoogleButtonOptions;
     },
     user: userEvent.setup(),

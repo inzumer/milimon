@@ -1,35 +1,108 @@
 name: CMS to dev
 
-# Each CMS save lands on a cms/* branch: validate the content and open (or update) its PR to dev.
+# The CMS saves to cms/draft. Each save becomes one clean commit per entry on cms/<slug>,
+# validated with the build and squash-merged into dev by PR.
 on:
   push:
-    branches: ['cms/**']
+    branches: [cms/draft, dev]
 
 permissions:
-  contents: read
+  contents: write
   pull-requests: write
 
 concurrency:
-  group: cms-${{ github.ref }}
-  cancel-in-progress: true
+  group: cms-draft
+  cancel-in-progress: false
 
 jobs:
-  validate:
-    uses: inzumer/inzumer-ci/.github/workflows/node-ci.yml@v1
-    with:
-      commands: pnpm build
-
-  pull-request:
-    needs: validate
+  publish:
+    if: github.ref_name == 'cms/draft'
     runs-on: ubuntu-latest
     env:
       GH_TOKEN: ${{ github.token }}
-      GH_REPO: ${{ github.repository }}
-      BRANCH: ${{ github.ref_name }}
+      DRAFT: ${{ github.sha }}
     steps:
-      - name: Open the PR to dev
+      - name: Checkout dev
+        uses: actions/checkout@v4
+        with:
+          ref: dev
+          fetch-depth: 0
+
+      - name: Pick the entries changed on the draft
+        id: changes
         run: |
+          base=$(git merge-base origin/dev "$DRAFT")
+          # Files saved since the draft left dev that still differ from dev.
+          files=$(git diff --name-only "$base" "$DRAFT" -- src/content src/assets |
+            while read -r file; do
+              git diff --quiet origin/dev "$DRAFT" -- "$file" || echo "$file"
+            done)
+          if [ -z "$files" ]; then
+            echo "Nothing new to publish."
+            exit 0
+          fi
+          slug=$(echo "$files" | sed -nE 's#^src/content/[^/]+/([^/.]+).*#\1#p' | sort -u | head -3 | paste -sd- -)
+          echo "branch=cms/${slug:-content}" >> "$GITHUB_OUTPUT"
+          echo "title=content: ${slug:-content}" >> "$GITHUB_OUTPUT"
+          echo "$files" > "$RUNNER_TEMP/files"
+
+      - name: Build the branch from dev
+        if: steps.changes.outputs.branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -c "${{ steps.changes.outputs.branch }}"
+          while read -r file; do
+            if git cat-file -e "$DRAFT:$file" 2>/dev/null; then
+              git checkout "$DRAFT" -- "$file"
+            else
+              git rm -q --ignore-unmatch "$file"
+            fi
+          done < "$RUNNER_TEMP/files"
+          git commit -qm "${{ steps.changes.outputs.title }}"
+
+      - name: Setup pnpm
+        if: steps.changes.outputs.branch
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        if: steps.changes.outputs.branch
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: Validate the content
+        if: steps.changes.outputs.branch
+        run: pnpm install --frozen-lockfile && pnpm build
+
+      - name: Open the PR and merge it when ready
+        if: steps.changes.outputs.branch
+        env:
+          BRANCH: ${{ steps.changes.outputs.branch }}
+          TITLE: ${{ steps.changes.outputs.title }}
+        run: |
+          git push --force origin "HEAD:refs/heads/$BRANCH"
           gh pr view "$BRANCH" --json state -q .state 2>/dev/null | grep -q OPEN ||
-            gh pr create --base dev --head "$BRANCH" \
-              --title "content: ${BRANCH#cms/}" \
-              --body "Cambio guardado desde el CMS (Keystatic). El build ya pasó."
+            gh pr create --base dev --head "$BRANCH" --title "$TITLE" \
+              --body "Guardado desde el CMS (Keystatic, rama cms/draft). El build pasó; se mergea solo con squash."
+          # Auto-merge needs pending checks; without them, merge now (the build already passed).
+          gh pr merge "$BRANCH" --auto --squash || gh pr merge "$BRANCH" --squash
+
+  # Keeps cms/draft on top of dev so an old draft never overwrites newer content.
+  sync-draft:
+    if: github.ref_name == 'dev'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout cms/draft
+        uses: actions/checkout@v4
+        with:
+          ref: cms/draft
+          fetch-depth: 0
+
+      - name: Merge dev into it
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git merge -q -X theirs origin/dev -m "chore: sync cms/draft with dev"
+          git push origin HEAD:cms/draft

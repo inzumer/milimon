@@ -32,6 +32,7 @@ const setup = (remote: Parameters<typeof createFakeAccountBackend>[0] = { user: 
   const session = createMemoryStorage();
   const sync = createAccountSync({ backend, session, debounceMs: 10 });
   started.push(sync);
+
   return { backend, settings, calculations, history, session, sync };
 };
 

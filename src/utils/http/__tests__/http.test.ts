@@ -9,9 +9,11 @@ const setup = (...responses: (Response | Error)[]) => {
     if (next instanceof Error) {
       throw next;
     }
+
     return next ?? json(200);
   });
   const sleep = vi.fn(async () => undefined);
+
   return { fetchImpl: fetchImpl as unknown as typeof fetch, calls: fetchImpl, sleep };
 };
 

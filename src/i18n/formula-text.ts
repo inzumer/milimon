@@ -11,6 +11,7 @@ const required = <T>(record: Record<string, T> | undefined, key: string, section
   if (value === undefined) {
     throw new Error(`Missing formula translation ${section}.${key}`);
   }
+
   return value;
 };
 
