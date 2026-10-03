@@ -549,7 +549,9 @@ producción con el release, y la base de producción tiene backups propios.
       visibles ahí; en producción `/keystatic` no existe y "Gestión del sitio" enlaza al de
       staging. Se edita sobre `cms/draft`; al guardar, `cms-to-dev` arma `cms/<entrada>` con un
       solo commit desde `dev`, valida el build y lo mergea con squash (un commit por entrada en
-      `dev`). GitHub App `milimon-cms` y sus variables en el Worker listas (30/09).
+      `dev`). GitHub App `milimon-cms` y sus variables en el Worker listas (30/09). Pantalla
+      partida online (03/10): `/keystatic-editor` con la vista previa leyendo `cms/draft`, que se
+      actualiza segundos después de guardar.
 - [ ] **Ramas protegidas**: `main` y `dev` solo por PR con el CI en verde, en el sitio y la API.
       _Lo hago yo (`gh api`), con tu OK._
 - [ ] **Google, GTM y Search Console por ambiente**: orígenes de staging y producción en Google
