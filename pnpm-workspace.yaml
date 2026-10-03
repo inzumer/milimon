@@ -28,3 +28,9 @@ supportedArchitectures:
   cpu:
     - current
     - wasm32
+
+# Advisories without a patched release yet (reviewed 2026-10-03); drop each one once a fix ships.
+auditConfig:
+  ignoreGhsas:
+    # http-cache-semantics (via astro): only Astro's build-time image cache; we have no shared cache.
+    - GHSA-ch52-4w7c-c8xp
